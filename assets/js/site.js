@@ -192,6 +192,15 @@
 
   const buildTrack=document.getElementById('buildTrack');
   const buildCanvas=document.getElementById('buildCanvas');
+  if(buildTrack){
+    buildTrack.style.touchAction='pan-y';
+    buildTrack.addEventListener('touchstart',()=>{}, {passive:true});
+    buildTrack.addEventListener('touchmove',()=>{}, {passive:true});
+  }
+  if(buildCanvas){
+    buildCanvas.style.pointerEvents='none';
+    buildCanvas.style.touchAction='auto';
+  }
   const buildTitle=document.getElementById('buildTitle');
   const buildBody=document.getElementById('buildBody');
   const buildCounter=document.getElementById('buildCounter');
@@ -241,7 +250,8 @@
   }
   function updateBuild(){
     if(!buildTrack)return;
-    const viewportH=window.visualViewport?.height||innerHeight;
+    const sticky=buildTrack.querySelector('.build-sticky');
+    const viewportH=Math.max(1,sticky?.clientHeight||innerHeight);
     const r=buildTrack.getBoundingClientRect(),span=Math.max(1,r.height-viewportH);
     if(!buildReady && r.top < viewportH * 1.6 && r.bottom > -viewportH * 0.5) initBuild();
     buildProgress=clamp(-r.top/span);
@@ -392,10 +402,25 @@
     if(innerWidth<=1190&&megaMenu?.classList.contains('open'))toggleMega(false);
   }
   let resizeFrame=0;
+  let lastLayoutWidth=innerWidth;
+  let lastOrientation=innerWidth>innerHeight?'landscape':'portrait';
+  function scheduleResponsiveResize(force=false){
+    const nextOrientation=innerWidth>innerHeight?'landscape':'portrait';
+    const widthChanged=Math.abs(innerWidth-lastLayoutWidth)>2;
+    const orientationChanged=nextOrientation!==lastOrientation;
+    // Mobile browser chrome changes visualViewport height during a swipe.
+    // Ignore that height-only resize so the sticky WebGL section never
+    // interrupts the native page gesture.
+    if(!force&&innerWidth<=760&&!widthChanged&&!orientationChanged)return;
+    lastLayoutWidth=innerWidth;
+    lastOrientation=nextOrientation;
+    cancelAnimationFrame(resizeFrame);
+    resizeFrame=requestAnimationFrame(handleResize);
+  }
   addEventListener('scroll',updateScroll,{passive:true});
-  addEventListener('resize',()=>{cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(handleResize)},{passive:true});
-  window.visualViewport?.addEventListener('resize',()=>{cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(handleResize)},{passive:true});
-  addEventListener('orientationchange',()=>setTimeout(handleResize,120),{passive:true});
+  addEventListener('resize',()=>scheduleResponsiveResize(false),{passive:true});
+  window.visualViewport?.addEventListener('resize',()=>scheduleResponsiveResize(false),{passive:true});
+  addEventListener('orientationchange',()=>setTimeout(()=>scheduleResponsiveResize(true),140),{passive:true});
   document.getElementById('year').textContent=new Date().getFullYear();
   renderPortfolio('all');setLanguage(language);
   queueBuildInit();updateScroll();

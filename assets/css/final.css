@@ -1624,3 +1624,62 @@ html[dir="rtl"] .wecan-mobile-word{
   .cinematic-wecan .wecan-final{left:12px;right:auto;width:min(58vw,650px);bottom:10px;max-height:calc(100dvh - 78px)}
   html[dir="rtl"] .cinematic-wecan .wecan-final{right:12px;left:auto}
 }
+
+/* ========================================================================
+   MOBILE MANUFACTURING SCROLL FIX
+   Keep the WebGL scene visible while allowing the page gesture to remain
+   owned by the browser on iOS/Android.
+   ======================================================================== */
+.build-track{
+  touch-action:pan-y;
+  overscroll-behavior-y:auto;
+}
+.build-sticky{
+  -webkit-position:sticky;
+  position:sticky;
+  touch-action:pan-y;
+  overscroll-behavior:auto;
+  contain:none;
+}
+#buildCanvas{
+  pointer-events:none!important;
+  touch-action:auto!important;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.build-vignette,
+.build-ui,
+.build-rail,
+.build-sticky .interaction-hint,
+#buildScrollIndicator{
+  pointer-events:none!important;
+}
+
+@media(max-width:760px){
+  .build-sticky{
+    height:100svh!important;
+    min-height:100svh!important;
+    max-height:100svh!important;
+  }
+  .build-track{
+    min-height:calc(100svh + 1px);
+    overflow:visible;
+  }
+  #buildCanvas{
+    width:100%!important;
+    height:100%!important;
+    transform:none!important;
+    -webkit-transform:none!important;
+  }
+}
+
+@supports not (height:100svh){
+  @media(max-width:760px){
+    .build-sticky{
+      height:100vh!important;
+      min-height:100vh!important;
+      max-height:100vh!important;
+    }
+    .build-track{min-height:calc(100vh + 1px)}
+  }
+}
