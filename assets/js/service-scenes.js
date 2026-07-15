@@ -320,14 +320,22 @@
   function initCanvas(canvas){
     const frame=canvas.closest('.canvas-frame');
     let renderer,scene,camera,root,materials,observer,resizeObserver;
-    let visible=false,initialized=false,dragging=false,startX=0,startY=0,lastX=0,lastY=0,yaw=.55,pitch=.24,targetYaw=.55,targetPitch=.24,auto=0;
+    const initialYaw=mobile?.08:.50;
+    let visible=false,initialized=false,dragging=false,startX=0,startY=0,lastX=0,lastY=0,yaw=initialYaw,pitch=.12,targetYaw=initialYaw,targetPitch=.12,auto=0;
     const type=canvas.dataset.scene;
     function viewportProfile(){
       const r=frame.getBoundingClientRect(),w=Math.max(1,r.width),h=Math.max(1,r.height),aspect=w/h;
-      const portrait=Math.max(0,Math.min(1,(.9-aspect)/.38));
-      const wideScene=(type==='booth'||type==='crowd'||type==='av');
-      const base=w<680?(wideScene?10.9:10.45):(wideScene?9.55:9.15);
-      return {w,h,aspect,portrait,fov:w<680?54+portrait*4:(w<980?47:42),radius:base+portrait*(wideScene?2.7:2.25)};
+      const portrait=Math.max(0,Math.min(1,(.9-aspect)/.42));
+      const fov=w<680?55+portrait*5:(w<980?47:42);
+      const vFov=THREE.MathUtils.degToRad(fov),hFov=2*Math.atan(Math.tan(vFov/2)*aspect);
+      return {w,h,aspect,portrait,fov,vFov,hFov};
+    }
+    function fitRadius(profile,angle){
+      const halfWidth=6.65,halfDepth=6.15,halfHeight=3.55;
+      const projectedHalfWidth=Math.abs(Math.cos(angle))*halfWidth+Math.abs(Math.sin(angle))*halfDepth;
+      const dw=projectedHalfWidth/Math.max(.12,Math.tan(profile.hFov/2));
+      const dh=halfHeight/Math.max(.12,Math.tan(profile.vFov/2));
+      return Math.max(dw,dh)*(mobile?1.18:1.08);
     }
     function qualityRatio(w,h){
       const dpr=window.devicePixelRatio||1,compact=w<760,cap=compact?1.95:2.25,maxPixels=compact?2200000:4200000;
@@ -363,7 +371,7 @@
 
     function bindInteraction(){
       canvas.addEventListener('pointerdown',e=>{dragging=true;startX=lastX=e.clientX;startY=lastY=e.clientY;canvas.setPointerCapture?.(e.pointerId);});
-      canvas.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;targetYaw+=dx*.006;targetPitch=Math.max(-.02,Math.min(.62,targetPitch+dy*.0038));});
+      canvas.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;targetYaw+=dx*(mobile?.0035:.006);targetPitch=Math.max(-.03,Math.min(.34,targetPitch+dy*.0028));});
       const end=e=>{dragging=false;try{canvas.releasePointerCapture?.(e.pointerId);}catch(_){}};
       canvas.addEventListener('pointerup',end);canvas.addEventListener('pointercancel',end);canvas.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')dragging=false;});
     }
@@ -390,9 +398,12 @@
         const t=performance.now()*.001;
         if(!dragging&&!reduce){auto+=.0016;targetYaw+=Math.sin(t*.33)*.00035;}
         yaw+=(targetYaw-yaw)*.07;pitch+=(targetPitch-pitch)*.07;
-        const profile=viewportProfile(),radius=profile.radius;
-        camera.position.set(Math.sin(yaw)*radius,3.15+profile.portrait*.24+pitch*2.1,Math.cos(yaw)*radius);
-        camera.lookAt(0,1.65+profile.portrait*.08,0);
+        const profile=viewportProfile(),radius=fitRadius(profile,yaw);
+        const targetY=1.72+profile.portrait*.08;
+        const elevation=.095+pitch*.18;
+        const horizontal=Math.cos(elevation)*radius;
+        camera.position.set(Math.sin(yaw)*horizontal,targetY+Math.sin(elevation)*radius,Math.cos(yaw)*horizontal);
+        camera.lookAt(0,targetY,0);
         root.rotation.y=Math.sin(t*.28)*.035;
         animateDetails(t);
         renderer.render(scene,camera);

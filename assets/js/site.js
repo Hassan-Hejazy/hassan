@@ -72,7 +72,7 @@
   const wecanTexts=Array.from(document.querySelectorAll('.wecan-cutout-text,.wecan-edge,.wecan-solid-text'));
   function syncWecanSvgLayout(){
     if(!wecanSvg)return;
-    const portrait=innerWidth<=680;
+    const portrait=innerWidth<=760;
     const ar=language==='ar';
     if(portrait){
       wecanSvg.setAttribute('viewBox','0 0 900 1600');
@@ -196,6 +196,7 @@
   const buildBody=document.getElementById('buildBody');
   const buildCounter=document.getElementById('buildCounter');
   const buildRail=Array.from(document.querySelectorAll('#buildRail span'));
+  const buildScrollIndicator=document.getElementById('buildScrollIndicator');
   let buildProgress=0,buildStage=-1,buildReady=false;
   const buildCopy={
     en:[
@@ -243,6 +244,11 @@
     if(!buildReady && r.top < innerHeight * 1.6 && r.bottom > -innerHeight * 0.5) initBuild();
     buildProgress=clamp(-r.top/span);
     if(buildReady)window.BuildScene.update(buildProgress);
+    if(buildScrollIndicator){
+      const show=1-smoothstep(range(buildProgress,.015,.16));
+      buildScrollIndicator.style.opacity=show.toFixed(3);
+      buildScrollIndicator.style.transform=`translate3d(-50%,${((1-show)*8).toFixed(1)}px,0)`;
+    }
     updateBuildCopy();
   }
 
@@ -312,7 +318,7 @@
 
   function applyWecan(p){
     root.style.setProperty('--wecan-p',p.toFixed(4));
-    const compact=innerWidth<=680;
+    const compact=innerWidth<=760;
     const solidFade=smootherstep(range(p,.035,compact?.20:.22));
     const portalReveal=smootherstep(range(p,.10,compact?.34:.38));
     const maskExpansion=smootherstep(range(p,compact?.22:.25,compact?.64:.70));
@@ -327,7 +333,13 @@
     const imageScale=(compact?1.075:1.105)-smootherstep(range(p,.08,.78))*(compact?.075:.105);
     const imageY=(1-portalReveal)*(compact?1.05:1.35)-smootherstep(range(p,.36,.82))*(compact?.35:.55);
     const imageFocus=48-smootherstep(range(p,.20,.86))*(compact?5:3);
+    const mobileWordProgress=smootherstep(range(p,.04,.58));
+    const mobileWordOpacity=1-smootherstep(range(p,.42,.68));
+    const mobileCurtainOpacity=1-smootherstep(range(p,.12,.62));
 
+    root.style.setProperty('--wecan-mobile-word-scale',(1+mobileWordProgress*2.15).toFixed(4));
+    root.style.setProperty('--wecan-mobile-word-opacity',mobileWordOpacity.toFixed(4));
+    root.style.setProperty('--wecan-mobile-curtain-opacity',mobileCurtainOpacity.toFixed(4));
     root.style.setProperty('--wecan-solid-opacity',(1-solidFade).toFixed(4));
     root.style.setProperty('--wecan-solid-scale',(1+solidFade*.045).toFixed(4));
     root.style.setProperty('--wecan-solid-blur',(solidFade*3.5).toFixed(2)+'px');

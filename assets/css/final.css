@@ -1261,3 +1261,173 @@ html[dir="rtl"] .process-journey{padding-left:0;padding-right:54px}html[dir="rtl
   .build-track{height:310svh}.connected-track{height:335svh}.cinematic-wecan .wecan-track{height:215svh}
   .canvas-frame{height:min(82dvh,480px);min-height:280px}
 }
+
+/* ========================================================================
+   DEVICE-FITTED 3D / SCROLL GUIDANCE / MOBILE WE CAN
+   ======================================================================== */
+.scene-scroll-indicator{
+  position:absolute;
+  z-index:7;
+  left:50%;
+  bottom:22px;
+  transform:translate3d(-50%,0,0);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  color:#ead8b5;
+  pointer-events:none;
+  will-change:opacity,transform;
+  transition:opacity .18s linear;
+  text-shadow:0 2px 14px rgba(0,0,0,.72);
+}
+.scene-scroll-indicator span{font-size:.58rem;letter-spacing:.18em;white-space:nowrap}
+.scene-scroll-indicator i{
+  position:relative;
+  display:block;
+  width:22px;
+  height:34px;
+  border:1px solid rgba(236,216,169,.58);
+  border-radius:999px;
+  background:rgba(7,6,4,.22);
+  box-shadow:0 8px 26px rgba(0,0,0,.24),inset 0 0 0 1px rgba(255,255,255,.025);
+}
+.scene-scroll-indicator b{
+  position:absolute;
+  left:50%;top:6px;
+  width:4px;height:8px;
+  margin-left:-2px;
+  border-radius:999px;
+  background:#f0d99f;
+  box-shadow:0 0 12px rgba(236,216,169,.48);
+  animation:scene-scroll-dot 1.55s cubic-bezier(.2,.7,.2,1) infinite;
+}
+@keyframes scene-scroll-dot{
+  0%{opacity:0;transform:translateY(0)}
+  22%{opacity:1}
+  75%{opacity:1}
+  100%{opacity:0;transform:translateY(13px)}
+}
+
+/* Mobile replacement for the SVG portal: predictable size and no cropping. */
+.wecan-mobile-curtain,.wecan-mobile-word{display:none}
+
+@media(max-width:900px){
+  .build-track{height:480svh}
+  .connected-track{height:550svh}
+  .build-sticky.model-active canvas,
+  .connected-sticky.model-active canvas,
+  .canvas-frame.ready canvas{filter:none}
+  .build-ui,.connected-copy{
+    max-height:30vh;
+    background:rgba(9,8,6,.74);
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
+  }
+}
+
+@media(max-width:680px){
+  .build-track{height:430svh}
+  .connected-track{height:500svh}
+  .cinematic-wecan .wecan-track{height:260svh}
+
+  .scene-scroll-indicator{
+    top:calc(var(--header-h) + 18px + var(--safe-top));
+    bottom:auto;
+    gap:6px;
+  }
+  .scene-scroll-indicator span{font-size:.53rem;letter-spacing:.16em}
+  .scene-scroll-indicator i{width:20px;height:31px}
+
+  .build-ui,.connected-copy{
+    left:10px;right:10px;
+    bottom:calc(10px + var(--safe-bottom));
+    max-height:27vh;
+    padding:12px 14px;
+    border-radius:16px;
+  }
+  html[dir="rtl"] .build-ui,html[dir="rtl"] .connected-copy{left:10px;right:10px}
+  .build-ui h3,.connected-copy h3{font-size:clamp(1.58rem,7.8vw,2.35rem);line-height:1.01;margin-bottom:6px}
+  .build-ui p,.connected-copy p{font-size:.78rem;line-height:1.45;-webkit-line-clamp:2}
+  .build-counter,.connected-copy>span{font-size:.58rem;margin-bottom:6px}
+
+  .wecan-mask{display:none!important}
+  .wecan-mobile-curtain{
+    display:block;
+    position:absolute;
+    inset:0;
+    z-index:4;
+    background:#030302;
+    opacity:var(--wecan-mobile-curtain-opacity,1);
+    pointer-events:none;
+    will-change:opacity;
+  }
+  .wecan-mobile-word{
+    display:grid;
+    place-items:center;
+    position:absolute;
+    inset:0;
+    z-index:5;
+    padding-inline:14px;
+    font-family:Syne,Inter,sans-serif;
+    font-size:clamp(3.25rem,18vw,6rem);
+    font-weight:800;
+    line-height:.88;
+    letter-spacing:-.045em;
+    color:#fff;
+    text-align:center;
+    white-space:nowrap;
+    opacity:var(--wecan-mobile-word-opacity,1);
+    transform:scale(var(--wecan-mobile-word-scale,1));
+    transform-origin:center 48%;
+    text-shadow:0 20px 55px rgba(0,0,0,.62),0 0 1px rgba(255,255,255,.55);
+    pointer-events:none;
+    will-change:transform,opacity;
+  }
+  html[dir="rtl"] .wecan-mobile-word{
+    font-family:Changa,Cairo,sans-serif;
+    font-size:clamp(3rem,17vw,5.6rem);
+    letter-spacing:0;
+  }
+  .wecan-opening-label{z-index:6;top:9%;font-size:.5rem;max-width:calc(100vw - 34px);white-space:normal;line-height:1.55}
+  .wecan-enter-hint{z-index:6;bottom:calc(14px + var(--safe-bottom));font-size:.5rem}
+  .cinematic-wecan .wecan-final{z-index:8;max-height:39vh}
+}
+
+@media(max-width:390px){
+  .build-track{height:410svh}
+  .connected-track{height:475svh}
+  .cinematic-wecan .wecan-track{height:248svh}
+  .wecan-mobile-word{font-size:clamp(3rem,17.5vw,4.7rem)}
+  html[dir="rtl"] .wecan-mobile-word{font-size:clamp(2.8rem,16.5vw,4.4rem)}
+  .build-ui,.connected-copy{max-height:25vh}
+}
+
+@media(max-height:560px) and (orientation:landscape){
+  .build-track{height:340svh}
+  .connected-track{height:390svh}
+  .scene-scroll-indicator{top:70px;left:auto;right:18px;transform:none!important}
+  .wecan-mask{display:block!important}
+  .wecan-mobile-curtain,.wecan-mobile-word{display:none!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .scene-scroll-indicator b{animation:none;transform:translateY(8px)}
+}
+
+@media(min-width:681px) and (max-width:760px){
+  .wecan-mask{display:none!important}
+  .wecan-mobile-curtain{
+    display:block;position:absolute;inset:0;z-index:4;background:#030302;
+    opacity:var(--wecan-mobile-curtain-opacity,1);pointer-events:none;will-change:opacity;
+  }
+  .wecan-mobile-word{
+    display:grid;place-items:center;position:absolute;inset:0;z-index:5;padding-inline:22px;
+    font-family:Syne,Inter,sans-serif;font-size:clamp(5.4rem,15vw,8rem);font-weight:800;
+    line-height:.88;letter-spacing:-.045em;color:#fff;text-align:center;white-space:nowrap;
+    opacity:var(--wecan-mobile-word-opacity,1);transform:scale(var(--wecan-mobile-word-scale,1));
+    transform-origin:center 48%;text-shadow:0 20px 55px rgba(0,0,0,.62);pointer-events:none;
+    will-change:transform,opacity;
+  }
+  html[dir="rtl"] .wecan-mobile-word{font-family:Changa,Cairo,sans-serif;font-size:clamp(5rem,14vw,7.4rem);letter-spacing:0}
+}

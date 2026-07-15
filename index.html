@@ -242,6 +242,7 @@
 </div>
 <div class="build-rail" id="buildRail"><span class="active"></span><span></span><span></span><span></span><span></span></div>
 <div class="interaction-hint mono" data-ar="مرر أو اسحب لمتابعة البناء" data-en="SCROLL / SWIPE TO BUILD">SCROLL / SWIPE TO BUILD</div>
+<div class="scene-scroll-indicator" id="buildScrollIndicator" aria-hidden="true"><span class="mono" data-ar="مرر للأسفل" data-en="SCROLL DOWN">SCROLL DOWN</span><i><b></b></i></div>
 </div>
 </div>
 </section>
@@ -284,6 +285,7 @@
 <div class="connected-copy"><span class="mono" id="connectedIndex">01 / 06</span><h3 data-ar="أجنحة المعارض والأجنحة الوطنية" data-en="Exhibition Stands &amp; Pavilions" id="connectedTitle">Exhibition Stands &amp; Pavilions</h3><p data-ar="يبدأ المسار من بيئة البناء باعتبارها نقطة الانطلاق لكل مراحل التنفيذ." data-en="The build environment anchors the connected production route." id="connectedBody">The build environment anchors the connected production route.</p></div>
 <div class="connected-rail" id="connectedRail"><span class="active">BUILD</span><span>DISPLAY</span><span>INTERIOR</span><span>MANAGE</span><span>FLOW</span><span>AV</span></div>
 <div class="interaction-hint mono" data-ar="مرر لمشاهدة ترابط المنظومة" data-en="SCROLL TO CONNECT THE SYSTEM">SCROLL TO CONNECT THE SYSTEM</div>
+<div class="scene-scroll-indicator" id="connectedScrollIndicator" aria-hidden="true"><span class="mono" data-ar="مرر للأسفل" data-en="SCROLL DOWN">SCROLL DOWN</span><i><b></b></i></div>
 </div>
 </div>
 </section>
@@ -327,6 +329,8 @@
 </g>
 </svg>
 </div>
+<div class="wecan-mobile-curtain" aria-hidden="true"></div>
+<div class="wecan-mobile-word" aria-hidden="true" data-ar="نستطيع" data-en="WE CAN">WE CAN</div>
 <div class="wecan-precision-frame" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
 <div class="wecan-opening-label mono" data-ar="رؤية واحدة · فريق واحد · تجربة متكاملة" data-en="ONE VISION · ONE TEAM · ONE SIGNATURE EXPERIENCE">ONE VISION · ONE TEAM · ONE SIGNATURE EXPERIENCE</div>
 <div class="wecan-enter-hint mono" data-ar="مرر للدخول عبر الحروف" data-en="SCROLL THROUGH THE LETTERS">SCROLL THROUGH THE LETTERS</div>
@@ -348,7 +352,7 @@
 </main>
 <footer class="site-footer"><div class="container"><a class="brand footer-brand" href="index.html#top"><img alt="By Meli" src="assets/logo/mark.png"/><span><strong>BY MELI</strong><small data-ar="المعارض · الفعاليات · الإنتاج" data-en="EXHIBITIONS · EVENTS · PRODUCTION">EXHIBITIONS · EVENTS · PRODUCTION</small></span></a><nav><a data-ar="آلية العمل" data-en="How We Work" href="index.html#manufacturing">How We Work</a><a data-ar="التنفيذ المتكامل" data-en="Integrated Production" href="index.html#services">Integrated Production</a><a data-ar="أعمالنا" data-en="Selected Work" href="index.html#portfolio">Selected Work</a><a data-ar="تواصل معنا" data-en="Contact" href="index.html#contact">Contact</a></nav><small>© <span id="year"></span> BY MELI PRODUCTION</small></div></footer>
 <div aria-hidden="true" class="lightbox" id="lightbox"><button aria-label="Close" class="lightbox-close" id="lightboxClose" type="button">×</button><button aria-label="Previous" class="lightbox-nav prev" id="lightboxPrev" type="button">‹</button><div class="lightbox-card"><div class="lightbox-media"><img alt="" id="lightboxImage" src=""/></div><div class="lightbox-copy"><span class="mono" id="lightboxCategory"></span><h3 id="lightboxTitle"></h3><p id="lightboxBody"></p><span class="mono" id="lightboxCount"></span></div></div><button aria-label="Next" class="lightbox-nav next" id="lightboxNext" type="button">›</button></div>
-<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script defer="" src="assets/vendor/three.min.js"></script>
 <script defer="" src="assets/js/ultra-quality.js"></script>
 <script defer="" src="assets/js/build-scene.js"></script>
 <script defer="" src="assets/js/service-scenes.js"></script>
