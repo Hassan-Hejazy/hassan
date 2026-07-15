@@ -1,24 +1,39 @@
-BY MELI — Final Device-Specific 3D and Responsive Correction
+BY MELI — FIXED ULTRA-QUALITY RESPONSIVE VERSION
 
-This version preserves the original workflow design and website structure.
+This package is based only on the uploaded “bymeli-ultra-quality-responsive” version.
+Its existing content, service sections, workflow stages, imagery and visual direction were retained.
 
-Final corrections included:
-- Manufacturing camera now uses real aspect-ratio and field-of-view fitting instead of fixed mobile zoom values.
-- The full manufacturing structure remains inside the frame on narrow portrait phones, tablets and landscape screens.
-- Connected 3D service models use the same aspect-ratio fitting, with a wider final overview camera for the complete route.
-- Mobile 3D overlays are smaller, scroll-safe and positioned to preserve the visible model area.
-- The We Can SVG automatically changes to a portrait coordinate system on narrow devices, preventing cropped wording.
-- We Can image scaling, final message panel, action layout and scroll distance were refined for phone and tablet screens.
-- Mobile scroll overscroll behavior was restored for a more natural touch experience.
-- Rendering density was increased adaptively, with improved mobile shadow resolution.
-- The original six-card workflow layout remains unchanged; only its responsive behavior is corrected.
-- Arabic diacritics remain removed.
-- Three.js remains bundled locally for reliable GitHub Pages or client hosting.
+RUN LOCALLY
+  python3 -m http.server
+Then open the local address shown in the terminal.
 
-Validated:
-- JavaScript syntax
-- CSS parsing
-- Local file references
-- Arabic diacritic removal
+RESPONSIVE 3D CORRECTIONS
+- Manufacturing camera distance now adapts to the real canvas aspect ratio so the full booth remains visible on portrait phones, tablets, landscape devices and desktop screens.
+- All individual service scenes use responsive camera fitting rather than one fixed mobile zoom level.
+- The connected 3D sequence uses responsive stage framing and a wider final system overview.
+- The WE CAN 3D finale is enabled on mobile with adaptive rendering and responsive camera framing.
+- WebGL renderers retain antialiasing, adaptive pixel density, soft shadows, studio reflections and off-screen pausing.
+- Additional initialization fallbacks improve reliability when users jump directly to a 3D section through an anchor link.
 
-Open index.html through a local web server or publish the complete folder through GitHub Pages.
+SCROLL AND TRANSITION CORRECTIONS
+- Manufacturing, connected and WE CAN progress is damped for smoother scroll-driven motion.
+- The connected sequence now eases between stages and transitions into the following light section instead of ending abruptly.
+- WE CAN uses responsive SVG coordinates on portrait screens, smoother portal timing, a shorter mobile letter-expansion stage and a fully visible final call-to-action panel.
+- The floating WhatsApp button temporarily clears the final WE CAN panel to prevent overlap.
+
+WORKFLOW LAYOUT
+- Desktop: balanced three-column, two-row workflow grid with a clear introduction and system status panel.
+- Tablet: two-column layout with consistent card height and readable outputs.
+- Mobile: connected single-column timeline with compact icons, readable content and no horizontal overflow.
+- All six stages and their original content remain included.
+
+LANGUAGE
+- Arabic and English switching and RTL support are retained.
+- Arabic diacritics are removed from interface content.
+
+DEPENDENCY
+- Three.js r128 is included locally in assets/vendor/three.min.js.
+- The site no longer depends on cdnjs for its 3D engine.
+
+DEPLOYMENT
+Upload the complete folder without changing its internal paths. It can be hosted directly on GitHub Pages or any static web server.
