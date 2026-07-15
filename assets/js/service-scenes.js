@@ -17,7 +17,7 @@
     return;
   }
 
-  const mobile = matchMedia('(max-width: 760px)').matches;
+  const mobile = matchMedia('(max-width: 900px), (pointer: coarse)').matches;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const Q = window.BYMELI_QUALITY || null;
 
@@ -317,148 +317,197 @@
 
   const factories={booth:createBooth,showroom:createShowroom,interior:createInterior,management:createManagement,crowd:createCrowd,av:createAV};
 
-  function initCanvas(canvas){
-    const frame=canvas.closest('.canvas-frame');
-    let renderer,scene,camera,root,materials,observer,resizeObserver,disposeTimer=0,profileCache=null,modelSphere=null;
-    const initialYaw=mobile?.08:.50;
-    let visible=false,initialized=false,dragging=false,startX=0,startY=0,lastX=0,lastY=0,yaw=initialYaw,pitch=.12,targetYaw=initialYaw,targetPitch=.12,auto=0;
+  function initCanvas(initialCanvas){
+    const frame=initialCanvas.closest('.canvas-frame');
+    let canvas=initialCanvas;
+    let renderer=null,scene=null,camera=null,root=null,materials=null;
+    let observer=null,resizeObserver=null,disposeTimer=0,profileCache=null,modelSphere=null;
+    let initialized=false,visible=false,pageVisible=!document.hidden,dragging=false,initAttempts=0;
+    let lastX=0,lastY=0,yaw=0,pitch=.11,targetYaw=0,targetPitch=.11,rafId=0;
     const type=canvas.dataset.scene;
+    const yawByType={booth:.32,showroom:-.34,interior:.22,management:-.28,crowd:.16,av:-.22};
+    yaw=targetYaw=yawByType[type]??.24;
+
     function computeViewportProfile(){
       const w=Math.max(1,frame.clientWidth),h=Math.max(1,frame.clientHeight),aspect=w/h;
-      const portrait=Math.max(0,Math.min(1,(.9-aspect)/.42));
-      const fov=w<680?55+portrait*4:(w<980?47:42);
+      const compact=w<760;
+      const portrait=Math.max(0,Math.min(1,(.88-aspect)/.36));
+      const short=Math.max(0,Math.min(1,(590-h)/190));
+      const fov=compact?(54+portrait*5+short*1.5):(w<1050?47:41);
       const vFov=THREE.MathUtils.degToRad(fov),hFov=2*Math.atan(Math.tan(vFov/2)*aspect);
-      profileCache={w,h,aspect,portrait,fov,vFov,hFov};
+      profileCache={w,h,aspect,compact,portrait,short,fov,vFov,hFov};
       return profileCache;
     }
     function viewportProfile(){return profileCache||computeViewportProfile();}
-    function fitRadius(profile){
-      const radius=Math.max(.1,modelSphere?.radius||6.7);
-      const limitingHalfAngle=Math.max(THREE.MathUtils.degToRad(10),Math.min(profile.vFov,profile.hFov)/2);
-      return radius/Math.sin(limitingHalfAngle)*(mobile?.96:.88);
-    }
     function qualityRatio(w,h){
-      const dpr=window.devicePixelRatio||1,compact=w<760,cap=compact?1.95:2.2,maxPixels=compact?2200000:4200000;
+      const dpr=window.devicePixelRatio||1,compact=w<760;
+      const memory=Number(navigator.deviceMemory||6),cores=Number(navigator.hardwareConcurrency||6);
+      const low=compact&&(memory<=3||cores<=4);
+      const cap=compact?(low?1.45:1.85):2.2;
+      const maxPixels=compact?(low?1450000:2250000):4300000;
       return Math.max(1,Math.min(dpr,cap,Math.sqrt(maxPixels/Math.max(1,w*h))));
     }
+    function fitRadius(profile){
+      const radius=Math.max(.1,modelSphere?.radius||6.7);
+      const usableVertical=profile.compact?.72:.9;
+      const vHalf=Math.atan(Math.tan(profile.vFov/2)*usableVertical);
+      const limiting=Math.max(THREE.MathUtils.degToRad(10),Math.min(vHalf,profile.hFov/2));
+      const margin=profile.compact?(1.08+profile.portrait*.10):.98;
+      return radius/Math.sin(limiting)*margin;
+    }
 
-    function disposeScene(){
+    function replaceCanvas(){
+      const clone=canvas.cloneNode(false);
+      clone.width=1;clone.height=1;
+      clone.style.pointerEvents=mobile?'none':'auto';
+      clone.style.touchAction=mobile?'pan-y':'none';
+      canvas.replaceWith(clone);
+      canvas=clone;
+    }
+
+    function disposeScene(replace=true){
       clearTimeout(disposeTimer);
-      if(!initialized)return;
-      initialized=false;
-      visible=false;
-      try{
-        scene?.traverse(obj=>{
-          obj.geometry?.dispose?.();
-          const mats=Array.isArray(obj.material)?obj.material:[obj.material];
-          mats.forEach(mat=>{
-            if(!mat)return;
-            ['map','emissiveMap','normalMap','roughnessMap','metalnessMap','alphaMap','envMap'].forEach(k=>mat[k]?.dispose?.());
-            mat.dispose?.();
+      if(initialized){
+        try{
+          scene?.traverse(obj=>{
+            obj.geometry?.dispose?.();
+            const mats=Array.isArray(obj.material)?obj.material:[obj.material];
+            mats.forEach(mat=>{
+              if(!mat)return;
+              ['map','emissiveMap','normalMap','roughnessMap','metalnessMap','alphaMap','envMap'].forEach(k=>mat[k]?.dispose?.());
+              mat.dispose?.();
+            });
           });
-        });
-        renderer?.dispose?.();
-        try{ renderer?.renderLists?.dispose?.(); }catch(_){}
-        try{ renderer?.forceContextLoss?.(); }catch(_){}
-        try{ renderer?.getContext?.().getExtension('WEBGL_lose_context')?.loseContext?.(); }catch(_){}
-        if(canvas){ canvas.width=1; canvas.height=1; }
-      }catch(_){}
+          renderer?.renderLists?.dispose?.();
+          renderer?.dispose?.();
+          if(replace){
+            try{renderer?.forceContextLoss?.();}catch(_){}
+            try{renderer?.getContext?.().getExtension('WEBGL_lose_context')?.loseContext?.();}catch(_){}
+          }
+        }catch(_){}
+      }
       renderer=scene=camera=root=materials=modelSphere=null;
-      frame.classList.remove('ready');
+      initialized=false;dragging=false;profileCache=null;
+      frame.classList.remove('ready','model-active','webgl-fallback');
+      frame.style.backgroundImage='';
+      if(replace&&canvas.isConnected)replaceCanvas();
+    }
+
+    function createRenderer(){
+      try{
+        return new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance',precision:'highp',stencil:false,preserveDrawingBuffer:false});
+      }catch(_){
+        try{return new THREE.WebGLRenderer({canvas,antialias:false,alpha:true,powerPreference:'default',precision:'mediump',stencil:false,preserveDrawingBuffer:false});}
+        catch(__){return null;}
+      }
     }
 
     function initialize(){
-      if(initialized) return;
+      if(initialized||!canvas.isConnected)return;
+      renderer=createRenderer();
+      if(!renderer){
+        initialized=false;initAttempts+=1;
+        if(canvas.isConnected)replaceCanvas();
+        if(visible&&initAttempts<4)setTimeout(initialize,280*initAttempts);
+        else fallback(canvas);
+        return;
+      }
+      initAttempts=0;
+      canvas.style.display='block';
+      frame.classList.remove('webgl-fallback');
       initialized=true;
-      try{
-        renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance',precision:'highp',stencil:false});
-      }catch(e){fallback(canvas);return;}
-      if(Q) Q.configureRenderer(renderer,{exposure:1.11,pixelCap:mobile?1.95:2.25}); else {renderer.setPixelRatio(Math.min(devicePixelRatio||1,2.25));renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.11;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;}
+      const profile=computeViewportProfile();
+      if(Q)Q.configureRenderer(renderer,{exposure:1.09,pixelCap:qualityRatio(profile.w,profile.h)});
+      else{
+        renderer.outputEncoding=THREE.sRGBEncoding;
+        renderer.toneMapping=THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure=1.09;
+        renderer.shadowMap.enabled=true;
+        renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+      }
+      renderer.setPixelRatio(qualityRatio(profile.w,profile.h));
       scene=new THREE.Scene();
       materials=baseScene(scene,renderer);
       root=new THREE.Group();scene.add(root);
       (factories[type]||factories.booth)(root,materials);
       root.updateMatrixWorld(true);
       modelSphere=new THREE.Box3().setFromObject(root).getBoundingSphere(new THREE.Sphere());
-      if(Q) Q.addContactShadow(root,renderer,Math.max(5.6,modelSphere.radius*.9),.43,.305);
-      const profile=computeViewportProfile();
-      camera=new THREE.PerspectiveCamera(profile.fov,1,.1,80);
-      resize();
+      if(Q&&!profile.compact)Q.addContactShadow(root,renderer,Math.max(5.6,modelSphere.radius*.88),.38,.305);
+      camera=new THREE.PerspectiveCamera(profile.fov,profile.w/profile.h,.1,100);
       bindInteraction();
-      frame.classList.add('ready');
-      render();
+      resize();
+      frame.classList.add('ready','model-active');
+      if(!rafId)rafId=requestAnimationFrame(render);
     }
 
     function resize(){
-      if(!renderer||!camera) return;
-      const profile=computeViewportProfile(),w=profile.w,h=profile.h;
-      renderer.setPixelRatio(qualityRatio(w,h));
-      renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=profile.fov;camera.updateProjectionMatrix();
+      if(!renderer||!camera)return;
+      const profile=computeViewportProfile();
+      renderer.setPixelRatio(qualityRatio(profile.w,profile.h));
+      renderer.setSize(profile.w,profile.h,false);
+      camera.aspect=profile.w/profile.h;
+      camera.fov=profile.fov;
+      camera.updateProjectionMatrix();
     }
 
     function bindInteraction(){
+      canvas.style.pointerEvents=mobile?'none':'auto';
+      canvas.style.touchAction=mobile?'pan-y':'none';
+      canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();setTimeout(()=>disposeScene(true),0);},{once:true});
       if(mobile)return;
-      canvas.addEventListener('pointerdown',e=>{dragging=true;startX=lastX=e.clientX;startY=lastY=e.clientY;canvas.setPointerCapture?.(e.pointerId);});
-      canvas.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;targetYaw+=dx*.006;targetPitch=Math.max(-.03,Math.min(.34,targetPitch+dy*.0028));});
-      const end=e=>{dragging=false;try{canvas.releasePointerCapture?.(e.pointerId);}catch(_){};};
+      canvas.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture?.(e.pointerId);});
+      canvas.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;targetYaw+=dx*.0055;targetPitch=Math.max(-.03,Math.min(.31,targetPitch+dy*.0024));});
+      const end=e=>{dragging=false;try{canvas.releasePointerCapture?.(e.pointerId);}catch(_){}};
       canvas.addEventListener('pointerup',end);canvas.addEventListener('pointercancel',end);canvas.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')dragging=false;});
+      canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();setTimeout(()=>disposeScene(true),0);},{once:true});
     }
 
     function animateDetails(t){
-      if(root.userData.people){root.userData.people.forEach((p,i)=>{const bob=Math.sin(t*1.45+i*.55)*.026;p.torso.position.y=p.baseY+bob;p.head.position.y=1.05+bob;});}
-      if(root.userData.beams){root.userData.beams.forEach((b,i)=>b.intensity=1.8+Math.sin(t*2.1+i*.8)*.55);}
-      if(root.userData.led){root.userData.led.material.emissiveIntensity=1.05+Math.sin(t*3.6)*.18;}
-      if(root.userData.screen){root.userData.screen.material.emissiveIntensity=1+Math.sin(t*3)*.1;}
-      if(root.userData.flowMarkers){
-        root.userData.flowMarkers.forEach((marker,i)=>{
-          const u=(t*.105+marker.userData.offset)%1;
-          const pos=marker.userData.curve.getPointAt(u);
-          marker.position.copy(pos);
-          marker.position.y=.37+Math.sin(t*4+i)*.025;
-          marker.scale.setScalar(.82+Math.sin(t*5+i*.8)*.18);
-        });
-      }
+      if(root?.userData.people)root.userData.people.forEach((p,i)=>{const bob=Math.sin(t*1.35+i*.55)*.022;p.torso.position.y=p.baseY+bob;p.head.position.y=1.05+bob;});
+      if(root?.userData.beams)root.userData.beams.forEach((b,i)=>b.intensity=1.72+Math.sin(t*1.9+i*.8)*.42);
+      if(root?.userData.led)root.userData.led.material.emissiveIntensity=1.02+Math.sin(t*3.1)*.13;
+      if(root?.userData.screen)root.userData.screen.material.emissiveIntensity=.98+Math.sin(t*2.7)*.09;
+      if(root?.userData.flowMarkers)root.userData.flowMarkers.forEach((marker,i)=>{const u=(t*.09+marker.userData.offset)%1;const pos=marker.userData.curve.getPointAt(u);marker.position.copy(pos);marker.position.y=.37+Math.sin(t*3.4+i)*.02;});
     }
 
-    function render(){
-      if(!initialized||!renderer||!scene||!camera) return;
-      if(visible){
-        const t=performance.now()*.001;
-        if(!dragging&&!reduce){auto+=.0016;targetYaw+=Math.sin(t*.33)*.00035;}
-        yaw+=(targetYaw-yaw)*.07;pitch+=(targetPitch-pitch)*.07;
-        const profile=viewportProfile(),radius=fitRadius(profile);
-        const center=modelSphere?.center||new THREE.Vector3(0,1.72,0);
-        const targetY=center.y+profile.portrait*.04;
-        const elevation=.085+pitch*.16;
-        const horizontal=Math.cos(elevation)*radius;
-        camera.position.set(center.x+Math.sin(yaw)*horizontal,targetY+Math.sin(elevation)*radius,center.z+Math.cos(yaw)*horizontal);
-        camera.lookAt(center.x,targetY,center.z);
-        root.rotation.y=Math.sin(t*.28)*.035;
-        animateDetails(t);
-        renderer.render(scene,camera);
-      }
-      requestAnimationFrame(render);
+    function render(now){
+      rafId=requestAnimationFrame(render);
+      if(!initialized||!visible||!pageVisible||!renderer||!scene||!camera)return;
+      const t=now*.001;
+      if(!dragging&&!reduce)targetYaw+=(Math.sin(t*.24)*.00018);
+      yaw+=(targetYaw-yaw)*.065;
+      pitch+=(targetPitch-pitch)*.065;
+      const profile=viewportProfile(),radius=fitRadius(profile);
+      const center=modelSphere?.center||new THREE.Vector3(0,1.7,0);
+      const targetY=center.y-profile.portrait*modelSphere.radius*.13;
+      const elevation=.11+pitch*.14;
+      const horizontal=Math.cos(elevation)*radius;
+      camera.position.set(center.x+Math.sin(yaw)*horizontal,targetY+Math.sin(elevation)*radius,center.z+Math.cos(yaw)*horizontal);
+      camera.lookAt(center.x,targetY,center.z);
+      root.rotation.y=Math.sin(t*.22)*.018;
+      animateDetails(t);
+      renderer.render(scene,camera);
     }
 
     observer=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>{
-        visible=entry.isIntersecting;
-        if(visible){
-          clearTimeout(disposeTimer);
-          if(!initialized) initialize();
-          if(initialized){requestAnimationFrame(resize);setTimeout(resize,100);}
-        }else if(initialized){
-          disposeTimer=setTimeout(()=>{
-            const r=frame.getBoundingClientRect();
-            const vh=window.visualViewport?.height||innerHeight;
-            if(r.bottom < -vh*.75 || r.top > vh*1.75) disposeScene();
-          },1200);
-        }
-      });
-    },{threshold:.03,rootMargin:'220px 0px'});
+      const entry=entries[entries.length-1];
+      visible=entry?.isIntersecting||false;
+      if(visible){
+        clearTimeout(disposeTimer);
+        if(!initialized)initialize();
+        else{requestAnimationFrame(resize);setTimeout(resize,90);}
+      }else if(initialized){
+        disposeTimer=setTimeout(()=>{
+          const r=frame.getBoundingClientRect();
+          const vh=window.visualViewport?.height||innerHeight;
+          if(r.bottom < -vh*1.4 || r.top > vh*2.2)disposeScene(true);
+        },1800);
+      }
+    },{threshold:.01,rootMargin:'260px 0px'});
     observer.observe(frame);
-    document.addEventListener('bymeli:release-service-scenes',disposeScene);
-    resizeObserver=new ResizeObserver(()=>resize());resizeObserver.observe(frame);
+    if('ResizeObserver'in window){resizeObserver=new ResizeObserver(()=>requestAnimationFrame(resize));resizeObserver.observe(frame);}
+    document.addEventListener('visibilitychange',()=>{pageVisible=!document.hidden;});
+    document.addEventListener('bymeli:release-service-scenes',()=>disposeScene(true));
   }
 
   canvases.forEach(initCanvas);

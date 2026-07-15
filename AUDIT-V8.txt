@@ -1,0 +1,35 @@
+CONNECTED 3D V8 AUDIT
+
+Scope
+- Connected 3D quality
+- Responsive camera fitting
+- Scroll-linked digital motion
+- Mobile and desktop performance
+
+Corrections
+- Replaced sphere-only zoom fitting with projected bounding-box fitting.
+- Added separate mobile, tablet, portrait, landscape and desktop camera profiles.
+- Rebalanced all six eye-level camera angles.
+- Added a quadratic cinematic camera arc between service stations.
+- Increased stable time-based scroll and camera damping.
+- Removed runtime pixel-density degradation that caused visible quality loss.
+- Disabled costly real-time shadow maps on phones and replaced them with soft contact shadows.
+- Preserved desktop soft shadows at higher resolution.
+- Added illuminated route markers for restrained digital motion.
+- Reduced simultaneous station rendering during transitions.
+- Improved tone mapping, screen emissive clarity, lighting and metal materials.
+- Shortened and normalized connected-section scroll lengths by device class.
+- Reduced the mobile information overlay footprint so models remain visible.
+- Kept the canvas pointer-transparent so wheel and touch scrolling remain native.
+
+Static validation
+- JavaScript syntax: passed
+- CSS brace balance: passed
+- Missing local assets: none
+- Duplicate HTML IDs: none
+- V8 stylesheet reference: passed
+- V8 script reference: passed
+- Connected canvas remains pointer-transparent: passed
+
+Rendering note
+The container does not expose a functioning WebGL GPU context. Renderer startup, camera math, lifecycle, syntax and responsive rules were audited, but physical-device Chrome/Safari remains the authoritative visual WebGL check.

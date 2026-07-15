@@ -1,0 +1,37 @@
+BY MELI — CONNECTED 3D + WE CAN V6 AUDIT
+
+Source
+- Built from bymeli-audited-connected-wecan-v5.
+- Existing site structure, content, portfolio, workflow, manufacturing and service sections preserved.
+
+Connected 3D corrections
+- Rebuilt the walkthrough camera around six stable hold positions and five controlled travel phases.
+- Each station uses its measured 3D bounding sphere for responsive camera fitting.
+- Mobile and portrait-tablet views are vertically offset to remain clear of the content panel.
+- Desktop views are composed toward the open visual side beside the text.
+- Transition phases show the outgoing model, illuminated route, then incoming model without displaying two oversized models at once.
+- Final overview uses separate responsive two-column and three-column layouts.
+- Adaptive antialiasing, pixel density, shadow resolution, lighting and tone mapping retained.
+- Canvas is pointer-transparent and cannot trap page scrolling.
+
+WE CAN corrections
+- Pure black opening background.
+- Large white wording measured at runtime and centered exactly on both viewport axes.
+- Responsive word width targets: approximately 92% on phones and 88% on larger screens.
+- Full-screen image reveal begins only after the black opening hold.
+- Word fade and final heading overlap smoothly with no empty animation interval.
+- Final heading and calls to action remain fully inside the viewport.
+
+Responsive validation
+- 320 x 700
+- 390 x 844
+- 768 x 1024
+- 1024 x 768
+- 1440 x 900
+
+Results
+- No horizontal overflow at tested widths.
+- Native wheel scrolling advanced by the requested delta inside Connected 3D and WE CAN.
+- WE CAN wording center matched the sticky viewport center at every tested size.
+- Connected station camera projections remained inside the viewport at every stable walkthrough view.
+- Final WE CAN content remained inside the viewport at every tested size.

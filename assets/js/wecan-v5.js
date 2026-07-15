@@ -16,11 +16,11 @@
 
   let target=0;
   let displayed=0;
-  let fitScale=1;
   let raf=0;
   let last=0;
   let queued=false;
   let visible=false;
+  let wordSize=180;
 
   function viewport(){
     return {
@@ -31,13 +31,19 @@
 
   function fitWord(){
     const {w,h}=viewport();
+    const mobile=w<760;
+    const landscape=w>h;
+    const targetW=w*(mobile?.92:.88);
+    const targetH=h*(landscape?.28:(mobile?.23:.30));
+
+    word.style.setProperty('font-size','100px','important');
     word.style.setProperty('transform','translate(-50%,-50%) scale(1)','important');
     const rect=word.getBoundingClientRect();
-    const maxW=w*(w<760?.90:.88);
-    const maxH=h*(w<760?.25:.30);
-    fitScale=Math.max(.16,Math.min(2.8,maxW/Math.max(1,rect.width),maxH/Math.max(1,rect.height)));
+    const scale=Math.min(targetW/Math.max(1,rect.width),targetH/Math.max(1,rect.height));
+    wordSize=Math.max(58,Math.min(310,100*scale));
+    root.style.setProperty('--wecan-word-size-v6',wordSize.toFixed(2)+'px');
+    word.style.removeProperty('font-size');
     word.style.removeProperty('transform');
-    root.style.setProperty('--wecan-word-fit-v5',fitScale.toFixed(6));
   }
 
   function readProgress(){
@@ -50,40 +56,44 @@
   function apply(p){
     const mobile=sticky.clientWidth<760;
 
-    // 0–16%: hold a pure black opening with the word perfectly centered.
-    // 16–54%: reveal the image from the center while the word remains stable.
-    // 42–64%: gently fade the word, never over-zooming or cropping it.
-    // 60–84%: bring in the final heading and actions.
-    const reveal=smoother(range(p,.16,mobile?.54:.52));
-    const wordLift=smoother(range(p,.24,.50));
-    const wordFade=smoother(range(p,mobile?.43:.42,mobile?.64:.62));
-    const finalIn=smoother(range(p,mobile?.54:.53,mobile?.77:.75));
-    const hintFade=smooth(range(p,.025,.14));
+    /*
+      00–16%  : pure black opening, white word held perfectly centered.
+      16–48%  : image opens from the center while the word stays dominant.
+      43–62%  : word fades only after the image is established.
+      53–80%  : final heading arrives with no blank interval.
+    */
+    const reveal=smoother(range(p,.16,mobile?.49:.47));
+    const wordMotion=smoother(range(p,.18,.50));
+    const wordFade=smoother(range(p,mobile?.43:.42,mobile?.59:.58));
+    const finalIn=smoother(range(p,mobile?.49:.48,mobile?.72:.70));
+    const hintFade=smooth(range(p,.035,.15));
     const settle=smoother(range(p,.18,.90));
 
-    const radius=reveal*(mobile?78:72);
-    const wordScale=fitScale*(1+wordLift*(mobile?.13:.16));
-    const imageScale=(mobile?1.075:1.065)-settle*(mobile?.075:.065);
-    const brightness=.68+reveal*.25+finalIn*.04;
-    const finalY=(1-finalIn)*(mobile?25:36);
-    const finalBlur=(1-finalIn)*(mobile?1.1:1.8);
-    const finalScale=.98+finalIn*.02;
+    const radius=reveal*112;
+    const imageOpacity=smooth(range(p,.145,.23));
+    const imageScale=(mobile?1.09:1.075)-settle*(mobile?.09:.075);
+    const imageBrightness=.62+reveal*.23+finalIn*.035;
+    const wordScale=1+wordMotion*(mobile?.09:.12);
+    const finalY=(1-finalIn)*(mobile?28:40);
+    const finalBlur=(1-finalIn)*(mobile?2.1:3.4);
+    const finalScale=.975+finalIn*.025;
 
-    root.style.setProperty('--wecan-reveal-radius-v5',radius.toFixed(3)+'vmax');
-    root.style.setProperty('--wecan-image-scale-v5',imageScale.toFixed(5));
-    root.style.setProperty('--wecan-image-brightness-v5',brightness.toFixed(5));
-    root.style.setProperty('--wecan-film-opacity-v5',(reveal*.34).toFixed(5));
-    root.style.setProperty('--wecan-lower-dark-v5',(.38+finalIn*.22).toFixed(5));
-    root.style.setProperty('--wecan-overlay-v5',(.04+finalIn*.22).toFixed(5));
-    root.style.setProperty('--wecan-word-scale-v5',wordScale.toFixed(6));
-    root.style.setProperty('--wecan-word-opacity-v5',(1-wordFade).toFixed(5));
-    root.style.setProperty('--wecan-word-shadow-v5',(reveal*.72).toFixed(5));
-    root.style.setProperty('--wecan-hint-opacity-v5',(1-hintFade).toFixed(5));
-    root.style.setProperty('--wecan-final-opacity-v5',finalIn.toFixed(5));
-    root.style.setProperty('--wecan-final-y-v5',finalY.toFixed(2)+'px');
-    root.style.setProperty('--wecan-final-blur-v5',finalBlur.toFixed(2)+'px');
-    root.style.setProperty('--wecan-final-scale-v5',finalScale.toFixed(5));
-    sticky.classList.toggle('is-final',finalIn>.72);
+    root.style.setProperty('--wecan-reveal-radius-v6',radius.toFixed(3)+'vmax');
+    root.style.setProperty('--wecan-image-opacity-v6',imageOpacity.toFixed(5));
+    root.style.setProperty('--wecan-image-scale-v6',imageScale.toFixed(5));
+    root.style.setProperty('--wecan-image-brightness-v6',imageBrightness.toFixed(5));
+    root.style.setProperty('--wecan-film-opacity-v6',(reveal*.32).toFixed(5));
+    root.style.setProperty('--wecan-lower-dark-v6',(.34+finalIn*.28).toFixed(5));
+    root.style.setProperty('--wecan-overlay-v6',(.02+finalIn*.24).toFixed(5));
+    root.style.setProperty('--wecan-word-scale-v6',wordScale.toFixed(5));
+    root.style.setProperty('--wecan-word-opacity-v6',(1-wordFade).toFixed(5));
+    root.style.setProperty('--wecan-word-shadow-v6',(reveal*.8).toFixed(5));
+    root.style.setProperty('--wecan-hint-opacity-v6',(1-hintFade).toFixed(5));
+    root.style.setProperty('--wecan-final-opacity-v6',finalIn.toFixed(5));
+    root.style.setProperty('--wecan-final-y-v6',finalY.toFixed(2)+'px');
+    root.style.setProperty('--wecan-final-blur-v6',finalBlur.toFixed(2)+'px');
+    root.style.setProperty('--wecan-final-scale-v6',finalScale.toFixed(5));
+    sticky.classList.toggle('is-final',finalIn>.68);
   }
 
   function animate(now){
@@ -113,7 +123,7 @@
 
   addEventListener('scroll',queueRead,{passive:true});
   addEventListener('resize',()=>requestAnimationFrame(refresh),{passive:true});
-  addEventListener('orientationchange',()=>setTimeout(refresh,140),{passive:true});
+  addEventListener('orientationchange',()=>setTimeout(refresh,150),{passive:true});
   window.visualViewport?.addEventListener('resize',()=>requestAnimationFrame(refresh),{passive:true});
   document.addEventListener('languagechange',()=>requestAnimationFrame(refresh));
 
@@ -124,10 +134,10 @@
   const io=new IntersectionObserver(entries=>{
     visible=entries.some(e=>e.isIntersecting);
     if(visible)refresh();
-  },{rootMargin:'260px 0px',threshold:0});
+  },{rootMargin:'280px 0px',threshold:0});
   io.observe(sticky);
 
-  window.ByMeliWecanV5={requestUpdate:queueRead,refresh};
+  window.ByMeliWecanV6={requestUpdate:queueRead,refresh};
   if(image&&!image.complete)image.addEventListener('load',refresh,{once:true});
   if(document.fonts?.ready)document.fonts.ready.then(refresh);
   apply(0);

@@ -1,0 +1,32 @@
+BY MELI MOBILE 3D V7 — TARGETED REPAIR
+
+Scope
+- Connected 3D walkthrough motion and mobile rendering lifecycle.
+- Six service-scene WebGL canvases on mobile and touch devices.
+
+Connected scene
+- Continuous stage-to-stage camera interpolation with curved vertical motion.
+- Overlapping station visibility eliminates blank transition frames.
+- Overlay-aware camera fitting for portrait mobile, tablet and desktop.
+- Smooth final overview transition from the last service camera pose.
+- Frame-time adaptive pixel density to balance clarity and motion.
+- Responsive geometry and shadow quality profiles.
+- Just-in-time service-context release before connected-scene initialization.
+- Automatic renderer retry and canvas recreation after WebGL context loss.
+
+Service scenes
+- Re-creatable canvases after GPU context release.
+- Lazy initialization, retry logic and context-loss recovery.
+- Mobile/touch canvases no longer capture vertical page gestures.
+- Camera distance calculated from the model bounds and usable viewport.
+- Off-screen scenes release GPU resources and reinitialize when revisited.
+
+Validation
+- All JavaScript files pass node --check.
+- CSS braces are balanced.
+- No duplicate HTML IDs.
+- No missing local script, stylesheet or image references.
+- Six service canvases and the connected canvas are present.
+
+Note
+- The execution container does not expose a usable WebGL GPU context, so final visual GPU rendering must be confirmed in Safari/Chrome on a physical mobile device. The context fallback and retry paths were exercised in headless testing.
