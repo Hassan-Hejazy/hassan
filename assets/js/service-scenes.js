@@ -319,7 +319,7 @@
 
   function initCanvas(canvas){
     const frame=canvas.closest('.canvas-frame');
-    let renderer,scene,camera,root,materials,observer,resizeObserver,disposeTimer=0,profileCache=null;
+    let renderer,scene,camera,root,materials,observer,resizeObserver,disposeTimer=0,profileCache=null,modelSphere=null;
     const initialYaw=mobile?.08:.50;
     let visible=false,initialized=false,dragging=false,startX=0,startY=0,lastX=0,lastY=0,yaw=initialYaw,pitch=.12,targetYaw=initialYaw,targetPitch=.12,auto=0;
     const type=canvas.dataset.scene;
@@ -332,15 +332,13 @@
       return profileCache;
     }
     function viewportProfile(){return profileCache||computeViewportProfile();}
-    function fitRadius(profile,angle){
-      const halfWidth=6.65,halfDepth=6.15,halfHeight=3.55;
-      const projectedHalfWidth=Math.abs(Math.cos(angle))*halfWidth+Math.abs(Math.sin(angle))*halfDepth;
-      const dw=projectedHalfWidth/Math.max(.12,Math.tan(profile.hFov/2));
-      const dh=halfHeight/Math.max(.12,Math.tan(profile.vFov/2));
-      return Math.max(dw,dh)*(mobile?1.10:1.06);
+    function fitRadius(profile){
+      const radius=Math.max(.1,modelSphere?.radius||6.7);
+      const limitingHalfAngle=Math.max(THREE.MathUtils.degToRad(10),Math.min(profile.vFov,profile.hFov)/2);
+      return radius/Math.sin(limitingHalfAngle)*(mobile?1.10:1.06);
     }
     function qualityRatio(w,h){
-      const dpr=window.devicePixelRatio||1,compact=w<760,cap=compact?1.95:2.25,maxPixels=compact?2200000:4200000;
+      const dpr=window.devicePixelRatio||1,compact=w<760,cap=compact?1.8:2.1,maxPixels=compact?1850000:3800000;
       return Math.max(1,Math.min(dpr,cap,Math.sqrt(maxPixels/Math.max(1,w*h))));
     }
 
@@ -361,7 +359,7 @@
         });
         renderer?.dispose?.();
       }catch(_){}
-      renderer=scene=camera=root=materials=null;
+      renderer=scene=camera=root=materials=modelSphere=null;
       frame.classList.remove('ready');
     }
 
@@ -376,7 +374,9 @@
       materials=baseScene(scene,renderer);
       root=new THREE.Group();scene.add(root);
       (factories[type]||factories.booth)(root,materials);
-      if(Q) Q.addContactShadow(root,renderer,6.0,.48,.305);
+      root.updateMatrixWorld(true);
+      modelSphere=new THREE.Box3().setFromObject(root).getBoundingSphere(new THREE.Sphere());
+      if(Q) Q.addContactShadow(root,renderer,Math.max(5.6,modelSphere.radius*.9),.43,.305);
       const profile=computeViewportProfile();
       camera=new THREE.PerspectiveCamera(profile.fov,1,.1,80);
       resize();
@@ -422,12 +422,13 @@
         const t=performance.now()*.001;
         if(!dragging&&!reduce){auto+=.0016;targetYaw+=Math.sin(t*.33)*.00035;}
         yaw+=(targetYaw-yaw)*.07;pitch+=(targetPitch-pitch)*.07;
-        const profile=viewportProfile(),radius=fitRadius(profile,yaw);
-        const targetY=1.72+profile.portrait*.08;
-        const elevation=.095+pitch*.18;
+        const profile=viewportProfile(),radius=fitRadius(profile);
+        const center=modelSphere?.center||new THREE.Vector3(0,1.72,0);
+        const targetY=center.y+profile.portrait*.04;
+        const elevation=.085+pitch*.16;
         const horizontal=Math.cos(elevation)*radius;
-        camera.position.set(Math.sin(yaw)*horizontal,targetY+Math.sin(elevation)*radius,Math.cos(yaw)*horizontal);
-        camera.lookAt(0,targetY,0);
+        camera.position.set(center.x+Math.sin(yaw)*horizontal,targetY+Math.sin(elevation)*radius,center.z+Math.cos(yaw)*horizontal);
+        camera.lookAt(center.x,targetY,center.z);
         root.rotation.y=Math.sin(t*.28)*.035;
         animateDetails(t);
         renderer.render(scene,camera);

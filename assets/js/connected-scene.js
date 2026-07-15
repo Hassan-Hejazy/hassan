@@ -34,15 +34,11 @@
     return cachedProfile;
   }
   function viewportProfile(){return cachedProfile||computeViewportProfile();}
-  function stageFitDistance(profile,multiplier=1){
-    const radius=7.15;
-    const limitingHalfAngle=Math.max(THREE.MathUtils.degToRad(8),Math.min(profile.vFov,profile.hFov)/2);
-    return radius/Math.sin(limitingHalfAngle)*(mobile?lerp(1.07,1.13,profile.portrait):1.04)*multiplier;
-  }
-  function overviewFit(profile){
-    const halfRoute=39.5;
-    const halfAngle=(mobile?profile.vFov:profile.hFov)/2;
-    return halfRoute/Math.max(.12,Math.tan(halfAngle))*(mobile?1.12:1.09);
+  function fitSphereDistance(profile,sphere,multiplier=1){
+    const radius=Math.max(.1,sphere?.radius||7.15);
+    const limitingHalfAngle=Math.max(THREE.MathUtils.degToRad(9),Math.min(profile.vFov,profile.hFov)/2);
+    const margin=mobile?lerp(1.08,1.14,profile.portrait):1.055;
+    return radius/Math.sin(limitingHalfAngle)*margin*multiplier;
   }
   function qualityRatio(w,h,overview=false){
     const dpr=window.devicePixelRatio||1;
@@ -50,7 +46,7 @@
     const cap=compact?(lowPower?1.35:1.75):2.1;
     const maxPixels=compact?(lowPower?1250000:2050000):4500000;
     const ratio=Math.max(1,Math.min(dpr,cap,Math.sqrt(maxPixels/Math.max(1,w*h))));
-    return overview&&compact?Math.max(1,ratio*.82):ratio;
+    return overview&&compact?Math.max(1,ratio*.95):ratio;
   }
 
 
@@ -80,12 +76,14 @@
   }
 
   let renderer,scene,camera,keyLight,cameraPath;
-  let groups=[],routeGroups=[],sceneLights=[],progress=0,targetProgress=0,current=-1,visible=false,pageVisible=!document.hidden,dragging=false,lastX=0,touchYaw=0,targetTouchYaw=0,lastFrame=0,overviewActive=false;
+  let groups=[],routeGroups=[],stageSpheres=[],overviewSphere=null,sceneLights=[],progress=0,targetProgress=0,current=-1,visible=false,pageVisible=!document.hidden,lastFrame=0,overviewActive=false;
   const cameraPosition=new THREE.Vector3();
   const cameraTarget=new THREE.Vector3();
   const desiredPosition=new THREE.Vector3();
   const desiredTarget=new THREE.Vector3();
   const desiredUp=new THREE.Vector3(0,1,0);
+  const stageTargetA=new THREE.Vector3();
+  const stageTargetB=new THREE.Vector3();
   const animated={people:[],screens:[],spots:[],rings:[],routeMarkers:[],statusLights:[],fans:[]};
   const centers=[
     new THREE.Vector3(0,0,0),
@@ -302,11 +300,17 @@
     groups=makers.map((fn,i)=>{
       const g=fn();g.position.copy(centers[i]);scene.add(g);
       const halo=ceilingRing(g,0,4.72,0,4.22,i%2?0x71c2b5:0xcda452);halo.material.opacity=.18;
-      // Service marker and perimeter accent pylons.
       [-4.15,4.15].forEach((x,n)=>{box(g,.18,2.15,.18,x,1.08,2.8,n?M.teal:M.gold);sphere(g,.12,x,2.28,2.8,n?M.teal:M.gold,10)});
+      g.updateMatrixWorld(true);
+      const bounds=new THREE.Box3().setFromObject(g);
+      stageSpheres.push(bounds.getBoundingSphere(new THREE.Sphere()));
       return g;
     });
     for(let i=0;i<centers.length-1;i++)addRoute(centers[i],centers[i+1],i);
+    const overviewBounds=new THREE.Box3();
+    groups.forEach(g=>overviewBounds.expandByObject(g));
+    routeGroups.forEach(g=>overviewBounds.expandByObject(g));
+    overviewSphere=overviewBounds.getBoundingSphere(new THREE.Sphere());
 
     // A restrained field of particles reinforces depth without distracting from the models.
     const count=mobile?0:110,positions=new Float32Array(count*3);
@@ -317,9 +321,9 @@
     scene.traverse(o=>{if(o.isPointLight||o.isSpotLight)sceneLights.push(o)});
     cameraPath=new THREE.CatmullRomCurve3(centers.map(c=>new THREE.Vector3(c.x,1.72,c.z)),false,'catmullrom',.18);
     camera=new THREE.PerspectiveCamera(mobile?55:42,1,.1,240);resize();
-    const profile=viewportProfile(),d=stageFitDistance(profile,1.02),start=centers[0];
-    cameraPosition.set(start.x,start.y+2.1,start.z+d);cameraTarget.set(start.x,1.72,start.z);camera.position.copy(cameraPosition);camera.lookAt(cameraTarget);
-    bind();sticky.classList.add('model-active');update();render();
+    const profile=viewportProfile(),firstSphere=stageSpheres[0]||new THREE.Sphere(new THREE.Vector3(0,1.7,0),7.15),d=fitSphereDistance(profile,firstSphere,1.02),start=firstSphere.center;
+    cameraPosition.set(start.x,start.y+d*.10,start.z+d);cameraTarget.copy(start);camera.position.copy(cameraPosition);camera.lookAt(cameraTarget);
+    bind();sticky.classList.add('model-active');readScrollProgress();render();
   }
 
   function resize(){
@@ -330,20 +334,16 @@
     camera.aspect=w/h;camera.fov=profile.fov;camera.updateProjectionMatrix();
   }
   function bind(){
-    canvas.style.touchAction='pan-y';
-    if(!mobile){
-      canvas.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;canvas.setPointerCapture?.(e.pointerId)});
-      canvas.addEventListener('pointermove',e=>{if(!dragging)return;targetTouchYaw+=(e.clientX-lastX)*.004;lastX=e.clientX});
-      ['pointerup','pointercancel'].forEach(k=>canvas.addEventListener(k,e=>{dragging=false;try{canvas.releasePointerCapture?.(e.pointerId)}catch(_){}}));
-    }
-    const visibilityObserver=new IntersectionObserver(entries=>{visible=entries.some(entry=>entry.isIntersecting);if(visible){requestAnimationFrame(resize);setTimeout(resize,120)}},{rootMargin:'240px 0px',threshold:0});
+    canvas.style.pointerEvents='none';
+    canvas.style.touchAction='auto';
+    const visibilityObserver=new IntersectionObserver(entries=>{visible=entries.some(entry=>entry.isIntersecting);if(visible){readScrollProgress();requestAnimationFrame(resize);setTimeout(resize,120)}},{rootMargin:'280px 0px',threshold:0});
     visibilityObserver.observe(sticky);
     window.addEventListener('resize',resize,{passive:true});
     window.addEventListener('orientationchange',()=>setTimeout(resize,140),{passive:true});
     if('ResizeObserver' in window){const ro=new ResizeObserver(()=>resize());ro.observe(sticky);}
-    window.addEventListener('scroll',update,{passive:true});
+    window.addEventListener('scroll',readScrollProgress,{passive:true});
     document.addEventListener('visibilitychange',()=>{pageVisible=!document.hidden});
-    document.addEventListener('languagechange',()=>{current=-1;setCopy(Math.min(5,Math.floor(clamp(progress/.865)*6)),progress>.90)});
+    document.addEventListener('languagechange',()=>{current=-1;setCopy(Math.min(5,Math.floor(clamp(progress/.86)*6)),progress>.91)});
   }
 
   let overviewState=false;
@@ -364,17 +364,17 @@
       requestAnimationFrame(()=>copyBox?.classList.remove('switching'));
     });
   }
-  function update(){
+  function readScrollProgress(){
     const viewportH=Math.max(1,sticky.clientHeight||innerHeight);
     const r=track.getBoundingClientRect(),span=Math.max(1,r.height-viewportH);
     targetProgress=clamp(-r.top/span);
     if(scrollIndicator){
-      const fade=1-smoother(clamp((targetProgress-.012)/.14));
+      const fade=1-smoother(clamp((targetProgress-.015)/.13));
       scrollIndicator.style.opacity=fade.toFixed(3);
-      scrollIndicator.style.transform=`translate3d(-50%,${((1-fade)*8).toFixed(1)}px,0)`;
+      scrollIndicator.style.setProperty('--indicator-shift',`${((1-fade)*7).toFixed(1)}px`);
     }
-    const i=Math.min(5,Math.floor(clamp(targetProgress/.865)*6));
-    setCopy(i,targetProgress>.90);
+    const i=Math.min(5,Math.floor(clamp(targetProgress/.86)*6));
+    setCopy(i,targetProgress>.91);
   }
 
   function objectVisible(o){
@@ -384,37 +384,40 @@
   }
 
   function render(now=performance.now()){
-    const minFrame=mobile?(lowPower?28:16):0;
-    if(minFrame&&now-lastFrame<minFrame){requestAnimationFrame(render);return;}
+    const minFrame=mobile?33:16;
+    if(now-lastFrame<minFrame){requestAnimationFrame(render);return;}
     const dt=lastFrame?Math.min(.05,(now-lastFrame)/1000):1/60;
     lastFrame=now;
     if(renderer&&visible&&pageVisible){
-      const progressEase=1-Math.exp(-(mobile?10.5:12.5)*dt);
+      readScrollProgress();
+      const progressEase=1-Math.exp(-(mobile?9.2:11.5)*dt);
       progress+= (targetProgress-progress)*progressEase;
       if(Math.abs(targetProgress-progress)<.00008)progress=targetProgress;
-      targetTouchYaw*=Math.exp(-4.8*dt);
-      touchYaw+=(targetTouchYaw-touchYaw)*(1-Math.exp(-7.5*dt));
       const p=progress,t=now*.001,profile=viewportProfile();
-      const overviewStart=.865;
+      const overviewStart=.86;
       if(p<overviewStart){
         const travel=smoother(clamp(p/overviewStart));
         const raw=travel*5;
         const base=Math.min(5,Math.floor(raw));
         const next=Math.min(5,base+1);
-        const target=cameraPath.getPointAt(travel);
-        target.y=1.72+profile.portrait*.08;
-        const angle=(mobile?.035:.10)+Math.sin(travel*Math.PI)* (mobile?.04:.12)+touchYaw*(mobile?.35:.75);
-        const distance=stageFitDistance(profile,1.015+Math.sin(travel*Math.PI)*.015);
-        const elevation=mobile?.072:.105;
+        const local=smoother(raw-base);
+        const sphereA=stageSpheres[base]||stageSpheres[0];
+        const sphereB=stageSpheres[next]||sphereA;
+        stageTargetA.copy(sphereA.center);stageTargetB.copy(sphereB.center);
+        const target=stageTargetA.lerp(stageTargetB,local);
+        target.y+=profile.portrait*.05;
+        const angle=(mobile?.025:.09)+Math.sin(travel*Math.PI)*(mobile?.025:.075);
+        const distance=lerp(fitSphereDistance(profile,sphereA,1.01),fitSphereDistance(profile,sphereB,1.01),local);
+        const elevation=mobile?.065:.095;
         const horizontal=Math.cos(elevation)*distance;
         desiredPosition.set(target.x+Math.sin(angle)*horizontal,target.y+Math.sin(elevation)*distance,target.z+Math.cos(angle)*horizontal);
         desiredTarget.copy(target);
         desiredUp.set(0,1,0);
-        groups.forEach((g,i)=>{g.visible=i===base||i===next||i===base-1});
+        groups.forEach((g,i)=>{g.visible=i===base||i===next});
         routeGroups.forEach((g,i)=>{g.visible=i===base||i===base-1});
         if(overviewActive){
           overviewActive=false;
-          renderer.shadowMap.enabled=true;
+          renderer.shadowMap.enabled=!lowPower;
           if(keyLight)keyLight.castShadow=!lowPower;
           sceneLights.forEach(l=>l.visible=true);
           resize();
@@ -427,18 +430,20 @@
           if(mobile){renderer.shadowMap.enabled=false;if(keyLight)keyLight.castShadow=false;sceneLights.forEach(l=>l.visible=false);}
           resize();
         }
-        const last=centers[5];
-        const closeTarget=new THREE.Vector3(last.x,1.72,last.z);
-        const closeDistance=stageFitDistance(profile,1.02),closeElevation=mobile?.072:.105,closeAngle=mobile?.04:.12;
+        const lastSphere=stageSpheres[5]||stageSpheres[0];
+        const closeTarget=lastSphere.center.clone();
+        const closeDistance=fitSphereDistance(profile,lastSphere,1.015),closeElevation=mobile?.065:.095,closeAngle=mobile?.025:.09;
         const closeHorizontal=Math.cos(closeElevation)*closeDistance;
         const closePos=new THREE.Vector3(closeTarget.x+Math.sin(closeAngle)*closeHorizontal,closeTarget.y+Math.sin(closeElevation)*closeDistance,closeTarget.z+Math.cos(closeAngle)*closeHorizontal);
-        const overviewDistance=overviewFit(profile);
-        const overviewPos=new THREE.Vector3(0,overviewDistance,routeCenterZ+.01);
-        const overviewTarget=new THREE.Vector3(0,.55,routeCenterZ);
+        const fullSphere=overviewSphere||new THREE.Sphere(new THREE.Vector3(0,1.5,routeCenterZ),40);
+        const overviewDistance=fitSphereDistance(profile,fullSphere,mobile?1.09:1.055);
+        const overviewTarget=fullSphere.center.clone();overviewTarget.y*=.55;
+        const overviewYaw=mobile?.18:.28,overviewElevation=mobile?.23:.20;
+        const overviewHorizontal=Math.cos(overviewElevation)*overviewDistance;
+        const overviewPos=new THREE.Vector3(overviewTarget.x+Math.sin(overviewYaw)*overviewHorizontal,overviewTarget.y+Math.sin(overviewElevation)*overviewDistance,overviewTarget.z+Math.cos(overviewYaw)*overviewHorizontal);
         desiredPosition.lerpVectors(closePos,overviewPos,q);
         desiredTarget.lerpVectors(closeTarget,overviewTarget,q);
-        const targetUp=mobile?new THREE.Vector3(0,0,-1):new THREE.Vector3(1,0,0);
-        desiredUp.lerpVectors(new THREE.Vector3(0,1,0),targetUp,q).normalize();
+        desiredUp.set(0,1,0);
       }
       const cameraEase=1-Math.exp(-(mobile?12.5:14.5)*dt);
       cameraPosition.lerp(desiredPosition,cameraEase);
@@ -467,9 +472,10 @@
 
 
   if('IntersectionObserver' in window){
-    const bootstrap=new IntersectionObserver(entries=>{
-      if(entries.some(entry=>entry.isIntersecting)){bootstrap.disconnect();init();}
-    },{rootMargin:'800px 0px',threshold:0});
+    let initialized=false;
+    const start=()=>{if(initialized)return;initialized=true;bootstrap.disconnect();init();};
+    const bootstrap=new IntersectionObserver(entries=>{if(entries.some(entry=>entry.isIntersecting))start();},{rootMargin:'900px 0px',threshold:0});
     bootstrap.observe(track);
+    setTimeout(()=>{const r=track.getBoundingClientRect();if(r.top<innerHeight*2.4&&r.bottom>-innerHeight)start();},1500);
   }else{init();}
 })();

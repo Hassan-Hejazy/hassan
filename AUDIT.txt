@@ -1,0 +1,7 @@
+By Meli connected-scene and camera-balance audit
+Duplicate HTML IDs: 0
+Missing local references: 0
+CSS parse errors: 0
+Arabic diacritics found: 0
+Browser scroll checks: mobile touch and desktop wheel both advanced native page scroll inside the connected section.
+Responsive layout checks: 320, 390, 768, 1024 and 1440 px widths; zero horizontal overflow.

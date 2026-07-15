@@ -50,12 +50,15 @@ window.BuildScene = (function(){
     return { aspect, portraitBoost, shortBoost, fov, vFov, hFov };
   }
 
-  function fitSphereDistance(multiplier=1){
+  function fitSceneDistance(yaw=0,elevation=0,multiplier=1){
     const vp = viewportProfile();
-    const limitingHalfAngle = Math.max(THREE.MathUtils.degToRad(8), Math.min(vp.vFov, vp.hFov) / 2);
-    const base = SCENE_RADIUS / Math.sin(limitingHalfAngle);
-    const margin = isMobile() ? lerp(1.08, 1.14, vp.portraitBoost) : 1.045;
-    return base * margin * multiplier;
+    const halfWidth=6.85,halfDepth=4.55,halfHeight=3.35;
+    const projectedHalfWidth=Math.abs(Math.cos(yaw))*halfWidth+Math.abs(Math.sin(yaw))*halfDepth;
+    const projectedHalfHeight=halfHeight+Math.abs(Math.sin(elevation))*halfDepth*.42;
+    const horizontalDistance=projectedHalfWidth/Math.max(.12,Math.tan(vp.hFov/2));
+    const verticalDistance=projectedHalfHeight/Math.max(.12,Math.tan(vp.vFov/2));
+    const margin=isMobile()?lerp(1.07,1.11,vp.portraitBoost):1.045;
+    return Math.max(horizontalDistance,verticalDistance)*margin*multiplier;
   }
 
   function choosePixelRatio(){
@@ -821,7 +824,7 @@ window.BuildScene = (function(){
     const u=smooth(clamp01((p-a.t)/((b.t-a.t)||1)));
     const yaw=lerp(a.yaw,b.yaw,u);
     const elevation=lerp(a.elevation,b.elevation,u);
-    const distance=fitSphereDistance(lerp(a.zoom,b.zoom,u));
+    const distance=fitSceneDistance(yaw,elevation,lerp(a.zoom,b.zoom,u));
     const target=SCENE_CENTER.clone();
     target.y+=lerp(a.lookY,b.lookY,u);
     target.z+=lerp(a.lookZ,b.lookZ,u);

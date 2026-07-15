@@ -263,7 +263,7 @@
     if(buildScrollIndicator){
       const show=1-smoothstep(range(buildProgress,.015,.16));
       buildScrollIndicator.style.opacity=show.toFixed(3);
-      buildScrollIndicator.style.transform=`translate3d(-50%,${((1-show)*8).toFixed(1)}px,0)`;
+      buildScrollIndicator.style.setProperty('--indicator-shift',`${((1-show)*7).toFixed(1)}px`);
     }
     updateBuildCopy();
   }

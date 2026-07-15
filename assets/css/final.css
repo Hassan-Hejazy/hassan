@@ -1573,3 +1573,100 @@ html[dir="rtl"] .wecan-mobile-word{font-family:Changa,Cairo,sans-serif;font-size
 html{scroll-behavior:auto}
 .process-command{grid-template-columns:minmax(0,1fr)}
 .process-intro h2{overflow-wrap:normal;word-break:normal}
+
+/* ========================================================================
+   CONNECTED SCENE + CAMERA BALANCE — authoritative final correction
+   ======================================================================== */
+#connectedCanvas{
+  pointer-events:none!important;
+  touch-action:auto!important;
+}
+
+/* Shorter, more responsive scroll distances while retaining all six stages. */
+.connected-track{height:400vh}
+@media(max-width:1100px){.connected-track{height:360svh}}
+@media(max-width:680px){.connected-track{height:325svh}}
+@media(max-width:390px){.connected-track{height:310svh}}
+@media(max-height:560px) and (orientation:landscape){.connected-track{height:285svh}}
+
+/* New compact exploration cue — no mouse icon. */
+.scene-scroll-indicator{
+  left:auto;
+  right:max(20px,calc((100vw - min(1280px,100vw - 40px))/2));
+  bottom:22px;
+  top:auto;
+  transform:translate3d(0,var(--indicator-shift,0),0)!important;
+  flex-direction:row;
+  gap:10px;
+  padding:9px 12px 9px 14px;
+  border:1px solid rgba(236,216,169,.22);
+  border-radius:999px;
+  background:rgba(7,6,4,.58);
+  backdrop-filter:blur(12px) saturate(115%);
+  box-shadow:0 12px 34px rgba(0,0,0,.24);
+  transition:opacity .18s linear;
+}
+html[dir="rtl"] .scene-scroll-indicator{
+  right:auto;
+  left:max(20px,calc((100vw - min(1280px,100vw - 40px))/2));
+  flex-direction:row-reverse;
+}
+.scene-scroll-indicator span{
+  font-size:.57rem;
+  letter-spacing:.15em;
+  line-height:1;
+}
+.scene-scroll-indicator i{
+  width:18px;
+  height:18px;
+  border:0;
+  border-radius:50%;
+  background:rgba(236,216,169,.1);
+  display:grid;
+  place-items:center;
+  position:relative;
+}
+.scene-scroll-indicator b{
+  position:static;
+  width:6px;
+  height:6px;
+  margin:0 0 3px;
+  border-radius:0;
+  background:transparent;
+  border-right:1.5px solid #f0d99f;
+  border-bottom:1.5px solid #f0d99f;
+  transform:rotate(45deg);
+  animation:balanced-scroll-chevron 1.35s ease-in-out infinite;
+}
+@keyframes balanced-scroll-chevron{
+  0%,100%{opacity:.35;transform:translateY(-2px) rotate(45deg)}
+  50%{opacity:1;transform:translateY(2px) rotate(45deg)}
+}
+
+/* Keep connected content clear of the exploration cue. */
+.connected-copy{bottom:clamp(34px,7.5vh,78px)}
+
+@media(max-width:680px){
+  .scene-scroll-indicator{
+    left:50%;
+    right:auto;
+    top:calc(var(--header-h) + 12px + env(safe-area-inset-top));
+    bottom:auto;
+    transform:translate3d(-50%,var(--indicator-shift,0),0)!important;
+    padding:8px 10px 8px 12px;
+    background:rgba(7,6,4,.7);
+  }
+  html[dir="rtl"] .scene-scroll-indicator{left:50%;right:auto;flex-direction:row-reverse}
+  .scene-scroll-indicator span{font-size:.49rem;letter-spacing:.13em}
+  .scene-scroll-indicator i{width:17px;height:17px}
+}
+
+/* Balanced canvas presentation across individual scenes. */
+.canvas-frame{height:clamp(500px,64vh,680px)}
+@media(max-width:1100px){.canvas-frame{height:clamp(450px,66vw,610px);min-height:450px}}
+@media(max-width:680px){.canvas-frame{height:clamp(390px,108vw,500px);min-height:390px}}
+@media(max-width:390px){.canvas-frame{height:clamp(360px,110vw,455px);min-height:360px}}
+
+@media(prefers-reduced-motion:reduce){
+  .scene-scroll-indicator b{animation:none;transform:rotate(45deg)}
+}
