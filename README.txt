@@ -1,42 +1,19 @@
-BY MELI — ULTRA QUALITY RESPONSIVE VERSION
+BY MELI — Targeted 3D and Responsive Correction
 
-Open through a local or hosted web server:
-  python3 -m http.server
-Then visit the local address shown in the terminal.
+This version preserves the original workflow design and website structure.
 
-ULTRA QUALITY 3D UPGRADE
-- Restored antialiasing across desktop, tablet and mobile renderers.
-- Replaced the previous near-1x mobile render cap with adaptive high-density supersampling.
-- Enabled soft dynamic shadows on supported devices with larger shadow maps and corrected shadow bias.
-- Added reflective studio environments, anisotropic texture filtering, mipmapping and contact shadows.
-- Added high-resolution branded screen graphics and sharper material response across the service scenes.
-- Increased geometric precision on primary floors, rings and display surfaces.
-- Maintained off-screen render pausing so quality does not require continuous background GPU use.
+Corrections included:
+- Restored the original six-card workflow design.
+- Corrected workflow breakpoints for desktop, tablet and mobile.
+- Increased mobile 3D viewport height so each scene remains fully visible.
+- Enabled antialiasing and soft shadows on mobile and desktop.
+- Added adaptive high-resolution rendering for sharp output without uncontrolled GPU load.
+- Added procedural studio reflections for improved metal, glass and material definition.
+- Adjusted mobile camera framing for build, service and connected scenes.
+- Added damped camera/animation progress for smoother scrolling.
+- Shortened excessive mobile pinned-scroll distances while retaining every animation stage.
+- Upgraded the existing We Can image source without changing its design.
+- Removed Arabic diacritics from the website text.
+- Bundled Three.js locally for more reliable loading when hosted.
 
-WE CAN CINEMATIC UPGRADE
-- Rebuilt the animation as a staged vector portal rather than a single abrupt scale effect.
-- Added a high-resolution, sharpened signature image specifically for the full-screen sequence.
-- Added atmospheric depth, precision framing, improved vector text rendering and smoother fades.
-- Added a real 3D integrated-production finale on capable desktop/tablet devices.
-- Phones retain the high-resolution cinematic image finale to avoid exhausting mobile WebGL context limits.
-
-WORKFLOW REDESIGN
-- Replaced the flat six-card grid with a connected production timeline.
-- Added stage status, custom vector icons, explicit outputs and a clear accountable delivery route.
-- Added responsive desktop, tablet, phone and RTL compositions.
-
-LANGUAGE
-- Removed Arabic diacritics from all Arabic interface text and JavaScript-generated messages.
-- Retained complete Arabic/English switching and RTL support.
-
-RESPONSIVE AND UX
-- Optimized for screens from 320 px wide through large desktop displays.
-- Includes safe-area spacing, short-landscape layouts, touch controls and adaptive pinned-scene lengths.
-- Interactive canvases pause when off-screen and resume when visible.
-- The WE CAN 3D scene initializes only when approaching its section.
-
-DEPENDENCY
-Three.js r128 is loaded from cdnjs. An internet connection is required for real-time 3D. Local image fallbacks remain available if Three.js or WebGL cannot load.
-
-DEPLOYMENT
-Upload the complete folder without changing its internal paths. It can be hosted directly on GitHub Pages.
+Open index.html through a web server or publish the folder through GitHub Pages.

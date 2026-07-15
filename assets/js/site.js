@@ -277,32 +277,23 @@
   const wecanTrack=document.getElementById('wecanTrack');
   const range=(value,start,end)=>clamp((value-start)/(end-start));
   const smoothstep=value=>value*value*(3-2*value);
-  function updateWecan(){
-    if(!wecanTrack)return;
-    const r=wecanTrack.getBoundingClientRect(),span=Math.max(1,r.height-innerHeight),p=clamp(-r.top/span);
+  let wecanDisplayed=0,wecanTarget=0,wecanFrame=0;
+  function applyWecanProgress(p){
     root.style.setProperty('--wecan-p',p.toFixed(4));
 
-    // Stage 1: solid white WE CAN. Stage 2: the white fill dissolves and
-    // the image becomes visible through the letter portal. Stage 3: the
-    // portal expands to full frame and reveals the final project statement.
     const solidFade=smoothstep(range(p,.045,.225));
     const portalReveal=smoothstep(range(p,.12,.39));
-    const maskExpansion=smoothstep(range(p,.25,.69));
-    const maskScale=1+maskExpansion*10.8;
-    const maskOpacity=1-smoothstep(range(p,.68,.82));
+    const maskExpansion=smoothstep(range(p,.27,.73));
+    const maskScale=1+maskExpansion*9.7;
+    const maskOpacity=1-smoothstep(range(p,.70,.84));
     const outlineIn=smoothstep(range(p,.12,.24));
     const outlineOut=1-smoothstep(range(p,.49,.73));
-    const finalOpacity=smoothstep(range(p,.80,.955));
+    const finalOpacity=smoothstep(range(p,.77,.95));
     const openingOpacity=1-smoothstep(range(p,.12,.31));
     const hintOpacity=(1-smoothstep(range(p,.10,.27)))*.76;
-    const imageIn=.88+portalReveal*.12;
-    const hasWecan3d=!!(window.WeCanScene&&window.WeCanScene.ready);
-    const imageOut=hasWecan3d?(1-smoothstep(range(p,.54,.82))):1;
-    const imageOpacity=imageIn*imageOut;
-    const imageScale=1.105-smoothstep(range(p,.10,.76))*.105;
-    const imageY=(1-portalReveal)*1.35-smoothstep(range(p,.38,.80))*.55;
-    const scene3dOpacity=hasWecan3d?smoothstep(range(p,.49,.75))*(1-smoothstep(range(p,.965,1))):0;
-    const scene3dScale=1.055-smoothstep(range(p,.48,.91))*.055;
+    const imageOpacity=.84+portalReveal*.16;
+    const imageScale=1.13-smoothstep(range(p,.12,.78))*.13;
+    const imageY=(1-portalReveal)*1.6-smoothstep(range(p,.38,.82))*.65;
 
     root.style.setProperty('--wecan-solid-opacity',(1-solidFade).toFixed(4));
     root.style.setProperty('--wecan-solid-scale',(1+solidFade*.055).toFixed(4));
@@ -311,8 +302,6 @@
     root.style.setProperty('--wecan-image-opacity',imageOpacity.toFixed(4));
     root.style.setProperty('--wecan-image-scale',imageScale.toFixed(4));
     root.style.setProperty('--wecan-image-y',imageY.toFixed(3)+'%');
-    root.style.setProperty('--wecan-3d-opacity',scene3dOpacity.toFixed(4));
-    root.style.setProperty('--wecan-3d-scale',scene3dScale.toFixed(4));
     root.style.setProperty('--wecan-mask-scale',maskScale.toFixed(4));
     root.style.setProperty('--wecan-mask-opacity',maskOpacity.toFixed(4));
     root.style.setProperty('--wecan-outline-opacity',(outlineIn*outlineOut*.82).toFixed(4));
@@ -321,7 +310,20 @@
     root.style.setProperty('--wecan-final-y',((1-finalOpacity)*44).toFixed(2)+'px');
     root.style.setProperty('--wecan-final-rotate',((1-finalOpacity)*7).toFixed(2)+'deg');
     root.style.setProperty('--wecan-hint-opacity',hintOpacity.toFixed(4));
-    if(window.WeCanScene) window.WeCanScene.update(p);
+  }
+  function animateWecan(){
+    wecanFrame=0;
+    const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    wecanDisplayed+= (wecanTarget-wecanDisplayed)*(reduce?1:.13);
+    if(Math.abs(wecanTarget-wecanDisplayed)<.00015)wecanDisplayed=wecanTarget;
+    applyWecanProgress(wecanDisplayed);
+    if(Math.abs(wecanTarget-wecanDisplayed)>.00015)wecanFrame=requestAnimationFrame(animateWecan);
+  }
+  function updateWecan(){
+    if(!wecanTrack)return;
+    const r=wecanTrack.getBoundingClientRect(),span=Math.max(1,r.height-innerHeight);
+    wecanTarget=clamp(-r.top/span);
+    if(!wecanFrame)wecanFrame=requestAnimationFrame(animateWecan);
   }
   document.addEventListener('languagechange',updateWecan);
 
