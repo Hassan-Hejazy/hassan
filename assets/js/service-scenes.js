@@ -138,7 +138,7 @@
       cream:new THREE.MeshStandardMaterial({color:0xeadfc7,metalness:.04,roughness:.74}),
       white:new THREE.MeshStandardMaterial({color:0xf7f2e8,metalness:.02,roughness:.78}),
       teal:new THREE.MeshStandardMaterial({color:0x5d9589,metalness:.15,roughness:.48,emissive:0x153d38,emissiveIntensity:.12}),
-      glass:new THREE.MeshPhysicalMaterial({color:0xc5ddd7,transparent:true,opacity:.26,roughness:.08,metalness:.02,transmission:.56,thickness:.25}),
+      glass:new THREE.MeshPhysicalMaterial({color:0xc5ddd7,transparent:true,opacity:.26,roughness:.08,metalness:.02,transmission:.56}),
       screen:new THREE.MeshStandardMaterial({color:0x101715,map:screenTexture,emissive:0x79cbbd,emissiveMap:screenTexture,emissiveIntensity:1.12,roughness:.32,metalness:.08}),
       red:new THREE.MeshStandardMaterial({color:0x8c3c31,roughness:.55})
     };
@@ -527,7 +527,8 @@
       pitch+=(targetPitch-pitch)*.065;
       const profile=viewportProfile(),radius=fitRadius(profile);
       const center=modelSphere?.center||new THREE.Vector3(0,1.7,0);
-      const targetY=center.y-profile.portrait*modelSphere.radius*.13;
+      const sphereRadius=Math.max(.1,modelSphere?.radius||6.7);
+      const targetY=center.y-profile.portrait*sphereRadius*.13;
       const elevation=.11+pitch*.14;
       const horizontal=Math.cos(elevation)*radius;
       camera.position.set(center.x+Math.sin(yaw)*horizontal,targetY+Math.sin(elevation)*radius,center.z+Math.cos(yaw)*horizontal);
@@ -555,7 +556,14 @@
     observer.observe(frame);
     if('ResizeObserver'in window){resizeObserver=new ResizeObserver(()=>requestAnimationFrame(resize));resizeObserver.observe(frame);}
     document.addEventListener('visibilitychange',()=>{pageVisible=!document.hidden;});
-    document.addEventListener('bymeli:release-service-scenes',()=>disposeScene(true));
+    document.addEventListener('bymeli:release-service-scenes',event=>{
+      const r=frame.getBoundingClientRect();
+      const vh=window.visualViewport?.height||innerHeight;
+      const offscreen=r.bottom < -vh*.35 || r.top > vh*1.35;
+      if(!event.detail?.offscreenOnly || offscreen){
+        disposeScene(true);
+      }
+    });
   }
 
   canvases.forEach(initCanvas);

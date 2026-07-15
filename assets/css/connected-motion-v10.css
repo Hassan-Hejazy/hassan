@@ -1,0 +1,236 @@
+/* CONNECTED 3D V8 — responsive cinematic motion and stable quality */
+#connected{background:#070604!important;overflow:visible!important}
+#connected .connected-track{
+  position:relative!important;
+  height:470vh!important;
+  min-height:470vh!important;
+  overscroll-behavior:visible!important;
+  contain:none!important;
+}
+#connected .connected-sticky{
+  position:sticky!important;
+  top:0!important;
+  width:100%!important;
+  height:100svh!important;
+  min-height:100svh!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+  touch-action:pan-y!important;
+  overscroll-behavior-y:auto!important;
+  background:
+    radial-gradient(circle at 66% 36%,rgba(84,64,28,.17),transparent 36%),
+    radial-gradient(circle at 42% 72%,rgba(41,103,91,.11),transparent 38%),
+    #070604!important;
+}
+#connectedCanvas{
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  pointer-events:none!important;
+  touch-action:pan-y!important;
+  user-select:none!important;
+  image-rendering:auto!important;
+  transform:translateZ(0)!important;
+  filter:none!important;
+}
+#connected .connected-fallback{
+  opacity:.18!important;
+  background-position:center 45%!important;
+  filter:saturate(.88) contrast(1.04) brightness(.7)!important;
+}
+#connected .connected-sticky.model-active>.connected-fallback{opacity:0!important}
+#connected .connected-scrim{
+  z-index:2!important;
+  background:
+    linear-gradient(90deg,rgba(4,3,2,.87) 0%,rgba(4,3,2,.46) 28%,rgba(4,3,2,.035) 60%,rgba(4,3,2,.08) 100%),
+    linear-gradient(180deg,rgba(4,3,2,.02),transparent 55%,rgba(4,3,2,.48))!important;
+}
+#connected .connected-copy{
+  left:max(24px,calc((100vw - min(1280px,100vw - 40px))/2))!important;
+  right:auto!important;
+  bottom:clamp(52px,7.5vh,84px)!important;
+  width:min(500px,calc(100vw - 48px))!important;
+  max-height:none!important;
+  overflow:visible!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:none!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  transition:opacity .18s ease,transform .22s cubic-bezier(.2,.75,.2,1)!important;
+}
+html[dir="rtl"] #connected .connected-copy{
+  left:auto!important;
+  right:max(24px,calc((100vw - min(1280px,100vw - 40px))/2))!important;
+}
+#connected .connected-copy.switching{opacity:.32!important;transform:translate3d(0,8px,0)!important}
+#connected .connected-copy h3{
+  max-width:13ch!important;
+  margin:0 0 11px!important;
+  font-size:clamp(2.35rem,4.2vw,4.7rem)!important;
+  line-height:.96!important;
+  text-shadow:0 18px 55px rgba(0,0,0,.76)!important;
+}
+#connected .connected-copy p{
+  max-width:56ch!important;
+  font-size:.95rem!important;
+  line-height:1.66!important;
+  text-shadow:0 8px 28px rgba(0,0,0,.8)!important;
+}
+#connected .connected-rail{
+  top:50%!important;
+  right:max(20px,calc((100vw - min(1280px,100vw - 40px))/2))!important;
+  gap:9px!important;
+  transform:translateY(-50%)!important;
+}
+html[dir="rtl"] #connected .connected-rail{right:auto!important;left:max(20px,calc((100vw - min(1280px,100vw - 40px))/2))!important}
+#connected .connected-rail span{
+  transition:color .25s ease,transform .35s cubic-bezier(.2,.8,.2,1),opacity .25s ease!important;
+}
+#connected .connected-rail span.active{transform:translateX(-6px)!important}
+html[dir="rtl"] #connected .connected-rail span.active{transform:translateX(6px)!important}
+#connected .scene-scroll-indicator{
+  bottom:17px!important;
+  gap:6px!important;
+  color:#e9d9b7!important;
+}
+#connected .scene-scroll-indicator i{height:27px!important}
+
+@media(max-width:1100px){
+  #connected .connected-track{height:435svh!important;min-height:435svh!important}
+  #connected .connected-copy h3{font-size:clamp(2.15rem,5.5vw,3.8rem)!important}
+}
+
+@media(max-width:760px){
+  #connected .connected-track{height:415svh!important;min-height:415svh!important}
+  #connected .connected-sticky{height:100svh!important;min-height:100svh!important}
+  #connected .connected-scrim{
+    background:linear-gradient(180deg,rgba(4,3,2,.01) 0%,rgba(4,3,2,.025) 48%,rgba(4,3,2,.67) 72%,rgba(4,3,2,.97) 100%)!important;
+  }
+  #connected .connected-copy{
+    left:10px!important;
+    right:10px!important;
+    bottom:calc(10px + env(safe-area-inset-bottom))!important;
+    width:auto!important;
+    max-height:29svh!important;
+    overflow:hidden!important;
+    padding:13px 14px!important;
+    border:1px solid rgba(236,216,169,.13)!important;
+    border-radius:17px!important;
+    background:linear-gradient(135deg,rgba(7,6,4,.72),rgba(7,6,4,.5))!important;
+    -webkit-backdrop-filter:blur(12px) saturate(112%)!important;
+    backdrop-filter:blur(12px) saturate(112%)!important;
+    box-shadow:0 18px 48px rgba(0,0,0,.34)!important;
+  }
+  html[dir="rtl"] #connected .connected-copy{left:10px!important;right:10px!important}
+  #connected .connected-copy>span{margin-bottom:6px!important;font-size:.57rem!important}
+  #connected .connected-copy h3{
+    max-width:14ch!important;
+    margin-bottom:6px!important;
+    font-size:clamp(1.75rem,7.7vw,2.65rem)!important;
+    line-height:1!important;
+  }
+  #connected .connected-copy p{
+    display:-webkit-box!important;
+    overflow:hidden!important;
+    font-size:.79rem!important;
+    line-height:1.43!important;
+    -webkit-box-orient:vertical!important;
+    -webkit-line-clamp:2!important;
+  }
+  #connected .connected-rail{
+    top:calc(var(--header-h) + 14px)!important;
+    right:10px!important;
+    left:auto!important;
+    gap:5px!important;
+    transform:none!important;
+  }
+  html[dir="rtl"] #connected .connected-rail{right:auto!important;left:10px!important}
+  #connected .connected-rail span{
+    width:3px!important;
+    height:20px!important;
+    padding:0!important;
+    border-radius:999px!important;
+    background:rgba(255,255,255,.18)!important;
+    font-size:0!important;
+    transform:none!important;
+    transition:height .28s ease,background .28s ease!important;
+  }
+  #connected .connected-rail span.active{height:33px!important;background:#ecd8a9!important;transform:none!important}
+  #connected .scene-scroll-indicator{top:calc(var(--header-h) + 13px)!important;bottom:auto!important}
+}
+
+@media(max-width:390px){
+  #connected .connected-track{height:400svh!important;min-height:400svh!important}
+  #connected .connected-copy{left:8px!important;right:8px!important;padding:11px 12px!important;border-radius:15px!important}
+  html[dir="rtl"] #connected .connected-copy{left:8px!important;right:8px!important}
+  #connected .connected-copy h3{font-size:clamp(1.55rem,8.2vw,2.25rem)!important}
+  #connected .connected-copy p{font-size:.75rem!important}
+  #connected .scene-scroll-indicator span{display:none!important}
+}
+
+@media(max-height:560px) and (orientation:landscape){
+  #connected .connected-track{height:360svh!important;min-height:360svh!important}
+  #connected .connected-copy{
+    left:12px!important;
+    right:auto!important;
+    bottom:9px!important;
+    width:min(45vw,470px)!important;
+    max-height:calc(100svh - 22px)!important;
+    padding:10px 12px!important;
+  }
+  html[dir="rtl"] #connected .connected-copy{right:12px!important;left:auto!important}
+  #connected .connected-copy h3{font-size:clamp(1.25rem,3.6vw,1.9rem)!important}
+  #connected .connected-copy p{font-size:.69rem!important}
+  #connected .scene-scroll-indicator{display:none!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  #connected .connected-copy,#connected .connected-rail span{transition:none!important}
+}
+
+/* V9 interaction and motion refinements */
+#connected .connected-track{
+  height:500vh!important;
+  min-height:500vh!important;
+}
+.services .service-canvas{
+  pointer-events:auto!important;
+  touch-action:pan-y pinch-zoom!important;
+  cursor:grab!important;
+  user-select:none!important;
+  -webkit-user-select:none!important;
+}
+.services .service-canvas.is-dragging{cursor:grabbing!important}
+.services .canvas-frame{touch-action:pan-y pinch-zoom!important}
+.services .touch-label{
+  pointer-events:none!important;
+  opacity:.92!important;
+  transition:opacity .25s ease,transform .25s ease!important;
+}
+
+@media(max-width:1100px){
+  #connected .connected-track{height:475svh!important;min-height:475svh!important}
+}
+@media(max-width:760px){
+  #connected .connected-track{height:460svh!important;min-height:460svh!important}
+  .services .service-canvas{touch-action:pan-y pinch-zoom!important}
+  .services .touch-label{display:block!important;font-size:.56rem!important;padding:8px 10px!important}
+}
+@media(max-width:390px){
+  #connected .connected-track{height:450svh!important;min-height:450svh!important}
+}
+@media(max-height:560px) and (orientation:landscape){
+  #connected .connected-track{height:410svh!important;min-height:410svh!important}
+}
+
+/* V10 runtime compatibility fixes */
+.services .canvas-frame.webgl-fallback .touch-label{display:none!important}
+.services .canvas-frame.webgl-fallback{background-size:cover!important;background-position:center!important}
+.services .service-canvas.is-dragging + .scene-loading{pointer-events:none}
+#connected .connected-fallback{transition:opacity .45s ease!important}

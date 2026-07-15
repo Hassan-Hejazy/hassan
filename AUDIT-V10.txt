@@ -1,0 +1,20 @@
+BY MELI CODE FIX V10
+
+Source: bymeli-connected-motion-v9.zip
+
+Runtime fixes:
+- Connected initialization releases only service scenes that are genuinely off-screen.
+- Visible service canvases remain active and are not destroyed during connected initialization.
+- Connected initialization retries are bounded and error-guarded.
+- Removed unsupported MeshPhysicalMaterial thickness properties for the bundled Three.js revision.
+- Removed CSS :has dependency from the drag-state styling.
+- Added safe fallback styling for failed WebGL canvases.
+- Preserved horizontal drag rotation with native vertical scrolling.
+
+Validation:
+- JavaScript syntax passed for all local scripts.
+- Connected scene executed successfully using a mocked renderer/runtime harness.
+- Service scene factory and initialization executed successfully using a mocked renderer/runtime harness.
+- No missing local script, stylesheet, or image references.
+- No duplicate HTML IDs.
+- CSS brace balance passed.
