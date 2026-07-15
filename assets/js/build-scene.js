@@ -4,7 +4,7 @@
    ========================================================================== */
 window.BuildScene = (function(){
   let renderer, scene, camera, clock, canvas, parentEl, resizeObserver, visibilityObserver;
-  let W = 0, H = 0, progress = 0, targetProgress = 0, ready = false, sceneVisible = false;
+  let W = 0, H = 0, progress = 0, targetProgress = 0, ready = false, sceneVisible = false, lastFrameTime = 0;
   const mobileQuery = matchMedia('(max-width:760px)');
   const Q = window.BYMELI_QUALITY || null;
   function isMobile(){ return mobileQuery.matches; }
@@ -31,6 +31,8 @@ window.BuildScene = (function(){
   const TEAL = 0x7FCBBD;
   const DARK = 0x16110C;
   const spanX = 6.1, spanZ = 3.45, height = 4.9;
+  const SCENE_CENTER = new THREE.Vector3(0, 2.52, 0.18);
+  const SCENE_RADIUS = 8.25;
 
   function clamp01(v){ return Math.max(0, Math.min(1, v)); }
   function lerp(a,b,t){ return a + (b-a)*t; }
@@ -38,32 +40,33 @@ window.BuildScene = (function(){
   function seg(p,a,b){ return clamp01((p-a)/(b-a)); }
   function viewportProfile(){
     const aspect = W / Math.max(1, H);
-    const portraitBoost = clamp01((0.9 - aspect) / 0.42);
-    const compactHeightBoost = clamp01((720 - H) / 240);
-    const fov = W < 720 ? lerp(55, 61, Math.max(portraitBoost, compactHeightBoost * 0.7)) : (W < 1024 ? 47 : 42);
+    const portraitBoost = clamp01((0.82 - aspect) / 0.38);
+    const shortBoost = clamp01((680 - H) / 220);
+    const fov = W < 720
+      ? lerp(52, 57, Math.max(portraitBoost, shortBoost * 0.75))
+      : (W < 1024 ? 46 : 41);
     const vFov = THREE.MathUtils.degToRad(fov);
     const hFov = 2 * Math.atan(Math.tan(vFov / 2) * aspect);
-    return { aspect, portraitBoost, compactHeightBoost, fov, vFov, hFov };
+    return { aspect, portraitBoost, shortBoost, fov, vFov, hFov };
   }
-  function fitDistance(yaw, margin=1){
+
+  function fitSphereDistance(multiplier=1){
     const vp = viewportProfile();
-    const halfWidth = 6.55;
-    const halfDepth = 3.85;
-    const halfHeight = 3.35;
-    const projectedHalfWidth = Math.abs(Math.cos(yaw)) * halfWidth + Math.abs(Math.sin(yaw)) * halfDepth;
-    const widthDistance = projectedHalfWidth / Math.max(.12, Math.tan(vp.hFov / 2));
-    const heightDistance = halfHeight / Math.max(.12, Math.tan(vp.vFov / 2));
-    const responsiveMargin = isMobile() ? lerp(1.16, 1.24, vp.portraitBoost) : 1.08;
-    return Math.max(widthDistance, heightDistance) * responsiveMargin * margin;
+    const limitingHalfAngle = Math.max(THREE.MathUtils.degToRad(8), Math.min(vp.vFov, vp.hFov) / 2);
+    const base = SCENE_RADIUS / Math.sin(limitingHalfAngle);
+    const margin = isMobile() ? lerp(1.08, 1.14, vp.portraitBoost) : 1.045;
+    return base * margin * multiplier;
   }
+
   function choosePixelRatio(){
     const dpr = window.devicePixelRatio || 1;
     const compact = isMobile();
-    const maxPixels = compact ? 2600000 : 5000000;
-    const ratioByPixels = Math.sqrt(maxPixels / Math.max(1, W * H));
-    const cap = compact ? 2.0 : 2.3;
-    return Math.max(1, Math.min(dpr, cap, ratioByPixels));
+    const profile = deviceProfile();
+    const cap = compact ? (profile.safe ? 1.45 : 1.8) : 2.15;
+    const maxPixels = compact ? (profile.safe ? 1450000 : 2250000) : 4800000;
+    return Math.max(1, Math.min(dpr, cap, Math.sqrt(maxPixels / Math.max(1, W * H))));
   }
+
 
   function setShadow(mesh, cast, receive){
     mesh.castShadow = !!cast;
@@ -797,56 +800,58 @@ window.BuildScene = (function(){
     const mobile = W < 720;
     const keys = mobile
       ? [
-          { t:0.00, yaw:-0.025, elevation:0.105, target:[0,2.18,0.05], zoom:1.07 },
-          { t:0.22, yaw:0.025, elevation:0.125, target:[0,2.36,0.02], zoom:1.02 },
-          { t:0.52, yaw:0.075, elevation:0.145, target:[0,2.48,0.05], zoom:1.00 },
-          { t:0.74, yaw:0.105, elevation:0.125, target:[0,2.48,0.18], zoom:1.035 },
-          { t:1.00, yaw:0.035, elevation:0.11, target:[0,2.40,0.28], zoom:1.08 }
+          {t:0.00,yaw:-0.045,elevation:0.055,zoom:1.035,lookY:-0.42,lookZ:-0.05},
+          {t:0.22,yaw:-0.005,elevation:0.070,zoom:1.015,lookY:-0.30,lookZ:0.00},
+          {t:0.52,yaw:0.050,elevation:0.082,zoom:1.000,lookY:-0.20,lookZ:0.06},
+          {t:0.74,yaw:0.085,elevation:0.072,zoom:1.018,lookY:-0.18,lookZ:0.14},
+          {t:1.00,yaw:0.025,elevation:0.062,zoom:1.045,lookY:-0.22,lookZ:0.22}
         ]
       : [
-          { t:0.00, yaw:-0.02, elevation:0.10, target:[0,1.35,0], zoom:1.04 },
-          { t:0.18, yaw:0.16, elevation:0.12, target:[0,1.75,0], zoom:.98 },
-          { t:0.42, yaw:0.31, elevation:0.145, target:[0,2.25,0], zoom:.96 },
-          { t:0.66, yaw:0.40, elevation:0.15, target:[0,2.55,.15], zoom:.98 },
-          { t:0.86, yaw:0.31, elevation:0.13, target:[0,2.45,.55], zoom:1.03 },
-          { t:1.00, yaw:0.22, elevation:0.115, target:[0,2.30,.75], zoom:1.06 }
+          {t:0.00,yaw:-0.070,elevation:0.070,zoom:1.025,lookY:-0.34,lookZ:-0.08},
+          {t:0.18,yaw:0.055,elevation:0.090,zoom:1.000,lookY:-0.18,lookZ:0.00},
+          {t:0.42,yaw:0.180,elevation:0.115,zoom:0.985,lookY:0.00,lookZ:0.05},
+          {t:0.66,yaw:0.265,elevation:0.120,zoom:0.995,lookY:0.10,lookZ:0.14},
+          {t:0.86,yaw:0.190,elevation:0.100,zoom:1.015,lookY:0.04,lookZ:0.28},
+          {t:1.00,yaw:0.105,elevation:0.082,zoom:1.035,lookY:-0.02,lookZ:0.38}
         ];
     let a=keys[0],b=keys[keys.length-1];
     for(let i=0;i<keys.length-1;i++){
       if(p>=keys[i].t&&p<=keys[i+1].t){a=keys[i];b=keys[i+1];break;}
     }
-    const local=smooth(clamp01((p-a.t)/((b.t-a.t)||1)));
-    const yaw=lerp(a.yaw,b.yaw,local);
-    const elevation=lerp(a.elevation,b.elevation,local);
-    const target=[
-      lerp(a.target[0],b.target[0],local),
-      lerp(a.target[1],b.target[1],local),
-      lerp(a.target[2],b.target[2],local)
-    ];
-    const distance=fitDistance(yaw,lerp(a.zoom,b.zoom,local));
+    const u=smooth(clamp01((p-a.t)/((b.t-a.t)||1)));
+    const yaw=lerp(a.yaw,b.yaw,u);
+    const elevation=lerp(a.elevation,b.elevation,u);
+    const distance=fitSphereDistance(lerp(a.zoom,b.zoom,u));
+    const target=SCENE_CENTER.clone();
+    target.y+=lerp(a.lookY,b.lookY,u);
+    target.z+=lerp(a.lookZ,b.lookZ,u);
     const horizontal=Math.cos(elevation)*distance;
     return {
       pos:[
-        target[0]+Math.sin(yaw)*horizontal,
-        target[1]+Math.sin(elevation)*distance,
-        target[2]+Math.cos(yaw)*horizontal
+        target.x+Math.sin(yaw)*horizontal,
+        target.y+Math.sin(elevation)*distance,
+        target.z+Math.cos(yaw)*horizontal
       ],
-      look:target
+      look:[target.x,target.y,target.z]
     };
   }
 
-  function renderLoop(){
+
+  function renderLoop(now=performance.now()){
     if(!ready) return;
+    const dt = lastFrameTime ? Math.min(.05, (now-lastFrameTime)/1000) : 1/60;
+    lastFrameTime = now;
     if(sceneVisible && !document.hidden){
-      const delta = targetProgress - progress;
-      const damping = isMobile() ? (Math.abs(delta) > .16 ? .115 : .085) : (Math.abs(delta) > .18 ? .13 : .095);
-      progress += delta * damping;
-      if(Math.abs(delta) < .0001) progress = targetProgress;
+      const delta = targetProgress-progress;
+      const speed = isMobile() ? 8.2 : 10.5;
+      progress += delta * (1-Math.exp(-speed*dt));
+      if(Math.abs(delta)<.00008) progress=targetProgress;
       applyProgress();
-      renderer.render(scene, camera);
+      renderer.render(scene,camera);
     }
     requestAnimationFrame(renderLoop);
   }
+
 
   function setLang(){ /* reserved; text panels intentionally stay in English as requested */ }
 

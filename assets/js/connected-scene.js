@@ -25,27 +25,32 @@
   function viewportProfile(){
     const r=sticky.getBoundingClientRect();
     const w=Math.max(1,r.width),h=Math.max(1,r.height),aspect=w/h;
-    const portrait=clamp((.9-aspect)/.42);
-    const short=clamp((720-h)/240);
-    const fov=w<700?lerp(55,61,Math.max(portrait,short*.7)):(w<1050?47:43);
+    const portrait=clamp((.82-aspect)/.38);
+    const short=clamp((680-h)/220);
+    const fov=w<700?lerp(52,57,Math.max(portrait,short*.75)):(w<1050?46:42);
     const vFov=THREE.MathUtils.degToRad(fov);
     const hFov=2*Math.atan(Math.tan(vFov/2)*aspect);
     return {w,h,aspect,portrait,short,fov,vFov,hFov};
   }
-  function stageFitDistance(profile,yaw){
-    const halfWidth=5.95,halfDepth=5.25,halfHeight=3.45;
-    const projectedHalfWidth=Math.abs(Math.cos(yaw))*halfWidth+Math.abs(Math.sin(yaw))*halfDepth;
-    const dw=projectedHalfWidth/Math.max(.12,Math.tan(profile.hFov/2));
-    const dh=halfHeight/Math.max(.12,Math.tan(profile.vFov/2));
-    return Math.max(dw,dh)*(mobile?lerp(1.14,1.22,profile.portrait):1.08);
+  function stageFitDistance(profile,multiplier=1){
+    const radius=7.15;
+    const limitingHalfAngle=Math.max(THREE.MathUtils.degToRad(8),Math.min(profile.vFov,profile.hFov)/2);
+    return radius/Math.sin(limitingHalfAngle)*(mobile?lerp(1.07,1.13,profile.portrait):1.04)*multiplier;
   }
-  function qualityRatio(w,h){
+  function overviewFit(profile){
+    const halfRoute=39.5;
+    const halfAngle=(mobile?profile.vFov:profile.hFov)/2;
+    return halfRoute/Math.max(.12,Math.tan(halfAngle))*(mobile?1.12:1.09);
+  }
+  function qualityRatio(w,h,overview=false){
     const dpr=window.devicePixelRatio||1;
     const compact=w<760;
-    const cap=compact?(lowPower?1.55:1.9):2.25;
-    const maxPixels=compact?(lowPower?1550000:2300000):5000000;
-    return Math.max(1,Math.min(dpr,cap,Math.sqrt(maxPixels/Math.max(1,w*h))));
+    const cap=compact?(lowPower?1.35:1.75):2.1;
+    const maxPixels=compact?(lowPower?1250000:2050000):4500000;
+    const ratio=Math.max(1,Math.min(dpr,cap,Math.sqrt(maxPixels/Math.max(1,w*h))));
+    return overview&&compact?Math.max(1,ratio*.82):ratio;
   }
+
 
   const copy={
     en:[
@@ -72,17 +77,24 @@
     return;
   }
 
-  let renderer,scene,camera;
+  let renderer,scene,camera,keyLight,cameraPath;
   let groups=[],routeGroups=[],sceneLights=[],progress=0,targetProgress=0,current=-1,visible=false,pageVisible=!document.hidden,dragging=false,lastX=0,touchYaw=0,targetTouchYaw=0,lastFrame=0,overviewActive=false;
+  const cameraPosition=new THREE.Vector3();
+  const cameraTarget=new THREE.Vector3();
+  const desiredPosition=new THREE.Vector3();
+  const desiredTarget=new THREE.Vector3();
+  const desiredUp=new THREE.Vector3(0,1,0);
   const animated={people:[],screens:[],spots:[],rings:[],routeMarkers:[],statusLights:[],fans:[]};
   const centers=[
     new THREE.Vector3(0,0,0),
-    new THREE.Vector3(2.4,0,-17),
-    new THREE.Vector3(-2.8,0,-34),
-    new THREE.Vector3(3.1,0,-51),
-    new THREE.Vector3(-2.2,0,-68),
-    new THREE.Vector3(0,0,-85)
+    new THREE.Vector3(2.1,0,-14.5),
+    new THREE.Vector3(-2.4,0,-29),
+    new THREE.Vector3(2.6,0,-43.5),
+    new THREE.Vector3(-2.0,0,-58),
+    new THREE.Vector3(0,0,-72.5)
   ];
+  const routeCenterZ=(centers[0].z+centers[centers.length-1].z)/2;
+
 
   const M={
     gold:new THREE.MeshStandardMaterial({color:0xcda452,metalness:.56,roughness:.32,emissive:0x402a08,emissiveIntensity:.18}),
@@ -99,7 +111,7 @@
     glass:new THREE.MeshPhysicalMaterial({color:0xc6ded7,transparent:true,opacity:.25,roughness:.08,transmission:.52,thickness:.2})
   };
 
-  function sh(mesh,cast=true){mesh.castShadow=cast&&!mobile;mesh.receiveShadow=true;return mesh}
+  function sh(mesh,cast=true){mesh.castShadow=cast&&!lowPower;mesh.receiveShadow=true;return mesh}
   function box(g,w,h,d,x,y,z,m=M.dark){const o=sh(new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m));o.position.set(x,y,z);g.add(o);return o}
   function cyl(g,r1,r2,h,x,y,z,m=M.gold,seg=(mobile?14:28)){const o=sh(new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,seg),m));o.position.set(x,y,z);g.add(o);return o}
   function sphere(g,r,x,y,z,m=M.cream,seg=(mobile?12:22)){const o=sh(new THREE.Mesh(new THREE.SphereGeometry(r,seg,Math.max(8,seg-2)),m));o.position.set(x,y,z);g.add(o);return o}
@@ -278,11 +290,11 @@
     if(Q){const tex=Q.prepareTexture(Q.makeScreenTexture('CONNECTED PRODUCTION ROUTE'),renderer);M.screen.map=tex;M.screen.emissiveMap=tex;M.screen.needsUpdate=true;}
     scene=new THREE.Scene();scene.background=new THREE.Color(0x0d0b08);scene.fog=new THREE.FogExp2(0x0d0b08,.017);if(Q)Q.studioEnvironment(scene);
     scene.add(new THREE.HemisphereLight(0xf0deba,0x14110d,1.05));
-    const key=new THREE.DirectionalLight(0xffe9bc,1.23);key.position.set(8,12,7);if(Q)Q.tuneShadow(key,mobile?1024:Q.shadowMapSize,16);else{key.castShadow=true;key.shadow.mapSize.set(2048,2048);key.shadow.camera.left=-16;key.shadow.camera.right=16;key.shadow.camera.top=16;key.shadow.camera.bottom=-16}scene.add(key);
+    keyLight=new THREE.DirectionalLight(0xffe9bc,1.23);keyLight.position.set(8,12,7);if(Q)Q.tuneShadow(keyLight,mobile?(lowPower?512:1024):Q.shadowMapSize,16);else{keyLight.castShadow=true;keyLight.shadow.mapSize.set(mobile?1024:2048,mobile?1024:2048);keyLight.shadow.camera.left=-16;keyLight.shadow.camera.right=16;keyLight.shadow.camera.top=16;keyLight.shadow.camera.bottom=-16}scene.add(keyLight);
     const teal=new THREE.PointLight(0x66b7ab,.48,44);teal.position.set(-8,5,8);scene.add(teal);
 
-    const floor=new THREE.Mesh(new THREE.PlaneGeometry(38,112),new THREE.MeshStandardMaterial({color:0x0f0d0a,roughness:.93}));floor.rotation.x=-Math.PI/2;floor.position.set(0,0,-42);floor.receiveShadow=true;scene.add(floor);
-    const grid=new THREE.GridHelper(110,76,0x6d5125,0x211b15);grid.position.z=-42;grid.material.transparent=true;grid.material.opacity=.115;scene.add(grid);if(Q&&!lowPower)Q.addContactShadow(scene,renderer,15.5,mobile?.22:.30,.012);
+    const floor=new THREE.Mesh(new THREE.PlaneGeometry(38,96),new THREE.MeshStandardMaterial({color:0x0f0d0a,roughness:.93}));floor.rotation.x=-Math.PI/2;floor.position.set(0,0,routeCenterZ);floor.receiveShadow=true;scene.add(floor);
+    const grid=new THREE.GridHelper(92,64,0x6d5125,0x211b15);grid.position.z=routeCenterZ;grid.material.transparent=true;grid.material.opacity=.10;scene.add(grid);if(Q&&!lowPower&&!mobile)Q.addContactShadow(scene,renderer,15.5,.28,.012);
 
     const makers=[booth,showroom,interior,management,crowd,av];
     groups=makers.map((fn,i)=>{
@@ -295,19 +307,23 @@
     for(let i=0;i<centers.length-1;i++)addRoute(centers[i],centers[i+1],i);
 
     // A restrained field of particles reinforces depth without distracting from the models.
-    const count=mobile?(lowPower?24:42):140,positions=new Float32Array(count*3);
+    const count=mobile?0:110,positions=new Float32Array(count*3);
     for(let i=0;i<count;i++){positions[i*3]=(Math.random()-.5)*25;positions[i*3+1]=1+Math.random()*8;positions[i*3+2]=-92+Math.random()*100}
     const pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(positions,3));
     const particles=new THREE.Points(pg,new THREE.PointsMaterial({color:0xcda452,size:.035,transparent:true,opacity:.28,depthWrite:false}));scene.add(particles);animated.fans.push(particles);
 
     scene.traverse(o=>{if(o.isPointLight||o.isSpotLight)sceneLights.push(o)});
-    camera=new THREE.PerspectiveCamera(mobile?58:43,1,.1,220);resize();bind();sticky.classList.add('model-active');update();render();
+    cameraPath=new THREE.CatmullRomCurve3(centers.map(c=>new THREE.Vector3(c.x,1.72,c.z)),false,'catmullrom',.18);
+    camera=new THREE.PerspectiveCamera(mobile?55:42,1,.1,240);resize();
+    const profile=viewportProfile(),d=stageFitDistance(profile,1.02),start=centers[0];
+    cameraPosition.set(start.x,start.y+2.1,start.z+d);cameraTarget.set(start.x,1.72,start.z);camera.position.copy(cameraPosition);camera.lookAt(cameraTarget);
+    bind();sticky.classList.add('model-active');update();render();
   }
 
   function resize(){
     if(!renderer)return;
     const profile=viewportProfile(),w=profile.w,h=profile.h;
-    renderer.setPixelRatio(qualityRatio(w,h));
+    renderer.setPixelRatio(qualityRatio(w,h,overviewActive));
     renderer.setSize(w,h,false);
     camera.aspect=w/h;camera.fov=profile.fov;camera.updateProjectionMatrix();
   }
@@ -318,17 +334,22 @@
     ['pointerup','pointercancel'].forEach(k=>canvas.addEventListener(k,e=>{dragging=false;try{canvas.releasePointerCapture?.(e.pointerId)}catch(_){}}));
     const visibilityObserver=new IntersectionObserver(entries=>{visible=entries.some(entry=>entry.isIntersecting);if(visible){requestAnimationFrame(resize);setTimeout(resize,120)}},{rootMargin:'240px 0px',threshold:0});
     visibilityObserver.observe(sticky);
-    window.addEventListener('resize',resize,{passive:true});window.addEventListener('scroll',update,{passive:true});
+    window.addEventListener('resize',resize,{passive:true});
+    window.addEventListener('orientationchange',()=>setTimeout(resize,140),{passive:true});
+    window.visualViewport?.addEventListener('resize',resize,{passive:true});
+    if('ResizeObserver' in window){const ro=new ResizeObserver(()=>resize());ro.observe(sticky);}
+    window.addEventListener('scroll',update,{passive:true});
     document.addEventListener('visibilitychange',()=>{pageVisible=!document.hidden});
-    document.addEventListener('languagechange',()=>{current=-1;setCopy(Math.min(5,Math.floor(clamp(progress/.84)*6)),progress>.89)});
+    document.addEventListener('languagechange',()=>{current=-1;setCopy(Math.min(5,Math.floor(clamp(progress/.865)*6)),progress>.90)});
   }
 
-  let copyTimer=0,overviewState=false;
+  let overviewState=false;
   function setCopy(i,overview=false){
     if(i===current&&overview===overviewState)return;
-    current=i;overviewState=overview;clearTimeout(copyTimer);copyBox?.classList.add('switching');
-    copyTimer=setTimeout(()=>{
-      const lang=document.documentElement.lang==='ar'?'ar':'en';
+    current=i;overviewState=overview;
+    const lang=document.documentElement.lang==='ar'?'ar':'en';
+    copyBox?.classList.add('switching');
+    requestAnimationFrame(()=>{
       if(overview){
         index.textContent='06 / 06';
         title.textContent=lang==='ar'?'منظومة تنفيذ واحدة متكاملة':'One connected delivery system';
@@ -337,68 +358,108 @@
       }else{
         const item=copy[lang][i];index.textContent=String(i+1).padStart(2,'0')+' / 06';title.textContent=item[0];body.textContent=item[1];rail.forEach((x,n)=>x.classList.toggle('active',n===i));
       }
-      copyBox?.classList.remove('switching');
-    },90);
+      requestAnimationFrame(()=>copyBox?.classList.remove('switching'));
+    });
   }
   function update(){
-    const r=track.getBoundingClientRect(),span=Math.max(1,r.height-innerHeight);
+    const viewportH=window.visualViewport?.height||innerHeight;
+    const r=track.getBoundingClientRect(),span=Math.max(1,r.height-viewportH);
     targetProgress=clamp(-r.top/span);
     if(scrollIndicator){
       const fade=1-smoother(clamp((targetProgress-.012)/.14));
       scrollIndicator.style.opacity=fade.toFixed(3);
       scrollIndicator.style.transform=`translate3d(-50%,${((1-fade)*8).toFixed(1)}px,0)`;
     }
-    const i=Math.min(5,Math.floor(clamp(targetProgress/.82)*6));
-    setCopy(i,targetProgress>.86);
+    const i=Math.min(5,Math.floor(clamp(targetProgress/.865)*6));
+    setCopy(i,targetProgress>.90);
+  }
+
+  function objectVisible(o){
+    let n=o;
+    while(n){if(n.visible===false)return false;n=n.parent;}
+    return true;
   }
 
   function render(now=performance.now()){
-    if(mobile&&now-lastFrame<(lowPower?24:17)){requestAnimationFrame(render);return;}
+    const minFrame=mobile?(lowPower?30:20):0;
+    if(minFrame&&now-lastFrame<minFrame){requestAnimationFrame(render);return;}
+    const dt=lastFrame?Math.min(.05,(now-lastFrame)/1000):1/60;
     lastFrame=now;
     if(renderer&&visible&&pageVisible){
-      const delta=targetProgress-progress;
-      progress+=delta*(Math.abs(delta)>.16?(mobile?.11:.10):(mobile?.082:.074));
-      if(Math.abs(delta)<.00012)progress=targetProgress;
-      const p=progress,t=performance.now()*.001,profile=viewportProfile();targetTouchYaw*=.94;touchYaw+=(targetTouchYaw-touchYaw)*.075;
-      let activeBase=5;
-      if(p<.82){
-        const raw=(p/.82)*5,base=Math.min(5,Math.floor(raw)),next=Math.min(5,base+1),local=smoother(clamp(raw-base)),a=centers[base],b=centers[next];
-        activeBase=base;
-        const target=new THREE.Vector3(lerp(a.x,b.x,local),1.68+profile.portrait*.12,lerp(a.z,b.z,local));
-        const angle=lerp(mobile?.035:.12,mobile?.10:.29,local)+touchYaw*(mobile?.45:1);
-        const distance=stageFitDistance(profile,angle)*(1+Math.sin(local*Math.PI)*.015);
-        const elevation=mobile?lerp(.095,.12,local):lerp(.13,.16,local);
+      const progressEase=1-Math.exp(-(mobile?8.0:10.5)*dt);
+      progress+= (targetProgress-progress)*progressEase;
+      if(Math.abs(targetProgress-progress)<.00008)progress=targetProgress;
+      targetTouchYaw*=Math.exp(-4.8*dt);
+      touchYaw+=(targetTouchYaw-touchYaw)*(1-Math.exp(-7.5*dt));
+      const p=progress,t=now*.001,profile=viewportProfile();
+      const overviewStart=.865;
+      if(p<overviewStart){
+        const travel=smoother(clamp(p/overviewStart));
+        const raw=travel*5;
+        const base=Math.min(5,Math.floor(raw));
+        const next=Math.min(5,base+1);
+        const target=cameraPath.getPointAt(travel);
+        target.y=1.72+profile.portrait*.08;
+        const angle=(mobile?.035:.10)+Math.sin(travel*Math.PI)* (mobile?.04:.12)+touchYaw*(mobile?.35:.75);
+        const distance=stageFitDistance(profile,1.015+Math.sin(travel*Math.PI)*.015);
+        const elevation=mobile?.072:.105;
         const horizontal=Math.cos(elevation)*distance;
-        camera.position.set(target.x+Math.sin(angle)*horizontal,target.y+Math.sin(elevation)*distance,target.z+Math.cos(angle)*horizontal);
-        camera.lookAt(target);
-        groups.forEach((g,i)=>{g.visible=Math.abs(i-base)<=1});
+        desiredPosition.set(target.x+Math.sin(angle)*horizontal,target.y+Math.sin(elevation)*distance,target.z+Math.cos(angle)*horizontal);
+        desiredTarget.copy(target);
+        desiredUp.set(0,1,0);
+        groups.forEach((g,i)=>{g.visible=i===base||i===next||i===base-1});
         routeGroups.forEach((g,i)=>{g.visible=i===base||i===base-1});
-        if(overviewActive){overviewActive=false;sceneLights.forEach(l=>l.visible=true);}
+        if(overviewActive){
+          overviewActive=false;
+          renderer.shadowMap.enabled=true;
+          if(keyLight)keyLight.castShadow=!lowPower;
+          sceneLights.forEach(l=>l.visible=true);
+          resize();
+        }
       }else{
-        const q=smoother(clamp((p-.82)/.18)),last=centers[5];
+        const q=smoother(clamp((p-overviewStart)/(1-overviewStart)));
         groups.forEach(g=>g.visible=true);routeGroups.forEach(g=>g.visible=true);
-        if(!overviewActive){overviewActive=true;if(mobile)sceneLights.forEach(l=>l.visible=false);}
-        const closeTarget=new THREE.Vector3(last.x,1.7,last.z),closeAngle=mobile?.06:.18,closeDistance=stageFitDistance(profile,closeAngle)*1.04,closeElevation=mobile?.105:.15;
-        const close=new THREE.Vector3(closeTarget.x+Math.sin(closeAngle)*Math.cos(closeElevation)*closeDistance,closeTarget.y+Math.sin(closeElevation)*closeDistance,closeTarget.z+Math.cos(closeAngle)*Math.cos(closeElevation)*closeDistance);
-        const overview=mobile?new THREE.Vector3(0,91,-42):new THREE.Vector3(17,15,-38),lookAll=new THREE.Vector3(0,.6,-42);
-        camera.position.set(lerp(close.x,overview.x,q),lerp(close.y,overview.y,q),lerp(close.z,overview.z,q));
-        camera.lookAt(lerp(closeTarget.x,lookAll.x,q),lerp(closeTarget.y,lookAll.y,q),lerp(closeTarget.z,lookAll.z,q));
+        if(!overviewActive){
+          overviewActive=true;
+          if(mobile){renderer.shadowMap.enabled=false;if(keyLight)keyLight.castShadow=false;sceneLights.forEach(l=>l.visible=false);}
+          resize();
+        }
+        const last=centers[5];
+        const closeTarget=new THREE.Vector3(last.x,1.72,last.z);
+        const closeDistance=stageFitDistance(profile,1.02),closeElevation=mobile?.072:.105,closeAngle=mobile?.04:.12;
+        const closeHorizontal=Math.cos(closeElevation)*closeDistance;
+        const closePos=new THREE.Vector3(closeTarget.x+Math.sin(closeAngle)*closeHorizontal,closeTarget.y+Math.sin(closeElevation)*closeDistance,closeTarget.z+Math.cos(closeAngle)*closeHorizontal);
+        const overviewDistance=overviewFit(profile);
+        const overviewPos=new THREE.Vector3(0,overviewDistance,routeCenterZ+.01);
+        const overviewTarget=new THREE.Vector3(0,.55,routeCenterZ);
+        desiredPosition.lerpVectors(closePos,overviewPos,q);
+        desiredTarget.lerpVectors(closeTarget,overviewTarget,q);
+        const targetUp=mobile?new THREE.Vector3(0,0,-1):new THREE.Vector3(1,0,0);
+        desiredUp.lerpVectors(new THREE.Vector3(0,1,0),targetUp,q).normalize();
       }
-      const exit=smoother(clamp((p-.93)/.07));
+      const cameraEase=1-Math.exp(-(mobile?11.5:13.5)*dt);
+      cameraPosition.lerp(desiredPosition,cameraEase);
+      cameraTarget.lerp(desiredTarget,cameraEase);
+      camera.position.copy(cameraPosition);
+      camera.up.lerp(desiredUp,cameraEase).normalize();
+      camera.lookAt(cameraTarget);
+
+      const exit=smoother(clamp((p-.965)/.035));
       sticky.style.setProperty('--connected-exit',exit.toFixed(4));
 
-      groups.forEach((g,i)=>{g.rotation.y=Math.sin(t*.25+i)*.022});
-      animated.people.forEach((o,n)=>{const bob=Math.sin(t*1.35+n*.55)*.023;o.torso.position.y=o.base+bob;o.head.position.y=o.headBase+bob});
-      animated.screens.forEach((s,i)=>s.material.emissiveIntensity=1.02+Math.sin(t*2.8+i*.72)*.16);
-      animated.spots.forEach((s,i)=>s.intensity=1.4+Math.sin(t*2+i*.72)*.42);
-      animated.rings.forEach((r,i)=>r.rotation.z=t*(i%2?-.024:.021));
-      animated.statusLights.forEach((l,i)=>l.intensity=.22+Math.sin(t*2.2+i*.37)*.08);
-      animated.routeMarkers.forEach((marker,i)=>{if(marker.parent&&!marker.parent.visible)return;const u=(t*(reduce?0:.085)+marker.userData.offset)%1,pos=marker.userData.curve.getPointAt(u);marker.position.copy(pos);marker.position.y=.38+Math.sin(t*4+i)*.025;marker.scale.setScalar(.82+Math.sin(t*4.5+i*.6)*.16)});
-      animated.fans.forEach((f,i)=>{f.rotation.y=t*.012*(i%2?1:-1)});
+      groups.forEach((g,i)=>{if(g.visible)g.rotation.y=Math.sin(t*.22+i)*.017});
+      animated.people.forEach((o,n)=>{if(!objectVisible(o.torso))return;const bob=Math.sin(t*1.25+n*.55)*.018;o.torso.position.y=o.base+bob;o.head.position.y=o.headBase+bob});
+      animated.screens.forEach((s,i)=>{if(objectVisible(s))s.material.emissiveIntensity=1.04+Math.sin(t*2.4+i*.72)*.12});
+      animated.spots.forEach((s,i)=>{if(s.visible&&objectVisible(s))s.intensity=1.35+Math.sin(t*1.8+i*.72)*.30});
+      animated.rings.forEach((r,i)=>{if(objectVisible(r))r.rotation.z=t*(i%2?-.016:.014)});
+      animated.statusLights.forEach((l,i)=>{if(objectVisible(l))l.intensity=.20+Math.sin(t*2+i*.37)*.06});
+      animated.routeMarkers.forEach((marker,i)=>{if(!objectVisible(marker))return;const u=(t*(reduce?0:.072)+marker.userData.offset)%1,pos=marker.userData.curve.getPointAt(u);marker.position.copy(pos);marker.position.y=.38+Math.sin(t*3.5+i)*.02});
+      animated.fans.forEach((f,i)=>{if(objectVisible(f))f.rotation.y=t*.008*(i%2?1:-1)});
       renderer.render(scene,camera);
     }
     requestAnimationFrame(render);
   }
+
 
   if('IntersectionObserver' in window){
     const bootstrap=new IntersectionObserver(entries=>{

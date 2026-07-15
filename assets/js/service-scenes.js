@@ -319,7 +319,7 @@
 
   function initCanvas(canvas){
     const frame=canvas.closest('.canvas-frame');
-    let renderer,scene,camera,root,materials,observer,resizeObserver;
+    let renderer,scene,camera,root,materials,observer,resizeObserver,disposeTimer=0;
     const initialYaw=mobile?.08:.50;
     let visible=false,initialized=false,dragging=false,startX=0,startY=0,lastX=0,lastY=0,yaw=initialYaw,pitch=.12,targetYaw=initialYaw,targetPitch=.12,auto=0;
     const type=canvas.dataset.scene;
@@ -340,6 +340,27 @@
     function qualityRatio(w,h){
       const dpr=window.devicePixelRatio||1,compact=w<760,cap=compact?1.95:2.25,maxPixels=compact?2200000:4200000;
       return Math.max(1,Math.min(dpr,cap,Math.sqrt(maxPixels/Math.max(1,w*h))));
+    }
+
+    function disposeScene(){
+      clearTimeout(disposeTimer);
+      if(!initialized)return;
+      initialized=false;
+      visible=false;
+      try{
+        scene?.traverse(obj=>{
+          obj.geometry?.dispose?.();
+          const mats=Array.isArray(obj.material)?obj.material:[obj.material];
+          mats.forEach(mat=>{
+            if(!mat)return;
+            ['map','emissiveMap','normalMap','roughnessMap','metalnessMap','alphaMap','envMap'].forEach(k=>mat[k]?.dispose?.());
+            mat.dispose?.();
+          });
+        });
+        renderer?.dispose?.();
+      }catch(_){}
+      renderer=scene=camera=root=materials=null;
+      frame.classList.remove('ready');
     }
 
     function initialize(){
@@ -414,10 +435,19 @@
     observer=new IntersectionObserver(entries=>{
       entries.forEach(entry=>{
         visible=entry.isIntersecting;
-        if(visible&&!initialized) initialize();
-        if(visible&&initialized){requestAnimationFrame(resize);setTimeout(resize,100);}
+        if(visible){
+          clearTimeout(disposeTimer);
+          if(!initialized) initialize();
+          if(initialized){requestAnimationFrame(resize);setTimeout(resize,100);}
+        }else if(initialized){
+          disposeTimer=setTimeout(()=>{
+            const r=frame.getBoundingClientRect();
+            const vh=window.visualViewport?.height||innerHeight;
+            if(r.bottom < -vh*.75 || r.top > vh*1.75) disposeScene();
+          },1200);
+        }
       });
-    },{threshold:.04,rootMargin:'180px'});
+    },{threshold:.03,rootMargin:'220px 0px'});
     observer.observe(frame);
     resizeObserver=new ResizeObserver(()=>resize());resizeObserver.observe(frame);
   }

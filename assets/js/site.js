@@ -230,7 +230,8 @@
     },{rootMargin:'700px 0px',threshold:0});
     observer.observe(buildTrack);
     setTimeout(()=>{
-      if(!buildReady && buildTrack.getBoundingClientRect().top < innerHeight * 2.2) initBuild();
+      const viewportH=window.visualViewport?.height||innerHeight;
+      if(!buildReady && buildTrack.getBoundingClientRect().top < viewportH * 2.2) initBuild();
     }, 1400);
   }
   function updateBuildCopy(force=false){
@@ -240,8 +241,9 @@
   }
   function updateBuild(){
     if(!buildTrack)return;
-    const r=buildTrack.getBoundingClientRect(),span=Math.max(1,r.height-innerHeight);
-    if(!buildReady && r.top < innerHeight * 1.6 && r.bottom > -innerHeight * 0.5) initBuild();
+    const viewportH=window.visualViewport?.height||innerHeight;
+    const r=buildTrack.getBoundingClientRect(),span=Math.max(1,r.height-viewportH);
+    if(!buildReady && r.top < viewportH * 1.6 && r.bottom > -viewportH * 0.5) initBuild();
     buildProgress=clamp(-r.top/span);
     if(buildReady)window.BuildScene.update(buildProgress);
     if(buildScrollIndicator){
@@ -314,60 +316,56 @@
   const range=(value,start,end)=>clamp((value-start)/(end-start));
   const smoothstep=value=>value*value*(3-2*value);
   const smootherstep=value=>value*value*value*(value*(value*6-15)+10);
-  let wecanTarget=0,wecanDisplayed=0,wecanFrame=0;
+  let wecanTarget=0,wecanDisplayed=0,wecanFrame=0,wecanLastTime=0;
 
   function applyWecan(p){
     root.style.setProperty('--wecan-p',p.toFixed(4));
     const compact=innerWidth<=760;
-    const solidFade=smootherstep(range(p,.035,compact?.20:.22));
-    const portalReveal=smootherstep(range(p,.10,compact?.34:.38));
-    const maskExpansion=smootherstep(range(p,compact?.22:.25,compact?.64:.70));
-    const maskScale=1+maskExpansion*(compact?8.4:10.2);
-    const maskOpacity=1-smootherstep(range(p,compact?.64:.69,compact?.77:.82));
-    const outlineIn=smoothstep(range(p,.10,.23));
-    const outlineOut=1-smoothstep(range(p,compact?.43:.49,compact?.66:.73));
-    const finalOpacity=smootherstep(range(p,compact?.70:.77,compact?.90:.95));
-    const openingOpacity=1-smoothstep(range(p,.09,.28));
-    const hintOpacity=(1-smoothstep(range(p,.08,.24)))*.76;
-    const imageOpacity=.86+portalReveal*.14;
-    const imageScale=(compact?1.075:1.105)-smootherstep(range(p,.08,.78))*(compact?.075:.105);
-    const imageY=(1-portalReveal)*(compact?1.05:1.35)-smootherstep(range(p,.36,.82))*(compact?.35:.55);
-    const imageFocus=48-smootherstep(range(p,.20,.86))*(compact?5:3);
-    const mobileWordProgress=smootherstep(range(p,.04,.58));
-    const mobileWordOpacity=1-smootherstep(range(p,.42,.68));
-    const mobileCurtainOpacity=1-smootherstep(range(p,.12,.62));
+    const wordExpand=smootherstep(range(p,.055,compact?.58:.62));
+    const wordOpacity=1-smootherstep(range(p,compact?.46:.50,compact?.66:.70));
+    const curtainOpacity=.46*(1-smootherstep(range(p,.12,compact?.58:.62)));
+    const portalReveal=smootherstep(range(p,.10,compact?.52:.56));
+    const finalOpacity=smootherstep(range(p,compact?.70:.73,compact?.91:.93));
+    const openingOpacity=1-smoothstep(range(p,.08,.27));
+    const hintOpacity=(1-smoothstep(range(p,.08,.26)))*.78;
+    const imageScale=(compact?1.045:1.065)-smootherstep(range(p,.08,.88))*(compact?.045:.065);
+    const imageY=(1-portalReveal)*(compact?.55:.85)-smootherstep(range(p,.40,.90))*(compact?.18:.32);
+    const imageFocus=(compact?43:48)-smootherstep(range(p,.24,.88))*(compact?2.5:2);
 
-    root.style.setProperty('--wecan-mobile-word-scale',(1+mobileWordProgress*2.15).toFixed(4));
-    root.style.setProperty('--wecan-mobile-word-opacity',mobileWordOpacity.toFixed(4));
-    root.style.setProperty('--wecan-mobile-curtain-opacity',mobileCurtainOpacity.toFixed(4));
-    root.style.setProperty('--wecan-solid-opacity',(1-solidFade).toFixed(4));
-    root.style.setProperty('--wecan-solid-scale',(1+solidFade*.045).toFixed(4));
-    root.style.setProperty('--wecan-solid-blur',(solidFade*3.5).toFixed(2)+'px');
+    root.style.setProperty('--wecan-mobile-word-scale',(1+wordExpand*(compact?4.5:5.2)).toFixed(4));
+    root.style.setProperty('--wecan-mobile-word-opacity',wordOpacity.toFixed(4));
+    root.style.setProperty('--wecan-mobile-curtain-opacity',curtainOpacity.toFixed(4));
+    root.style.setProperty('--wecan-solid-opacity','0');
+    root.style.setProperty('--wecan-solid-scale','1');
+    root.style.setProperty('--wecan-solid-blur','0px');
     root.style.setProperty('--wecan-reveal-progress',portalReveal.toFixed(4));
-    root.style.setProperty('--wecan-image-opacity',imageOpacity.toFixed(4));
+    root.style.setProperty('--wecan-image-opacity','1');
     root.style.setProperty('--wecan-image-scale',imageScale.toFixed(4));
     root.style.setProperty('--wecan-image-y',imageY.toFixed(3)+'%');
     root.style.setProperty('--wecan-image-focus',imageFocus.toFixed(2)+'%');
-    root.style.setProperty('--wecan-mask-scale',maskScale.toFixed(4));
-    root.style.setProperty('--wecan-mask-opacity',maskOpacity.toFixed(4));
-    root.style.setProperty('--wecan-outline-opacity',(outlineIn*outlineOut*.82).toFixed(4));
+    root.style.setProperty('--wecan-mask-scale','1');
+    root.style.setProperty('--wecan-mask-opacity','0');
+    root.style.setProperty('--wecan-outline-opacity','0');
     root.style.setProperty('--wecan-opening-opacity',openingOpacity.toFixed(4));
     root.style.setProperty('--wecan-final-opacity',finalOpacity.toFixed(4));
-    root.style.setProperty('--wecan-final-y',((1-finalOpacity)*(compact?30:42)).toFixed(2)+'px');
-    root.style.setProperty('--wecan-final-rotate',((1-finalOpacity)*(compact?3:7)).toFixed(2)+'deg');
+    root.style.setProperty('--wecan-final-y',((1-finalOpacity)*(compact?26:38)).toFixed(2)+'px');
+    root.style.setProperty('--wecan-final-rotate',((1-finalOpacity)*(compact?2:5)).toFixed(2)+'deg');
     root.style.setProperty('--wecan-hint-opacity',hintOpacity.toFixed(4));
   }
-  function animateWecan(){
+  function animateWecan(now=performance.now()){
     wecanFrame=0;
+    const dt=wecanLastTime?Math.min(.05,(now-wecanLastTime)/1000):1/60;
+    wecanLastTime=now;
     const delta=wecanTarget-wecanDisplayed;
-    wecanDisplayed+=delta*(Math.abs(delta)>.16?.12:.085);
-    if(Math.abs(delta)<.00012)wecanDisplayed=wecanTarget;
+    wecanDisplayed+=delta*(1-Math.exp(-(innerWidth<=760?8.8:10.8)*dt));
+    if(Math.abs(delta)<.00008)wecanDisplayed=wecanTarget;
     applyWecan(wecanDisplayed);
-    if(Math.abs(wecanTarget-wecanDisplayed)>.00012)wecanFrame=requestAnimationFrame(animateWecan);
+    if(Math.abs(wecanTarget-wecanDisplayed)>.00008)wecanFrame=requestAnimationFrame(animateWecan);
   }
   function updateWecan(){
     if(!wecanTrack)return;
-    const r=wecanTrack.getBoundingClientRect(),span=Math.max(1,r.height-innerHeight);
+    const viewportH=window.visualViewport?.height||innerHeight;
+    const r=wecanTrack.getBoundingClientRect(),span=Math.max(1,r.height-viewportH);
     wecanTarget=clamp(-r.top/span);
     if(!wecanFrame)wecanFrame=requestAnimationFrame(animateWecan);
   }
@@ -396,6 +394,7 @@
   let resizeFrame=0;
   addEventListener('scroll',updateScroll,{passive:true});
   addEventListener('resize',()=>{cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(handleResize)},{passive:true});
+  window.visualViewport?.addEventListener('resize',()=>{cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(handleResize)},{passive:true});
   addEventListener('orientationchange',()=>setTimeout(handleResize,120),{passive:true});
   document.getElementById('year').textContent=new Date().getFullYear();
   renderPortfolio('all');setLanguage(language);
