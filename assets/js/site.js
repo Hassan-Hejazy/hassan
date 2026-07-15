@@ -4,6 +4,14 @@
   const clamp=v=>Math.max(0,Math.min(1,v));
   let language=(new URLSearchParams(location.search).get('lang')||localStorage.getItem('bymeli-language')||'en')==='ar'?'ar':'en';
 
+  function syncViewport(){
+    const viewportHeight=Math.round(window.visualViewport?.height||window.innerHeight||0);
+    if(viewportHeight>0) root.style.setProperty('--viewport-h',viewportHeight+'px');
+    root.classList.toggle('short-landscape',window.innerWidth>window.innerHeight&&viewportHeight<=560);
+  }
+  syncViewport();
+  window.visualViewport?.addEventListener('resize',syncViewport,{passive:true});
+
   const preloader=document.getElementById('preloader');
   const preloaderBar=document.getElementById('preloaderBar');
   const preloaderPercent=document.getElementById('preloaderPercent');
@@ -50,6 +58,7 @@
   setTimeout(finishPreloader,3200);
 
   const header=document.getElementById('siteHeader');
+  const whatsappButton=document.querySelector('.whatsapp');
   const menuToggle=document.getElementById('menuToggle');
   const mobileNav=document.getElementById('mobileNav');
   const mobileMenuClose=document.getElementById('mobileMenuClose');
@@ -99,7 +108,7 @@
     document.body.classList.toggle('lock',open);
     if(open)toggleMega(false);
   }
-  menuToggle.addEventListener('click',()=>toggleMenu());
+  menuToggle?.addEventListener('click',()=>toggleMenu());
   mobileMenuClose?.addEventListener('click',()=>toggleMenu(false));
   mobileNav.addEventListener('click',e=>{if(e.target===mobileNav)toggleMenu(false)});
   mobileNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
@@ -184,10 +193,19 @@
   };
 
   function initBuild(){
-    if(window.THREE&&window.BuildScene&&buildCanvas){
+    if(buildReady||!buildCanvas)return;
+    if(window.THREE&&window.BuildScene){
       buildReady=window.BuildScene.init(buildCanvas);
       if(buildReady)buildCanvas.parentElement.classList.add('model-active');
     }
+  }
+  function queueBuildInit(){
+    if(!buildTrack)return;
+    if(!('IntersectionObserver' in window)){initBuild();return;}
+    const observer=new IntersectionObserver(entries=>{
+      if(entries.some(entry=>entry.isIntersecting)){observer.disconnect();initBuild();}
+    },{rootMargin:'700px 0px',threshold:0});
+    observer.observe(buildTrack);
   }
   function updateBuildCopy(force=false){
     const stage=Math.min(4,Math.floor(buildProgress*5));
@@ -230,7 +248,7 @@
   function cardClass(i){if(i%9===0||i%9===6)return'wide';if(i%7===4)return'tall';return''}
   function renderPortfolio(filter='all'){
     activeFilter=filter;visibleItems=galleryData.filter(x=>filter==='all'||x.cat===filter);
-    grid.innerHTML=visibleItems.map((item,i)=>`<article class="portfolio-card ${cardClass(i)}" data-index="${i}" tabindex="0" role="button" aria-label="${language==='ar'?item.ar:item.en}"><div class="portfolio-image-wrap"><img src="${item.img}" data-original-src="${item.img}" alt="${language==='ar'?item.ar:item.en}" loading="eager" decoding="async"></div><div class="portfolio-meta"><span>${String(i+1).padStart(2,'0')} / ${catLabel[language][item.cat]}</span><h3>${language==='ar'?item.ar:item.en}</h3></div></article>`).join('');
+    grid.innerHTML=visibleItems.map((item,i)=>`<article class="portfolio-card ${cardClass(i)}" data-index="${i}" tabindex="0" role="button" aria-label="${language==='ar'?item.ar:item.en}"><div class="portfolio-image-wrap"><img src="${item.img}" data-original-src="${item.img}" alt="${language==='ar'?item.ar:item.en}" loading="${i<4?'eager':'lazy'}" fetchpriority="${i<2?'high':'auto'}" decoding="async"></div><div class="portfolio-meta"><span>${String(i+1).padStart(2,'0')} / ${catLabel[language][item.cat]}</span><h3>${language==='ar'?item.ar:item.en}</h3></div></article>`).join('');
     grid.querySelectorAll('.portfolio-card').forEach(card=>{
       const image=card.querySelector('img');
       image.addEventListener('load',()=>card.classList.add('image-ready'),{once:true});
@@ -303,9 +321,26 @@
   form.addEventListener('submit',e=>{e.preventDefault();const d=new FormData(form),name=String(d.get('name')||'').trim(),company=String(d.get('company')||'').trim(),email=String(d.get('email')||'').trim(),phone=String(d.get('phone')||'').trim(),message=String(d.get('message')||'').trim();if(!name||!email||!message){formStatus.textContent=language==='ar'?'فضلاً، عبّئ الاسم والبريد الإلكتروني ونبذة المشروع.':'Please complete the name, email and project brief.';return}const lines=language==='ar'?['السلام عليكم فريق باي ملي،',`الاسم: ${name}`,company?`الشركة: ${company}`:null,`البريد الإلكتروني: ${email}`,phone?`الهاتف: ${phone}`:null,`تفاصيل المشروع: ${message}`].filter(Boolean):['Hello By Meli,',`Name: ${name}`,company?`Company: ${company}`:null,`Email: ${email}`,phone?`Phone: ${phone}`:null,`Project brief: ${message}`].filter(Boolean);formStatus.textContent=language==='ar'?'جارٍ فتح واتساب...':'Opening WhatsApp...';window.open(`https://wa.me/966599699226?text=${encodeURIComponent(lines.join('\n'))}`,'_blank','noopener')});
 
   let scrollTicking=false;
-  function updateScroll(){header.classList.toggle('scrolled',scrollY>18);updateBuild();updateWecan();if(!scrollTicking){scrollTicking=true;requestAnimationFrame(()=>{updateMotion();scrollTicking=false})}}
-  addEventListener('scroll',updateScroll,{passive:true});addEventListener('resize',()=>{refreshMotionTargets();updateBuild();updateWecan();updateMotion()});
+  function updateScroll(){
+    header.classList.toggle('scrolled',scrollY>18);
+    whatsappButton?.classList.toggle('visible',innerWidth>680||scrollY>Math.min(320,innerHeight*.42));
+    updateBuild();updateWecan();
+    if(!scrollTicking){scrollTicking=true;requestAnimationFrame(()=>{updateMotion();scrollTicking=false})}
+  }
+  function handleResize(){
+    syncViewport();
+    refreshMotionTargets();
+    updateBuild();
+    updateWecan();
+    updateMotion();
+    if(innerWidth>=1190&&mobileNav?.classList.contains('open'))toggleMenu(false);
+    if(innerWidth<=1190&&megaMenu?.classList.contains('open'))toggleMega(false);
+  }
+  let resizeFrame=0;
+  addEventListener('scroll',updateScroll,{passive:true});
+  addEventListener('resize',()=>{cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(handleResize)},{passive:true});
+  addEventListener('orientationchange',()=>setTimeout(handleResize,120),{passive:true});
   document.getElementById('year').textContent=new Date().getFullYear();
   renderPortfolio('all');setLanguage(language);
-  setTimeout(initBuild,50);updateScroll();
+  queueBuildInit();updateScroll();
 })();

@@ -43,7 +43,7 @@
   }
 
   let renderer,scene,camera;
-  let groups=[],progress=0,current=-1,visible=true,dragging=false,lastX=0,touchYaw=0,targetTouchYaw=0;
+  let groups=[],progress=0,current=-1,visible=false,pageVisible=!document.hidden,dragging=false,lastX=0,touchYaw=0,targetTouchYaw=0;
   const animated={people:[],screens:[],spots:[],rings:[],routeMarkers:[],statusLights:[],fans:[]};
   const centers=[
     new THREE.Vector3(0,0,0),
@@ -271,8 +271,10 @@
     canvas.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;canvas.setPointerCapture?.(e.pointerId)});
     canvas.addEventListener('pointermove',e=>{if(!dragging)return;targetTouchYaw+=(e.clientX-lastX)*.004;lastX=e.clientX});
     ['pointerup','pointercancel'].forEach(k=>canvas.addEventListener(k,e=>{dragging=false;try{canvas.releasePointerCapture?.(e.pointerId)}catch(_){}}));
-    window.addEventListener('resize',resize);window.addEventListener('scroll',update,{passive:true});
-    document.addEventListener('visibilitychange',()=>visible=!document.hidden);
+    const visibilityObserver=new IntersectionObserver(entries=>{visible=entries.some(entry=>entry.isIntersecting)},{rootMargin:'240px 0px',threshold:0});
+    visibilityObserver.observe(sticky);
+    window.addEventListener('resize',resize,{passive:true});window.addEventListener('scroll',update,{passive:true});
+    document.addEventListener('visibilitychange',()=>{pageVisible=!document.hidden});
     document.addEventListener('languagechange',()=>{current=-1;setCopy(Math.min(5,Math.floor(clamp(progress/.84)*6)),progress>.89)});
   }
 
@@ -296,7 +298,7 @@
   function update(){const r=track.getBoundingClientRect(),span=Math.max(1,r.height-innerHeight);progress=clamp(-r.top/span);const i=Math.min(5,Math.floor(clamp(progress/.84)*6));setCopy(i,progress>.89)}
 
   function render(){
-    if(renderer&&visible){
+    if(renderer&&visible&&pageVisible){
       const p=progress,t=performance.now()*.001;targetTouchYaw*=.94;touchYaw+=(targetTouchYaw-touchYaw)*.08;
       if(p<.84){
         const raw=(p/.84)*5,base=Math.floor(raw),next=Math.min(5,base+1),local=smooth(raw-base),a=centers[base],b=centers[next];
@@ -323,5 +325,10 @@
     requestAnimationFrame(render);
   }
 
-  init();
+  if('IntersectionObserver' in window){
+    const bootstrap=new IntersectionObserver(entries=>{
+      if(entries.some(entry=>entry.isIntersecting)){bootstrap.disconnect();init();}
+    },{rootMargin:'800px 0px',threshold:0});
+    bootstrap.observe(track);
+  }else{init();}
 })();

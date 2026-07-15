@@ -4,7 +4,8 @@
    ========================================================================== */
 window.BuildScene = (function(){
   let renderer, scene, camera, clock, canvas;
-  let W = 0, H = 0, progress = 0, ready = false;
+  let W = 0, H = 0, progress = 0, ready = false, sceneVisible = false;
+  const mobile = matchMedia('(max-width:760px)').matches;
 
   let rootGroup, environmentGroup;
   let floorGrid, floorPlane, floorGlow, footprintLine, footprintCorners = [];
@@ -28,7 +29,7 @@ window.BuildScene = (function(){
   function seg(p,a,b){ return clamp01((p-a)/(b-a)); }
 
   function setShadow(mesh, cast, receive){
-    mesh.castShadow = !!cast;
+    mesh.castShadow = !!cast && !mobile;
     mesh.receiveShadow = !!receive;
     return mesh;
   }
@@ -502,17 +503,17 @@ window.BuildScene = (function(){
     W = parent.clientWidth; H = parent.clientHeight;
 
     try {
-      renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:'high-performance' });
+      renderer = new THREE.WebGLRenderer({ canvas, antialias:!mobile, alpha:true, powerPreference:'high-performance' });
     } catch(err) {
       return false;
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.2 : 1.8));
     renderer.setSize(W, H, false);
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.sortObjects = true;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.05;
-    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.enabled = !mobile;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     scene = new THREE.Scene();
@@ -523,12 +524,14 @@ window.BuildScene = (function(){
     scene.add(new THREE.HemisphereLight(0xE7D3A6, 0x1A1711, 1.0));
     const sun = new THREE.DirectionalLight(0xfff0c8, 1.18);
     sun.position.set(6.2, 9.6, 7.8);
-    sun.castShadow = true;
-    sun.shadow.mapSize.set(1024,1024);
-    sun.shadow.camera.left = -12;
-    sun.shadow.camera.right = 12;
-    sun.shadow.camera.top = 12;
-    sun.shadow.camera.bottom = -12;
+    sun.castShadow = !mobile;
+    if(!mobile){
+      sun.shadow.mapSize.set(1024,1024);
+      sun.shadow.camera.left = -12;
+      sun.shadow.camera.right = 12;
+      sun.shadow.camera.top = 12;
+      sun.shadow.camera.bottom = -12;
+    }
     scene.add(sun);
 
     rootGroup = new THREE.Group();
@@ -544,9 +547,15 @@ window.BuildScene = (function(){
     clock = new THREE.Clock();
     ready = true;
     canvas.parentElement.classList.add('model-active');
+    applyProgress();
+    renderer.render(scene,camera);
+    const visibilityObserver=new IntersectionObserver(entries=>{
+      sceneVisible=entries.some(entry=>entry.isIntersecting);
+    },{rootMargin:'240px 0px',threshold:0});
+    visibilityObserver.observe(parent);
     renderLoop();
 
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', resize,{passive:true});
     return true;
   }
 
@@ -770,8 +779,10 @@ window.BuildScene = (function(){
 
   function renderLoop(){
     if(!ready) return;
-    applyProgress();
-    renderer.render(scene, camera);
+    if(sceneVisible && !document.hidden){
+      applyProgress();
+      renderer.render(scene, camera);
+    }
     requestAnimationFrame(renderLoop);
   }
 
