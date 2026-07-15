@@ -4,7 +4,7 @@
    ========================================================================== */
 window.BuildScene = (function(){
   let renderer, scene, camera, clock, canvas, parentEl, resizeObserver, visibilityObserver;
-  let W = 0, H = 0, progress = 0, ready = false, sceneVisible = false;
+  let W = 0, H = 0, progress = 0, targetProgress = 0, ready = false, sceneVisible = false;
   const mobileQuery = matchMedia('(max-width:760px)');
   const Q = window.BYMELI_QUALITY || null;
   function isMobile(){ return mobileQuery.matches; }
@@ -608,7 +608,7 @@ window.BuildScene = (function(){
     renderer.setSize(W, H, false);
   }
 
-  function update(p){ progress = clamp01(p); }
+  function update(p){ targetProgress = clamp01(p); }
 
   function applyProgress(){
     const p = progress;
@@ -824,6 +824,9 @@ window.BuildScene = (function(){
   function renderLoop(){
     if(!ready) return;
     if(sceneVisible && !document.hidden){
+      const delta = targetProgress - progress;
+      progress += delta * (Math.abs(delta) > .18 ? .105 : .075);
+      if(Math.abs(delta) < .00012) progress = targetProgress;
       applyProgress();
       renderer.render(scene, camera);
     }

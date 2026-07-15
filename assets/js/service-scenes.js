@@ -322,6 +322,17 @@
     let renderer,scene,camera,root,materials,observer,resizeObserver;
     let visible=false,initialized=false,dragging=false,startX=0,startY=0,lastX=0,lastY=0,yaw=.55,pitch=.24,targetYaw=.55,targetPitch=.24,auto=0;
     const type=canvas.dataset.scene;
+    function viewportProfile(){
+      const r=frame.getBoundingClientRect(),w=Math.max(1,r.width),h=Math.max(1,r.height),aspect=w/h;
+      const portrait=Math.max(0,Math.min(1,(.9-aspect)/.38));
+      const wideScene=(type==='booth'||type==='crowd'||type==='av');
+      const base=w<680?(wideScene?10.9:10.45):(wideScene?9.55:9.15);
+      return {w,h,aspect,portrait,fov:w<680?54+portrait*4:(w<980?47:42),radius:base+portrait*(wideScene?2.7:2.25)};
+    }
+    function qualityRatio(w,h){
+      const dpr=window.devicePixelRatio||1,compact=w<760,cap=compact?1.95:2.25,maxPixels=compact?2200000:4200000;
+      return Math.max(1,Math.min(dpr,cap,Math.sqrt(maxPixels/Math.max(1,w*h))));
+    }
 
     function initialize(){
       if(initialized) return;
@@ -329,13 +340,14 @@
       try{
         renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance',precision:'highp',stencil:false});
       }catch(e){fallback(canvas);return;}
-      if(Q) Q.configureRenderer(renderer,{exposure:1.11}); else {renderer.setPixelRatio(Math.min(devicePixelRatio||1,2.25));renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.11;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;}
+      if(Q) Q.configureRenderer(renderer,{exposure:1.11,pixelCap:mobile?1.95:2.25}); else {renderer.setPixelRatio(Math.min(devicePixelRatio||1,2.25));renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.11;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;}
       scene=new THREE.Scene();
       materials=baseScene(scene,renderer);
       root=new THREE.Group();scene.add(root);
       (factories[type]||factories.booth)(root,materials);
       if(Q) Q.addContactShadow(root,renderer,6.0,.48,.305);
-      camera=new THREE.PerspectiveCamera(mobile?48:42,1,.1,80);
+      const profile=viewportProfile();
+      camera=new THREE.PerspectiveCamera(profile.fov,1,.1,80);
       resize();
       bindInteraction();
       frame.classList.add('ready');
@@ -344,9 +356,9 @@
 
     function resize(){
       if(!renderer||!camera) return;
-      const r=frame.getBoundingClientRect();
-      const w=Math.max(1,r.width),h=Math.max(1,r.height);
-      renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=w<680?50:42;camera.updateProjectionMatrix();
+      const profile=viewportProfile(),w=profile.w,h=profile.h;
+      renderer.setPixelRatio(qualityRatio(w,h));
+      renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=profile.fov;camera.updateProjectionMatrix();
     }
 
     function bindInteraction(){
@@ -378,9 +390,9 @@
         const t=performance.now()*.001;
         if(!dragging&&!reduce){auto+=.0016;targetYaw+=Math.sin(t*.33)*.00035;}
         yaw+=(targetYaw-yaw)*.07;pitch+=(targetPitch-pitch)*.07;
-        const radius=mobile?10.1:9.1;
-        camera.position.set(Math.sin(yaw)*radius,3.15+pitch*2.1,Math.cos(yaw)*radius);
-        camera.lookAt(0,1.65,0);
+        const profile=viewportProfile(),radius=profile.radius;
+        camera.position.set(Math.sin(yaw)*radius,3.15+profile.portrait*.24+pitch*2.1,Math.cos(yaw)*radius);
+        camera.lookAt(0,1.65+profile.portrait*.08,0);
         root.rotation.y=Math.sin(t*.28)*.035;
         animateDetails(t);
         renderer.render(scene,camera);
@@ -392,8 +404,9 @@
       entries.forEach(entry=>{
         visible=entry.isIntersecting;
         if(visible&&!initialized) initialize();
+        if(visible&&initialized){requestAnimationFrame(resize);setTimeout(resize,100);}
       });
-    },{threshold:.08,rootMargin:'120px'});
+    },{threshold:.04,rootMargin:'180px'});
     observer.observe(frame);
     resizeObserver=new ResizeObserver(()=>resize());resizeObserver.observe(frame);
   }

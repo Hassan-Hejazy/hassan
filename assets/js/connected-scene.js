@@ -17,6 +17,21 @@
   const clamp=v=>Math.max(0,Math.min(1,v));
   const lerp=(a,b,t)=>a+(b-a)*t;
   const smooth=v=>v*v*(3-2*v);
+  const smoother=v=>v*v*v*(v*(v*6-15)+10);
+  function viewportProfile(){
+    const r=sticky.getBoundingClientRect();
+    const w=Math.max(1,r.width),h=Math.max(1,r.height),aspect=w/h;
+    const portrait=clamp((.88-aspect)/.34);
+    const short=clamp((720-h)/240);
+    return {w,h,aspect,portrait,short,fov:w<700?lerp(54,60,Math.max(portrait,short*.7)):(w<1050?47:43),radius:(w<700?11.5:9.25)+portrait*3.4+short*.75};
+  }
+  function qualityRatio(w,h){
+    const dpr=window.devicePixelRatio||1;
+    const compact=w<760;
+    const cap=compact?2:2.35;
+    const maxPixels=compact?2800000:5500000;
+    return Math.max(1,Math.min(dpr,cap,Math.sqrt(maxPixels/Math.max(1,w*h))));
+  }
 
   const copy={
     en:[
@@ -44,7 +59,7 @@
   }
 
   let renderer,scene,camera;
-  let groups=[],progress=0,current=-1,visible=false,pageVisible=!document.hidden,dragging=false,lastX=0,touchYaw=0,targetTouchYaw=0;
+  let groups=[],progress=0,targetProgress=0,current=-1,visible=false,pageVisible=!document.hidden,dragging=false,lastX=0,touchYaw=0,targetTouchYaw=0;
   const animated={people:[],screens:[],spots:[],rings:[],routeMarkers:[],statusLights:[],fans:[]};
   const centers=[
     new THREE.Vector3(0,0,0),
@@ -238,7 +253,7 @@
 
   function init(){
     try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance',precision:'highp',stencil:false})}catch(e){canvas.style.display='none';fallback.style.opacity='.55';return}
-    if(Q)Q.configureRenderer(renderer,{exposure:1.10});else{renderer.setPixelRatio(Math.min(devicePixelRatio||1,2.2));renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.10;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;}
+    if(Q)Q.configureRenderer(renderer,{exposure:1.10,pixelCap:mobile?2:2.35});else{renderer.setPixelRatio(Math.min(devicePixelRatio||1,2.2));renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.10;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;}
     if(Q){const tex=Q.prepareTexture(Q.makeScreenTexture('CONNECTED PRODUCTION ROUTE'),renderer);M.screen.map=tex;M.screen.emissiveMap=tex;M.screen.needsUpdate=true;}
     scene=new THREE.Scene();scene.background=new THREE.Color(0x0d0b08);scene.fog=new THREE.FogExp2(0x0d0b08,.017);if(Q)Q.studioEnvironment(scene);
     scene.add(new THREE.HemisphereLight(0xf0deba,0x14110d,1.05));
@@ -267,13 +282,19 @@
     camera=new THREE.PerspectiveCamera(mobile?52:43,1,.1,190);resize();bind();sticky.classList.add('model-active');update();render();
   }
 
-  function resize(){if(!renderer)return;const r=sticky.getBoundingClientRect(),w=Math.max(1,r.width),h=Math.max(1,r.height);renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=w<700?52:43;camera.updateProjectionMatrix()}
+  function resize(){
+    if(!renderer)return;
+    const profile=viewportProfile(),w=profile.w,h=profile.h;
+    renderer.setPixelRatio(qualityRatio(w,h));
+    renderer.setSize(w,h,false);
+    camera.aspect=w/h;camera.fov=profile.fov;camera.updateProjectionMatrix();
+  }
   function bind(){
     canvas.style.touchAction='pan-y';
     canvas.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;canvas.setPointerCapture?.(e.pointerId)});
     canvas.addEventListener('pointermove',e=>{if(!dragging)return;targetTouchYaw+=(e.clientX-lastX)*.004;lastX=e.clientX});
     ['pointerup','pointercancel'].forEach(k=>canvas.addEventListener(k,e=>{dragging=false;try{canvas.releasePointerCapture?.(e.pointerId)}catch(_){}}));
-    const visibilityObserver=new IntersectionObserver(entries=>{visible=entries.some(entry=>entry.isIntersecting)},{rootMargin:'240px 0px',threshold:0});
+    const visibilityObserver=new IntersectionObserver(entries=>{visible=entries.some(entry=>entry.isIntersecting);if(visible){requestAnimationFrame(resize);setTimeout(resize,120)}},{rootMargin:'240px 0px',threshold:0});
     visibilityObserver.observe(sticky);
     window.addEventListener('resize',resize,{passive:true});window.addEventListener('scroll',update,{passive:true});
     document.addEventListener('visibilitychange',()=>{pageVisible=!document.hidden});
@@ -297,22 +318,33 @@
       copyBox?.classList.remove('switching');
     },90);
   }
-  function update(){const r=track.getBoundingClientRect(),span=Math.max(1,r.height-innerHeight);progress=clamp(-r.top/span);const i=Math.min(5,Math.floor(clamp(progress/.84)*6));setCopy(i,progress>.89)}
+  function update(){
+    const r=track.getBoundingClientRect(),span=Math.max(1,r.height-innerHeight);
+    targetProgress=clamp(-r.top/span);
+    const i=Math.min(5,Math.floor(clamp(targetProgress/.82)*6));
+    setCopy(i,targetProgress>.86);
+  }
 
   function render(){
     if(renderer&&visible&&pageVisible){
-      const p=progress,t=performance.now()*.001;targetTouchYaw*=.94;touchYaw+=(targetTouchYaw-touchYaw)*.08;
-      if(p<.84){
-        const raw=(p/.84)*5,base=Math.floor(raw),next=Math.min(5,base+1),local=smooth(raw-base),a=centers[base],b=centers[next];
-        const target=new THREE.Vector3(lerp(a.x,b.x,local),1.62,lerp(a.z,b.z,local));
-        const angle=lerp(.14,.31,local)+touchYaw;
-        camera.position.set(target.x+Math.sin(angle)*9.25,3.92+Math.sin(local*Math.PI)*.18,target.z+Math.cos(angle)*9.25);
+      const delta=targetProgress-progress;
+      progress+=delta*(Math.abs(delta)>.16?.085:.062);
+      if(Math.abs(delta)<.00012)progress=targetProgress;
+      const p=progress,t=performance.now()*.001,profile=viewportProfile();targetTouchYaw*=.94;touchYaw+=(targetTouchYaw-touchYaw)*.075;
+      if(p<.82){
+        const raw=(p/.82)*5,base=Math.floor(raw),next=Math.min(5,base+1),local=smoother(clamp(raw-base)),a=centers[base],b=centers[next];
+        const target=new THREE.Vector3(lerp(a.x,b.x,local),1.62+profile.portrait*.12,lerp(a.z,b.z,local));
+        const angle=lerp(.12,.29,local)+touchYaw;
+        const radius=profile.radius;
+        camera.position.set(target.x+Math.sin(angle)*radius,3.92+profile.portrait*.38+Math.sin(local*Math.PI)*.22,target.z+Math.cos(angle)*radius);
         camera.lookAt(target);
       }else{
-        const q=smooth((p-.84)/.16),last=centers[5],close=new THREE.Vector3(last.x+3.2,4,last.z+8.4),overview=new THREE.Vector3(17,15,-38),lookClose=new THREE.Vector3(last.x,1.7,last.z),lookAll=new THREE.Vector3(0,1.2,-42);
+        const q=smoother(clamp((p-.82)/.18)),last=centers[5],close=new THREE.Vector3(last.x+(profile.portrait?3.8:3.2),4.15+profile.portrait*.35,last.z+8.9+profile.portrait*2.5),overview=new THREE.Vector3(17+profile.portrait*6,15+profile.portrait*5,-38),lookClose=new THREE.Vector3(last.x,1.7,last.z),lookAll=new THREE.Vector3(0,1.2,-42);
         camera.position.set(lerp(close.x,overview.x,q),lerp(close.y,overview.y,q),lerp(close.z,overview.z,q));
         camera.lookAt(lerp(lookClose.x,lookAll.x,q),lerp(lookClose.y,lookAll.y,q),lerp(lookClose.z,lookAll.z,q));
       }
+      const exit=smoother(clamp((p-.93)/.07));
+      sticky.style.setProperty('--connected-exit',exit.toFixed(4));
 
       groups.forEach((g,i)=>{g.rotation.y=Math.sin(t*.25+i)*.022});
       animated.people.forEach((o,n)=>{const bob=Math.sin(t*1.35+n*.55)*.023;o.torso.position.y=o.base+bob;o.head.position.y=o.headBase+bob});
