@@ -1,0 +1,47 @@
+BY MELI — CONNECTED CINEMATIC V12 AUDIT
+
+CONNECTED 3D REBUILD
+- Uses the detailed geometry from all six service-scene factories rather than simplified standalone shapes.
+- Six fitted camera compositions with dedicated portrait-phone, landscape, tablet and desktop profiles.
+- Explicit route bridge frames; no uncontrolled spline fly-through or camera traversal through geometry.
+- Active and incoming stations perform a coordinated scale-and-position hand-off during transitions.
+- Final connected overview assembles into a responsive 2x3 layout on portrait phones and 3x2 layout on larger screens.
+- Scroll progress uses one damping layer plus a catch-up speed limit to prevent large wheel or touch jumps from skipping camera frames.
+- One full-detail service environment is rendered at a time on phones; lightweight architectural proxies preserve continuity and reduce dropped frames.
+- Adaptive pixel density, high-precision rendering where supported, ACES tone mapping, antialiasing, desktop soft shadows and mobile-friendly light treatment.
+- Live status graphics, route packets, platform halos, scan beams, particles, animated service details and illuminated overview links.
+- WebGL context-loss recovery stops the previous animation loop before restarting, preventing duplicate render loops.
+
+SERVICE SCENES
+- Horizontal drag rotation remains enabled for mouse, touch and pen.
+- Vertical gestures continue native page scrolling; pinch zoom remains available.
+- Renderers can release and restart safely when scenes move far off screen.
+
+RESPONSIVE CAMERA AUDIT
+The actual Three.js scene graph and detailed model bounding boxes were evaluated through a renderer-independent camera-projection harness at:
+- 320 x 700
+- 390 x 844
+- 768 x 1024
+- 1024 x 768
+- 1440 x 900
+
+Results:
+- 0 failed fitted service hold frames at every viewport.
+- Final six-station overview fully contained at every viewport.
+- No invalid camera coordinates or missing model bounds.
+- Responsive final layouts: 2x3 portrait mobile, 3x2 tablet/desktop.
+
+SITE VALIDATION
+- JavaScript syntax checks passed for every local script.
+- CSS parsing completed without errors.
+- No duplicate HTML IDs.
+- No missing local image, script or stylesheet references.
+- No horizontal overflow at the five audited viewport sizes.
+- Connected canvas is pointer-transparent with pan-y scrolling.
+- Service canvases retain interactive drag with pan-y and pinch-zoom.
+- No stale body scroll lock was present.
+- Arabic diacritic scan passed.
+- ZIP integrity tested after packaging.
+
+ENVIRONMENT NOTE
+The execution environment does not expose a functioning WebGL GPU context. Final camera framing and scene behavior were therefore audited against the real Three.js scene graph with a renderer test harness; layout and native input paths were separately checked in Chromium.

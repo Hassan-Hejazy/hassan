@@ -1,11 +1,7 @@
-BY MELI — CONNECTED CINEMATIC V11
+BY MELI — CONNECTED CINEMATIC V12
 
-Open index.html to run the website.
+Open index.html to preview the website. For normal browser security and reliable asset loading, host the folder through a local or web server rather than opening it only with file://.
 
-This version contains the rebuilt cinematic connected 3D scene:
-- assets/js/connected-scene-v11.js
-- assets/css/connected-motion-v11.css
+V12 rebuilds the connected 3D sequence around the same detailed service-model factory used by the six individual service scenes. The scene includes responsive camera fitting, a scroll-synchronised six-stage walkthrough, lightweight mobile hand-offs, a final connected-system overview, live screens, animated production routes, scan light, particles and adaptive rendering quality.
 
-The V11 scene includes responsive camera fitting, cinematic transition pullbacks, live screen graphics, route-light animation, dust, floor halos, light beams and adaptive mobile/desktop rendering quality.
-
-See AUDIT-V11.txt for validation details.
+See AUDIT-V12.txt for validation details.

@@ -20,10 +20,11 @@
   const mobile = matchMedia('(max-width: 900px), (pointer: coarse)').matches;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const Q = window.BYMELI_QUALITY || null;
+  let sceneShadowEnabled = true;
 
   function shadow(mesh, enabled=true){
-    mesh.castShadow = enabled;
-    mesh.receiveShadow = enabled;
+    mesh.castShadow = enabled && sceneShadowEnabled;
+    mesh.receiveShadow = sceneShadowEnabled;
     return mesh;
   }
 
@@ -132,15 +133,15 @@
   function createMaterials(renderer){
     const screenTexture=Q?Q.prepareTexture(Q.makeScreenTexture('IMMERSIVE EVENT SYSTEM'),renderer):null;
     return {
-      gold:new THREE.MeshStandardMaterial({color:0xcda452,metalness:.55,roughness:.32,emissive:0x3e2a0a,emissiveIntensity:.16}),
-      goldDark:new THREE.MeshStandardMaterial({color:0x80612b,metalness:.4,roughness:.48}),
-      dark:new THREE.MeshStandardMaterial({color:0x211b15,metalness:.18,roughness:.62}),
-      cream:new THREE.MeshStandardMaterial({color:0xeadfc7,metalness:.04,roughness:.74}),
-      white:new THREE.MeshStandardMaterial({color:0xf7f2e8,metalness:.02,roughness:.78}),
-      teal:new THREE.MeshStandardMaterial({color:0x5d9589,metalness:.15,roughness:.48,emissive:0x153d38,emissiveIntensity:.12}),
-      glass:new THREE.MeshPhysicalMaterial({color:0xc5ddd7,transparent:true,opacity:.26,roughness:.08,metalness:.02,transmission:.56}),
-      screen:new THREE.MeshStandardMaterial({color:0x101715,map:screenTexture,emissive:0x79cbbd,emissiveMap:screenTexture,emissiveIntensity:1.12,roughness:.32,metalness:.08}),
-      red:new THREE.MeshStandardMaterial({color:0x8c3c31,roughness:.55})
+      gold:new THREE.MeshPhysicalMaterial({color:0xd4ad5d,metalness:.74,roughness:.23,clearcoat:.38,clearcoatRoughness:.18,emissive:0x352006,emissiveIntensity:.13,envMapIntensity:1.35}),
+      goldDark:new THREE.MeshPhysicalMaterial({color:0x765527,metalness:.54,roughness:.36,clearcoat:.2,clearcoatRoughness:.28,envMapIntensity:1.0}),
+      dark:new THREE.MeshStandardMaterial({color:0x1c1814,metalness:.28,roughness:.48,envMapIntensity:.84}),
+      cream:new THREE.MeshStandardMaterial({color:0xeee2ca,metalness:.03,roughness:.59,envMapIntensity:.58}),
+      white:new THREE.MeshStandardMaterial({color:0xf8f4eb,metalness:.02,roughness:.64,envMapIntensity:.5}),
+      teal:new THREE.MeshPhysicalMaterial({color:0x609f92,metalness:.2,roughness:.34,clearcoat:.18,clearcoatRoughness:.24,emissive:0x123d36,emissiveIntensity:.14,envMapIntensity:.96}),
+      glass:new THREE.MeshPhysicalMaterial({color:0xd2ebe5,transparent:true,opacity:.29,roughness:.045,metalness:.02,transmission:.62,clearcoat:.4,clearcoatRoughness:.05,envMapIntensity:1.35,depthWrite:false}),
+      screen:new THREE.MeshStandardMaterial({color:0x071310,map:screenTexture,emissive:0x7bd4c3,emissiveMap:screenTexture,emissiveIntensity:1.2,roughness:.22,metalness:.08,envMapIntensity:.72}),
+      red:new THREE.MeshStandardMaterial({color:0x91473b,roughness:.45,metalness:.08,envMapIntensity:.55})
     };
   }
 
@@ -317,6 +318,23 @@
 
   const factories={booth:createBooth,showroom:createShowroom,interior:createInterior,management:createManagement,crowd:createCrowd,av:createAV};
 
+  // Shared factory used by the connected cinematic scene. This keeps the
+  // standalone service models and the final connected environment visually
+  // consistent without creating six additional WebGL contexts.
+  window.ByMeliServiceFactory={
+    types:Object.keys(factories),
+    factories,
+    createMaterials,
+    setShadowEnabled(value){sceneShadowEnabled=Boolean(value);},
+    animate(group,time){
+      if(group?.userData.people)group.userData.people.forEach((p,i)=>{const bob=Math.sin(time*1.35+i*.55)*.022;p.torso.position.y=p.baseY+bob;p.head.position.y=1.05+bob;});
+      if(group?.userData.beams)group.userData.beams.forEach((b,i)=>b.intensity=1.72+Math.sin(time*1.9+i*.8)*.42);
+      if(group?.userData.led)group.userData.led.material.emissiveIntensity=1.02+Math.sin(time*3.1)*.13;
+      if(group?.userData.screen)group.userData.screen.material.emissiveIntensity=1.02+Math.sin(time*2.7)*.1;
+      if(group?.userData.flowMarkers)group.userData.flowMarkers.forEach((marker,i)=>{const u=(time*.09+marker.userData.offset)%1;const pos=marker.userData.curve.getPointAt(u);marker.position.copy(pos);marker.position.y=.37+Math.sin(time*3.4+i)*.02;});
+    }
+  };
+
   function initCanvas(initialCanvas){
     const frame=initialCanvas.closest('.canvas-frame');
     let canvas=initialCanvas;
@@ -418,6 +436,7 @@
       frame.classList.remove('webgl-fallback');
       initialized=true;
       const profile=computeViewportProfile();
+      sceneShadowEnabled=!profile.compact && Number(navigator.deviceMemory||6)>=4 && Number(navigator.hardwareConcurrency||6)>=4;
       if(Q)Q.configureRenderer(renderer,{exposure:1.09,pixelCap:qualityRatio(profile.w,profile.h)});
       else{
         renderer.outputEncoding=THREE.sRGBEncoding;
@@ -426,6 +445,7 @@
         renderer.shadowMap.enabled=true;
         renderer.shadowMap.type=THREE.PCFSoftShadowMap;
       }
+      renderer.shadowMap.enabled=sceneShadowEnabled;
       renderer.setPixelRatio(qualityRatio(profile.w,profile.h));
       scene=new THREE.Scene();
       materials=baseScene(scene,renderer);
