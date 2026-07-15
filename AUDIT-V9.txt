@@ -1,0 +1,26 @@
+BY MELI CONNECTED MOTION V9 — TARGETED AUDIT
+
+Connected 3D
+- Replaced late-stage camera jumps with cubic frame-to-frame camera and target interpolation.
+- Added a final hold on service 06 before the overview transition.
+- Increased scroll duration to provide consistent motion time across phone, tablet, laptop and desktop viewports.
+- Rebalanced eye-level yaw, elevation, framing margins and mobile panel clearance.
+- Added time-based, velocity-aware progress damping and faster camera convergence.
+- Added active route illumination and moving digital markers synchronized with the current service transition.
+- Increased adaptive pixel density and geometry detail.
+- Upgraded materials, environment response, screen emission, glass and metallic finish.
+- Enabled real-time shadows on capable mobile devices while retaining contact-shadow fallback on weaker devices.
+
+Service 3D drag
+- Enabled pointer interaction on every service canvas on mouse, touch and pen devices.
+- Horizontal touch gestures rotate the model; vertical gestures remain native page scrolling.
+- Added direction locking, pointer capture only after horizontal intent, bounded pitch and smooth inertia.
+- Preserved pinch zoom and vertical scrolling through touch-action: pan-y pinch-zoom.
+- Restores drag after WebGL context recreation or scene reinitialization.
+
+Static validation
+- JavaScript syntax checked with node --check.
+- CSS parsed without stylesheet errors.
+- No duplicate HTML IDs.
+- No missing local script, stylesheet or image references.
+- Local Three.js dependency retained.

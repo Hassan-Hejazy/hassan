@@ -323,7 +323,8 @@
     let renderer=null,scene=null,camera=null,root=null,materials=null;
     let observer=null,resizeObserver=null,disposeTimer=0,profileCache=null,modelSphere=null;
     let initialized=false,visible=false,pageVisible=!document.hidden,dragging=false,initAttempts=0;
-    let lastX=0,lastY=0,yaw=0,pitch=.11,targetYaw=0,targetPitch=.11,rafId=0;
+    let lastX=0,lastY=0,startX=0,startY=0,activePointer=null,gestureMode='idle';
+    let yaw=0,pitch=.11,targetYaw=0,targetPitch=.11,rafId=0;
     const type=canvas.dataset.scene;
     const yawByType={booth:.32,showroom:-.34,interior:.22,management:-.28,crowd:.16,av:-.22};
     yaw=targetYaw=yawByType[type]??.24;
@@ -343,8 +344,8 @@
       const dpr=window.devicePixelRatio||1,compact=w<760;
       const memory=Number(navigator.deviceMemory||6),cores=Number(navigator.hardwareConcurrency||6);
       const low=compact&&(memory<=3||cores<=4);
-      const cap=compact?(low?1.45:1.85):2.2;
-      const maxPixels=compact?(low?1450000:2250000):4300000;
+      const cap=compact?(low?1.5:2.0):2.25;
+      const maxPixels=compact?(low?1600000:2700000):5000000;
       return Math.max(1,Math.min(dpr,cap,Math.sqrt(maxPixels/Math.max(1,w*h))));
     }
     function fitRadius(profile){
@@ -359,8 +360,8 @@
     function replaceCanvas(){
       const clone=canvas.cloneNode(false);
       clone.width=1;clone.height=1;
-      clone.style.pointerEvents=mobile?'none':'auto';
-      clone.style.touchAction=mobile?'pan-y':'none';
+      clone.style.pointerEvents='auto';
+      clone.style.touchAction='pan-y pinch-zoom';
       canvas.replaceWith(clone);
       canvas=clone;
     }
@@ -387,7 +388,7 @@
         }catch(_){}
       }
       renderer=scene=camera=root=materials=modelSphere=null;
-      initialized=false;dragging=false;profileCache=null;
+      initialized=false;dragging=false;activePointer=null;gestureMode='idle';profileCache=null;
       frame.classList.remove('ready','model-active','webgl-fallback');
       frame.style.backgroundImage='';
       if(replace&&canvas.isConnected)replaceCanvas();
@@ -451,15 +452,62 @@
     }
 
     function bindInteraction(){
-      canvas.style.pointerEvents=mobile?'none':'auto';
-      canvas.style.touchAction=mobile?'pan-y':'none';
+      canvas.style.pointerEvents='auto';
+      canvas.style.touchAction='pan-y pinch-zoom';
+      canvas.style.cursor='grab';
+      const currentLabel=canvas.getAttribute('aria-label')||'Interactive 3D model';
+      if(!currentLabel.includes('Drag horizontally'))canvas.setAttribute('aria-label',currentLabel+'. Drag horizontally to rotate.');
+
       canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();setTimeout(()=>disposeScene(true),0);},{once:true});
-      if(mobile)return;
-      canvas.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture?.(e.pointerId);});
-      canvas.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;targetYaw+=dx*.0055;targetPitch=Math.max(-.03,Math.min(.31,targetPitch+dy*.0024));});
-      const end=e=>{dragging=false;try{canvas.releasePointerCapture?.(e.pointerId);}catch(_){}};
-      canvas.addEventListener('pointerup',end);canvas.addEventListener('pointercancel',end);canvas.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')dragging=false;});
-      canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();setTimeout(()=>disposeScene(true),0);},{once:true});
+      canvas.addEventListener('dragstart',e=>e.preventDefault());
+
+      canvas.addEventListener('pointerdown',e=>{
+        if(e.isPrimary===false||activePointer!==null)return;
+        activePointer=e.pointerId;
+        startX=lastX=e.clientX;
+        startY=lastY=e.clientY;
+        gestureMode=e.pointerType==='mouse'?'rotate':'pending';
+        dragging=gestureMode==='rotate';
+        if(dragging){
+          canvas.classList.add('is-dragging');
+          canvas.style.cursor='grabbing';
+          try{canvas.setPointerCapture?.(e.pointerId);}catch(_){}
+        }
+      });
+
+      canvas.addEventListener('pointermove',e=>{
+        if(e.pointerId!==activePointer)return;
+        const totalX=e.clientX-startX,totalY=e.clientY-startY;
+        if(gestureMode==='pending'){
+          if(Math.hypot(totalX,totalY)<7)return;
+          if(Math.abs(totalX)>Math.abs(totalY)*1.12){
+            gestureMode='rotate';dragging=true;
+            canvas.classList.add('is-dragging');canvas.style.cursor='grabbing';
+            try{canvas.setPointerCapture?.(e.pointerId);}catch(_){}
+          }else{
+            gestureMode='scroll';dragging=false;
+            return;
+          }
+        }
+        if(gestureMode!=='rotate')return;
+        e.preventDefault();
+        const dx=e.clientX-lastX,dy=e.clientY-lastY;
+        lastX=e.clientX;lastY=e.clientY;
+        const speed=e.pointerType==='mouse'?.0052:.0062;
+        targetYaw+=dx*speed;
+        targetPitch=Math.max(-.045,Math.min(.32,targetPitch+dy*.0022));
+      },{passive:false});
+
+      const end=e=>{
+        if(activePointer!==null&&e.pointerId!==activePointer)return;
+        dragging=false;gestureMode='idle';activePointer=null;
+        canvas.classList.remove('is-dragging');canvas.style.cursor='grab';
+        try{canvas.releasePointerCapture?.(e.pointerId);}catch(_){}
+      };
+      canvas.addEventListener('pointerup',end);
+      canvas.addEventListener('pointercancel',end);
+      canvas.addEventListener('lostpointercapture',end);
+      canvas.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'&&gestureMode==='rotate')end(e);});
     }
 
     function animateDetails(t){
