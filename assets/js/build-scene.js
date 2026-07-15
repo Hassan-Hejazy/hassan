@@ -6,6 +6,7 @@ window.BuildScene = (function(){
   let renderer, scene, camera, clock, canvas;
   let W = 0, H = 0, progress = 0, ready = false, sceneVisible = false;
   const mobile = matchMedia('(max-width:760px)').matches;
+  const Q = window.BYMELI_QUALITY || null;
 
   let rootGroup, environmentGroup;
   let floorGrid, floorPlane, floorGlow, footprintLine, footprintCorners = [];
@@ -29,7 +30,7 @@ window.BuildScene = (function(){
   function seg(p,a,b){ return clamp01((p-a)/(b-a)); }
 
   function setShadow(mesh, cast, receive){
-    mesh.castShadow = !!cast && !mobile;
+    mesh.castShadow = !!cast;
     mesh.receiveShadow = !!receive;
     return mesh;
   }
@@ -46,6 +47,7 @@ window.BuildScene = (function(){
     ctx.fillRect(0,0,s,s);
     const tex = new THREE.CanvasTexture(c);
     tex.needsUpdate = true;
+    if(Q && renderer) Q.prepareTexture(tex,renderer);
     return tex;
   }
 
@@ -79,6 +81,7 @@ window.BuildScene = (function(){
     });
     const tex = new THREE.CanvasTexture(c);
     tex.needsUpdate = true;
+    if(Q && renderer) Q.prepareTexture(tex,renderer);
     return tex;
   }
 
@@ -155,7 +158,7 @@ window.BuildScene = (function(){
     environmentGroup.add(floorPlane);
 
     const glowMat = new THREE.MeshBasicMaterial({ color:0x2A2111, transparent:true, opacity:0.55 });
-    floorGlow = new THREE.Mesh(new THREE.CircleGeometry(8.2, 48), glowMat);
+    floorGlow = new THREE.Mesh(new THREE.CircleGeometry(8.2, 96), glowMat);
     floorGlow.rotation.x = -Math.PI/2;
     floorGlow.position.y = 0.01;
     rootGroup.add(floorGlow);
@@ -188,7 +191,7 @@ window.BuildScene = (function(){
     footprintLine = new THREE.Line(geo, new THREE.LineBasicMaterial({ color:GOLD_SOFT, transparent:true, opacity:0, depthTest:false }));
     rootGroup.add(footprintLine);
 
-    const cornerGeo = new THREE.RingGeometry(0.09, 0.15, 20);
+    const cornerGeo = new THREE.RingGeometry(0.09, 0.15, 40);
     footprintCorners = pts.slice(0,4).map(pt=>{
       const ring = new THREE.Mesh(cornerGeo, new THREE.MeshBasicMaterial({ color:GOLD_SOFT, transparent:true, opacity:0, side:THREE.DoubleSide }));
       ring.position.copy(pt);
@@ -310,13 +313,13 @@ window.BuildScene = (function(){
       [ 0,height+0.12,spanZ*0.55],
     ];
     rigPositions.forEach((p, i)=>{
-      const head = setShadow(new THREE.Mesh(new THREE.CylinderGeometry(0.11,0.14,0.28,14), new THREE.MeshStandardMaterial({ color:0x111111, metalness:0.82, roughness:0.3 })), true, true);
+      const head = setShadow(new THREE.Mesh(new THREE.CylinderGeometry(0.11,0.14,0.28,24), new THREE.MeshStandardMaterial({ color:0x111111, metalness:0.82, roughness:0.3 })), true, true);
       head.rotation.x = Math.PI/2;
       head.position.set(p[0], p[1]+0.22, p[2]);
       rootGroup.add(head);
 
       const beam = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.09, 0.95, 3.4, 16, 1, true),
+        new THREE.CylinderGeometry(0.09, 0.95, 3.4, 28, 1, true),
         new THREE.MeshBasicMaterial({ color:i===2 ? TEAL : 0xFFE6A6, transparent:true, opacity:0, depthWrite:false, side:THREE.DoubleSide })
       );
       beam.position.set(p[0], height*0.6, p[2]);
@@ -354,7 +357,7 @@ window.BuildScene = (function(){
     tvFrame.position.set(2.72, -0.24, -0.28); rootGroup.add(tvFrame); finalDetails.push({ mesh:tvFrame, targetY:1.95, emissive:false });
     const tvStem = setShadow(new THREE.Mesh(new THREE.BoxGeometry(0.12, 1.15, 0.12), new THREE.MeshStandardMaterial({ color:0x0f1011, roughness:0.4, metalness:0.22, transparent:true, opacity:0 })), true, true);
     tvStem.position.set(2.72, -0.24, -0.28); rootGroup.add(tvStem); finalDetails.push({ mesh:tvStem, targetY:0.82, emissive:false });
-    const tvBase = setShadow(new THREE.Mesh(new THREE.CylinderGeometry(0.34,0.42,0.08,18), new THREE.MeshStandardMaterial({ color:0x1a1b1d, roughness:0.54, metalness:0.14, transparent:true, opacity:0 })), true, true);
+    const tvBase = setShadow(new THREE.Mesh(new THREE.CylinderGeometry(0.34,0.42,0.08,32), new THREE.MeshStandardMaterial({ color:0x1a1b1d, roughness:0.54, metalness:0.14, transparent:true, opacity:0 })), true, true);
     tvBase.position.set(2.72, -0.24, -0.28); rootGroup.add(tvBase); finalDetails.push({ mesh:tvBase, targetY:0.04, emissive:false });
     rentalTvScreen = new THREE.Mesh(new THREE.PlaneGeometry(1.62, .92), new THREE.MeshStandardMaterial({ map:adTex, color:0xffffff, emissive:0x6dbeb1, emissiveIntensity:0, roughness:0.24, metalness:0.02, transparent:true, opacity:0, polygonOffset:true, polygonOffsetFactor:-2, polygonOffsetUnits:-2 }));
     rentalTvScreen.position.set(2.72, -0.24, -0.205); rentalTvScreen.renderOrder = 4; rootGroup.add(rentalTvScreen); finalDetails.push({ mesh:rentalTvScreen, targetY:1.95, emissive:true, maxEmissive:1.35 });
@@ -402,7 +405,7 @@ window.BuildScene = (function(){
       plinth.position.set(x,-0.24,z); rootGroup.add(plinth); finalDetails.push({ mesh:plinth, targetY:0.53, emissive:false });
       const cap = setShadow(new THREE.Mesh(new THREE.BoxGeometry(0.78,0.05,0.78), goldMat.clone()), true, true);
       cap.position.set(x,-0.24,z); rootGroup.add(cap); finalDetails.push({ mesh:cap, targetY:1.07, emissive:true });
-      const object = setShadow(new THREE.Mesh(new THREE.CylinderGeometry(0.12,0.12,0.28,16), idx===0 ? tealMat.clone() : creamMat.clone()), true, true);
+      const object = setShadow(new THREE.Mesh(new THREE.CylinderGeometry(0.12,0.12,0.28,28), idx===0 ? tealMat.clone() : creamMat.clone()), true, true);
       object.position.set(x,-0.24,z); rootGroup.add(object); finalDetails.push({ mesh:object, targetY:1.25, emissive:false });
     });
     const nicheBack = setShadow(new THREE.Mesh(new THREE.BoxGeometry(0.16,2.15,1.95), darkMat.clone()), true, true);
@@ -435,7 +438,7 @@ window.BuildScene = (function(){
 
     // suspended decorative halo rings
     [0,1].forEach(i=>{
-      const ring = new THREE.Mesh(new THREE.TorusGeometry(0.54 + i*0.24, 0.025, 12, 56), new THREE.MeshStandardMaterial({ color:0xF1D797, emissive:GOLD, emissiveIntensity:0, roughness:0.28, metalness:0.42, transparent:true, opacity:0 }));
+      const ring = new THREE.Mesh(new THREE.TorusGeometry(0.54 + i*0.24, 0.025, 18, 96), new THREE.MeshStandardMaterial({ color:0xF1D797, emissive:GOLD, emissiveIntensity:0, roughness:0.28, metalness:0.42, transparent:true, opacity:0 }));
       ring.rotation.x = Math.PI/2; ring.position.set(-2.1 + i*1.0, -0.24, -0.3); rootGroup.add(ring); hangingFeatures.push({ mesh:ring, targetY:3.35 + i*0.28 });
     });
   }
@@ -454,18 +457,18 @@ window.BuildScene = (function(){
     rootGroup.add(deskGlow);
     furniture.push({ mesh:deskGlow, targetY:0.86, isTrim:true });
 
-    const table = setShadow(new THREE.Mesh(new THREE.CylinderGeometry(0.58,0.72,0.08,18), darkMat.clone()), true, true);
+    const table = setShadow(new THREE.Mesh(new THREE.CylinderGeometry(0.58,0.72,0.08,36), darkMat.clone()), true, true);
     table.position.set(-2.28, -0.2, 1.7);
     rootGroup.add(table);
     furniture.push({ mesh:table, targetY:0.82 });
 
-    const tableStem = setShadow(new THREE.Mesh(new THREE.CylinderGeometry(0.09,0.12,0.7,14), darkMat.clone()), true, true);
+    const tableStem = setShadow(new THREE.Mesh(new THREE.CylinderGeometry(0.09,0.12,0.7,24), darkMat.clone()), true, true);
     tableStem.position.set(-2.28, -0.2, 1.7);
     rootGroup.add(tableStem);
     furniture.push({ mesh:tableStem, targetY:0.35 });
 
     [-3.1,-2.28,-1.46].forEach(x=>{
-      const stool = setShadow(new THREE.Mesh(new THREE.CylinderGeometry(0.22,0.18,0.56,14), darkMat.clone()), true, true);
+      const stool = setShadow(new THREE.Mesh(new THREE.CylinderGeometry(0.22,0.18,0.56,24), darkMat.clone()), true, true);
       stool.position.set(x, -0.2, 2.42);
       rootGroup.add(stool);
       furniture.push({ mesh:stool, targetY:0.28 });
@@ -475,12 +478,12 @@ window.BuildScene = (function(){
     const potMat = new THREE.MeshStandardMaterial({ color:0x2A241D, roughness:0.68, metalness:0.15, transparent:true, opacity:0 });
     const leafMat = new THREE.MeshStandardMaterial({ color:0x415F4D, roughness:0.82, metalness:0.02, transparent:true, opacity:0 });
     [[4.15,2.35],[-4.15,2.15]].forEach(([x,z])=>{
-      const pot = setShadow(new THREE.Mesh(new THREE.CylinderGeometry(0.22,0.28,0.42,14), potMat.clone()), true, true);
+      const pot = setShadow(new THREE.Mesh(new THREE.CylinderGeometry(0.22,0.28,0.42,24), potMat.clone()), true, true);
       pot.position.set(x,-0.2,z);
       rootGroup.add(pot);
       decor.push({ mesh:pot, targetY:0.21, isLeaf:false });
       for(let i=0;i<5;i++){
-        const leaf = setShadow(new THREE.Mesh(new THREE.SphereGeometry(0.18 + i*0.015, 12, 10), leafMat.clone()), true, true);
+        const leaf = setShadow(new THREE.Mesh(new THREE.SphereGeometry(0.18 + i*0.015, 20, 16), leafMat.clone()), true, true);
         leaf.scale.set(0.8, 1.35, 0.62);
         leaf.position.set(x + (i-2)*0.05, -0.2, z + (i%2?0.08:-0.08));
         rootGroup.add(leaf);
@@ -503,35 +506,25 @@ window.BuildScene = (function(){
     W = parent.clientWidth; H = parent.clientHeight;
 
     try {
-      renderer = new THREE.WebGLRenderer({ canvas, antialias:!mobile, alpha:true, powerPreference:'high-performance' });
+      renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:'high-performance', precision:'highp', stencil:false });
     } catch(err) {
       return false;
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.2 : 1.8));
+    if(Q) Q.configureRenderer(renderer,{exposure:1.10});
+    else { renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2.25)); renderer.outputEncoding=THREE.sRGBEncoding; renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.10; renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap; }
     renderer.setSize(W, H, false);
-    renderer.outputEncoding = THREE.sRGBEncoding;
-    renderer.sortObjects = true;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.05;
-    renderer.shadowMap.enabled = !mobile;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x120E0A, 0.028);
+    scene.fog = new THREE.FogExp2(0x120E0A, 0.026);
+    if(Q) Q.studioEnvironment(scene);
 
     camera = new THREE.PerspectiveCamera(W < 720 ? 52 : 42, W / H, 0.1, 100);
 
     scene.add(new THREE.HemisphereLight(0xE7D3A6, 0x1A1711, 1.0));
     const sun = new THREE.DirectionalLight(0xfff0c8, 1.18);
     sun.position.set(6.2, 9.6, 7.8);
-    sun.castShadow = !mobile;
-    if(!mobile){
-      sun.shadow.mapSize.set(1024,1024);
-      sun.shadow.camera.left = -12;
-      sun.shadow.camera.right = 12;
-      sun.shadow.camera.top = 12;
-      sun.shadow.camera.bottom = -12;
-    }
+    if(Q) Q.tuneShadow(sun,Q.shadowMapSize,12);
+    else { sun.castShadow=true; sun.shadow.mapSize.set(2048,2048); sun.shadow.camera.left=-12; sun.shadow.camera.right=12; sun.shadow.camera.top=12; sun.shadow.camera.bottom=-12; }
     scene.add(sun);
 
     rootGroup = new THREE.Group();
@@ -543,6 +536,7 @@ window.BuildScene = (function(){
     addLighting();
     addFurniture();
     addRealism();
+    if(Q) Q.addContactShadow(rootGroup,renderer,8.4,.42,.014);
 
     clock = new THREE.Clock();
     ready = true;

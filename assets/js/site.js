@@ -184,11 +184,11 @@
       ['Furniture, Gifts & Handover','Furniture, styling items, branded gifts and final detailing complete the stand before testing, cleaning and handover.']
     ],
     ar:[
-      ['الموقع وتحديد المساحة','نحدّد أبعاد المساحة ونقاط الخدمات ومسارات الحركة بدقة قبل تركيب أول عنصر إنشائي.'],
+      ['الموقع وتحديد المساحة','نحدد أبعاد المساحة ونقاط الخدمات ومسارات الحركة بدقة قبل تركيب أول عنصر إنشائي.'],
       ['الهيكل الإنشائي','ترتفع الأعمدة والجسور والتدعيمات لتشكيل الهيكل الذي يحمل الجدران واللافتات والشاشات ونقاط الإضاءة.'],
       ['التكسية والجرافيكس وورق الجدران','نثبت ألواح الجدران والجرافيكس المطبوعة وورق الجدران المخصص لتظهر الهوية النهائية للجناح بصورة واضحة ومهنية.'],
-      ['الإضاءة والشاشات والأنظمة التقنية','ندمج الإضاءة والشاشات المؤجرة والأنظمة التقنية، ثم نشغّلها ونختبرها ونضبطها بما يخدم تجربة الزائر.'],
-      ['الأثاث والهدايا والتسليم','نضيف الأثاث والتنسيق والهدايا الدعائية والتفاصيل النهائية، ثم نختبر الجناح وننظفه ونسلّمه جاهزاً للاستقبال.']
+      ['الإضاءة والشاشات والأنظمة التقنية','ندمج الإضاءة والشاشات المؤجرة والأنظمة التقنية، ثم نشغلها ونختبرها ونضبطها بما يخدم تجربة الزائر.'],
+      ['الأثاث والهدايا والتسليم','نضيف الأثاث والتنسيق والهدايا الدعائية والتفاصيل النهائية، ثم نختبر الجناح وننظفه ونسلمه جاهزا للاستقبال.']
     ]
   };
 
@@ -230,7 +230,7 @@
     {img:'assets/img/port-catalonia.jpg',cat:'interiors',en:'Executive Brand Space',ar:'مساحة راقية للعلامة',bodyEn:'A premium brand environment balancing reception, privacy and material quality.',bodyAr:'مساحة راقية توازن بين الاستقبال والخصوصية وجودة المواد.'},
     {img:'assets/img/port-chandelier.jpg',cat:'interiors',en:'Executive Reception',ar:'استقبال تنفيذي',bodyEn:'Lighting, finishes and proportion create a polished executive arrival.',bodyAr:'تصنع الإضاءة والتشطيبات المدروسة تجربة استقبال تنفيذية متكاملة.'},
     {img:'assets/img/port-jaawdah.jpg',cat:'stands',en:'Jaawdah Pavilion',ar:'جناح جودة',bodyEn:'A bold branded pavilion built around strong visibility and product communication.',bodyAr:'جناح بهوية قوية يضمن وضوح العلامة وسهولة تقديم المنتجات.'},
-    {img:'assets/img/port-jewelry.jpg',cat:'showrooms',en:'Jewellery Display',ar:'عرض مجوهرات',bodyEn:'A refined retail display environment for premium product presentation.',bodyAr:'بيئة عرض راقية صُممت لإبراز المنتجات الفاخرة بأفضل صورة.'},
+    {img:'assets/img/port-jewelry.jpg',cat:'showrooms',en:'Jewellery Display',ar:'عرض مجوهرات',bodyEn:'A refined retail display environment for premium product presentation.',bodyAr:'بيئة عرض راقية صممت لإبراز المنتجات الفاخرة بأفضل صورة.'},
     {img:'assets/img/port-mawaduna.jpg',cat:'stands',en:'Mawaduna Brand Space',ar:'مساحة موادنا',bodyEn:'An immersive pavilion layout organizing product categories and visitor movement.',bodyAr:'تخطيط متكامل للجناح ينظم فئات المنتجات ومسارات الزوار.'},
     {img:'assets/img/port-render.jpg',cat:'production',en:'3D Concept Development',ar:'تطوير التصور ثلاثي الأبعاد',bodyEn:'Pre-production visualization aligning spatial strategy, design and technical planning.',bodyAr:'تصور قبل التنفيذ يربط التخطيط المكاني بالتصميم والمتطلبات التقنية.'},
     {img:'assets/img/port-samer.jpg',cat:'interiors',en:'VIP Lounge',ar:'صالة كبار الشخصيات',bodyEn:'A quieter hospitality setting using premium material and controlled lighting.',bodyAr:'صالة ضيافة هادئة بمواد راقية وإضاءة مدروسة.'},
@@ -287,17 +287,22 @@
     // portal expands to full frame and reveals the final project statement.
     const solidFade=smoothstep(range(p,.045,.225));
     const portalReveal=smoothstep(range(p,.12,.39));
-    const maskExpansion=smoothstep(range(p,.27,.73));
-    const maskScale=1+maskExpansion*9.7;
-    const maskOpacity=1-smoothstep(range(p,.70,.84));
+    const maskExpansion=smoothstep(range(p,.25,.69));
+    const maskScale=1+maskExpansion*10.8;
+    const maskOpacity=1-smoothstep(range(p,.68,.82));
     const outlineIn=smoothstep(range(p,.12,.24));
     const outlineOut=1-smoothstep(range(p,.49,.73));
-    const finalOpacity=smoothstep(range(p,.77,.95));
+    const finalOpacity=smoothstep(range(p,.80,.955));
     const openingOpacity=1-smoothstep(range(p,.12,.31));
     const hintOpacity=(1-smoothstep(range(p,.10,.27)))*.76;
-    const imageOpacity=.84+portalReveal*.16;
-    const imageScale=1.13-smoothstep(range(p,.12,.78))*.13;
-    const imageY=(1-portalReveal)*1.6-smoothstep(range(p,.38,.82))*.65;
+    const imageIn=.88+portalReveal*.12;
+    const hasWecan3d=!!(window.WeCanScene&&window.WeCanScene.ready);
+    const imageOut=hasWecan3d?(1-smoothstep(range(p,.54,.82))):1;
+    const imageOpacity=imageIn*imageOut;
+    const imageScale=1.105-smoothstep(range(p,.10,.76))*.105;
+    const imageY=(1-portalReveal)*1.35-smoothstep(range(p,.38,.80))*.55;
+    const scene3dOpacity=hasWecan3d?smoothstep(range(p,.49,.75))*(1-smoothstep(range(p,.965,1))):0;
+    const scene3dScale=1.055-smoothstep(range(p,.48,.91))*.055;
 
     root.style.setProperty('--wecan-solid-opacity',(1-solidFade).toFixed(4));
     root.style.setProperty('--wecan-solid-scale',(1+solidFade*.055).toFixed(4));
@@ -306,6 +311,8 @@
     root.style.setProperty('--wecan-image-opacity',imageOpacity.toFixed(4));
     root.style.setProperty('--wecan-image-scale',imageScale.toFixed(4));
     root.style.setProperty('--wecan-image-y',imageY.toFixed(3)+'%');
+    root.style.setProperty('--wecan-3d-opacity',scene3dOpacity.toFixed(4));
+    root.style.setProperty('--wecan-3d-scale',scene3dScale.toFixed(4));
     root.style.setProperty('--wecan-mask-scale',maskScale.toFixed(4));
     root.style.setProperty('--wecan-mask-opacity',maskOpacity.toFixed(4));
     root.style.setProperty('--wecan-outline-opacity',(outlineIn*outlineOut*.82).toFixed(4));
@@ -314,11 +321,12 @@
     root.style.setProperty('--wecan-final-y',((1-finalOpacity)*44).toFixed(2)+'px');
     root.style.setProperty('--wecan-final-rotate',((1-finalOpacity)*7).toFixed(2)+'deg');
     root.style.setProperty('--wecan-hint-opacity',hintOpacity.toFixed(4));
+    if(window.WeCanScene) window.WeCanScene.update(p);
   }
   document.addEventListener('languagechange',updateWecan);
 
   const form=document.getElementById('contactForm'),formStatus=document.getElementById('formStatus');
-  form.addEventListener('submit',e=>{e.preventDefault();const d=new FormData(form),name=String(d.get('name')||'').trim(),company=String(d.get('company')||'').trim(),email=String(d.get('email')||'').trim(),phone=String(d.get('phone')||'').trim(),message=String(d.get('message')||'').trim();if(!name||!email||!message){formStatus.textContent=language==='ar'?'فضلاً، عبّئ الاسم والبريد الإلكتروني ونبذة المشروع.':'Please complete the name, email and project brief.';return}const lines=language==='ar'?['السلام عليكم فريق باي ملي،',`الاسم: ${name}`,company?`الشركة: ${company}`:null,`البريد الإلكتروني: ${email}`,phone?`الهاتف: ${phone}`:null,`تفاصيل المشروع: ${message}`].filter(Boolean):['Hello By Meli,',`Name: ${name}`,company?`Company: ${company}`:null,`Email: ${email}`,phone?`Phone: ${phone}`:null,`Project brief: ${message}`].filter(Boolean);formStatus.textContent=language==='ar'?'جارٍ فتح واتساب...':'Opening WhatsApp...';window.open(`https://wa.me/966599699226?text=${encodeURIComponent(lines.join('\n'))}`,'_blank','noopener')});
+  form.addEventListener('submit',e=>{e.preventDefault();const d=new FormData(form),name=String(d.get('name')||'').trim(),company=String(d.get('company')||'').trim(),email=String(d.get('email')||'').trim(),phone=String(d.get('phone')||'').trim(),message=String(d.get('message')||'').trim();if(!name||!email||!message){formStatus.textContent=language==='ar'?'فضلا، عبئ الاسم والبريد الإلكتروني ونبذة المشروع.':'Please complete the name, email and project brief.';return}const lines=language==='ar'?['السلام عليكم فريق باي ملي،',`الاسم: ${name}`,company?`الشركة: ${company}`:null,`البريد الإلكتروني: ${email}`,phone?`الهاتف: ${phone}`:null,`تفاصيل المشروع: ${message}`].filter(Boolean):['Hello By Meli,',`Name: ${name}`,company?`Company: ${company}`:null,`Email: ${email}`,phone?`Phone: ${phone}`:null,`Project brief: ${message}`].filter(Boolean);formStatus.textContent=language==='ar'?'جار فتح واتساب...':'Opening WhatsApp...';window.open(`https://wa.me/966599699226?text=${encodeURIComponent(lines.join('\n'))}`,'_blank','noopener')});
 
   let scrollTicking=false;
   function updateScroll(){

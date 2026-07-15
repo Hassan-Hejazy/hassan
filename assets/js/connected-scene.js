@@ -13,6 +13,7 @@
   const fallback=sticky.querySelector('.connected-fallback');
   const mobile=matchMedia('(max-width:760px)').matches;
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const Q=window.BYMELI_QUALITY||null;
   const clamp=v=>Math.max(0,Math.min(1,v));
   const lerp=(a,b,t)=>a+(b-a)*t;
   const smooth=v=>v*v*(3-2*v);
@@ -69,10 +70,10 @@
     glass:new THREE.MeshPhysicalMaterial({color:0xc6ded7,transparent:true,opacity:.25,roughness:.08,transmission:.52,thickness:.2})
   };
 
-  function sh(mesh,cast=true){mesh.castShadow=cast&&!mobile;mesh.receiveShadow=true;return mesh}
+  function sh(mesh,cast=true){mesh.castShadow=cast;mesh.receiveShadow=true;return mesh}
   function box(g,w,h,d,x,y,z,m=M.dark){const o=sh(new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m));o.position.set(x,y,z);g.add(o);return o}
-  function cyl(g,r1,r2,h,x,y,z,m=M.gold,seg=18){const o=sh(new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,seg),m));o.position.set(x,y,z);g.add(o);return o}
-  function sphere(g,r,x,y,z,m=M.cream,seg=14){const o=sh(new THREE.Mesh(new THREE.SphereGeometry(r,seg,Math.max(8,seg-2)),m));o.position.set(x,y,z);g.add(o);return o}
+  function cyl(g,r1,r2,h,x,y,z,m=M.gold,seg=28){const o=sh(new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,seg),m));o.position.set(x,y,z);g.add(o);return o}
+  function sphere(g,r,x,y,z,m=M.cream,seg=22){const o=sh(new THREE.Mesh(new THREE.SphereGeometry(r,seg,Math.max(8,seg-2)),m));o.position.set(x,y,z);g.add(o);return o}
   function monitor(g,x,y,z,w,h,rotation=0){
     const frame=box(g,w,h,.11,x,y,z,M.dark);frame.rotation.y=rotation;
     const s=new THREE.Mesh(new THREE.PlaneGeometry(w*.88,h*.78),M.screen.clone());
@@ -116,10 +117,10 @@
     [-.28,0,.28].forEach((dx,i)=>{const leg=cyl(rig,.025,.035,1.35,dx*.65,.7,(i-1)*.12,M.goldDark,8);leg.rotation.z=dx*.8});
     rig.position.set(x,0,z);rig.rotation.y=rotation;g.add(rig);
   }
-  function ceilingRing(g,x,y,z,r,color=0xcda452){const ring=new THREE.Mesh(new THREE.TorusGeometry(r,.045,10,48),new THREE.MeshBasicMaterial({color,transparent:true,opacity:.58}));ring.rotation.x=Math.PI/2;ring.position.set(x,y,z);g.add(ring);animated.rings.push(ring);return ring}
+  function ceilingRing(g,x,y,z,r,color=0xcda452){const ring=new THREE.Mesh(new THREE.TorusGeometry(r,.045,18,96),new THREE.MeshBasicMaterial({color,transparent:true,opacity:.58}));ring.rotation.x=Math.PI/2;ring.position.set(x,y,z);g.add(ring);animated.rings.push(ring);return ring}
   function pedestal(g){
-    const b=sh(new THREE.Mesh(new THREE.CylinderGeometry(5.3,5.8,.28,46),new THREE.MeshStandardMaterial({color:0x15110d,roughness:.88})),false);b.position.y=.14;g.add(b);
-    const ring=new THREE.Mesh(new THREE.RingGeometry(4.55,5.15,52),new THREE.MeshBasicMaterial({color:0xcda452,side:THREE.DoubleSide,transparent:true,opacity:.32}));ring.rotation.x=-Math.PI/2;ring.position.y=.29;g.add(ring);
+    const b=sh(new THREE.Mesh(new THREE.CylinderGeometry(5.3,5.8,.28,88),new THREE.MeshStandardMaterial({color:0x15110d,roughness:.88})),false);b.position.y=.14;g.add(b);
+    const ring=new THREE.Mesh(new THREE.RingGeometry(4.55,5.15,96),new THREE.MeshBasicMaterial({color:0xcda452,side:THREE.DoubleSide,transparent:true,opacity:.32}));ring.rotation.x=-Math.PI/2;ring.position.y=.29;g.add(ring);
     const grid=new THREE.GridHelper(10,14,0x6e5226,0x282119);grid.material.transparent=true;grid.material.opacity=.13;grid.position.y=.3;g.add(grid);
   }
   function product(g,x,y,z,m=M.teal){box(g,.28,.42,.28,x,y,z,m);cyl(g,.07,.09,.18,x,y+.3,z,M.gold,10)}
@@ -236,15 +237,16 @@
   }
 
   function init(){
-    try{renderer=new THREE.WebGLRenderer({canvas,antialias:!mobile,alpha:true,powerPreference:'high-performance'})}catch(e){canvas.style.display='none';fallback.style.opacity='.55';return}
-    renderer.setPixelRatio(Math.min(devicePixelRatio||1,mobile?1.18:1.6));renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.04;renderer.shadowMap.enabled=!mobile;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-    scene=new THREE.Scene();scene.background=new THREE.Color(0x0d0b08);scene.fog=new THREE.FogExp2(0x0d0b08,.018);
+    try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance',precision:'highp',stencil:false})}catch(e){canvas.style.display='none';fallback.style.opacity='.55';return}
+    if(Q)Q.configureRenderer(renderer,{exposure:1.10});else{renderer.setPixelRatio(Math.min(devicePixelRatio||1,2.2));renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.10;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;}
+    if(Q){const tex=Q.prepareTexture(Q.makeScreenTexture('CONNECTED PRODUCTION ROUTE'),renderer);M.screen.map=tex;M.screen.emissiveMap=tex;M.screen.needsUpdate=true;}
+    scene=new THREE.Scene();scene.background=new THREE.Color(0x0d0b08);scene.fog=new THREE.FogExp2(0x0d0b08,.017);if(Q)Q.studioEnvironment(scene);
     scene.add(new THREE.HemisphereLight(0xf0deba,0x14110d,1.05));
-    const key=new THREE.DirectionalLight(0xffe9bc,1.18);key.position.set(8,12,7);if(!mobile){key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-16;key.shadow.camera.right=16;key.shadow.camera.top=16;key.shadow.camera.bottom=-16}scene.add(key);
+    const key=new THREE.DirectionalLight(0xffe9bc,1.23);key.position.set(8,12,7);if(Q)Q.tuneShadow(key,Q.shadowMapSize,16);else{key.castShadow=true;key.shadow.mapSize.set(2048,2048);key.shadow.camera.left=-16;key.shadow.camera.right=16;key.shadow.camera.top=16;key.shadow.camera.bottom=-16}scene.add(key);
     const teal=new THREE.PointLight(0x66b7ab,.48,44);teal.position.set(-8,5,8);scene.add(teal);
 
     const floor=new THREE.Mesh(new THREE.PlaneGeometry(38,112),new THREE.MeshStandardMaterial({color:0x0f0d0a,roughness:.93}));floor.rotation.x=-Math.PI/2;floor.position.set(0,0,-42);floor.receiveShadow=true;scene.add(floor);
-    const grid=new THREE.GridHelper(110,76,0x6d5125,0x211b15);grid.position.z=-42;grid.material.transparent=true;grid.material.opacity=.115;scene.add(grid);
+    const grid=new THREE.GridHelper(110,76,0x6d5125,0x211b15);grid.position.z=-42;grid.material.transparent=true;grid.material.opacity=.115;scene.add(grid);if(Q)Q.addContactShadow(scene,renderer,15.5,.30,.012);
 
     const makers=[booth,showroom,interior,management,crowd,av];
     groups=makers.map((fn,i)=>{
