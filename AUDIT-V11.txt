@@ -1,0 +1,27 @@
+BY MELI — CONNECTED CINEMATIC V11 AUDIT
+
+Scope
+- Rebuilt the connected 3D scene from the stable V10 lifecycle base.
+- Corrected the broken V10 HTML references that pointed to missing V9 CSS and JavaScript files.
+- Added a single active V11 connected-scene script and stylesheet.
+
+Connected scene improvements
+- Camera choreography uses six service holds, wide cinematic transition frames and a centered final overview.
+- Mobile, tablet and desktop camera fitting is calculated from actual scene bounds and field of view.
+- Conservative projected-sphere camera audit passed at 27 scroll positions for 320x700, 390x844, 768x1024, 1024x768 and 1440x900.
+- Scroll input advances natively by 600px at all five tested viewports.
+- No horizontal overflow at any tested viewport.
+- Live screen graphics, illuminated route markers, active floor halos, light shafts, moving dust and a follow spotlight add environmental motion.
+- Adaptive pixel density and geometry detail profiles preserve quality while respecting mobile GPU limits.
+- WebGL retry and off-screen service-context lifecycle protections remain enabled.
+
+Validation
+- All local HTML asset references resolve.
+- No duplicate HTML IDs.
+- All JavaScript files pass Node syntax checks.
+- All CSS files parse without errors.
+- Connected camera/runtime test harness completed without JavaScript exceptions.
+- ZIP integrity verified.
+
+Environment note
+- The container does not expose a usable GPU WebGL context. Camera math, scene initialization and renderer behavior were audited with a renderer harness; physical-device Chrome/Safari remains the final visual GPU check.

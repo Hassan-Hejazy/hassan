@@ -1,12 +1,11 @@
-BY MELI PRODUCTION — AUDITED V5
+BY MELI — CONNECTED CINEMATIC V11
 
-Open index.html through a web server or deploy the complete folder to GitHub Pages.
-Do not upload index.html alone; keep the assets folder beside it.
+Open index.html to run the website.
 
-Primary revisions:
-- Connected 3D context lifecycle, mobile camera framing, walkthrough timing and final overview.
-- Responsive zoom balance for the six individual 3D service scenes.
-- Rebuilt full-screen WE CAN image transition with centered opening typography.
-- Native mobile and desktop scrolling retained throughout the page.
+This version contains the rebuilt cinematic connected 3D scene:
+- assets/js/connected-scene-v11.js
+- assets/css/connected-motion-v11.css
 
-See AUDIT-V5.txt for the detailed validation record.
+The V11 scene includes responsive camera fitting, cinematic transition pullbacks, live screen graphics, route-light animation, dust, floor halos, light beams and adaptive mobile/desktop rendering quality.
+
+See AUDIT-V11.txt for validation details.
