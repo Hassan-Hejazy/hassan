@@ -322,26 +322,6 @@
     let renderer,scene,camera,root,materials,observer,resizeObserver;
     let visible=false,initialized=false,dragging=false,startX=0,startY=0,lastX=0,lastY=0,yaw=.55,pitch=.24,targetYaw=.55,targetPitch=.24,auto=0;
     const type=canvas.dataset.scene;
-    const sceneBounds={
-      booth:[4.75,3.25],showroom:[4.55,3.15],interior:[4.35,2.9],
-      management:[4.45,3.05],crowd:[4.9,3.1],av:[4.8,3.25]
-    }[type]||[4.75,3.2];
-
-    function responsiveFov(width,height){
-      const aspect=width/Math.max(1,height);
-      if(aspect<.62) return 62;
-      if(aspect<.82) return 57;
-      if(width<680) return 53;
-      if(width<1050) return 47;
-      return 42;
-    }
-
-    function fittedRadius(){
-      const vfov=THREE.MathUtils.degToRad(camera.fov);
-      const vtan=Math.tan(vfov*.5);
-      const htan=Math.max(.08,vtan*Math.max(.38,camera.aspect));
-      return Math.max(sceneBounds[0]/htan,sceneBounds[1]/vtan)*1.1;
-    }
 
     function initialize(){
       if(initialized) return;
@@ -366,10 +346,7 @@
       if(!renderer||!camera) return;
       const r=frame.getBoundingClientRect();
       const w=Math.max(1,r.width),h=Math.max(1,r.height);
-      renderer.setSize(w,h,false);
-      camera.aspect=w/h;
-      camera.fov=responsiveFov(w,h);
-      camera.updateProjectionMatrix();
+      renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=w<680?50:42;camera.updateProjectionMatrix();
     }
 
     function bindInteraction(){
@@ -401,8 +378,8 @@
         const t=performance.now()*.001;
         if(!dragging&&!reduce){auto+=.0016;targetYaw+=Math.sin(t*.33)*.00035;}
         yaw+=(targetYaw-yaw)*.07;pitch+=(targetPitch-pitch)*.07;
-        const radius=Math.max(mobile?10.4:9.1,fittedRadius());
-        camera.position.set(Math.sin(yaw)*radius,3.15+pitch*2.1+(camera.aspect<.72?.22:0),Math.cos(yaw)*radius);
+        const radius=mobile?10.1:9.1;
+        camera.position.set(Math.sin(yaw)*radius,3.15+pitch*2.1,Math.cos(yaw)*radius);
         camera.lookAt(0,1.65,0);
         root.rotation.y=Math.sin(t*.28)*.035;
         animateDetails(t);
@@ -416,16 +393,8 @@
         visible=entry.isIntersecting;
         if(visible&&!initialized) initialize();
       });
-    },{threshold:.04,rootMargin:'320px'});
+    },{threshold:.08,rootMargin:'120px'});
     observer.observe(frame);
-    const maybeInitialize=()=>{
-      if(initialized)return;
-      const r=frame.getBoundingClientRect();
-      if(r.top<innerHeight+360&&r.bottom>-360){visible=true;initialize();}
-    };
-    addEventListener('scroll',maybeInitialize,{passive:true});
-    addEventListener('resize',maybeInitialize,{passive:true});
-    setTimeout(maybeInitialize,180);
     resizeObserver=new ResizeObserver(()=>resize());resizeObserver.observe(frame);
   }
 

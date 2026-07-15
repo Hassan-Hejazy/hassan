@@ -44,7 +44,7 @@
   }
 
   let renderer,scene,camera;
-  let groups=[],progress=0,targetProgress=0,current=-1,visible=false,pageVisible=!document.hidden,dragging=false,lastX=0,touchYaw=0,targetTouchYaw=0;
+  let groups=[],progress=0,current=-1,visible=false,pageVisible=!document.hidden,dragging=false,lastX=0,touchYaw=0,targetTouchYaw=0;
   const animated={people:[],screens:[],spots:[],rings:[],routeMarkers:[],statusLights:[],fans:[]};
   const centers=[
     new THREE.Vector3(0,0,0),
@@ -237,7 +237,6 @@
   }
 
   function init(){
-    if(renderer)return;
     try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance',precision:'highp',stencil:false})}catch(e){canvas.style.display='none';fallback.style.opacity='.55';return}
     if(Q)Q.configureRenderer(renderer,{exposure:1.10});else{renderer.setPixelRatio(Math.min(devicePixelRatio||1,2.2));renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.10;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;}
     if(Q){const tex=Q.prepareTexture(Q.makeScreenTexture('CONNECTED PRODUCTION ROUTE'),renderer);M.screen.map=tex;M.screen.emissiveMap=tex;M.screen.needsUpdate=true;}
@@ -268,23 +267,7 @@
     camera=new THREE.PerspectiveCamera(mobile?52:43,1,.1,190);resize();bind();sticky.classList.add('model-active');update();render();
   }
 
-  function viewportProfile(){
-    const r=sticky.getBoundingClientRect(),w=Math.max(1,r.width),h=Math.max(1,r.height),aspect=w/h;
-    const fov=aspect<.56?64:(aspect<.8?59:(w<700?54:(w<1050?47:43)));
-    return {w,h,aspect,fov};
-  }
-  function fitRadius(halfWidth=6.25,halfHeight=3.35,padding=1.12){
-    const vfov=THREE.MathUtils.degToRad(camera.fov),vtan=Math.tan(vfov*.5),htan=Math.max(.08,vtan*Math.max(.34,camera.aspect));
-    return Math.max(halfWidth/htan,halfHeight/vtan)*padding;
-  }
-  function resize(){
-    if(!renderer)return;
-    const profile=viewportProfile();
-    renderer.setSize(profile.w,profile.h,false);
-    camera.aspect=profile.aspect;
-    camera.fov=profile.fov;
-    camera.updateProjectionMatrix();
-  }
+  function resize(){if(!renderer)return;const r=sticky.getBoundingClientRect(),w=Math.max(1,r.width),h=Math.max(1,r.height);renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=w<700?52:43;camera.updateProjectionMatrix()}
   function bind(){
     canvas.style.touchAction='pan-y';
     canvas.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;canvas.setPointerCapture?.(e.pointerId)});
@@ -314,42 +297,21 @@
       copyBox?.classList.remove('switching');
     },90);
   }
-  function update(){const r=track.getBoundingClientRect(),span=Math.max(1,r.height-innerHeight);targetProgress=clamp(-r.top/span)}
+  function update(){const r=track.getBoundingClientRect(),span=Math.max(1,r.height-innerHeight);progress=clamp(-r.top/span);const i=Math.min(5,Math.floor(clamp(progress/.84)*6));setCopy(i,progress>.89)}
 
   function render(){
     if(renderer&&visible&&pageVisible){
-      const damping=reduce?1:(mobile?.105:.085);
-      progress+=(targetProgress-progress)*damping;
-      if(Math.abs(targetProgress-progress)<.0001)progress=targetProgress;
-      const p=progress,t=performance.now()*.001;
-      const stageIndex=Math.min(5,Math.floor(clamp(p/.84)*6));
-      setCopy(stageIndex,p>.89);
-      const exit=smooth(clamp((p-.925)/.075));
-      sticky.style.setProperty('--connected-exit',exit.toFixed(4));
-      sticky.style.setProperty('--connected-exit-y',(exit*24).toFixed(2)+'px');
-      sticky.style.setProperty('--connected-rail-y',(exit*18).toFixed(2)+'px');
-      sticky.style.setProperty('--connected-scrim-opacity',(1-exit*.78).toFixed(4));
-      sticky.style.setProperty('--connected-canvas-scale',(1-exit*.018).toFixed(5));
-      sticky.style.setProperty('--connected-canvas-opacity',(1-exit*.08).toFixed(4));
-      targetTouchYaw*=.94;touchYaw+=(targetTouchYaw-touchYaw)*.08;
+      const p=progress,t=performance.now()*.001;targetTouchYaw*=.94;touchYaw+=(targetTouchYaw-touchYaw)*.08;
       if(p<.84){
         const raw=(p/.84)*5,base=Math.floor(raw),next=Math.min(5,base+1),local=smooth(raw-base),a=centers[base],b=centers[next];
         const target=new THREE.Vector3(lerp(a.x,b.x,local),1.62,lerp(a.z,b.z,local));
         const angle=lerp(.14,.31,local)+touchYaw;
-        const radius=Math.max(mobile?11.4:9.25,fitRadius());
-        camera.position.set(target.x+Math.sin(angle)*radius,3.92+Math.sin(local*Math.PI)*.18+(camera.aspect<.72?.35:0),target.z+Math.cos(angle)*radius);
+        camera.position.set(target.x+Math.sin(angle)*9.25,3.92+Math.sin(local*Math.PI)*.18,target.z+Math.cos(angle)*9.25);
         camera.lookAt(target);
       }else{
-        const q=smooth((p-.84)/.16),last=centers[5],closeRadius=Math.max(mobile?11.5:8.8,fitRadius());
-        const close=new THREE.Vector3(last.x+closeRadius*.28,4.2+(camera.aspect<.72?.35:0),last.z+closeRadius*.92);
-        const overviewCenter=new THREE.Vector3(0,1.2,-42);
-        const worldRadius=48;
-        const vfov=THREE.MathUtils.degToRad(camera.fov),overviewDistance=worldRadius/Math.max(.26,Math.sin(vfov*.5))*1.03;
-        const overviewDirection=new THREE.Vector3(.52,.54,.66).normalize();
-        const overview=overviewCenter.clone().addScaledVector(overviewDirection,overviewDistance);
-        const lookClose=new THREE.Vector3(last.x,1.7,last.z);
+        const q=smooth((p-.84)/.16),last=centers[5],close=new THREE.Vector3(last.x+3.2,4,last.z+8.4),overview=new THREE.Vector3(17,15,-38),lookClose=new THREE.Vector3(last.x,1.7,last.z),lookAll=new THREE.Vector3(0,1.2,-42);
         camera.position.set(lerp(close.x,overview.x,q),lerp(close.y,overview.y,q),lerp(close.z,overview.z,q));
-        camera.lookAt(lerp(lookClose.x,overviewCenter.x,q),lerp(lookClose.y,overviewCenter.y,q),lerp(lookClose.z,overviewCenter.z,q));
+        camera.lookAt(lerp(lookClose.x,lookAll.x,q),lerp(lookClose.y,lookAll.y,q),lerp(lookClose.z,lookAll.z,q));
       }
 
       groups.forEach((g,i)=>{g.rotation.y=Math.sin(t*.25+i)*.022});
@@ -365,18 +327,10 @@
     requestAnimationFrame(render);
   }
 
-  function maybeInit(){
-    if(renderer)return;
-    const r=track.getBoundingClientRect();
-    if(r.top<innerHeight+900&&r.bottom>-900)init();
-  }
   if('IntersectionObserver' in window){
     const bootstrap=new IntersectionObserver(entries=>{
       if(entries.some(entry=>entry.isIntersecting)){bootstrap.disconnect();init();}
     },{rootMargin:'800px 0px',threshold:0});
     bootstrap.observe(track);
-  }
-  addEventListener('scroll',maybeInit,{passive:true});
-  addEventListener('resize',maybeInit,{passive:true});
-  setTimeout(maybeInit,120);
+  }else{init();}
 })();

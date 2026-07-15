@@ -1,39 +1,42 @@
-BY MELI — FIXED ULTRA-QUALITY RESPONSIVE VERSION
+BY MELI — ULTRA QUALITY RESPONSIVE VERSION
 
-This package is based only on the uploaded “bymeli-ultra-quality-responsive” version.
-Its existing content, service sections, workflow stages, imagery and visual direction were retained.
-
-RUN LOCALLY
+Open through a local or hosted web server:
   python3 -m http.server
-Then open the local address shown in the terminal.
+Then visit the local address shown in the terminal.
 
-RESPONSIVE 3D CORRECTIONS
-- Manufacturing camera distance now adapts to the real canvas aspect ratio so the full booth remains visible on portrait phones, tablets, landscape devices and desktop screens.
-- All individual service scenes use responsive camera fitting rather than one fixed mobile zoom level.
-- The connected 3D sequence uses responsive stage framing and a wider final system overview.
-- The WE CAN 3D finale is enabled on mobile with adaptive rendering and responsive camera framing.
-- WebGL renderers retain antialiasing, adaptive pixel density, soft shadows, studio reflections and off-screen pausing.
-- Additional initialization fallbacks improve reliability when users jump directly to a 3D section through an anchor link.
+ULTRA QUALITY 3D UPGRADE
+- Restored antialiasing across desktop, tablet and mobile renderers.
+- Replaced the previous near-1x mobile render cap with adaptive high-density supersampling.
+- Enabled soft dynamic shadows on supported devices with larger shadow maps and corrected shadow bias.
+- Added reflective studio environments, anisotropic texture filtering, mipmapping and contact shadows.
+- Added high-resolution branded screen graphics and sharper material response across the service scenes.
+- Increased geometric precision on primary floors, rings and display surfaces.
+- Maintained off-screen render pausing so quality does not require continuous background GPU use.
 
-SCROLL AND TRANSITION CORRECTIONS
-- Manufacturing, connected and WE CAN progress is damped for smoother scroll-driven motion.
-- The connected sequence now eases between stages and transitions into the following light section instead of ending abruptly.
-- WE CAN uses responsive SVG coordinates on portrait screens, smoother portal timing, a shorter mobile letter-expansion stage and a fully visible final call-to-action panel.
-- The floating WhatsApp button temporarily clears the final WE CAN panel to prevent overlap.
+WE CAN CINEMATIC UPGRADE
+- Rebuilt the animation as a staged vector portal rather than a single abrupt scale effect.
+- Added a high-resolution, sharpened signature image specifically for the full-screen sequence.
+- Added atmospheric depth, precision framing, improved vector text rendering and smoother fades.
+- Added a real 3D integrated-production finale on capable desktop/tablet devices.
+- Phones retain the high-resolution cinematic image finale to avoid exhausting mobile WebGL context limits.
 
-WORKFLOW LAYOUT
-- Desktop: balanced three-column, two-row workflow grid with a clear introduction and system status panel.
-- Tablet: two-column layout with consistent card height and readable outputs.
-- Mobile: connected single-column timeline with compact icons, readable content and no horizontal overflow.
-- All six stages and their original content remain included.
+WORKFLOW REDESIGN
+- Replaced the flat six-card grid with a connected production timeline.
+- Added stage status, custom vector icons, explicit outputs and a clear accountable delivery route.
+- Added responsive desktop, tablet, phone and RTL compositions.
 
 LANGUAGE
-- Arabic and English switching and RTL support are retained.
-- Arabic diacritics are removed from interface content.
+- Removed Arabic diacritics from all Arabic interface text and JavaScript-generated messages.
+- Retained complete Arabic/English switching and RTL support.
+
+RESPONSIVE AND UX
+- Optimized for screens from 320 px wide through large desktop displays.
+- Includes safe-area spacing, short-landscape layouts, touch controls and adaptive pinned-scene lengths.
+- Interactive canvases pause when off-screen and resume when visible.
+- The WE CAN 3D scene initializes only when approaching its section.
 
 DEPENDENCY
-- Three.js r128 is included locally in assets/vendor/three.min.js.
-- The site no longer depends on cdnjs for its 3D engine.
+Three.js r128 is loaded from cdnjs. An internet connection is required for real-time 3D. Local image fallbacks remain available if Three.js or WebGL cannot load.
 
 DEPLOYMENT
-Upload the complete folder without changing its internal paths. It can be hosted directly on GitHub Pages or any static web server.
+Upload the complete folder without changing its internal paths. It can be hosted directly on GitHub Pages.

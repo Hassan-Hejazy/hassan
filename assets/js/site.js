@@ -66,38 +66,13 @@
   const megaMenu=document.getElementById('megaMenu');
   const langToggle=document.getElementById('langToggle');
   const translatable=Array.from(document.querySelectorAll('[data-en][data-ar]'));
-  const wecanSvg=document.querySelector('.wecan-mask-svg');
-  const wecanMask=document.getElementById('wecanCutoutMask');
-  const wecanTexts=Array.from(document.querySelectorAll('.wecan-cutout-text,.wecan-edge,.wecan-solid-text'));
-
-  function syncWecanLayout(){
-    if(!wecanSvg)return;
-    const aspect=(window.innerWidth||1)/Math.max(1,window.innerHeight||1);
-    const smallPortrait=window.innerWidth<=680&&aspect<.82;
-    const tabletPortrait=!smallPortrait&&window.innerWidth<=980&&aspect<.9;
-    const config=smallPortrait
-      ? {w:800,h:1600,x:400,y:875,en:690,ar:610,portrait:true}
-      : tabletPortrait
-      ? {w:1100,h:1450,x:550,y:790,en:920,ar:800,portrait:true}
-      : {w:1600,h:900,x:800,y:535,en:1230,ar:980,portrait:false};
-    root.classList.toggle('wecan-portrait',config.portrait);
-    wecanSvg.setAttribute('viewBox',`0 0 ${config.w} ${config.h}`);
-    wecanSvg.setAttribute('preserveAspectRatio','xMidYMid slice');
-    if(wecanMask){wecanMask.setAttribute('width',String(config.w));wecanMask.setAttribute('height',String(config.h));}
-    wecanSvg.querySelectorAll('rect').forEach(rect=>{rect.setAttribute('width',String(config.w));rect.setAttribute('height',String(config.h));});
-    wecanTexts.forEach(el=>{
-      el.setAttribute('x',String(config.x));
-      el.setAttribute('y',String(config.y));
-      el.setAttribute('textLength',String(language==='ar'?config.ar:config.en));
-    });
-  }
 
   function setLanguage(lang){
     language=lang;
     localStorage.setItem('bymeli-language',lang);
     root.lang=lang;root.dir=lang==='ar'?'rtl':'ltr';
     translatable.forEach(el=>{const value=el.getAttribute(`data-${lang}`);if(value!==null)el.textContent=value});
-    syncWecanLayout();
+    document.querySelectorAll('.wecan-cutout-text,.wecan-edge,.wecan-solid-text').forEach(el=>el.setAttribute('textLength',lang==='ar'?'980':'1230'));
     langToggle.textContent=lang==='en'?'AR':'EN';
     updateBuildCopy(true);
     renderPortfolio(activeFilter);
@@ -231,6 +206,9 @@
       if(entries.some(entry=>entry.isIntersecting)){observer.disconnect();initBuild();}
     },{rootMargin:'700px 0px',threshold:0});
     observer.observe(buildTrack);
+    setTimeout(()=>{
+      if(!buildReady && buildTrack.getBoundingClientRect().top < innerHeight * 2.2) initBuild();
+    }, 1400);
   }
   function updateBuildCopy(force=false){
     const stage=Math.min(4,Math.floor(buildProgress*5));
@@ -240,7 +218,7 @@
   function updateBuild(){
     if(!buildTrack)return;
     const r=buildTrack.getBoundingClientRect(),span=Math.max(1,r.height-innerHeight);
-    if(!buildReady&&r.top<innerHeight+800&&r.bottom>-800)initBuild();
+    if(!buildReady && r.top < innerHeight * 1.6 && r.bottom > -innerHeight * 0.5) initBuild();
     buildProgress=clamp(-r.top/span);
     if(buildReady)window.BuildScene.update(buildProgress);
     updateBuildCopy();
@@ -306,34 +284,37 @@
 
   const wecanTrack=document.getElementById('wecanTrack');
   const range=(value,start,end)=>clamp((value-start)/(end-start));
-  const smoother=value=>value*value*value*(value*(value*6-15)+10);
-  let wecanTarget=0,wecanDisplayed=0,wecanFrame=0;
-
-  function applyWecanProgress(p){
+  const smoothstep=value=>value*value*(3-2*value);
+  function updateWecan(){
+    if(!wecanTrack)return;
+    const r=wecanTrack.getBoundingClientRect(),span=Math.max(1,r.height-innerHeight),p=clamp(-r.top/span);
     root.style.setProperty('--wecan-p',p.toFixed(4));
-    const portrait=root.classList.contains('wecan-portrait');
-    const solidFade=smoother(range(p,.035,.19));
-    const portalReveal=smoother(range(p,.08,portrait?.29:.34));
-    const maskExpansion=smoother(range(p,portrait?.15:.21,portrait?.46:.67));
-    const maskScale=1+maskExpansion*(portrait?5.9:9.8);
-    const maskOpacity=1-smoother(range(p,portrait?.40:.66,portrait?.53:.79));
-    const outlineIn=smoother(range(p,.10,.23));
-    const outlineOut=1-smoother(range(p,portrait?.33:.45,portrait?.49:.69));
-    const finalOpacity=smoother(range(p,portrait?.69:.76,portrait?.88:.92));
-    const openingOpacity=1-smoother(range(p,.08,.27));
-    const hintOpacity=(1-smoother(range(p,.08,.24)))*.76;
-    const hasWecan3d=!!(window.WeCanScene&&window.WeCanScene.ready);
+
+    // Stage 1: solid white WE CAN. Stage 2: the white fill dissolves and
+    // the image becomes visible through the letter portal. Stage 3: the
+    // portal expands to full frame and reveals the final project statement.
+    const solidFade=smoothstep(range(p,.045,.225));
+    const portalReveal=smoothstep(range(p,.12,.39));
+    const maskExpansion=smoothstep(range(p,.25,.69));
+    const maskScale=1+maskExpansion*10.8;
+    const maskOpacity=1-smoothstep(range(p,.68,.82));
+    const outlineIn=smoothstep(range(p,.12,.24));
+    const outlineOut=1-smoothstep(range(p,.49,.73));
+    const finalOpacity=smoothstep(range(p,.80,.955));
+    const openingOpacity=1-smoothstep(range(p,.12,.31));
+    const hintOpacity=(1-smoothstep(range(p,.10,.27)))*.76;
     const imageIn=.88+portalReveal*.12;
-    const imageOut=hasWecan3d?(1-smoother(range(p,portrait?.36:.48,portrait?.58:.73))):1;
+    const hasWecan3d=!!(window.WeCanScene&&window.WeCanScene.ready);
+    const imageOut=hasWecan3d?(1-smoothstep(range(p,.54,.82))):1;
     const imageOpacity=imageIn*imageOut;
-    const imageScale=(portrait?1.045:1.095)-smoother(range(p,.08,.72))*(portrait?.045:.095);
-    const imageY=(1-portalReveal)*(portrait?.7:1.25)-smoother(range(p,.36,.76))*(portrait?.25:.5);
-    const scene3dOpacity=hasWecan3d?smoother(range(p,portrait?.35:.45,portrait?.58:.73)):0;
-    const scene3dScale=(portrait?1.018:1.045)-smoother(range(p,.45,.90))*(portrait?.018:.045);
+    const imageScale=1.105-smoothstep(range(p,.10,.76))*.105;
+    const imageY=(1-portalReveal)*1.35-smoothstep(range(p,.38,.80))*.55;
+    const scene3dOpacity=hasWecan3d?smoothstep(range(p,.49,.75))*(1-smoothstep(range(p,.965,1))):0;
+    const scene3dScale=1.055-smoothstep(range(p,.48,.91))*.055;
 
     root.style.setProperty('--wecan-solid-opacity',(1-solidFade).toFixed(4));
-    root.style.setProperty('--wecan-solid-scale',(1+solidFade*.04).toFixed(4));
-    root.style.setProperty('--wecan-solid-blur',(solidFade*3.2).toFixed(2)+'px');
+    root.style.setProperty('--wecan-solid-scale',(1+solidFade*.055).toFixed(4));
+    root.style.setProperty('--wecan-solid-blur',(solidFade*4.5).toFixed(2)+'px');
     root.style.setProperty('--wecan-reveal-progress',portalReveal.toFixed(4));
     root.style.setProperty('--wecan-image-opacity',imageOpacity.toFixed(4));
     root.style.setProperty('--wecan-image-scale',imageScale.toFixed(4));
@@ -345,29 +326,12 @@
     root.style.setProperty('--wecan-outline-opacity',(outlineIn*outlineOut*.82).toFixed(4));
     root.style.setProperty('--wecan-opening-opacity',openingOpacity.toFixed(4));
     root.style.setProperty('--wecan-final-opacity',finalOpacity.toFixed(4));
-    root.style.setProperty('--wecan-final-y',((1-finalOpacity)*36).toFixed(2)+'px');
-    root.style.setProperty('--wecan-final-rotate',((1-finalOpacity)*4).toFixed(2)+'deg');
+    root.style.setProperty('--wecan-final-y',((1-finalOpacity)*44).toFixed(2)+'px');
+    root.style.setProperty('--wecan-final-rotate',((1-finalOpacity)*7).toFixed(2)+'deg');
     root.style.setProperty('--wecan-hint-opacity',hintOpacity.toFixed(4));
-    document.body.classList.toggle('wecan-active',p>.72&&p<.995);
-    if(window.WeCanScene)window.WeCanScene.update(p);
+    if(window.WeCanScene) window.WeCanScene.update(p);
   }
-
-  function animateWecan(){
-    wecanFrame=0;
-    const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
-    wecanDisplayed+=(wecanTarget-wecanDisplayed)*(reduced?1:(innerWidth<=680?.135:.11));
-    if(Math.abs(wecanTarget-wecanDisplayed)<.00012)wecanDisplayed=wecanTarget;
-    applyWecanProgress(wecanDisplayed);
-    if(Math.abs(wecanTarget-wecanDisplayed)>.00012)wecanFrame=requestAnimationFrame(animateWecan);
-  }
-
-  function updateWecan(){
-    if(!wecanTrack)return;
-    const r=wecanTrack.getBoundingClientRect(),span=Math.max(1,r.height-innerHeight);
-    wecanTarget=clamp(-r.top/span);
-    if(!wecanFrame)wecanFrame=requestAnimationFrame(animateWecan);
-  }
-  document.addEventListener('languagechange',()=>{syncWecanLayout();updateWecan();});
+  document.addEventListener('languagechange',updateWecan);
 
   const form=document.getElementById('contactForm'),formStatus=document.getElementById('formStatus');
   form.addEventListener('submit',e=>{e.preventDefault();const d=new FormData(form),name=String(d.get('name')||'').trim(),company=String(d.get('company')||'').trim(),email=String(d.get('email')||'').trim(),phone=String(d.get('phone')||'').trim(),message=String(d.get('message')||'').trim();if(!name||!email||!message){formStatus.textContent=language==='ar'?'فضلا، عبئ الاسم والبريد الإلكتروني ونبذة المشروع.':'Please complete the name, email and project brief.';return}const lines=language==='ar'?['السلام عليكم فريق باي ملي،',`الاسم: ${name}`,company?`الشركة: ${company}`:null,`البريد الإلكتروني: ${email}`,phone?`الهاتف: ${phone}`:null,`تفاصيل المشروع: ${message}`].filter(Boolean):['Hello By Meli,',`Name: ${name}`,company?`Company: ${company}`:null,`Email: ${email}`,phone?`Phone: ${phone}`:null,`Project brief: ${message}`].filter(Boolean);formStatus.textContent=language==='ar'?'جار فتح واتساب...':'Opening WhatsApp...';window.open(`https://wa.me/966599699226?text=${encodeURIComponent(lines.join('\n'))}`,'_blank','noopener')});
@@ -381,12 +345,10 @@
   }
   function handleResize(){
     syncViewport();
-    syncWecanLayout();
     refreshMotionTargets();
     updateBuild();
     updateWecan();
     updateMotion();
-    if(buildReady&&window.BuildScene?.resize)window.BuildScene.resize();
     if(innerWidth>=1190&&mobileNav?.classList.contains('open'))toggleMenu(false);
     if(innerWidth<=1190&&megaMenu?.classList.contains('open'))toggleMega(false);
   }

@@ -75,7 +75,7 @@
     // Crowd route and people
     const routeMat=new THREE.MeshStandardMaterial({color:0x4b3717,emissive:0x5c3b07,emissiveIntensity:.42,roughness:.65});
     box(world,2.2,.12,12.5,0,.42,.1,routeMat);box(world,9.5,.12,1.5,0,.425,3.55,routeMat);
-    for(let i=0;i<(mobile?14:20);i++){const x=(i%5-2)*.72,z=Math.floor(i/5)*1.02+.2;person(world,x,z,i%6===0?M.gold:(i%5===0?M.teal:M.dark),.92)}
+    for(let i=0;i<20;i++){const x=(i%5-2)*.72,z=Math.floor(i/5)*1.02+.2;person(world,x,z,i%6===0?M.gold:(i%5===0?M.teal:M.dark),.92)}
     [-1.7,-.55,.55,1.7].forEach(x=>{box(world,.06,.72,3.9,x,.72,3.8,M.goldDark);for(let z=2.5;z<5.5;z+=1){cyl(world,.052,.052,.8,x,.76,z,M.goldDark,10)}});
 
     // Floating brand rings and wayfinding
@@ -84,7 +84,7 @@
   }
 
   function init(){
-    if(initialized)return;initialized=true;
+    if(initialized||mobile)return;initialized=true;
     try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance',precision:'highp',stencil:false})}catch(e){return}
     if(Q)Q.configureRenderer(renderer,{exposure:1.11});else{renderer.setPixelRatio(Math.min(devicePixelRatio||1,2.2));renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.11;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;}
     if(Q){const tex=Q.prepareTexture(Q.makeScreenTexture('SIGNATURE EXPERIENCE'),renderer);M.screen.map=tex;M.screen.emissiveMap=tex;M.screen.needsUpdate=true;}
@@ -92,39 +92,11 @@
     scene.add(new THREE.HemisphereLight(0xf1dfbd,0x100d09,1.08));const key=new THREE.DirectionalLight(0xffe9bd,1.25);key.position.set(9,13,9);if(Q)Q.tuneShadow(key,Q.shadowMapSize,18);else{key.castShadow=true;key.shadow.mapSize.set(2048,2048);key.shadow.camera.left=-18;key.shadow.camera.right=18;key.shadow.camera.top=18;key.shadow.camera.bottom=-18}scene.add(key);const rim=new THREE.PointLight(0x69bcaf,.55,40);rim.position.set(-10,6,8);scene.add(rim);
     buildWorld();if(Q)Q.addContactShadow(world,renderer,10.2,.38,.36);camera=new THREE.PerspectiveCamera(mobile?53:43,1,.1,120);resize();bind();layer.classList.add('model-active');window.WeCanScene.ready=true;render();
   }
-  function viewportProfile(){
-    const r=layer.getBoundingClientRect(),w=Math.max(1,r.width),h=Math.max(1,r.height),aspect=w/h;
-    const fov=aspect<.56?64:(aspect<.8?59:(w<700?54:(w<1050?47:43)));
-    return {w,h,aspect,fov};
-  }
-  function fitDistance(halfWidth=10.7,halfHeight=4.55,padding=1.07){
-    const vfov=THREE.MathUtils.degToRad(camera.fov),vtan=Math.tan(vfov*.5),htan=Math.max(.08,vtan*Math.max(.34,camera.aspect));
-    return Math.max(halfWidth/htan,halfHeight/vtan)*padding;
-  }
-  function resize(){
-    if(!renderer||!camera)return;
-    const profile=viewportProfile();
-    renderer.setSize(profile.w,profile.h,false);
-    camera.aspect=profile.aspect;
-    camera.fov=profile.fov;
-    camera.updateProjectionMatrix();
-  }
+  function resize(){if(!renderer||!camera)return;const r=layer.getBoundingClientRect(),w=Math.max(1,r.width),h=Math.max(1,r.height);renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=w<700?53:43;camera.updateProjectionMatrix()}
   function bind(){canvas.style.touchAction='pan-y';canvas.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;canvas.setPointerCapture?.(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!dragging)return;targetYaw+=(e.clientX-lastX)*.0045;lastX=e.clientX});['pointerup','pointercancel'].forEach(k=>canvas.addEventListener(k,e=>{dragging=false;try{canvas.releasePointerCapture?.(e.pointerId)}catch(_){}}));addEventListener('resize',resize);document.addEventListener('visibilitychange',()=>visible=!document.hidden)}
   function render(){
-    if(renderer&&visible){const t=performance.now()*.001;targetYaw*=.94;yaw+=(targetYaw-yaw)*.08;const q=Math.max(0,Math.min(1,(progress-.68)/.32));const eased=q*q*(3-2*q);const radius=Math.max(mobile?15.2:13.2,fitDistance());const angle=.35+yaw+eased*.24;const cameraY=Math.max(5.1+eased*2.5,radius*(camera.aspect<.72?.17:.11));camera.position.set(Math.sin(angle)*radius,cameraY,Math.cos(angle)*radius+1.2-eased*2.8);camera.lookAt(0,1.9-eased*.16,-.8-eased*1.1);world.rotation.y=Math.sin(t*.2)*.025;
+    if(renderer&&visible){const t=performance.now()*.001;targetYaw*=.94;yaw+=(targetYaw-yaw)*.08;const q=Math.max(0,Math.min(1,(progress-.73)/.27));const eased=q*q*(3-2*q);const radius=mobile?14.8:13.2;const angle=.35+yaw+eased*.28;camera.position.set(Math.sin(angle)*radius,5.1+eased*2.8,Math.cos(angle)*radius+1.2-eased*3.5);camera.lookAt(0,1.9-eased*.2,-.8-eased*1.4);world.rotation.y=Math.sin(t*.2)*.025;
       animated.screens.forEach((s,i)=>s.material.emissiveIntensity=1.05+Math.sin(t*2.7+i*.8)*.18);animated.lights.forEach((l,i)=>l.intensity=1.7+Math.sin(t*2+i)*.55);animated.beams.forEach((b,i)=>b.material.opacity=.08+Math.sin(t*1.5+i*.8)*.035);animated.people.forEach((p,i)=>{const bob=Math.sin(t*1.25+i*.52)*.025;p.torso.position.y=p.base+bob;p.head.position.y=p.headBase+bob});animated.rings.forEach((r,i)=>{r.rotation.z=t*(i%2?-.035:.028)});renderer.render(scene,camera)}requestAnimationFrame(render)
   }
-  function maybeInit(){
-    const r=layer.getBoundingClientRect();
-    visible=r.top<innerHeight+520&&r.bottom>-520;
-    if(visible&&!initialized)init();
-  }
-  visible=false;
-  if('IntersectionObserver' in window){
-    const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{visible=e.isIntersecting;if(visible&&!initialized)init()})},{threshold:.03,rootMargin:'520px'});
-    observer.observe(layer);
-  }
-  addEventListener('scroll',maybeInit,{passive:true});
-  addEventListener('resize',maybeInit,{passive:true});
-  setTimeout(maybeInit,160);
+  visible=false;const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{visible=e.isIntersecting;if(visible&&!initialized)init()})},{threshold:.03,rootMargin:'280px'});observer.observe(layer);
 })();

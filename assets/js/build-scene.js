@@ -3,10 +3,18 @@
    Stages: footprint -> steel -> cladding -> lighting/media -> furnished finish.
    ========================================================================== */
 window.BuildScene = (function(){
-  let renderer, scene, camera, clock, canvas;
-  let W = 0, H = 0, progress = 0, targetProgress = 0, ready = false, sceneVisible = false;
-  const mobile = matchMedia('(max-width:760px)').matches;
+  let renderer, scene, camera, clock, canvas, parentEl, resizeObserver, visibilityObserver;
+  let W = 0, H = 0, progress = 0, ready = false, sceneVisible = false;
+  const mobileQuery = matchMedia('(max-width:760px)');
   const Q = window.BYMELI_QUALITY || null;
+  function isMobile(){ return mobileQuery.matches; }
+  function deviceProfile(){
+    const compact = isMobile();
+    const memory = Number(navigator.deviceMemory || 6);
+    const cores = Number(navigator.hardwareConcurrency || 6);
+    const safe = compact && (memory <= 4 || cores <= 4);
+    return { compact, memory, cores, safe };
+  }
 
   let rootGroup, environmentGroup;
   let floorGrid, floorPlane, floorGlow, footprintLine, footprintCorners = [];
@@ -28,6 +36,26 @@ window.BuildScene = (function(){
   function lerp(a,b,t){ return a + (b-a)*t; }
   function smooth(v){ return v*v*(3-2*v); }
   function seg(p,a,b){ return clamp01((p-a)/(b-a)); }
+  function viewportProfile(){
+    const aspect = W / Math.max(1, H);
+    const portraitBoost = clamp01((0.88 - aspect) / 0.34);
+    const compactHeightBoost = clamp01((760 - H) / 260);
+    return {
+      aspect,
+      portraitBoost,
+      compactHeightBoost,
+      fov: W < 720 ? lerp(54, 60, Math.max(portraitBoost, compactHeightBoost * 0.75)) : 42,
+      distanceBoost: isMobile() ? (lerp(0.6, 3.2, portraitBoost) + lerp(0.0, 0.8, compactHeightBoost)) : 0
+    };
+  }
+  function choosePixelRatio(){
+    const dpr = window.devicePixelRatio || 1;
+    const compact = isMobile();
+    const maxPixels = compact ? 1900000 : 4200000;
+    const ratioByPixels = Math.sqrt(maxPixels / Math.max(1, W * H));
+    const cap = compact ? 1.85 : 2.2;
+    return Math.max(1, Math.min(dpr, cap, ratioByPixels));
+  }
 
   function setShadow(mesh, cast, receive){
     mesh.castShadow = !!cast;
@@ -502,29 +530,33 @@ window.BuildScene = (function(){
   function init(cvs){
     canvas = cvs;
     if(!canvas || typeof THREE === 'undefined') return false;
-    const parent = canvas.parentElement;
-    W = parent.clientWidth; H = parent.clientHeight;
+    parentEl = canvas.parentElement;
+    W = parentEl.clientWidth; H = parentEl.clientHeight;
 
     try {
-      renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:'high-performance', precision:'highp', stencil:false });
+      const profile = deviceProfile();
+      renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference: profile.safe ? 'default' : 'high-performance', precision:'highp', stencil:false, preserveDrawingBuffer:false });
     } catch(err) {
       return false;
     }
-    if(Q) Q.configureRenderer(renderer,{exposure:1.10});
-    else { renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2.25)); renderer.outputEncoding=THREE.sRGBEncoding; renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.10; renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap; }
-    renderer.setSize(W, H, false);
+    if(Q) Q.configureRenderer(renderer,{exposure:1.10, pixelCap: choosePixelRatio()});
+    else { renderer.setPixelRatio(choosePixelRatio()); renderer.outputEncoding=THREE.sRGBEncoding; renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.10; renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap; }
+    renderer.setPixelRatio(choosePixelRatio());
+    renderer.setSize(Math.max(1,W), Math.max(1,H), false);
 
     scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x120E0A, 0.026);
     if(Q) Q.studioEnvironment(scene);
 
-    camera = new THREE.PerspectiveCamera(W < 720 ? 52 : 42, W / H, 0.1, 100);
+    const vp = viewportProfile();
+    camera = new THREE.PerspectiveCamera(vp.fov, Math.max(1,W) / Math.max(1,H), 0.1, 100);
 
     scene.add(new THREE.HemisphereLight(0xE7D3A6, 0x1A1711, 1.0));
     const sun = new THREE.DirectionalLight(0xfff0c8, 1.18);
     sun.position.set(6.2, 9.6, 7.8);
-    if(Q) Q.tuneShadow(sun,Q.shadowMapSize,12);
-    else { sun.castShadow=true; sun.shadow.mapSize.set(2048,2048); sun.shadow.camera.left=-12; sun.shadow.camera.right=12; sun.shadow.camera.top=12; sun.shadow.camera.bottom=-12; }
+    const compactDevice = isMobile();
+    if(Q) Q.tuneShadow(sun, compactDevice ? Math.min(Q.shadowMapSize || 1024, 1024) : Q.shadowMapSize, 12);
+    else { sun.castShadow=true; sun.shadow.mapSize.set(compactDevice ? 1024 : 2048, compactDevice ? 1024 : 2048); sun.shadow.camera.left=-12; sun.shadow.camera.right=12; sun.shadow.camera.top=12; sun.shadow.camera.bottom=-12; }
     scene.add(sun);
 
     rootGroup = new THREE.Group();
@@ -536,52 +568,47 @@ window.BuildScene = (function(){
     addLighting();
     addFurniture();
     addRealism();
-    if(Q) Q.addContactShadow(rootGroup,renderer,8.4,.42,.014);
+    if(Q && !deviceProfile().safe) Q.addContactShadow(rootGroup,renderer,8.4,.42,.014);
 
     clock = new THREE.Clock();
     ready = true;
     canvas.parentElement.classList.add('model-active');
     applyProgress();
+    resize();
     renderer.render(scene,camera);
-    const visibilityObserver=new IntersectionObserver(entries=>{
+    visibilityObserver=new IntersectionObserver(entries=>{
       sceneVisible=entries.some(entry=>entry.isIntersecting);
+      if(sceneVisible){
+        requestAnimationFrame(resize);
+        setTimeout(resize, 120);
+      }
     },{rootMargin:'240px 0px',threshold:0});
-    visibilityObserver.observe(parent);
+    visibilityObserver.observe(parentEl);
+    if('ResizeObserver' in window){
+      resizeObserver = new ResizeObserver(()=>resize());
+      resizeObserver.observe(parentEl);
+    }
     renderLoop();
 
     window.addEventListener('resize', resize,{passive:true});
+    window.addEventListener('orientationchange', ()=>setTimeout(resize, 140),{passive:true});
     return true;
   }
 
-  function responsiveFov(){
-    const aspect=W/Math.max(1,H);
-    if(aspect<0.56) return 64;
-    if(aspect<0.78) return 59;
-    if(W<720) return 55;
-    if(W<1050) return 47;
-    return 42;
-  }
-
-  function requiredDistance(halfWidth=7.25,halfHeight=3.45,padding=1.08){
-    const vfov=THREE.MathUtils.degToRad(camera.fov);
-    const verticalTan=Math.tan(vfov*.5);
-    const horizontalTan=Math.max(.08,verticalTan*Math.max(.34,camera.aspect));
-    return Math.max(halfWidth/horizontalTan,halfHeight/verticalTan)*padding;
-  }
-
   function resize(){
-    if(!canvas || !renderer || !camera) return;
-    const parent = canvas.parentElement;
-    W = parent.clientWidth;
-    H = parent.clientHeight;
+    if(!canvas || !renderer || !camera || !parentEl) return;
+    W = parentEl.clientWidth;
+    H = parentEl.clientHeight;
     if(W === 0 || H === 0) return;
+    const vp = viewportProfile();
+    renderer.setPixelRatio(choosePixelRatio());
     camera.aspect = W/H;
-    camera.fov = responsiveFov();
+    camera.fov = vp.fov;
     camera.updateProjectionMatrix();
     renderer.setSize(W, H, false);
   }
 
-  function update(p){ targetProgress = clamp01(p); }
+  function update(p){ progress = clamp01(p); }
 
   function applyProgress(){
     const p = progress;
@@ -752,20 +779,22 @@ window.BuildScene = (function(){
     camera.position.set(cam.pos[0], cam.pos[1], cam.pos[2]);
     camera.lookAt(cam.look[0], cam.look[1], cam.look[2]);
 
-    rootGroup.rotation.y = lerp(-0.34, 0.16, smooth(p));
-    rootGroup.position.y = Math.sin(time*0.6) * 0.02;
+    const vp = viewportProfile();
+    rootGroup.rotation.y = lerp(vp.distanceBoost > 0 ? -0.24 : -0.34, vp.distanceBoost > 0 ? 0.1 : 0.16, smooth(p));
+    rootGroup.position.y = Math.sin(time*0.6) * 0.02 + (vp.distanceBoost > 0 ? 0.12 : 0);
     floorGlow.scale.setScalar(1 + s5*0.03 + Math.sin(time*0.9)*0.008);
   }
 
   function cameraForProgress(p){
-    const isMobile = W < 720;
-    const keys = isMobile
+    const mobile = W < 720;
+    const vp = viewportProfile();
+    const keys = mobile
       ? [
-          { t:0.00, pos:[0.4, 2.0, 12.4], look:[0,0.7,0] },
-          { t:0.22, pos:[1.8, 2.6, 11.1], look:[0,1.8,0] },
-          { t:0.52, pos:[4.8, 3.4, 10.0], look:[0,2.4,0.1] },
-          { t:0.74, pos:[5.6, 3.0, 11.4], look:[0,2.5,0.5] },
-          { t:1.00, pos:[3.2, 2.5, 12.8], look:[0,2.2,0.8] }
+          { t:0.00, pos:[0.3, 2.3, 13.6], look:[0,0.85,0] },
+          { t:0.22, pos:[1.45, 2.9, 12.7], look:[0,1.85,0] },
+          { t:0.52, pos:[4.0, 3.65, 11.8], look:[0,2.45,0.1] },
+          { t:0.74, pos:[4.55, 3.25, 12.9], look:[0,2.55,0.42] },
+          { t:1.00, pos:[2.45, 2.85, 14.0], look:[0,2.2,0.62] }
         ]
       : [
           { t:0.00, pos:[0.2, 1.7, 12.0], look:[0,0.6,0] },
@@ -783,24 +812,18 @@ window.BuildScene = (function(){
     const local = smooth(clamp01((p - a.t) / span));
     const pos=[ lerp(a.pos[0], b.pos[0], local), lerp(a.pos[1], b.pos[1], local), lerp(a.pos[2], b.pos[2], local) ];
     const look=[ lerp(a.look[0], b.look[0], local), lerp(a.look[1], b.look[1], local), lerp(a.look[2], b.look[2], local) ];
-    const fit=requiredDistance();
-    const dx=pos[0]-look[0],dy=pos[1]-look[1],dz=pos[2]-look[2];
-    const distance=Math.max(.001,Math.hypot(dx,dy,dz));
-    if(distance<fit){
-      const scale=fit/distance;
-      pos[0]=look[0]+dx*scale;
-      pos[1]=look[1]+dy*scale;
-      pos[2]=look[2]+dz*scale;
+    if(mobile){
+      pos[2] += vp.distanceBoost;
+      pos[1] += lerp(0.08, 0.34, vp.portraitBoost);
+      pos[0] *= lerp(1, 0.74, vp.portraitBoost);
+      look[1] += lerp(0.0, 0.16, vp.portraitBoost);
     }
-    return {pos,look};
+    return { pos, look };
   }
 
   function renderLoop(){
     if(!ready) return;
     if(sceneVisible && !document.hidden){
-      const damping=reduceMotion()?1:(W<760?.115:.095);
-      progress += (targetProgress-progress)*damping;
-      if(Math.abs(targetProgress-progress)<.0001) progress=targetProgress;
       applyProgress();
       renderer.render(scene, camera);
     }
