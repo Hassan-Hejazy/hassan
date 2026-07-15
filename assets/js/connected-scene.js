@@ -34,19 +34,30 @@
     return cachedProfile;
   }
   function viewportProfile(){return cachedProfile||computeViewportProfile();}
+  function fitBoxDistance(profile,box,multiplier=1,yaw=.12,elevation=.12){
+    if(!box||box.isEmpty()) return 12;
+    const size=box.getSize(new THREE.Vector3());
+    const cy=Math.abs(Math.cos(yaw)),sy=Math.abs(Math.sin(yaw));
+    const ce=Math.abs(Math.cos(elevation)),se=Math.abs(Math.sin(elevation));
+    const projectedWidth=Math.max(1,size.x*cy+size.z*sy);
+    const projectedDepth=Math.max(1,size.x*sy+size.z*cy);
+    const projectedHeight=Math.max(1,size.y*ce+projectedDepth*se*.72);
+    const dv=(projectedHeight*.5)/Math.max(.08,Math.tan(profile.vFov*.5));
+    const dh=(projectedWidth*.5)/Math.max(.08,Math.tan(profile.hFov*.5));
+    const margin=mobile?lerp(1.08,1.14,profile.portrait):1.06;
+    return Math.max(dv,dh,7.8)*margin*multiplier;
+  }
   function fitSphereDistance(profile,sphere,multiplier=1){
     const radius=Math.max(.1,sphere?.radius||7.15);
-    const limitingHalfAngle=Math.max(THREE.MathUtils.degToRad(9),Math.min(profile.vFov,profile.hFov)/2);
-    const margin=mobile?lerp(1.08,1.14,profile.portrait):1.055;
-    return radius/Math.sin(limitingHalfAngle)*margin*multiplier;
+    const limitingHalfAngle=Math.max(THREE.MathUtils.degToRad(10),Math.min(profile.vFov,profile.hFov)/2);
+    return radius/Math.sin(limitingHalfAngle)*(mobile?1.08:1.04)*multiplier;
   }
-  function qualityRatio(w,h,overview=false){
+  function qualityRatio(w,h){
     const dpr=window.devicePixelRatio||1;
     const compact=w<760;
-    const cap=compact?(lowPower?1.35:1.75):2.1;
-    const maxPixels=compact?(lowPower?1250000:2050000):4500000;
-    const ratio=Math.max(1,Math.min(dpr,cap,Math.sqrt(maxPixels/Math.max(1,w*h))));
-    return overview&&compact?Math.max(1,ratio*.95):ratio;
+    const cap=compact?(lowPower?1.55:2.0):2.35;
+    const maxPixels=compact?(lowPower?1700000:2900000):5600000;
+    return Math.max(1,Math.min(dpr,cap,Math.sqrt(maxPixels/Math.max(1,w*h))));
   }
 
 
@@ -76,7 +87,7 @@
   }
 
   let renderer,scene,camera,keyLight,cameraPath;
-  let groups=[],routeGroups=[],stageSpheres=[],overviewSphere=null,sceneLights=[],progress=0,targetProgress=0,current=-1,visible=false,pageVisible=!document.hidden,lastFrame=0,overviewActive=false;
+  let groups=[],routeGroups=[],stageSpheres=[],stageBoxes=[],overviewSphere=null,overviewBox=null,sceneLights=[],progress=0,targetProgress=0,current=-1,visible=false,pageVisible=!document.hidden,lastFrame=0,overviewActive=false;
   const cameraPosition=new THREE.Vector3();
   const cameraTarget=new THREE.Vector3();
   const desiredPosition=new THREE.Vector3();
@@ -108,13 +119,13 @@
     wood:new THREE.MeshStandardMaterial({color:0x5d422d,roughness:.8}),
     green:new THREE.MeshStandardMaterial({color:0x4f6c54,roughness:.84}),
     screen:new THREE.MeshStandardMaterial({color:0x0e1715,emissive:0x78c8bb,emissiveIntensity:1.08,roughness:.42}),
-    glass:new THREE.MeshPhysicalMaterial({color:0xc6ded7,transparent:true,opacity:.25,roughness:.08,transmission:.52,thickness:.2})
+    glass:new THREE.MeshPhysicalMaterial({color:0xc6ded7,transparent:true,opacity:.25,roughness:.08,transmission:.52})
   };
 
   function sh(mesh,cast=true){mesh.castShadow=cast&&!lowPower;mesh.receiveShadow=true;return mesh}
   function box(g,w,h,d,x,y,z,m=M.dark){const o=sh(new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m));o.position.set(x,y,z);g.add(o);return o}
-  function cyl(g,r1,r2,h,x,y,z,m=M.gold,seg=(mobile?14:28)){const o=sh(new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,seg),m));o.position.set(x,y,z);g.add(o);return o}
-  function sphere(g,r,x,y,z,m=M.cream,seg=(mobile?12:22)){const o=sh(new THREE.Mesh(new THREE.SphereGeometry(r,seg,Math.max(8,seg-2)),m));o.position.set(x,y,z);g.add(o);return o}
+  function cyl(g,r1,r2,h,x,y,z,m=M.gold,seg=(mobile?20:28)){const o=sh(new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,seg),m));o.position.set(x,y,z);g.add(o);return o}
+  function sphere(g,r,x,y,z,m=M.cream,seg=(mobile?18:22)){const o=sh(new THREE.Mesh(new THREE.SphereGeometry(r,seg,Math.max(8,seg-2)),m));o.position.set(x,y,z);g.add(o);return o}
   function monitor(g,x,y,z,w,h,rotation=0){
     const frame=box(g,w,h,.11,x,y,z,M.dark);frame.rotation.y=rotation;
     const s=new THREE.Mesh(new THREE.PlaneGeometry(w*.88,h*.78),M.screen.clone());
@@ -285,12 +296,13 @@
   }
 
   function init(){
+    document.dispatchEvent(new CustomEvent('bymeli:release-service-scenes'));
     try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:lowPower?'default':'high-performance',precision:'highp',stencil:false,preserveDrawingBuffer:false})}catch(e){canvas.style.display='none';fallback.style.opacity='.55';return}
     if(Q)Q.configureRenderer(renderer,{exposure:1.10,pixelCap:mobile?(lowPower?1.55:1.9):2.25});else{renderer.setPixelRatio(Math.min(devicePixelRatio||1,2.2));renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.10;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;}
     if(Q){const tex=Q.prepareTexture(Q.makeScreenTexture('CONNECTED PRODUCTION ROUTE'),renderer);M.screen.map=tex;M.screen.emissiveMap=tex;M.screen.needsUpdate=true;}
     scene=new THREE.Scene();scene.background=new THREE.Color(0x0d0b08);scene.fog=new THREE.FogExp2(0x0d0b08,.017);if(Q)Q.studioEnvironment(scene);
     scene.add(new THREE.HemisphereLight(0xf0deba,0x14110d,1.05));
-    keyLight=new THREE.DirectionalLight(0xffe9bc,1.23);keyLight.position.set(8,12,7);if(Q)Q.tuneShadow(keyLight,mobile?(lowPower?512:1024):Q.shadowMapSize,16);else{keyLight.castShadow=true;keyLight.shadow.mapSize.set(mobile?1024:2048,mobile?1024:2048);keyLight.shadow.camera.left=-16;keyLight.shadow.camera.right=16;keyLight.shadow.camera.top=16;keyLight.shadow.camera.bottom=-16}scene.add(keyLight);
+    keyLight=new THREE.DirectionalLight(0xffe9bc,1.23);keyLight.position.set(8,12,7);if(Q)Q.tuneShadow(keyLight,mobile?(lowPower?768:1536):Q.shadowMapSize,16);else{keyLight.castShadow=true;keyLight.shadow.mapSize.set(mobile?1536:2048,mobile?1536:2048);keyLight.shadow.camera.left=-16;keyLight.shadow.camera.right=16;keyLight.shadow.camera.top=16;keyLight.shadow.camera.bottom=-16}scene.add(keyLight);
     const teal=new THREE.PointLight(0x66b7ab,.48,44);teal.position.set(-8,5,8);scene.add(teal);
 
     const floor=new THREE.Mesh(new THREE.PlaneGeometry(38,96),new THREE.MeshStandardMaterial({color:0x0f0d0a,roughness:.93}));floor.rotation.x=-Math.PI/2;floor.position.set(0,0,routeCenterZ);floor.receiveShadow=true;scene.add(floor);
@@ -299,17 +311,19 @@
     const makers=[booth,showroom,interior,management,crowd,av];
     groups=makers.map((fn,i)=>{
       const g=fn();g.position.copy(centers[i]);scene.add(g);
-      const halo=ceilingRing(g,0,4.72,0,4.22,i%2?0x71c2b5:0xcda452);halo.material.opacity=.18;
-      [-4.15,4.15].forEach((x,n)=>{box(g,.18,2.15,.18,x,1.08,2.8,n?M.teal:M.gold);sphere(g,.12,x,2.28,2.8,n?M.teal:M.gold,10)});
       g.updateMatrixWorld(true);
-      const bounds=new THREE.Box3().setFromObject(g);
-      stageSpheres.push(bounds.getBoundingSphere(new THREE.Sphere()));
+      const coreBounds=new THREE.Box3().setFromObject(g);
+      stageBoxes.push(coreBounds.clone());
+      stageSpheres.push(coreBounds.getBoundingSphere(new THREE.Sphere()));
+      const halo=ceilingRing(g,0,4.72,0,4.22,i%2?0x71c2b5:0xcda452);halo.material.opacity=.14;
+      [-4.15,4.15].forEach((x,n)=>{box(g,.14,1.75,.14,x,0.88,2.8,n?M.teal:M.gold);sphere(g,.10,x,1.86,2.8,n?M.teal:M.gold,10)});
       return g;
     });
     for(let i=0;i<centers.length-1;i++)addRoute(centers[i],centers[i+1],i);
     const overviewBounds=new THREE.Box3();
     groups.forEach(g=>overviewBounds.expandByObject(g));
     routeGroups.forEach(g=>overviewBounds.expandByObject(g));
+    overviewBox=overviewBounds.clone();
     overviewSphere=overviewBounds.getBoundingSphere(new THREE.Sphere());
 
     // A restrained field of particles reinforces depth without distracting from the models.
@@ -321,7 +335,7 @@
     scene.traverse(o=>{if(o.isPointLight||o.isSpotLight)sceneLights.push(o)});
     cameraPath=new THREE.CatmullRomCurve3(centers.map(c=>new THREE.Vector3(c.x,1.72,c.z)),false,'catmullrom',.18);
     camera=new THREE.PerspectiveCamera(mobile?55:42,1,.1,240);resize();
-    const profile=viewportProfile(),firstSphere=stageSpheres[0]||new THREE.Sphere(new THREE.Vector3(0,1.7,0),7.15),d=fitSphereDistance(profile,firstSphere,1.02),start=firstSphere.center;
+    const profile=viewportProfile(),firstSphere=stageSpheres[0]||new THREE.Sphere(new THREE.Vector3(0,1.7,0),7.15),d=fitBoxDistance(profile,stageBoxes[0],1.02,mobile?.10:.16,mobile?.12:.13),start=firstSphere.center;
     cameraPosition.set(start.x,start.y+d*.10,start.z+d);cameraTarget.copy(start);camera.position.copy(cameraPosition);camera.lookAt(cameraTarget);
     bind();sticky.classList.add('model-active');readScrollProgress();render();
   }
@@ -329,7 +343,7 @@
   function resize(){
     if(!renderer)return;
     const profile=computeViewportProfile(),w=profile.w,h=profile.h;
-    renderer.setPixelRatio(qualityRatio(w,h,overviewActive));
+    renderer.setPixelRatio(qualityRatio(w,h));
     renderer.setSize(w,h,false);
     camera.aspect=w/h;camera.fov=profile.fov;camera.updateProjectionMatrix();
   }
@@ -341,7 +355,10 @@
     window.addEventListener('resize',resize,{passive:true});
     window.addEventListener('orientationchange',()=>setTimeout(resize,140),{passive:true});
     if('ResizeObserver' in window){const ro=new ResizeObserver(()=>resize());ro.observe(sticky);}
-    window.addEventListener('scroll',readScrollProgress,{passive:true});
+    let scrollQueued=false;
+    const queueScrollRead=()=>{if(scrollQueued)return;scrollQueued=true;requestAnimationFrame(()=>{scrollQueued=false;readScrollProgress();});};
+    window.addEventListener('scroll',queueScrollRead,{passive:true});
+    window.visualViewport?.addEventListener('resize',queueScrollRead,{passive:true});
     document.addEventListener('visibilitychange',()=>{pageVisible=!document.hidden});
     document.addEventListener('languagechange',()=>{current=-1;setCopy(Math.min(5,Math.floor(clamp(progress/.86)*6)),progress>.91)});
   }
@@ -384,12 +401,11 @@
   }
 
   function render(now=performance.now()){
-    const minFrame=mobile?33:16;
+    const minFrame=lowPower?24:12;
     if(now-lastFrame<minFrame){requestAnimationFrame(render);return;}
-    const dt=lastFrame?Math.min(.05,(now-lastFrame)/1000):1/60;
+    const dt=lastFrame?Math.min(.04,(now-lastFrame)/1000):1/60;
     lastFrame=now;
     if(renderer&&visible&&pageVisible){
-      readScrollProgress();
       const progressEase=1-Math.exp(-(mobile?9.2:11.5)*dt);
       progress+= (targetProgress-progress)*progressEase;
       if(Math.abs(targetProgress-progress)<.00008)progress=targetProgress;
@@ -406,46 +422,44 @@
         stageTargetA.copy(sphereA.center);stageTargetB.copy(sphereB.center);
         const target=stageTargetA.lerp(stageTargetB,local);
         target.y+=profile.portrait*.05;
-        const angle=(mobile?.025:.09)+Math.sin(travel*Math.PI)*(mobile?.025:.075);
-        const distance=lerp(fitSphereDistance(profile,sphereA,1.01),fitSphereDistance(profile,sphereB,1.01),local);
-        const elevation=mobile?.065:.095;
+        const angle=(mobile?.10:.16)+Math.sin(travel*Math.PI)*(mobile?.025:.055);
+        const elevation=mobile?.12:.13;
+        const distance=lerp(fitBoxDistance(profile,stageBoxes[base],1.015,angle,elevation),fitBoxDistance(profile,stageBoxes[next],1.015,angle,elevation),local);
         const horizontal=Math.cos(elevation)*distance;
         desiredPosition.set(target.x+Math.sin(angle)*horizontal,target.y+Math.sin(elevation)*distance,target.z+Math.cos(angle)*horizontal);
         desiredTarget.copy(target);
         desiredUp.set(0,1,0);
         groups.forEach((g,i)=>{g.visible=i===base||i===next});
-        routeGroups.forEach((g,i)=>{g.visible=i===base||i===base-1});
+        routeGroups.forEach((g,i)=>{g.visible=i===base||i===base-1||i===next});
         if(overviewActive){
           overviewActive=false;
           renderer.shadowMap.enabled=!lowPower;
           if(keyLight)keyLight.castShadow=!lowPower;
           sceneLights.forEach(l=>l.visible=true);
-          resize();
         }
       }else{
         const q=smoother(clamp((p-overviewStart)/(1-overviewStart)));
         groups.forEach(g=>g.visible=true);routeGroups.forEach(g=>g.visible=true);
         if(!overviewActive){
           overviewActive=true;
-          if(mobile){renderer.shadowMap.enabled=false;if(keyLight)keyLight.castShadow=false;sceneLights.forEach(l=>l.visible=false);}
-          resize();
+          if(mobile&&lowPower){renderer.shadowMap.enabled=false;if(keyLight)keyLight.castShadow=false;sceneLights.forEach(l=>l.visible=false);}
         }
         const lastSphere=stageSpheres[5]||stageSpheres[0];
         const closeTarget=lastSphere.center.clone();
-        const closeDistance=fitSphereDistance(profile,lastSphere,1.015),closeElevation=mobile?.065:.095,closeAngle=mobile?.025:.09;
+        const closeElevation=mobile?.12:.13,closeAngle=mobile?.10:.16,closeDistance=fitBoxDistance(profile,stageBoxes[5],1.02,closeAngle,closeElevation);
         const closeHorizontal=Math.cos(closeElevation)*closeDistance;
         const closePos=new THREE.Vector3(closeTarget.x+Math.sin(closeAngle)*closeHorizontal,closeTarget.y+Math.sin(closeElevation)*closeDistance,closeTarget.z+Math.cos(closeAngle)*closeHorizontal);
         const fullSphere=overviewSphere||new THREE.Sphere(new THREE.Vector3(0,1.5,routeCenterZ),40);
-        const overviewDistance=fitSphereDistance(profile,fullSphere,mobile?1.09:1.055);
         const overviewTarget=fullSphere.center.clone();overviewTarget.y*=.55;
-        const overviewYaw=mobile?.18:.28,overviewElevation=mobile?.23:.20;
+        const overviewYaw=mobile?.22:.30,overviewElevation=mobile?.18:.17;
+        const overviewDistance=fitBoxDistance(profile,overviewBox,mobile?1.06:1.03,overviewYaw,overviewElevation);
         const overviewHorizontal=Math.cos(overviewElevation)*overviewDistance;
         const overviewPos=new THREE.Vector3(overviewTarget.x+Math.sin(overviewYaw)*overviewHorizontal,overviewTarget.y+Math.sin(overviewElevation)*overviewDistance,overviewTarget.z+Math.cos(overviewYaw)*overviewHorizontal);
         desiredPosition.lerpVectors(closePos,overviewPos,q);
         desiredTarget.lerpVectors(closeTarget,overviewTarget,q);
         desiredUp.set(0,1,0);
       }
-      const cameraEase=1-Math.exp(-(mobile?12.5:14.5)*dt);
+      const cameraEase=1-Math.exp(-(mobile?10.5:12.5)*dt);
       cameraPosition.lerp(desiredPosition,cameraEase);
       cameraTarget.lerp(desiredTarget,cameraEase);
       camera.position.copy(cameraPosition);
@@ -474,7 +488,7 @@
   if('IntersectionObserver' in window){
     let initialized=false;
     const start=()=>{if(initialized)return;initialized=true;bootstrap.disconnect();init();};
-    const bootstrap=new IntersectionObserver(entries=>{if(entries.some(entry=>entry.isIntersecting))start();},{rootMargin:'900px 0px',threshold:0});
+    const bootstrap=new IntersectionObserver(entries=>{if(entries.some(entry=>entry.isIntersecting))start();},{rootMargin:'420px 0px',threshold:0});
     bootstrap.observe(track);
     setTimeout(()=>{const r=track.getBoundingClientRect();if(r.top<innerHeight*2.4&&r.bottom>-innerHeight)start();},1500);
   }else{init();}

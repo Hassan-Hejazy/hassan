@@ -453,6 +453,7 @@
       });
     },{threshold:.03,rootMargin:'220px 0px'});
     observer.observe(frame);
+    document.addEventListener('bymeli:release-service-scenes',disposeScene);
     resizeObserver=new ResizeObserver(()=>resize());resizeObserver.observe(frame);
   }
 

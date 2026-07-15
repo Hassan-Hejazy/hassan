@@ -1,0 +1,26 @@
+CONNECTED 3D + WE CAN REBUILD
+
+Connected 3D
+- Replaced sphere-only camera fitting with orientation-aware box fitting.
+- Stage bounds are measured before decorative halos/pylons, preventing excessive zoom-out.
+- Final route overview accounts for route depth and camera yaw instead of using the full diagonal radius.
+- Removed the forced 30 FPS mobile cap; rendering follows display refresh except on explicitly low-power devices.
+- Increased mobile geometry segments, pixel-density ceiling and shadow-map resolution.
+- Scroll geometry reads are requestAnimationFrame-throttled instead of running during every render frame.
+- Service-scene WebGL contexts are released before connected-scene initialization to avoid mobile context exhaustion.
+- Connected fallback upgraded to the 3232 x 2158 source image.
+
+WE CAN
+- Image-only full-screen sequence; SVG mask and 3D layers are disabled.
+- Full wording remains fitted at the opening state on desktop and phone layouts.
+- Word expansion, curtain release, image movement and final-card reveal use separate smooth timing ranges.
+- Responsive final card and image crop verified at 390 x 844 and 1440 x 900.
+
+Validation
+- JavaScript syntax: passed.
+- CSS parser: no errors.
+- Duplicate HTML IDs: none.
+- Missing local references: none.
+- Arabic diacritics: none.
+- Horizontal overflow: none at 320, 390, 768, 1024 and 1440 px.
+- Sticky/track geometry checked at the same widths.
