@@ -319,23 +319,25 @@
 
   function initCanvas(canvas){
     const frame=canvas.closest('.canvas-frame');
-    let renderer,scene,camera,root,materials,observer,resizeObserver,disposeTimer=0;
+    let renderer,scene,camera,root,materials,observer,resizeObserver,disposeTimer=0,profileCache=null;
     const initialYaw=mobile?.08:.50;
     let visible=false,initialized=false,dragging=false,startX=0,startY=0,lastX=0,lastY=0,yaw=initialYaw,pitch=.12,targetYaw=initialYaw,targetPitch=.12,auto=0;
     const type=canvas.dataset.scene;
-    function viewportProfile(){
-      const r=frame.getBoundingClientRect(),w=Math.max(1,r.width),h=Math.max(1,r.height),aspect=w/h;
+    function computeViewportProfile(){
+      const w=Math.max(1,frame.clientWidth),h=Math.max(1,frame.clientHeight),aspect=w/h;
       const portrait=Math.max(0,Math.min(1,(.9-aspect)/.42));
-      const fov=w<680?55+portrait*5:(w<980?47:42);
+      const fov=w<680?55+portrait*4:(w<980?47:42);
       const vFov=THREE.MathUtils.degToRad(fov),hFov=2*Math.atan(Math.tan(vFov/2)*aspect);
-      return {w,h,aspect,portrait,fov,vFov,hFov};
+      profileCache={w,h,aspect,portrait,fov,vFov,hFov};
+      return profileCache;
     }
+    function viewportProfile(){return profileCache||computeViewportProfile();}
     function fitRadius(profile,angle){
       const halfWidth=6.65,halfDepth=6.15,halfHeight=3.55;
       const projectedHalfWidth=Math.abs(Math.cos(angle))*halfWidth+Math.abs(Math.sin(angle))*halfDepth;
       const dw=projectedHalfWidth/Math.max(.12,Math.tan(profile.hFov/2));
       const dh=halfHeight/Math.max(.12,Math.tan(profile.vFov/2));
-      return Math.max(dw,dh)*(mobile?1.18:1.08);
+      return Math.max(dw,dh)*(mobile?1.10:1.06);
     }
     function qualityRatio(w,h){
       const dpr=window.devicePixelRatio||1,compact=w<760,cap=compact?1.95:2.25,maxPixels=compact?2200000:4200000;
@@ -375,7 +377,7 @@
       root=new THREE.Group();scene.add(root);
       (factories[type]||factories.booth)(root,materials);
       if(Q) Q.addContactShadow(root,renderer,6.0,.48,.305);
-      const profile=viewportProfile();
+      const profile=computeViewportProfile();
       camera=new THREE.PerspectiveCamera(profile.fov,1,.1,80);
       resize();
       bindInteraction();
@@ -385,15 +387,16 @@
 
     function resize(){
       if(!renderer||!camera) return;
-      const profile=viewportProfile(),w=profile.w,h=profile.h;
+      const profile=computeViewportProfile(),w=profile.w,h=profile.h;
       renderer.setPixelRatio(qualityRatio(w,h));
       renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=profile.fov;camera.updateProjectionMatrix();
     }
 
     function bindInteraction(){
+      if(mobile)return;
       canvas.addEventListener('pointerdown',e=>{dragging=true;startX=lastX=e.clientX;startY=lastY=e.clientY;canvas.setPointerCapture?.(e.pointerId);});
-      canvas.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;targetYaw+=dx*(mobile?.0035:.006);targetPitch=Math.max(-.03,Math.min(.34,targetPitch+dy*.0028));});
-      const end=e=>{dragging=false;try{canvas.releasePointerCapture?.(e.pointerId);}catch(_){}};
+      canvas.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;targetYaw+=dx*.006;targetPitch=Math.max(-.03,Math.min(.34,targetPitch+dy*.0028));});
+      const end=e=>{dragging=false;try{canvas.releasePointerCapture?.(e.pointerId);}catch(_){};};
       canvas.addEventListener('pointerup',end);canvas.addEventListener('pointercancel',end);canvas.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')dragging=false;});
     }
 

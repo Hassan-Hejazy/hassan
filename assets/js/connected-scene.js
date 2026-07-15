@@ -22,16 +22,18 @@
   const lerp=(a,b,t)=>a+(b-a)*t;
   const smooth=v=>v*v*(3-2*v);
   const smoother=v=>v*v*v*(v*(v*6-15)+10);
-  function viewportProfile(){
-    const r=sticky.getBoundingClientRect();
-    const w=Math.max(1,r.width),h=Math.max(1,r.height),aspect=w/h;
+  let cachedProfile=null;
+  function computeViewportProfile(){
+    const w=Math.max(1,sticky.clientWidth||innerWidth),h=Math.max(1,sticky.clientHeight||innerHeight),aspect=w/h;
     const portrait=clamp((.82-aspect)/.38);
     const short=clamp((680-h)/220);
     const fov=w<700?lerp(52,57,Math.max(portrait,short*.75)):(w<1050?46:42);
     const vFov=THREE.MathUtils.degToRad(fov);
     const hFov=2*Math.atan(Math.tan(vFov/2)*aspect);
-    return {w,h,aspect,portrait,short,fov,vFov,hFov};
+    cachedProfile={w,h,aspect,portrait,short,fov,vFov,hFov};
+    return cachedProfile;
   }
+  function viewportProfile(){return cachedProfile||computeViewportProfile();}
   function stageFitDistance(profile,multiplier=1){
     const radius=7.15;
     const limitingHalfAngle=Math.max(THREE.MathUtils.degToRad(8),Math.min(profile.vFov,profile.hFov)/2);
@@ -322,21 +324,22 @@
 
   function resize(){
     if(!renderer)return;
-    const profile=viewportProfile(),w=profile.w,h=profile.h;
+    const profile=computeViewportProfile(),w=profile.w,h=profile.h;
     renderer.setPixelRatio(qualityRatio(w,h,overviewActive));
     renderer.setSize(w,h,false);
     camera.aspect=w/h;camera.fov=profile.fov;camera.updateProjectionMatrix();
   }
   function bind(){
     canvas.style.touchAction='pan-y';
-    canvas.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;canvas.setPointerCapture?.(e.pointerId)});
-    canvas.addEventListener('pointermove',e=>{if(!dragging)return;targetTouchYaw+=(e.clientX-lastX)*.004;lastX=e.clientX});
-    ['pointerup','pointercancel'].forEach(k=>canvas.addEventListener(k,e=>{dragging=false;try{canvas.releasePointerCapture?.(e.pointerId)}catch(_){}}));
+    if(!mobile){
+      canvas.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;canvas.setPointerCapture?.(e.pointerId)});
+      canvas.addEventListener('pointermove',e=>{if(!dragging)return;targetTouchYaw+=(e.clientX-lastX)*.004;lastX=e.clientX});
+      ['pointerup','pointercancel'].forEach(k=>canvas.addEventListener(k,e=>{dragging=false;try{canvas.releasePointerCapture?.(e.pointerId)}catch(_){}}));
+    }
     const visibilityObserver=new IntersectionObserver(entries=>{visible=entries.some(entry=>entry.isIntersecting);if(visible){requestAnimationFrame(resize);setTimeout(resize,120)}},{rootMargin:'240px 0px',threshold:0});
     visibilityObserver.observe(sticky);
     window.addEventListener('resize',resize,{passive:true});
     window.addEventListener('orientationchange',()=>setTimeout(resize,140),{passive:true});
-    window.visualViewport?.addEventListener('resize',resize,{passive:true});
     if('ResizeObserver' in window){const ro=new ResizeObserver(()=>resize());ro.observe(sticky);}
     window.addEventListener('scroll',update,{passive:true});
     document.addEventListener('visibilitychange',()=>{pageVisible=!document.hidden});
@@ -362,7 +365,7 @@
     });
   }
   function update(){
-    const viewportH=window.visualViewport?.height||innerHeight;
+    const viewportH=Math.max(1,sticky.clientHeight||innerHeight);
     const r=track.getBoundingClientRect(),span=Math.max(1,r.height-viewportH);
     targetProgress=clamp(-r.top/span);
     if(scrollIndicator){
@@ -381,12 +384,12 @@
   }
 
   function render(now=performance.now()){
-    const minFrame=mobile?(lowPower?30:20):0;
+    const minFrame=mobile?(lowPower?28:16):0;
     if(minFrame&&now-lastFrame<minFrame){requestAnimationFrame(render);return;}
     const dt=lastFrame?Math.min(.05,(now-lastFrame)/1000):1/60;
     lastFrame=now;
     if(renderer&&visible&&pageVisible){
-      const progressEase=1-Math.exp(-(mobile?8.0:10.5)*dt);
+      const progressEase=1-Math.exp(-(mobile?10.5:12.5)*dt);
       progress+= (targetProgress-progress)*progressEase;
       if(Math.abs(targetProgress-progress)<.00008)progress=targetProgress;
       targetTouchYaw*=Math.exp(-4.8*dt);
@@ -437,24 +440,26 @@
         const targetUp=mobile?new THREE.Vector3(0,0,-1):new THREE.Vector3(1,0,0);
         desiredUp.lerpVectors(new THREE.Vector3(0,1,0),targetUp,q).normalize();
       }
-      const cameraEase=1-Math.exp(-(mobile?11.5:13.5)*dt);
+      const cameraEase=1-Math.exp(-(mobile?12.5:14.5)*dt);
       cameraPosition.lerp(desiredPosition,cameraEase);
       cameraTarget.lerp(desiredTarget,cameraEase);
       camera.position.copy(cameraPosition);
       camera.up.lerp(desiredUp,cameraEase).normalize();
       camera.lookAt(cameraTarget);
 
-      const exit=smoother(clamp((p-.965)/.035));
+      const exit=smoother(clamp((p-.92)/.08));
       sticky.style.setProperty('--connected-exit',exit.toFixed(4));
 
       groups.forEach((g,i)=>{if(g.visible)g.rotation.y=Math.sin(t*.22+i)*.017});
-      animated.people.forEach((o,n)=>{if(!objectVisible(o.torso))return;const bob=Math.sin(t*1.25+n*.55)*.018;o.torso.position.y=o.base+bob;o.head.position.y=o.headBase+bob});
-      animated.screens.forEach((s,i)=>{if(objectVisible(s))s.material.emissiveIntensity=1.04+Math.sin(t*2.4+i*.72)*.12});
-      animated.spots.forEach((s,i)=>{if(s.visible&&objectVisible(s))s.intensity=1.35+Math.sin(t*1.8+i*.72)*.30});
-      animated.rings.forEach((r,i)=>{if(objectVisible(r))r.rotation.z=t*(i%2?-.016:.014)});
-      animated.statusLights.forEach((l,i)=>{if(objectVisible(l))l.intensity=.20+Math.sin(t*2+i*.37)*.06});
-      animated.routeMarkers.forEach((marker,i)=>{if(!objectVisible(marker))return;const u=(t*(reduce?0:.072)+marker.userData.offset)%1,pos=marker.userData.curve.getPointAt(u);marker.position.copy(pos);marker.position.y=.38+Math.sin(t*3.5+i)*.02});
-      animated.fans.forEach((f,i)=>{if(objectVisible(f))f.rotation.y=t*.008*(i%2?1:-1)});
+      if(!lowPower){
+        animated.people.forEach((o,n)=>{if(!objectVisible(o.torso))return;const bob=Math.sin(t*1.25+n*.55)*.018;o.torso.position.y=o.base+bob;o.head.position.y=o.headBase+bob});
+        animated.screens.forEach((s,i)=>{if(objectVisible(s))s.material.emissiveIntensity=1.04+Math.sin(t*2.4+i*.72)*.12});
+        animated.spots.forEach((s,i)=>{if(s.visible&&objectVisible(s))s.intensity=1.35+Math.sin(t*1.8+i*.72)*.30});
+        animated.rings.forEach((r,i)=>{if(objectVisible(r))r.rotation.z=t*(i%2?-.016:.014)});
+        animated.statusLights.forEach((l,i)=>{if(objectVisible(l))l.intensity=.20+Math.sin(t*2+i*.37)*.06});
+        animated.routeMarkers.forEach((marker,i)=>{if(!objectVisible(marker))return;const u=(t*(reduce?0:.072)+marker.userData.offset)%1,pos=marker.userData.curve.getPointAt(u);marker.position.copy(pos);marker.position.y=.38+Math.sin(t*3.5+i)*.02});
+        animated.fans.forEach((f,i)=>{if(objectVisible(f))f.rotation.y=t*.008*(i%2?1:-1)});
+      }
       renderer.render(scene,camera);
     }
     requestAnimationFrame(render);

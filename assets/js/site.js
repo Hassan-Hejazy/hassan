@@ -2,15 +2,18 @@
   'use strict';
   const root=document.documentElement;
   const clamp=v=>Math.max(0,Math.min(1,v));
-  let language=(new URLSearchParams(location.search).get('lang')||localStorage.getItem('bymeli-language')||'en')==='ar'?'ar':'en';
+  const storage={
+    get(key){try{return window.localStorage?.getItem(key)||null}catch(_){return null}},
+    set(key,value){try{window.localStorage?.setItem(key,value)}catch(_){}}
+  };
+  let language=(new URLSearchParams(location.search).get('lang')||storage.get('bymeli-language')||'en')==='ar'?'ar':'en';
 
   function syncViewport(){
-    const viewportHeight=Math.round(window.visualViewport?.height||window.innerHeight||0);
+    const viewportHeight=Math.round(window.innerHeight||0);
     if(viewportHeight>0) root.style.setProperty('--viewport-h',viewportHeight+'px');
     root.classList.toggle('short-landscape',window.innerWidth>window.innerHeight&&viewportHeight<=560);
   }
   syncViewport();
-  window.visualViewport?.addEventListener('resize',syncViewport,{passive:true});
 
   const preloader=document.getElementById('preloader');
   const preloaderBar=document.getElementById('preloaderBar');
@@ -57,6 +60,11 @@
   window.addEventListener('load',finishPreloader,{once:true});
   setTimeout(finishPreloader,3200);
 
+  document.body.classList.remove('lock');
+  window.addEventListener('pageshow',()=>{
+    if(!document.querySelector('.mobile-menu-overlay.open,.lightbox.open'))document.body.classList.remove('lock');
+  },{passive:true});
+
   const header=document.getElementById('siteHeader');
   const whatsappButton=document.querySelector('.whatsapp');
   const menuToggle=document.getElementById('menuToggle');
@@ -91,7 +99,7 @@
 
   function setLanguage(lang){
     language=lang;
-    localStorage.setItem('bymeli-language',lang);
+    storage.set('bymeli-language',lang);
     root.lang=lang;root.dir=lang==='ar'?'rtl':'ltr';
     translatable.forEach(el=>{const value=el.getAttribute(`data-${lang}`);if(value!==null)el.textContent=value});
     syncWecanSvgLayout();
@@ -192,11 +200,7 @@
 
   const buildTrack=document.getElementById('buildTrack');
   const buildCanvas=document.getElementById('buildCanvas');
-  if(buildTrack){
-    buildTrack.style.touchAction='pan-y';
-    buildTrack.addEventListener('touchstart',()=>{}, {passive:true});
-    buildTrack.addEventListener('touchmove',()=>{}, {passive:true});
-  }
+  if(buildTrack)buildTrack.style.touchAction='pan-y';
   if(buildCanvas){
     buildCanvas.style.pointerEvents='none';
     buildCanvas.style.touchAction='auto';
@@ -331,18 +335,18 @@
   function applyWecan(p){
     root.style.setProperty('--wecan-p',p.toFixed(4));
     const compact=innerWidth<=760;
-    const wordExpand=smootherstep(range(p,.055,compact?.58:.62));
-    const wordOpacity=1-smootherstep(range(p,compact?.46:.50,compact?.66:.70));
-    const curtainOpacity=.46*(1-smootherstep(range(p,.12,compact?.58:.62)));
-    const portalReveal=smootherstep(range(p,.10,compact?.52:.56));
-    const finalOpacity=smootherstep(range(p,compact?.70:.73,compact?.91:.93));
+    const wordExpand=smootherstep(range(p,.30,compact?.58:.62));
+    const wordOpacity=1-smootherstep(range(p,compact?.48:.51,compact?.64:.68));
+    const curtainOpacity=.44*(1-smootherstep(range(p,.14,compact?.60:.64)));
+    const portalReveal=smootherstep(range(p,.10,compact?.50:.54));
+    const finalOpacity=smootherstep(range(p,compact?.66:.69,compact?.90:.92));
     const openingOpacity=1-smoothstep(range(p,.08,.27));
     const hintOpacity=(1-smoothstep(range(p,.08,.26)))*.78;
     const imageScale=(compact?1.045:1.065)-smootherstep(range(p,.08,.88))*(compact?.045:.065);
     const imageY=(1-portalReveal)*(compact?.55:.85)-smootherstep(range(p,.40,.90))*(compact?.18:.32);
     const imageFocus=(compact?43:48)-smootherstep(range(p,.24,.88))*(compact?2.5:2);
 
-    root.style.setProperty('--wecan-mobile-word-scale',(1+wordExpand*(compact?4.5:5.2)).toFixed(4));
+    root.style.setProperty('--wecan-mobile-word-scale',(1+wordExpand*(compact?3.8:4.5)).toFixed(4));
     root.style.setProperty('--wecan-mobile-word-opacity',wordOpacity.toFixed(4));
     root.style.setProperty('--wecan-mobile-curtain-opacity',curtainOpacity.toFixed(4));
     root.style.setProperty('--wecan-solid-opacity','0');
@@ -386,15 +390,22 @@
 
   let scrollTicking=false;
   function updateScroll(){
-    header.classList.toggle('scrolled',scrollY>18);
-    whatsappButton?.classList.toggle('visible',innerWidth>680||scrollY>Math.min(320,innerHeight*.42));
-    updateBuild();updateWecan();
-    if(!scrollTicking){scrollTicking=true;requestAnimationFrame(()=>{updateMotion();scrollTicking=false})}
+    if(scrollTicking)return;
+    scrollTicking=true;
+    requestAnimationFrame(()=>{
+      header.classList.toggle('scrolled',scrollY>18);
+      whatsappButton?.classList.toggle('visible',innerWidth>680||scrollY>Math.min(320,innerHeight*.42));
+      updateBuild();
+      updateWecan();
+      updateMotion();
+      scrollTicking=false;
+    });
   }
   function handleResize(){
     syncViewport();
     syncWecanSvgLayout();
     refreshMotionTargets();
+    window.BuildScene?.resize?.();
     updateBuild();
     updateWecan();
     updateMotion();
