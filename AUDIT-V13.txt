@@ -1,0 +1,57 @@
+BY MELI — CONNECTED CINEMATIC V13 AUDIT
+
+CONNECTED CAMERA AND MOTION
+- Replaced the unstable camera-key interpolation with a dense responsive camera path calculated from the actual Three.js model bounds.
+- Corrected the camera-local right-axis calculation that previously pushed desktop compositions away from their intended safe frame.
+- Camera fitting accounts for the active information panel and uses separate phone, tablet and desktop framing regions.
+- All six station holds use a subtle eye-level orbit while preserving exact model containment.
+- Transitions move the outgoing and incoming environments along the same production route and exchange their visual weight continuously.
+- Transition camera yaw now blends between adjacent service angles without route-angle spins or 180-degree camera swings.
+- The final connected overview begins from the sixth service camera and gradually resolves into the responsive system layout without a camera snap.
+- Scroll motion uses time-based damping plus a frame-rate-normalized catch-up limit, preventing wheel or swipe jumps from skipping the walkthrough.
+
+QUALITY AND PERFORMANCE
+- Adaptive high-density rendering uses device capability, viewport size, DPR and a pixel budget rather than forcing an oversized buffer on every device.
+- Phone rendering supports up to 2.75 DPR within a 5.2-million-pixel budget; desktop rendering supports up to 2.5 DPR within an 8.3-million-pixel budget.
+- Minimum supersampling is retained where the performance budget permits, improving edge and text clarity on standard-DPR displays.
+- Mobile transitions render the full-detail scene that matters visually and use the lighter representation only while the second environment is small.
+- Mobile shadows use soft contact treatment; capable desktop devices retain PCF soft shadows.
+- Live display textures, particles and route effects update at device-appropriate rates.
+- Rendering pauses while the section or browser tab is not visible.
+- WebGL context loss is handled without creating duplicate animation loops.
+
+RESPONSIVE PROJECTION AUDIT
+The real Three.js model graph and camera projections were evaluated at 81 walkthrough positions for each viewport:
+- 320 x 700
+- 390 x 844
+- 768 x 1024
+- 1024 x 768
+- 1440 x 900
+
+Projection results:
+- 405 walkthrough frames checked.
+- 0 camera-containment failures.
+- 0 invalid camera coordinates.
+- 0 horizontal-overflow failures.
+- Every visible station remained inside its device-specific safe frame.
+- Phone station holds occupy approximately 83% of the viewport width while remaining clear of the mobile information panel.
+- Desktop station holds remain compositionally balanced beside the copy panel.
+
+SCROLL TEST
+- Native page scrolling remained enabled within the connected section.
+- The connected canvas remained pointer-transparent with touch-action: pan-y.
+- A 600-pixel wheel/scroll input progressed monotonically through the animation on phone and desktop test viewports.
+- No stale body scroll lock was detected.
+
+SITE VALIDATION
+- JavaScript syntax checks passed for every local script.
+- Runtime camera harness completed without JavaScript errors.
+- CSS parsed without errors.
+- No duplicate HTML IDs.
+- No missing local images, scripts or stylesheets.
+- No Arabic diacritics were found.
+- Service canvases retain mouse, touch and pen drag while vertical gestures preserve page scrolling.
+- ZIP integrity passed after packaging.
+
+ENVIRONMENT NOTE
+The execution environment does not expose a functioning WebGL GPU context. The connected scene was therefore validated against the real Three.js scene graph through a renderer-independent projection and runtime harness. Native layout, input and scrolling were checked separately in Chromium. Final GPU appearance should be reviewed in Chrome and Safari on the target devices after deployment.

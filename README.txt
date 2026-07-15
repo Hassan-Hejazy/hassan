@@ -1,7 +1,7 @@
-BY MELI — CONNECTED CINEMATIC V12
+BY MELI — CONNECTED CINEMATIC V13
 
-Open index.html to preview the website. For normal browser security and reliable asset loading, host the folder through a local or web server rather than opening it only with file://.
+Open index.html through a local or web server for reliable browser asset loading. The folder is ready for static hosting, including GitHub Pages.
 
-V12 rebuilds the connected 3D sequence around the same detailed service-model factory used by the six individual service scenes. The scene includes responsive camera fitting, a scroll-synchronised six-stage walkthrough, lightweight mobile hand-offs, a final connected-system overview, live screens, animated production routes, scan light, particles and adaptive rendering quality.
+V13 rebuilds the connected 3D walkthrough around a responsive, projection-fitted camera path. It uses the detailed geometry from the six service environments, adaptive high-density rendering, scroll-normalized motion, cinematic lighting, live screens, route animation, scan light, particles and a responsive final system overview.
 
-See AUDIT-V12.txt for validation details.
+See AUDIT-V13.txt for the technical validation results.
