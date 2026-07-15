@@ -1,19 +1,24 @@
-BY MELI — Targeted 3D and Responsive Correction
+BY MELI — Final Device-Specific 3D and Responsive Correction
 
 This version preserves the original workflow design and website structure.
 
-Corrections included:
-- Restored the original six-card workflow design.
-- Corrected workflow breakpoints for desktop, tablet and mobile.
-- Increased mobile 3D viewport height so each scene remains fully visible.
-- Enabled antialiasing and soft shadows on mobile and desktop.
-- Added adaptive high-resolution rendering for sharp output without uncontrolled GPU load.
-- Added procedural studio reflections for improved metal, glass and material definition.
-- Adjusted mobile camera framing for build, service and connected scenes.
-- Added damped camera/animation progress for smoother scrolling.
-- Shortened excessive mobile pinned-scroll distances while retaining every animation stage.
-- Upgraded the existing We Can image source without changing its design.
-- Removed Arabic diacritics from the website text.
-- Bundled Three.js locally for more reliable loading when hosted.
+Final corrections included:
+- Manufacturing camera now uses real aspect-ratio and field-of-view fitting instead of fixed mobile zoom values.
+- The full manufacturing structure remains inside the frame on narrow portrait phones, tablets and landscape screens.
+- Connected 3D service models use the same aspect-ratio fitting, with a wider final overview camera for the complete route.
+- Mobile 3D overlays are smaller, scroll-safe and positioned to preserve the visible model area.
+- The We Can SVG automatically changes to a portrait coordinate system on narrow devices, preventing cropped wording.
+- We Can image scaling, final message panel, action layout and scroll distance were refined for phone and tablet screens.
+- Mobile scroll overscroll behavior was restored for a more natural touch experience.
+- Rendering density was increased adaptively, with improved mobile shadow resolution.
+- The original six-card workflow layout remains unchanged; only its responsive behavior is corrected.
+- Arabic diacritics remain removed.
+- Three.js remains bundled locally for reliable GitHub Pages or client hosting.
 
-Open index.html through a web server or publish the folder through GitHub Pages.
+Validated:
+- JavaScript syntax
+- CSS parsing
+- Local file references
+- Arabic diacritic removal
+
+Open index.html through a local web server or publish the complete folder through GitHub Pages.

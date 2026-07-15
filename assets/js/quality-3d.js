@@ -49,8 +49,8 @@
   }
 
   function pixelRatio(width,height,isMobile){
-    const maxRatio=isMobile?2:2.15;
-    const maxPixels=isMobile?2300000:5000000;
+    const maxRatio=isMobile?2.25:2.25;
+    const maxPixels=isMobile?3200000:5500000;
     return Math.max(1,Math.min(window.devicePixelRatio||1,maxRatio,Math.sqrt(maxPixels/Math.max(1,width*height))));
   }
 

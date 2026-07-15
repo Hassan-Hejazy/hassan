@@ -148,7 +148,7 @@
     scene.fog=new THREE.FogExp2(0x12100d,.035);
     scene.add(new THREE.HemisphereLight(0xf1dfbd,0x15110d,1.1));
     const key=new THREE.DirectionalLight(0xffedc7,1.25);key.position.set(7,11,8);
-    key.castShadow=true;key.shadow.mapSize.set(mobile?1024:2048,mobile?1024:2048);key.shadow.camera.left=-12;key.shadow.camera.right=12;key.shadow.camera.top=12;key.shadow.camera.bottom=-12;key.shadow.bias=-0.00035;key.shadow.normalBias=0.025;
+    key.castShadow=true;key.shadow.mapSize.set(mobile?1536:2048,mobile?1536:2048);key.shadow.camera.left=-12;key.shadow.camera.right=12;key.shadow.camera.top=12;key.shadow.camera.bottom=-12;key.shadow.bias=-0.00035;key.shadow.normalBias=0.025;
     scene.add(key);
     const rim=new THREE.PointLight(0x67b9ac,.55,28);rim.position.set(-7,4,6);scene.add(rim);
     const floor=shadow(new THREE.Mesh(new THREE.CylinderGeometry(6.3,6.6,.28,56),new THREE.MeshStandardMaterial({color:0x17130f,roughness:.9,metalness:.05})),false);

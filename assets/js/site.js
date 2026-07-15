@@ -67,12 +67,50 @@
   const langToggle=document.getElementById('langToggle');
   const translatable=Array.from(document.querySelectorAll('[data-en][data-ar]'));
 
+  function syncWecanTypography(){
+    const width=window.innerWidth||1280;
+    const height=window.visualViewport?.height||window.innerHeight||900;
+    const aspect=width/Math.max(1,height);
+    const isArabic=language==='ar';
+    const portrait=width<=980&&aspect<.9;
+    const svg=document.querySelector('.wecan-mask-svg');
+    const mask=document.getElementById('wecanCutoutMask');
+    const maskRect=mask?.querySelector('rect');
+    const cover=document.querySelector('.wecan-mask-cover');
+    const texts=Array.from(document.querySelectorAll('.wecan-cutout-text,.wecan-edge,.wecan-solid-text'));
+
+    if(portrait){
+      svg?.setAttribute('viewBox','0 0 900 1600');
+      mask?.setAttribute('width','900');mask?.setAttribute('height','1600');
+      maskRect?.setAttribute('width','900');maskRect?.setAttribute('height','1600');
+      cover?.setAttribute('width','900');cover?.setAttribute('height','1600');
+      const textLength=isArabic?(width<=430?590:640):(width<=430?650:710);
+      texts.forEach(el=>{
+        el.setAttribute('x','450');
+        el.setAttribute('y',isArabic?'845':'855');
+        el.setAttribute('textLength',String(textLength));
+      });
+    }else{
+      svg?.setAttribute('viewBox','0 0 1600 900');
+      mask?.setAttribute('width','1600');mask?.setAttribute('height','900');
+      maskRect?.setAttribute('width','1600');maskRect?.setAttribute('height','900');
+      cover?.setAttribute('width','1600');cover?.setAttribute('height','900');
+      const textLength=isArabic?'980':'1230';
+      texts.forEach(el=>{
+        el.setAttribute('x','800');
+        el.setAttribute('y','535');
+        el.setAttribute('textLength',textLength);
+      });
+    }
+    root.classList.toggle('wecan-portrait',portrait);
+  }
+
   function setLanguage(lang){
     language=lang;
     localStorage.setItem('bymeli-language',lang);
     root.lang=lang;root.dir=lang==='ar'?'rtl':'ltr';
     translatable.forEach(el=>{const value=el.getAttribute(`data-${lang}`);if(value!==null)el.textContent=value});
-    document.querySelectorAll('.wecan-cutout-text,.wecan-edge,.wecan-solid-text').forEach(el=>el.setAttribute('textLength',lang==='ar'?'980':'1230'));
+    syncWecanTypography();
     langToggle.textContent=lang==='en'?'AR':'EN';
     updateBuildCopy(true);
     renderPortfolio(activeFilter);
@@ -339,10 +377,12 @@
   }
   function handleResize(){
     syncViewport();
+    syncWecanTypography();
     refreshMotionTargets();
     updateBuild();
     updateWecan();
     updateMotion();
+    if(buildReady&&window.BuildScene?.resize)window.BuildScene.resize();
     if(innerWidth>=1190&&mobileNav?.classList.contains('open'))toggleMenu(false);
     if(innerWidth<=1190&&megaMenu?.classList.contains('open'))toggleMega(false);
   }

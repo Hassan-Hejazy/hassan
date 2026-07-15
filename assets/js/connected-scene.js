@@ -240,7 +240,7 @@
     // Adaptive pixel density is applied by resize().renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.04;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
     scene=new THREE.Scene();window.ByMeli3DQuality?.apply(renderer,scene,{exposure:1.07});scene.background=new THREE.Color(0x0d0b08);scene.fog=new THREE.FogExp2(0x0d0b08,.018);
     scene.add(new THREE.HemisphereLight(0xf0deba,0x14110d,1.05));
-    const key=new THREE.DirectionalLight(0xffe9bc,1.18);key.position.set(8,12,7);key.castShadow=true;key.shadow.mapSize.set(mobile?1024:2048,mobile?1024:2048);key.shadow.camera.left=-16;key.shadow.camera.right=16;key.shadow.camera.top=16;key.shadow.camera.bottom=-16;key.shadow.bias=-0.00035;key.shadow.normalBias=.03;scene.add(key);
+    const key=new THREE.DirectionalLight(0xffe9bc,1.18);key.position.set(8,12,7);key.castShadow=true;key.shadow.mapSize.set(mobile?1536:2048,mobile?1536:2048);key.shadow.camera.left=-16;key.shadow.camera.right=16;key.shadow.camera.top=16;key.shadow.camera.bottom=-16;key.shadow.bias=-0.00035;key.shadow.normalBias=.03;scene.add(key);
     const teal=new THREE.PointLight(0x66b7ab,.48,44);teal.position.set(-8,5,8);scene.add(teal);
 
     const floor=new THREE.Mesh(new THREE.PlaneGeometry(38,112),new THREE.MeshStandardMaterial({color:0x0f0d0a,roughness:.93}));floor.rotation.x=-Math.PI/2;floor.position.set(0,0,-42);floor.receiveShadow=true;scene.add(floor);
@@ -265,7 +265,31 @@
     camera=new THREE.PerspectiveCamera(mobile?52:43,1,.1,190);resize();bind();sticky.classList.add('model-active');update();render();
   }
 
-  function resize(){if(!renderer)return;const r=sticky.getBoundingClientRect(),w=Math.max(1,r.width),h=Math.max(1,r.height);const maxRatio=mobile?2:2.1,maxPixels=mobile?2300000:5000000,ratio=window.ByMeli3DQuality?.pixelRatio(w,h,mobile)||Math.max(1,Math.min(devicePixelRatio||1,maxRatio,Math.sqrt(maxPixels/(w*h))));renderer.setPixelRatio(ratio);renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=w<700?56:(w<1000?48:43);camera.updateProjectionMatrix()}
+  function viewportProfile(){
+    const r=sticky.getBoundingClientRect(),w=Math.max(1,r.width),h=Math.max(1,r.height);
+    const aspect=w/Math.max(1,h);
+    const portraitBoost=clamp((0.86-aspect)/0.34);
+    const compactHeightBoost=clamp((720-h)/220);
+    const fov=w<700?lerp(56,61,Math.max(portraitBoost,compactHeightBoost*.7)):(w<1000?48:43);
+    const vFov=THREE.MathUtils.degToRad(fov);
+    const hFov=2*Math.atan(Math.tan(vFov/2)*aspect);
+    const widthRadius=(12.1*.5)/Math.max(.12,Math.tan(hFov/2));
+    const heightRadius=(7.2*.5)/Math.max(.12,Math.tan((vFov*.78)/2));
+    return {
+      w,h,aspect,portraitBoost,compactHeightBoost,
+      tightView:aspect<0.8,
+      fov,
+      fitRadius:Math.max(widthRadius,heightRadius)*1.04
+    };
+  }
+
+  function resize(){
+    if(!renderer)return;
+    const profile=viewportProfile();
+    const w=profile.w,h=profile.h;
+    const maxRatio=mobile?2:2.1,maxPixels=mobile?2300000:5000000,ratio=window.ByMeli3DQuality?.pixelRatio(w,h,mobile)||Math.max(1,Math.min(devicePixelRatio||1,maxRatio,Math.sqrt(maxPixels/(w*h))));
+    renderer.setPixelRatio(ratio);renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=profile.fov;camera.updateProjectionMatrix()
+  }
   function bind(){
     canvas.style.touchAction='pan-y';
     canvas.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;canvas.setPointerCapture?.(e.pointerId)});
@@ -300,14 +324,17 @@
   function render(){
     if(renderer&&visible&&pageVisible){
       progress+=(targetProgress-progress)*(reduce?1:.09);if(Math.abs(targetProgress-progress)<.0001)progress=targetProgress;const p=progress,t=performance.now()*.001;targetTouchYaw*=.94;touchYaw+=(targetTouchYaw-touchYaw)*.08;
+      const profile=viewportProfile();
       if(p<.84){
         const raw=(p/.84)*5,base=Math.floor(raw),next=Math.min(5,base+1),local=smooth(raw-base),a=centers[base],b=centers[next];
-        const target=new THREE.Vector3(lerp(a.x,b.x,local),1.62,lerp(a.z,b.z,local));
+        const target=new THREE.Vector3(lerp(a.x,b.x,local),1.62+profile.portraitBoost*.12,lerp(a.z,b.z,local));
         const angle=lerp(.14,.31,local)+touchYaw;
-        const radius=mobile?11.7:9.25;camera.position.set(target.x+Math.sin(angle)*radius,(mobile?4.25:3.92)+Math.sin(local*Math.PI)*.18,target.z+Math.cos(angle)*radius);
+        const radius=mobile?Math.max(11.8,profile.fitRadius):9.25;
+        const camY=(mobile?4.28:3.92)+Math.sin(local*Math.PI)*.18+profile.portraitBoost*.46;
+        camera.position.set(target.x+Math.sin(angle)*radius,camY,target.z+Math.cos(angle)*radius);
         camera.lookAt(target);
       }else{
-        const q=smooth((p-.84)/.16),last=centers[5],close=new THREE.Vector3(last.x+(mobile?3.8:3.2),mobile?4.5:4,last.z+(mobile?10.2:8.4)),overview=mobile?new THREE.Vector3(23,20,-34):new THREE.Vector3(17,15,-38),lookClose=new THREE.Vector3(last.x,1.7,last.z),lookAll=new THREE.Vector3(0,1.2,-42);
+        const q=smooth((p-.84)/.16),last=centers[5],closeRadius=mobile?Math.max(10.2,profile.fitRadius*.82):8.4,close=new THREE.Vector3(last.x+(mobile?4.4:3.2),mobile?4.8:4,last.z+closeRadius),overview=mobile?new THREE.Vector3(30+profile.portraitBoost*5,24+profile.portraitBoost*3,-35):new THREE.Vector3(17,15,-38),lookClose=new THREE.Vector3(last.x,1.55,last.z),lookAll=new THREE.Vector3(0,1.15,-42);
         camera.position.set(lerp(close.x,overview.x,q),lerp(close.y,overview.y,q),lerp(close.z,overview.z,q));
         camera.lookAt(lerp(lookClose.x,lookAll.x,q),lerp(lookClose.y,lookAll.y,q),lerp(lookClose.z,lookAll.z,q));
       }

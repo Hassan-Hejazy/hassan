@@ -528,7 +528,7 @@ window.BuildScene = (function(){
     const sun = new THREE.DirectionalLight(0xfff0c8, 1.18);
     sun.position.set(6.2, 9.6, 7.8);
     sun.castShadow = true;
-    sun.shadow.mapSize.set(mobile?1024:2048,mobile?1024:2048);
+    sun.shadow.mapSize.set(mobile?1536:2048,mobile?1536:2048);
     sun.shadow.camera.left = -12;
     sun.shadow.camera.right = 12;
     sun.shadow.camera.top = 12;
@@ -562,18 +562,40 @@ window.BuildScene = (function(){
     return true;
   }
 
+  function viewportProfile(){
+    const aspect = W / Math.max(1, H);
+    const portraitBoost = clamp01((0.86 - aspect) / 0.34);
+    const compactHeightBoost = clamp01((720 - H) / 220);
+    const fov = W < 720
+      ? lerp(56, 61, Math.max(portraitBoost, compactHeightBoost * 0.7))
+      : (W < 1000 ? 48 : 42);
+    const vFov = THREE.MathUtils.degToRad(fov);
+    const hFov = 2 * Math.atan(Math.tan(vFov / 2) * aspect);
+    const widthDistance = (13.3 * 0.5) / Math.max(0.12, Math.tan(hFov / 2));
+    const heightDistance = (7.4 * 0.5) / Math.max(0.12, Math.tan((vFov * 0.78) / 2));
+    return {
+      aspect,
+      portraitBoost,
+      compactHeightBoost,
+      tightView: aspect < 0.8,
+      fov,
+      fitDistance: Math.max(widthDistance, heightDistance) * 1.035
+    };
+  }
+
   function resize(){
     if(!canvas || !renderer || !camera) return;
     const parent = canvas.parentElement;
     W = parent.clientWidth;
     H = parent.clientHeight;
     if(W === 0 || H === 0) return;
+    const profile = viewportProfile();
     const maxRatio=mobile?2:2.15;
     const maxPixels=mobile?2300000:5000000;
     const ratio=window.ByMeli3DQuality?.pixelRatio(W,H,mobile)||Math.max(1,Math.min(window.devicePixelRatio||1,maxRatio,Math.sqrt(maxPixels/(W*H))));
     renderer.setPixelRatio(ratio);
     camera.aspect = W/H;
-    camera.fov = W < 720 ? 55 : (W < 1000 ? 47 : 42);
+    camera.fov = profile.fov;
     camera.updateProjectionMatrix();
     renderer.setSize(W, H, false);
   }
@@ -749,20 +771,24 @@ window.BuildScene = (function(){
     camera.position.set(cam.pos[0], cam.pos[1], cam.pos[2]);
     camera.lookAt(cam.look[0], cam.look[1], cam.look[2]);
 
-    rootGroup.rotation.y = lerp(-0.34, 0.16, smooth(p));
-    rootGroup.position.y = Math.sin(time*0.6) * 0.02;
+    const profile = viewportProfile();
+    const rotStart = profile.tightView ? -0.25 : -0.34;
+    const rotEnd = profile.tightView ? 0.09 : 0.16;
+    rootGroup.rotation.y = lerp(rotStart, rotEnd, smooth(p));
+    rootGroup.position.y = Math.sin(time*0.6) * 0.02 + (profile.tightView ? 0.14 : 0);
     floorGlow.scale.setScalar(1 + s5*0.03 + Math.sin(time*0.9)*0.008);
   }
 
   function cameraForProgress(p){
     const isMobile = W < 720;
+    const profile = viewportProfile();
     const keys = isMobile
       ? [
-          { t:0.00, pos:[0.4, 2.25, 14.0], look:[0,0.7,0] },
-          { t:0.22, pos:[1.8, 2.85, 12.8], look:[0,1.8,0] },
-          { t:0.52, pos:[5.2, 3.65, 11.7], look:[0,2.4,0.1] },
-          { t:0.74, pos:[6.0, 3.35, 13.0], look:[0,2.5,0.5] },
-          { t:1.00, pos:[3.5, 2.8, 14.4], look:[0,2.2,0.8] }
+          { t:0.00, pos:[0.35, 2.55, 15.5], look:[0,0.9,0] },
+          { t:0.22, pos:[1.45, 3.0, 14.8], look:[0,1.85,0] },
+          { t:0.52, pos:[4.15, 3.85, 13.9], look:[0,2.45,0.08] },
+          { t:0.74, pos:[4.85, 3.55, 14.6], look:[0,2.52,0.35] },
+          { t:1.00, pos:[2.65, 3.0, 16.0], look:[0,2.2,0.55] }
         ]
       : [
           { t:0.00, pos:[0.2, 1.7, 12.0], look:[0,0.6,0] },
@@ -778,10 +804,22 @@ window.BuildScene = (function(){
     }
     const span = (b.t - a.t) || 1;
     const local = smooth(clamp01((p - a.t) / span));
-    return {
-      pos:[ lerp(a.pos[0], b.pos[0], local), lerp(a.pos[1], b.pos[1], local), lerp(a.pos[2], b.pos[2], local) ],
-      look:[ lerp(a.look[0], b.look[0], local), lerp(a.look[1], b.look[1], local), lerp(a.look[2], b.look[2], local) ]
-    };
+    const pos=[ lerp(a.pos[0], b.pos[0], local), lerp(a.pos[1], b.pos[1], local), lerp(a.pos[2], b.pos[2], local) ];
+    const look=[ lerp(a.look[0], b.look[0], local), lerp(a.look[1], b.look[1], local), lerp(a.look[2], b.look[2], local) ];
+    if(isMobile){
+      pos[1] += lerp(0.12, 0.42, profile.portraitBoost);
+      pos[0] *= lerp(1, 0.64, profile.portraitBoost);
+      look[1] -= lerp(0.04, 0.38, profile.portraitBoost);
+      const dx=pos[0]-look[0],dy=pos[1]-look[1],dz=pos[2]-look[2];
+      const distance=Math.hypot(dx,dy,dz)||1;
+      if(distance<profile.fitDistance){
+        const scale=profile.fitDistance/distance;
+        pos[0]=look[0]+dx*scale;
+        pos[1]=look[1]+dy*scale;
+        pos[2]=look[2]+dz*scale;
+      }
+    }
+    return { pos, look };
   }
 
   function renderLoop(){

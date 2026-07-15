@@ -1214,3 +1214,116 @@ body{min-width:280px}
   .process-card{border-left:none!important;border-right:none!important;border-bottom:1px solid rgba(236,216,169,.12)!important}
   .process-card:last-child{border-bottom:none!important}
 }
+
+/* ========================================================================
+   FINAL DEVICE POLISH — fit the 3D scenes fully on mobile without
+   changing the established workflow design.
+   ======================================================================== */
+@media(max-width:900px){
+  .build-vignette,
+  .connected-scrim{
+    background:linear-gradient(180deg,rgba(8,7,5,.01) 0%,rgba(8,7,5,.04) 50%,rgba(8,7,5,.74) 76%,rgba(8,7,5,.95) 100%);
+  }
+  .build-ui,
+  .connected-copy{
+    max-width:min(92vw,620px);
+    max-height:min(38vh,270px);
+    overflow:auto;
+    scrollbar-width:none;
+  }
+  .build-ui::-webkit-scrollbar,
+  .connected-copy::-webkit-scrollbar{display:none}
+}
+
+@media(max-width:680px){
+  .build-track{height:400svh}
+  .connected-track{height:450svh}
+  .cinematic-wecan .wecan-track{height:255svh}
+
+  .build-ui,
+  .connected-copy{
+    left:12px;
+    right:12px;
+    bottom:calc(12px + var(--safe-bottom));
+    padding:14px 15px;
+    border-radius:18px;
+    max-height:min(34vh,230px);
+    background:linear-gradient(180deg,rgba(9,8,6,.72),rgba(9,8,6,.5));
+    box-shadow:0 16px 44px rgba(0,0,0,.24);
+  }
+  html[dir="rtl"] .build-ui,
+  html[dir="rtl"] .connected-copy{left:12px;right:12px}
+  .build-ui h3,
+  .connected-copy h3{font-size:clamp(1.72rem,8.7vw,2.6rem);margin-bottom:8px}
+  .build-ui p,
+  .connected-copy p{font-size:.84rem;line-height:1.55;-webkit-line-clamp:2}
+  .build-counter,
+  .connected-copy>span{font-size:.62rem;margin-bottom:7px}
+  .build-rail,
+  .connected-rail{top:calc(var(--header-h) + 16px);right:12px}
+  html[dir="rtl"] .build-rail,
+  html[dir="rtl"] .connected-rail{right:auto;left:12px}
+
+  .cinematic-wecan .wecan-sticky{perspective:1500px}
+  .wecan-single-image{
+    inset:0;
+    transform:translate3d(0,var(--wecan-image-y,1.2%),0) scale(calc(var(--wecan-image-scale,1.06) * .92));
+    transform-origin:center center;
+  }
+  .wecan-single-image img{object-position:center 44%}
+  .wecan-cutout-text,
+  .wecan-edge,
+  .wecan-solid-text{letter-spacing:2px}
+  .wecan-opening-label{top:10%;font-size:.52rem;letter-spacing:.16em}
+  .wecan-enter-hint{font-size:.52rem}
+  .cinematic-wecan .wecan-final{
+    left:12px;
+    right:12px;
+    bottom:calc(12px + var(--safe-bottom));
+    padding:18px 17px 18px;
+    border-radius:18px;
+    max-height:min(40vh,300px);
+    background:linear-gradient(110deg,rgba(7,6,4,.84),rgba(7,6,4,.62) 72%,rgba(7,6,4,.24));
+    box-shadow:0 18px 46px rgba(0,0,0,.28);
+  }
+  html[dir="rtl"] .cinematic-wecan .wecan-final{left:12px;right:12px}
+  .cinematic-wecan .wecan-final h2{font-size:clamp(1.95rem,8.9vw,3.05rem);margin-bottom:10px;max-width:12ch}
+  .cinematic-wecan .wecan-final>p:last-of-type{font-size:.84rem;line-height:1.56}
+  .wecan-final-actions{gap:12px;margin-top:14px}
+}
+
+@media(max-width:420px){
+  .build-track{height:385svh}
+  .connected-track{height:430svh}
+  .cinematic-wecan .wecan-track{height:245svh}
+  .build-ui,
+  .connected-copy{max-height:min(32vh,210px)}
+  .build-ui p,
+  .connected-copy p{font-size:.8rem}
+  .cinematic-wecan .wecan-final{max-height:min(38vh,280px)}
+  .cinematic-wecan .wecan-final h2{font-size:clamp(1.82rem,9.1vw,2.65rem)}
+}
+
+@media(max-height:560px) and (orientation:landscape){
+  .build-ui,
+  .connected-copy{max-height:calc(var(--viewport-h) - 28px);overflow:auto}
+  .cinematic-wecan .wecan-final{max-height:calc(var(--viewport-h) - 26px);overflow:auto}
+}
+
+/* Portrait We Can geometry and natural mobile scrolling. */
+@media(max-width:900px){
+  html{overscroll-behavior-y:auto;scrollbar-gutter:auto}
+  html.wecan-portrait .wecan-single-image{
+    inset:-4%;
+    transform:translate3d(0,var(--wecan-image-y,1.2%),0) scale(calc(var(--wecan-image-scale,1.06) * .94));
+  }
+  html.wecan-portrait .wecan-opening-label{top:9.5%}
+}
+
+@media(max-width:420px){
+  .build-ui p,.connected-copy p{-webkit-line-clamp:1}
+  .build-ui,.connected-copy{max-height:min(29vh,188px)}
+  .cinematic-wecan .wecan-final{max-height:min(36vh,260px)}
+  .wecan-final-actions{flex-direction:row;align-items:center;flex-wrap:wrap}
+  .wecan-final .btn{width:auto}
+}
