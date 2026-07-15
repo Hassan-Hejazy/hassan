@@ -335,10 +335,10 @@
     function fitRadius(profile){
       const radius=Math.max(.1,modelSphere?.radius||6.7);
       const limitingHalfAngle=Math.max(THREE.MathUtils.degToRad(10),Math.min(profile.vFov,profile.hFov)/2);
-      return radius/Math.sin(limitingHalfAngle)*(mobile?1.10:1.06);
+      return radius/Math.sin(limitingHalfAngle)*(mobile?.96:.88);
     }
     function qualityRatio(w,h){
-      const dpr=window.devicePixelRatio||1,compact=w<760,cap=compact?1.8:2.1,maxPixels=compact?1850000:3800000;
+      const dpr=window.devicePixelRatio||1,compact=w<760,cap=compact?1.95:2.2,maxPixels=compact?2200000:4200000;
       return Math.max(1,Math.min(dpr,cap,Math.sqrt(maxPixels/Math.max(1,w*h))));
     }
 
@@ -358,6 +358,10 @@
           });
         });
         renderer?.dispose?.();
+        try{ renderer?.renderLists?.dispose?.(); }catch(_){}
+        try{ renderer?.forceContextLoss?.(); }catch(_){}
+        try{ renderer?.getContext?.().getExtension('WEBGL_lose_context')?.loseContext?.(); }catch(_){}
+        if(canvas){ canvas.width=1; canvas.height=1; }
       }catch(_){}
       renderer=scene=camera=root=materials=modelSphere=null;
       frame.classList.remove('ready');

@@ -1,0 +1,31 @@
+BY MELI — CONNECTED 3D + WE CAN V4 AUDIT
+
+Source
+- Rebuilt from bymeli-connected-wecan-v3.
+- Existing site structure, content, navigation, services and portfolio retained.
+
+Connected 3D validation
+- WebGL scene rendered through Chromium SwiftShader at 390x844 and 1440x900.
+- Mobile frames reviewed at progress 0%, 10%, 22%, 40%, 62%, 82%, 94% and 99.5%.
+- Desktop frames reviewed at progress 0%, 20%, 40%, 62% and 82%.
+- Current/next station transitions retain the complete model in frame.
+- Final six-station overview fits above the mobile content panel.
+- Canvas pointer-events: none; native wheel/touch page scrolling remains available.
+- Native wheel test inside the connected sticky section moved the page by the requested 500px.
+- Adaptive DPR, geometry detail and shadow quality are used according to device capability.
+
+WE CAN validation
+- Opening state: pure black background, white word, image opacity 0.
+- Word center tested at 320x700, 390x844, 768x1024, 1024x768 and 1440x900.
+- Opening word fills approximately 91–92% of the usable viewport width and remains centered.
+- Transition frames reviewed at 0%, 12%, 24%, 42%, 60%, 78% and 95%.
+- Image reveal, word enlargement/fade and final centered heading panel were visually reviewed on mobile and desktop.
+- No 3D model is present in the WE CAN section.
+
+Code and package validation
+- All JavaScript files passed node --check.
+- CSS brace counts passed.
+- No duplicate HTML IDs.
+- No missing local script, stylesheet or image references.
+- No Arabic diacritics found in index.html.
+- No horizontal content overflow detected at the tested viewport sizes.

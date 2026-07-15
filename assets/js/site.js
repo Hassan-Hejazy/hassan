@@ -2,6 +2,8 @@
   'use strict';
   const root=document.documentElement;
   const clamp=v=>Math.max(0,Math.min(1,v));
+  const range=(v,a,b)=>clamp((v-a)/(b-a));
+  const smoothstep=t=>t*t*(3-2*t);
   const storage={
     get(key){try{return window.localStorage?.getItem(key)||null}catch(_){return null}},
     set(key,value){try{window.localStorage?.setItem(key,value)}catch(_){}}
@@ -327,62 +329,8 @@
   let swipeStart=0;lightbox.addEventListener('touchstart',e=>{swipeStart=e.touches[0].clientX},{passive:true});lightbox.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-swipeStart;if(Math.abs(dx)>55)stepLightbox(dx>0?-1:1)},{passive:true});
 
   const wecanTrack=document.getElementById('wecanTrack');
-  const range=(value,start,end)=>clamp((value-start)/(end-start));
-  const smoothstep=value=>value*value*(3-2*value);
-  const smootherstep=value=>value*value*value*(value*(value*6-15)+10);
-  let wecanTarget=0,wecanDisplayed=0,wecanFrame=0,wecanLastTime=0;
-
-  function applyWecan(p){
-    root.style.setProperty('--wecan-p',p.toFixed(4));
-    const compact=innerWidth<=760;
-    const hold=smootherstep(range(p,.16,.28));
-    const wordExpand=smootherstep(range(p,compact?.26:.28,compact?.60:.62));
-    const wordOpacity=1-smootherstep(range(p,compact?.48:.50,compact?.66:.68));
-    const curtainRelease=smootherstep(range(p,.18,compact?.67:.70));
-    const finalOpacity=smootherstep(range(p,compact?.68:.70,compact?.91:.92));
-    const openingOpacity=1-smoothstep(range(p,.07,.24));
-    const hintOpacity=(1-smoothstep(range(p,.08,.25)))*.82;
-    const imageMove=smootherstep(range(p,.12,.92));
-    const imageScale=(compact?1.075:1.09)-imageMove*(compact?.075:.09);
-    const imageY=(1-imageMove)*(compact?.35:.55)-imageMove*(compact?.12:.20);
-    const imageFocus=(compact?43.5:47)-imageMove*(compact?1.5:1.0);
-    const wordScale=1+wordExpand*(compact?1.55:1.85);
-    const curtainOpacity=.68-(curtainRelease*.50);
-    const finalBlur=(1-finalOpacity)*(compact?5:8);
-
-    root.style.setProperty('--wecan-mobile-word-scale',wordScale.toFixed(4));
-    root.style.setProperty('--wecan-mobile-word-opacity',wordOpacity.toFixed(4));
-    root.style.setProperty('--wecan-mobile-curtain-opacity',curtainOpacity.toFixed(4));
-    root.style.setProperty('--wecan-word-hold',hold.toFixed(4));
-    root.style.setProperty('--wecan-image-opacity','1');
-    root.style.setProperty('--wecan-image-scale',imageScale.toFixed(4));
-    root.style.setProperty('--wecan-image-y',imageY.toFixed(3)+'%');
-    root.style.setProperty('--wecan-image-focus',imageFocus.toFixed(2)+'%');
-    root.style.setProperty('--wecan-opening-opacity',openingOpacity.toFixed(4));
-    root.style.setProperty('--wecan-final-opacity',finalOpacity.toFixed(4));
-    root.style.setProperty('--wecan-final-y',((1-finalOpacity)*(compact?24:34)).toFixed(2)+'px');
-    root.style.setProperty('--wecan-final-rotate','0deg');
-    root.style.setProperty('--wecan-final-blur',finalBlur.toFixed(2)+'px');
-    root.style.setProperty('--wecan-hint-opacity',hintOpacity.toFixed(4));
-  }
-  function animateWecan(now=performance.now()){
-    wecanFrame=0;
-    const dt=wecanLastTime?Math.min(.04,(now-wecanLastTime)/1000):1/60;
-    wecanLastTime=now;
-    const delta=wecanTarget-wecanDisplayed;
-    wecanDisplayed+=delta*(1-Math.exp(-(innerWidth<=760?10.5:12.5)*dt));
-    if(Math.abs(delta)<.00008)wecanDisplayed=wecanTarget;
-    applyWecan(wecanDisplayed);
-    if(Math.abs(wecanTarget-wecanDisplayed)>.00008)wecanFrame=requestAnimationFrame(animateWecan);
-  }
-  function updateWecan(){
-    if(!wecanTrack)return;
-    const viewportH=window.visualViewport?.height||innerHeight;
-    const r=wecanTrack.getBoundingClientRect(),span=Math.max(1,r.height-viewportH);
-    wecanTarget=clamp(-r.top/span);
-    if(!wecanFrame)wecanFrame=requestAnimationFrame(animateWecan);
-  }
-  document.addEventListener('languagechange',updateWecan);
+  function updateWecan(){window.ByMeliWecanV3?.requestUpdate?.();}
+  document.addEventListener('languagechange',()=>window.ByMeliWecanV3?.refresh?.());
 
   const form=document.getElementById('contactForm'),formStatus=document.getElementById('formStatus');
   form.addEventListener('submit',e=>{e.preventDefault();const d=new FormData(form),name=String(d.get('name')||'').trim(),company=String(d.get('company')||'').trim(),email=String(d.get('email')||'').trim(),phone=String(d.get('phone')||'').trim(),message=String(d.get('message')||'').trim();if(!name||!email||!message){formStatus.textContent=language==='ar'?'فضلا، عبئ الاسم والبريد الإلكتروني ونبذة المشروع.':'Please complete the name, email and project brief.';return}const lines=language==='ar'?['السلام عليكم فريق باي ملي،',`الاسم: ${name}`,company?`الشركة: ${company}`:null,`البريد الإلكتروني: ${email}`,phone?`الهاتف: ${phone}`:null,`تفاصيل المشروع: ${message}`].filter(Boolean):['Hello By Meli,',`Name: ${name}`,company?`Company: ${company}`:null,`Email: ${email}`,phone?`Phone: ${phone}`:null,`Project brief: ${message}`].filter(Boolean);formStatus.textContent=language==='ar'?'جار فتح واتساب...':'Opening WhatsApp...';window.open(`https://wa.me/966599699226?text=${encodeURIComponent(lines.join('\n'))}`,'_blank','noopener')});

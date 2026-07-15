@@ -1,0 +1,46 @@
+BY MELI — ALL-DEVICE AUDIT V5
+
+Scope
+- Latest connected 3D walkthrough and WE CAN section rebuilt on the supplied website version.
+- Existing site structure, content, workflow, services, portfolio and contact sections retained.
+
+Connected 3D corrections
+- Earlier service renderers now explicitly release GPU resources and WebGL contexts before the connected renderer starts.
+- Connected initialization waits for context release and retries up to four times.
+- A lower-cost renderer profile is attempted only when the high-quality renderer cannot be created.
+- Walkthrough timing now includes stable station holds and shorter transitions.
+- Transitioning stations move closer together to prevent extreme zoom-out.
+- Camera distance is calculated from live model bounding spheres and current device field of view.
+- Mobile models are placed above the content panel and kept within safe horizontal margins.
+- Desktop models are offset toward the open side of the composition to avoid the text column.
+- Final overview uses fitted bounds for all six stations and a higher viewing angle on portrait screens.
+- Rendering density was increased for lower-memory phones without removing adaptive performance safeguards.
+
+WE CAN corrections
+- Opening frame is pure black with large white text centered exactly on both axes.
+- Initial word width is measured at runtime and fitted to 90% of phone width and 88% of desktop width.
+- The image reveals from the center without excessive text zoom or cropped letters.
+- The final heading enters before the opening word fully disappears, preventing an empty transition.
+- Final text uses a progressively darkened image overlay for readability.
+- Final content remains fully inside the viewport at all tested sizes.
+
+Responsive and scroll audit
+Tested viewport dimensions:
+- 320 × 700
+- 390 × 844
+- 768 × 1024
+- 1024 × 768
+- 1440 × 900
+
+Verified results:
+- No horizontal overflow at any tested size.
+- Connected and WE CAN pinned sections accept native wheel scrolling.
+- Connected canvas uses pointer-events:none and sticky sections use touch-action:pan-y.
+- WE CAN word center matched the viewport center at all tested sizes.
+- Workflow resolves to one column on phones, two columns on tablets and three columns on desktop.
+- Final WE CAN content stayed entirely inside each tested viewport.
+- Connected camera projection was audited with the actual Three.js geometry at 15 progress points on mobile and desktop; all visible geometry remained within the camera frame.
+- JavaScript syntax, CSS brace balance, local asset references, duplicate HTML IDs and Arabic diacritics were checked.
+
+Environment note
+- The container browser does not expose a real WebGL context. Camera projection and geometry framing were therefore validated with a Three.js renderer test harness, while HTML/CSS/scroll frames were rendered in Chromium. The production code includes real WebGL context recovery and fallback handling for browsers and devices.

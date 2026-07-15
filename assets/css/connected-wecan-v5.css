@@ -1,0 +1,428 @@
+/* ======================================================================
+   CONNECTED 3D + WE CAN — V5 AUDITED SYSTEM
+   One deterministic responsive layer; no nested scroll or touch capture.
+   ====================================================================== */
+
+/* ----------------------------- CONNECTED ----------------------------- */
+#connected{background:#080705!important}
+#connected .connected-track{
+  position:relative!important;
+  height:470vh!important;
+  min-height:470vh!important;
+  contain:none!important;
+  overscroll-behavior:visible!important;
+}
+#connected .connected-sticky{
+  position:sticky!important;
+  top:0!important;
+  width:100%!important;
+  height:100svh!important;
+  min-height:100svh!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+  contain:none!important;
+  touch-action:pan-y!important;
+  background:#080705!important;
+}
+#connectedCanvas{
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  pointer-events:none!important;
+  touch-action:none!important;
+  transform:none!important;
+  filter:none!important;
+}
+#connected .connected-fallback{
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  opacity:.3!important;
+  background-position:center 46%!important;
+  background-size:cover!important;
+  transition:opacity .38s ease!important;
+}
+#connected .connected-sticky.model-active>.connected-fallback{opacity:0!important}
+#connected .connected-scrim{
+  position:absolute!important;
+  inset:0!important;
+  z-index:2!important;
+  pointer-events:none!important;
+  background:
+    linear-gradient(90deg,rgba(5,4,3,.86) 0%,rgba(5,4,3,.42) 31%,rgba(5,4,3,.04) 67%,rgba(5,4,3,.18) 100%),
+    linear-gradient(180deg,rgba(5,4,3,.08),transparent 47%,rgba(5,4,3,.45))!important;
+}
+#connected .connected-copy{
+  position:absolute!important;
+  z-index:4!important;
+  left:max(24px,calc((100vw - min(1280px,100vw - 40px))/2))!important;
+  right:auto!important;
+  bottom:clamp(58px,8vh,94px)!important;
+  width:min(520px,calc(100vw - 48px))!important;
+  max-height:none!important;
+  overflow:visible!important;
+  padding:0!important;
+  border:0!important;
+  background:none!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  color:#fff!important;
+}
+html[dir="rtl"] #connected .connected-copy{
+  left:auto!important;
+  right:max(24px,calc((100vw - min(1280px,100vw - 40px))/2))!important;
+  text-align:right!important;
+}
+#connected .connected-copy.switching{opacity:.28!important;transform:translateY(8px)!important}
+#connected .connected-copy>span{
+  display:block!important;
+  margin:0 0 11px!important;
+  color:#ecd8a9!important;
+  font-size:.69rem!important;
+  letter-spacing:.18em!important;
+}
+#connected .connected-copy h3{
+  max-width:13ch!important;
+  margin:0 0 13px!important;
+  color:#fff!important;
+  font-size:clamp(2.55rem,4.55vw,5rem)!important;
+  line-height:.95!important;
+  letter-spacing:-.045em!important;
+  text-shadow:0 16px 54px rgba(0,0,0,.7)!important;
+}
+#connected .connected-copy p{
+  max-width:58ch!important;
+  margin:0!important;
+  color:#e8dece!important;
+  font-size:.98rem!important;
+  line-height:1.72!important;
+  text-shadow:0 7px 26px rgba(0,0,0,.72)!important;
+}
+#connected .connected-rail{
+  position:absolute!important;
+  z-index:4!important;
+  top:50%!important;
+  right:max(24px,calc((100vw - min(1280px,100vw - 40px))/2))!important;
+  left:auto!important;
+  display:grid!important;
+  gap:8px!important;
+  transform:translateY(-50%)!important;
+  text-align:right!important;
+}
+html[dir="rtl"] #connected .connected-rail{right:auto!important;left:max(24px,calc((100vw - min(1280px,100vw - 40px))/2))!important;text-align:left!important}
+#connected .connected-rail span{
+  color:rgba(255,255,255,.32)!important;
+  font-size:.64rem!important;
+  letter-spacing:.14em!important;
+  transition:color .24s ease,transform .24s ease!important;
+}
+#connected .connected-rail span.active{color:#efdcae!important;transform:translateX(-7px)!important}
+html[dir="rtl"] #connected .connected-rail span.active{transform:translateX(7px)!important}
+#connected .interaction-hint{display:none!important}
+#connected .scene-scroll-indicator{
+  position:absolute!important;
+  left:50%!important;
+  right:auto!important;
+  bottom:18px!important;
+  z-index:5!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  padding:0!important;
+  border:0!important;
+  background:none!important;
+  color:#e6d4af!important;
+  transform:translateX(-50%)!important;
+  pointer-events:none!important;
+}
+#connected .scene-scroll-indicator span{font-size:.53rem!important;letter-spacing:.18em!important;white-space:nowrap!important}
+#connected .scene-scroll-indicator i{
+  position:relative!important;
+  display:block!important;
+  width:22px!important;
+  height:22px!important;
+  border:1px solid rgba(236,216,169,.42)!important;
+  border-radius:50%!important;
+  background:rgba(7,6,4,.22)!important;
+}
+#connected .scene-scroll-indicator i:before,
+#connected .scene-scroll-indicator i:after{
+  content:""!important;
+  position:absolute!important;
+  left:50%!important;
+  top:8px!important;
+  width:6px!important;
+  height:6px!important;
+  border-right:1px solid #ecd8a9!important;
+  border-bottom:1px solid #ecd8a9!important;
+  transform:translateX(-50%) rotate(45deg)!important;
+  animation:connected-chevron 1.55s ease-in-out infinite!important;
+}
+#connected .scene-scroll-indicator i:after{top:4px!important;opacity:.35!important;animation-delay:.16s!important}
+#connected .scene-scroll-indicator i b{display:none!important}
+@keyframes connected-chevron{
+  0%,100%{transform:translate(-50%,-2px) rotate(45deg);opacity:.25}
+  50%{transform:translate(-50%,3px) rotate(45deg);opacity:1}
+}
+
+/* ------------------------------ WE CAN ------------------------------- */
+#wecan.cinematic-wecan{background:#000!important}
+#wecan.cinematic-wecan .wecan-track{
+  position:relative!important;
+  height:300vh!important;
+  min-height:300vh!important;
+  contain:none!important;
+  overscroll-behavior:visible!important;
+}
+#wecan.cinematic-wecan .wecan-sticky{
+  position:sticky!important;
+  top:0!important;
+  width:100%!important;
+  height:100svh!important;
+  min-height:100svh!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+  contain:none!important;
+  touch-action:pan-y!important;
+  background:#000!important;
+}
+#wecan .wecan-black-field{
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  display:block!important;
+  background:#000!important;
+}
+#wecan .wecan-atmosphere,
+#wecan .wecan-mask,
+#wecan .wecan-mobile-curtain,
+#wecan .wecan-precision-frame,
+#wecan .wecan-3d-layer,
+#wecan .wecan-opening-label{display:none!important}
+#wecan .wecan-single-image{
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  display:block!important;
+  margin:0!important;
+  overflow:hidden!important;
+  opacity:1!important;
+  clip-path:circle(var(--wecan-reveal-radius-v5,0vmax) at 50% 50%)!important;
+  transform:scale(var(--wecan-image-scale-v5,1.08))!important;
+  transform-origin:center center!important;
+  will-change:clip-path,transform!important;
+}
+#wecan .wecan-single-image img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center 46%!important;
+  transform:none!important;
+  filter:brightness(var(--wecan-image-brightness-v5,.68)) saturate(1.02) contrast(1.06)!important;
+}
+#wecan .wecan-image-depth{
+  position:absolute!important;
+  inset:0!important;
+  box-shadow:inset 0 0 0 100vmax rgba(0,0,0,var(--wecan-overlay-v5,.04))!important;
+  background:
+    radial-gradient(circle at 50% 42%,rgba(0,0,0,.02),rgba(0,0,0,.16) 54%,rgba(0,0,0,.52) 100%),
+    linear-gradient(180deg,rgba(0,0,0,.14),rgba(0,0,0,.02) 42%,rgba(0,0,0,var(--wecan-lower-dark-v5,.42)) 100%)!important;
+}
+#wecan .wecan-film-light{opacity:var(--wecan-film-opacity-v5,0)!important;mix-blend-mode:screen!important}
+#wecan .wecan-mobile-word{
+  position:absolute!important;
+  left:50%!important;
+  right:auto!important;
+  top:50%!important;
+  bottom:auto!important;
+  z-index:4!important;
+  display:block!important;
+  width:max-content!important;
+  height:auto!important;
+  min-height:0!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  color:#fff!important;
+  font-family:Syne,Inter,sans-serif!important;
+  font-size:200px!important;
+  font-weight:800!important;
+  line-height:.82!important;
+  letter-spacing:-.06em!important;
+  white-space:nowrap!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+  text-shadow:0 12px 44px rgba(0,0,0,var(--wecan-word-shadow-v5,0))!important;
+  opacity:var(--wecan-word-opacity-v5,1)!important;
+  transform:translate(-50%,-50%) scale(var(--wecan-word-scale-v5,var(--wecan-word-fit-v5,1)))!important;
+  transform-origin:center center!important;
+  will-change:transform,opacity!important;
+  pointer-events:none!important;
+}
+html[dir="rtl"] #wecan .wecan-mobile-word{font-family:Changa,Cairo,sans-serif!important;letter-spacing:0!important}
+#wecan .wecan-enter-hint{
+  position:absolute!important;
+  left:50%!important;
+  bottom:20px!important;
+  z-index:5!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  color:#e4d3b2!important;
+  font-size:.54rem!important;
+  letter-spacing:.18em!important;
+  white-space:nowrap!important;
+  opacity:var(--wecan-hint-opacity-v5,1)!important;
+  transform:translateX(-50%)!important;
+}
+#wecan .wecan-enter-hint:after{
+  content:"↓"!important;
+  display:grid!important;
+  place-items:center!important;
+  width:22px!important;
+  height:22px!important;
+  border:1px solid rgba(236,216,169,.42)!important;
+  border-radius:50%!important;
+  font-size:.75rem!important;
+}
+#wecan .wecan-final{
+  position:absolute!important;
+  left:50%!important;
+  right:auto!important;
+  top:50%!important;
+  bottom:auto!important;
+  z-index:6!important;
+  width:min(900px,calc(100vw - 48px))!important;
+  max-height:none!important;
+  overflow:visible!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:none!important;
+  backdrop-filter:none!important;
+  box-shadow:none!important;
+  color:#fff!important;
+  text-align:center!important;
+  opacity:var(--wecan-final-opacity-v5,0)!important;
+  transform:translate(-50%,calc(-50% + var(--wecan-final-y-v5,34px))) scale(var(--wecan-final-scale-v5,.98))!important;
+  filter:blur(var(--wecan-final-blur-v5,6px))!important;
+  pointer-events:none!important;
+  will-change:transform,opacity,filter!important;
+}
+#wecan .wecan-sticky.is-final .wecan-final{pointer-events:auto!important}
+html[dir="rtl"] #wecan .wecan-final{left:50%!important;right:auto!important;text-align:center!important}
+#wecan .wecan-final:before{
+  content:""!important;
+  display:block!important;
+  width:46px!important;
+  height:2px!important;
+  margin:0 auto 18px!important;
+  border-radius:999px!important;
+  background:linear-gradient(90deg,#ecd8a9,#b98a35)!important;
+}
+#wecan .wecan-final .eyebrow{margin-bottom:12px!important;text-align:center!important}
+#wecan .wecan-final h2{
+  max-width:14ch!important;
+  margin:0 auto 16px!important;
+  color:#fff!important;
+  font-size:clamp(3rem,5.3vw,6rem)!important;
+  line-height:.94!important;
+  letter-spacing:-.047em!important;
+  text-align:center!important;
+  text-shadow:0 18px 62px rgba(0,0,0,.72)!important;
+}
+#wecan .wecan-final>p:last-of-type{
+  max-width:740px!important;
+  margin:0 auto!important;
+  color:#eee4d5!important;
+  font-size:1rem!important;
+  line-height:1.72!important;
+  text-align:center!important;
+  text-shadow:0 8px 28px rgba(0,0,0,.76)!important;
+}
+#wecan .wecan-final-actions{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:22px!important;
+  margin-top:25px!important;
+}
+html[dir="rtl"] #wecan .wecan-final-actions{flex-direction:row!important;justify-content:center!important}
+#wecan .wecan-final a{pointer-events:auto!important}
+
+@media(max-width:900px){
+  #connected .connected-track{height:440svh!important;min-height:440svh!important}
+  #connected .connected-scrim{
+    background:linear-gradient(180deg,rgba(5,4,3,.03) 0%,rgba(5,4,3,.04) 48%,rgba(5,4,3,.76) 74%,rgba(5,4,3,.96) 100%)!important;
+  }
+  #connected .connected-copy{
+    left:12px!important;
+    right:12px!important;
+    bottom:calc(12px + env(safe-area-inset-bottom))!important;
+    width:auto!important;
+    padding:14px 15px!important;
+    border:1px solid rgba(236,216,169,.14)!important;
+    border-radius:18px!important;
+    background:rgba(7,6,4,.58)!important;
+    backdrop-filter:blur(14px) saturate(112%)!important;
+    box-shadow:0 18px 48px rgba(0,0,0,.32)!important;
+  }
+  html[dir="rtl"] #connected .connected-copy{left:12px!important;right:12px!important}
+  #connected .connected-copy h3{max-width:14ch!important;margin-bottom:8px!important;font-size:clamp(1.95rem,8vw,3.05rem)!important}
+  #connected .connected-copy p{display:-webkit-box!important;overflow:hidden!important;font-size:.84rem!important;line-height:1.5!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important}
+  #connected .connected-copy>span{margin-bottom:7px!important;font-size:.59rem!important}
+  #connected .connected-rail{top:calc(var(--header-h) + 16px)!important;right:11px!important;left:auto!important;gap:5px!important;transform:none!important}
+  html[dir="rtl"] #connected .connected-rail{right:auto!important;left:11px!important}
+  #connected .connected-rail span{width:3px!important;height:21px!important;padding:0!important;border-radius:999px!important;background:rgba(255,255,255,.2)!important;font-size:0!important;transform:none!important}
+  #connected .connected-rail span.active{height:34px!important;background:#ecd8a9!important;transform:none!important}
+  #connected .scene-scroll-indicator{top:calc(var(--header-h) + 16px)!important;bottom:auto!important}
+
+  #wecan.cinematic-wecan .wecan-track{height:270svh!important;min-height:270svh!important}
+  #wecan .wecan-single-image img{object-position:center 45%!important}
+  #wecan .wecan-enter-hint{bottom:16px!important;font-size:.5rem!important}
+  #wecan .wecan-final{width:calc(100vw - 30px)!important}
+  #wecan .wecan-final h2{max-width:12ch!important;margin-bottom:12px!important;font-size:clamp(2.15rem,9.5vw,3.55rem)!important;line-height:.98!important}
+  #wecan .wecan-final>p:last-of-type{font-size:.86rem!important;line-height:1.55!important}
+  #wecan .wecan-final-actions{gap:13px!important;margin-top:18px!important;flex-wrap:wrap!important}
+  #wecan .wecan-final .btn{min-height:45px!important;padding:11px 17px!important}
+  #wecan .wecan-final-link{font-size:.77rem!important}
+}
+
+@media(max-width:420px){
+  #connected .connected-track{height:420svh!important;min-height:420svh!important}
+  #connected .connected-copy{left:9px!important;right:9px!important;padding:12px 13px!important;border-radius:16px!important}
+  html[dir="rtl"] #connected .connected-copy{left:9px!important;right:9px!important}
+  #connected .connected-copy h3{font-size:clamp(1.72rem,8.5vw,2.42rem)!important}
+  #connected .connected-copy p{font-size:.78rem!important}
+  #connected .scene-scroll-indicator span{display:none!important}
+
+  #wecan.cinematic-wecan .wecan-track{height:255svh!important;min-height:255svh!important}
+  #wecan .wecan-final{width:calc(100vw - 22px)!important}
+  #wecan .wecan-final h2{font-size:clamp(1.9rem,9.4vw,2.82rem)!important}
+  #wecan .wecan-final>p:last-of-type{font-size:.79rem!important;line-height:1.48!important}
+  #wecan .wecan-final-actions{margin-top:15px!important}
+}
+
+@media(max-height:560px) and (orientation:landscape){
+  #connected .connected-track{height:380svh!important;min-height:380svh!important}
+  #connected .connected-copy{left:12px!important;right:auto!important;bottom:9px!important;width:min(47vw,500px)!important;padding:11px 13px!important}
+  html[dir="rtl"] #connected .connected-copy{right:12px!important;left:auto!important}
+  #connected .connected-copy h3{font-size:clamp(1.28rem,3.7vw,1.92rem)!important}
+  #connected .connected-copy p{font-size:.7rem!important}
+  #connected .scene-scroll-indicator{display:none!important}
+
+  #wecan.cinematic-wecan .wecan-track{height:220svh!important;min-height:220svh!important}
+  #wecan .wecan-final{width:min(72vw,790px)!important}
+  #wecan .wecan-final h2{font-size:clamp(1.72rem,4vw,2.8rem)!important;margin-bottom:8px!important}
+  #wecan .wecan-final>p:last-of-type{font-size:.72rem!important;line-height:1.4!important}
+  #wecan .wecan-final-actions{margin-top:11px!important;flex-wrap:nowrap!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  #connected .scene-scroll-indicator i:before,
+  #connected .scene-scroll-indicator i:after{animation:none!important}
+}

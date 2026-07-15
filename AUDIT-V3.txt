@@ -1,0 +1,33 @@
+BY MELI — CONNECTED / WE CAN V3 AUDIT
+
+Source
+- Rebuilt from bymeli-connected-wecan-rebuild.zip.
+- Existing website structure, content, portfolio and manufacturing sections retained.
+
+Connected 3D
+- Replaced the previous connected-scene implementation with connected-scene-v3.js.
+- One WebGL renderer and one deterministic scroll model.
+- Cached document scroll start/span; no per-frame layout reads.
+- Canvas is pointer-transparent and cannot trap wheel/touch scrolling.
+- Current and next service stations render during travel; all six compact into a balanced final summary grid.
+- Mobile final overview is framed at a distance calculated for narrow horizontal FOV.
+- Adaptive DPR: up to 1.9 mobile and 2.35 desktop, constrained by rendered pixel budget.
+- 1024 mobile / 2048 desktop directional shadows.
+- ACES tone mapping, sRGB output, studio environment and high-resolution screen texture.
+- Passive scroll events, time-based camera damping and ResizeObserver/orientation recalculation.
+
+WE CAN
+- Removed SVG-mask and 3D dependencies from the active visual sequence.
+- Full-viewport high-resolution image remains visible for the entire pinned section.
+- Word size is measured against the actual viewport and current language.
+- Timed hold, expansion, fade, image reveal and final-panel entrance use smootherstep curves.
+- Dedicated cached scroll mapping and time-based damping.
+- Responsive track duration: 300vh desktop, 260svh tablet/mobile, 245svh small phone.
+
+Static validation
+- All JavaScript files pass node --check.
+- CSS parses without errors using tinycss2.
+- No duplicate HTML IDs.
+- No missing local scripts, styles or images.
+- No Arabic diacritics in HTML/CSS/JS text.
+- Canvas pointer/touch rules do not block native page scrolling.
