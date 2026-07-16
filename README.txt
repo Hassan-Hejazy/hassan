@@ -1,10 +1,6 @@
-BY MELI — Connected 3D Professional V20
+BY MELI — CONNECTED 3D PROFESSIONAL V25
 
-This version preserves the existing website design and refines only the connected 3D walkthrough and six individual service 3D scenes.
+Open index.html through a web server or upload the complete folder to hosting.
+Do not upload index.html alone; the assets directory is required.
 
-Open index.html through a local or hosted web server.
-
-V24 CONNECTED + SERVICE 3D UPDATE
-- Open index.html to review the website.
-- The connected and service 3D files use V24 filenames to prevent stale browser caching.
-- See AUDIT-V24.txt for the verified scope and responsive audit results.
+V25 repairs the connected 3D WebGL startup and service-scene context lifecycle.

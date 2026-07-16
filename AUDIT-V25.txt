@@ -1,0 +1,28 @@
+BY MELI — CONNECTED 3D RUNTIME REPAIR V25
+
+Scope
+- Existing design, layout and booth-manufacturing scene were not changed.
+- Repaired connected 3D startup, service-scene lifecycle and mobile WebGL context management.
+
+Runtime fixes
+- Only one standalone service renderer can own a WebGL context at a time.
+- All service renderers are released before the connected renderer starts.
+- Connected initialization waits for the shared service-model factory.
+- Connected startup uses bounded retries and a WebGL compatibility fallback.
+- Connected and service canvases release their contexts when moving between distant sections.
+- Returning from the connected scene to a service scene safely restores the service renderer.
+- Context-loss recovery cannot create duplicate animation loops.
+- New V25 CSS and JavaScript filenames prevent stale V24 browser cache reuse.
+
+Validation
+- Connected runtime initialized in the renderer-independent browser harness at 320x700, 390x844, 768x1024, 1024x768, 1440x900 and 844x390.
+- 51 connected timeline samples were checked at every viewport.
+- Camera containment failures: 0.
+- Blank connected frames: 0.
+- Horizontal overflow: 0.
+- WebGL lifecycle stress test held a maximum of two active contexts, including the existing booth-manufacturing renderer.
+- Native page scroll remained enabled.
+- No JavaScript syntax errors.
+- No CSS parse errors.
+- No duplicate HTML IDs.
+- No missing local assets.
