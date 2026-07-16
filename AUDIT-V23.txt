@@ -1,0 +1,39 @@
+BY MELI — CONNECTED + SERVICE 3D V23 AUDIT
+
+Scope
+- Booth manufacturing/build scene was not modified.
+- Updated the six individual service 3D models and the connected 3D walkthrough only.
+
+Connected scene
+- Unified service camera directions between standalone and connected views.
+- Corrected showroom/service 02 to a readable frontal three-quarter direction.
+- Rebuilt transition camera fitting against the union of outgoing and incoming model bounds.
+- Added responsive projection fitting for phone portrait, phone landscape, tablet, laptop and desktop.
+- Retuned scroll timeline and reduced scroll-to-camera lag.
+- Added per-station contact grounding and adaptive shadow quality.
+- Reduced dynamic screen/light pulse frequency to prevent flicker.
+- Increased adaptive rendering density without forcing unsafe literal 4K framebuffers on phones.
+
+Service scenes
+- Reframed all six models with device-specific yaw, elevation, vertical focus and composition.
+- Restored higher adaptive pixel density and material/environment clarity.
+- Added high-capability mobile shadows with contact-shadow fallback.
+- Removed CSS post-processing that softened WebGL output.
+- Preserved horizontal drag rotation and vertical native page scrolling.
+
+Validation
+- Viewports: 320x700, 390x844, 768x1024, 1024x768, 1440x900, 844x390.
+- All six standalone service camera audits initialized and passed containment at every viewport.
+- Connected walkthrough: 51 timeline samples per viewport, no blank frames.
+- Connected mobile portrait and landscape transition containment: zero failures.
+- Native scroll progression monotonic on phone and desktop.
+- Maximum sampled scroll-to-render lag after wheel input: below 0.04 normalized progress.
+- No horizontal overflow.
+- No JavaScript syntax errors.
+- No CSS parse errors.
+- No duplicate HTML IDs.
+- No missing local assets.
+- No Arabic diacritics.
+
+Note
+The execution environment does not expose a physical mobile GPU. Camera projection, scene graph, lifecycle, scrolling and responsive framing were validated with the real Three.js geometry through a renderer-independent browser harness.

@@ -1,0 +1,50 @@
+BY MELI — CONNECTED + SERVICE 3D PROFESSIONAL V24
+
+Scope
+- Booth manufacturing/build scene was not modified.
+- Existing page design and content were preserved.
+- Updated only the six service 3D scenes and the connected 3D walkthrough.
+
+Direction and camera system
+- All six models now use the same client-facing architectural front direction.
+- Removed the alternating left/right camera reversals that made some scenes appear backward.
+- Showroom, project management and live AV were corrected to show their open presentation side.
+- Standalone service views and connected-scene views use matching yaw, elevation, focus height and composition presets.
+- Separate presets are applied for phone portrait, phone landscape, tablet and desktop.
+- Every standalone model is projection-fitted to its actual bounds instead of a fixed zoom value.
+
+Connected walkthrough
+- Rebuilt each service transfer around a centered spatial handoff.
+- Outgoing and incoming environments gather toward the route center and scale gradually.
+- Transition camera fitting uses the visible union of both environments, preventing cropping and extreme pullbacks.
+- Camera direction remains consistent through all six stages.
+- Final overview models enter from the center instead of appearing from outside the safe frame.
+- Scroll progression uses responsive damping with no overshoot and low normalized catch-up lag.
+- Connected track timing was normalized across desktop, tablet, phone and landscape views.
+
+Rendering quality
+- Increased adaptive pixel-density limits and framebuffer budgets.
+- Added procedural micro-surface detail to architectural materials.
+- Improved metallic, fabric, painted-surface and environment response.
+- Increased anisotropic filtering for detail and screen textures.
+- Improved exposure, key light and rim light balance.
+- Retained high-capability phone shadows and contact grounding with lower-tier safeguards.
+- Reduced emissive, route and lighting pulse amplitude to remove visible flicker.
+- Reduced dynamic screen redraw frequency while preserving live animation.
+- New V24 CSS and JavaScript filenames prevent browsers from reusing older cached scene files.
+
+Validation
+- Viewports: 320x700, 390x844, 768x1024, 1024x768, 1440x900 and 844x390 landscape.
+- Six standalone service scenes: all initialized and passed camera containment at every viewport.
+- Connected walkthrough: 51 timeline samples per viewport.
+- Connected camera-containment failures: 0.
+- Blank connected frames: 0.
+- Horizontal overflow: 0.
+- Mobile scroll progression: monotonic; maximum sampled normalized lag below 0.030.
+- Desktop scroll progression: monotonic; maximum sampled normalized lag below 0.034.
+- No JavaScript syntax errors.
+- No CSS parse errors.
+- No duplicate HTML IDs.
+- No missing local assets.
+- No Arabic diacritics.
+- Booth manufacturing files match V23 byte-for-byte.
