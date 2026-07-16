@@ -1,0 +1,35 @@
+BY MELI — CONNECTED 3D PROFESSIONAL V20 AUDIT
+
+Scope
+- Connected-scene camera composition, zoom, direction and scroll choreography
+- Individual service-model camera position, zoom, direction and drag behavior
+- Mobile, tablet, laptop, desktop and landscape-phone responsiveness
+- Flicker reduction and WebGL performance stability
+
+Responsive targets
+- 320 x 700
+- 390 x 844
+- 768 x 1024
+- 1024 x 768
+- 1440 x 900
+- 1920 x 1080
+- 844 x 390 landscape
+
+Technical changes
+- Per-service camera presets instead of one generic angle
+- Per-device field of view and safe framing
+- Projection-fitted camera targets using each model's actual bounds
+- Lower-distortion mobile lenses and corrected vertical composition
+- Continuous cubic camera transfers with restrained FOV breathing
+- Stable progress damping with a maximum frame-to-frame travel step
+- Reduced screen-texture upload frequency and lighting pulse amplitude
+- Stable first-frame handoff before removing the fallback image
+- Static shadow maps and reduced mobile compositing cost
+- Native vertical scrolling and horizontal model drag preserved
+
+Validation
+- JavaScript syntax
+- CSS parsing and brace balance
+- Duplicate HTML IDs
+- Local asset references
+- ZIP integrity

@@ -1,0 +1,16 @@
+/* Service 3D V20 — interaction and rendering stability only; existing design is unchanged. */
+.service-canvas{
+  pointer-events:auto!important;
+  touch-action:pan-y pinch-zoom!important;
+  cursor:grab!important;
+  image-rendering:auto!important;
+  transform:none!important;
+  backface-visibility:visible!important;
+}
+.service-canvas.is-dragging{cursor:grabbing!important}
+.canvas-frame.ready .service-canvas{opacity:1!important}
+.canvas-frame.webgl-fallback .service-canvas{pointer-events:none!important}
+@media(hover:none) and (pointer:coarse){
+  .service-canvas{pointer-events:auto!important;touch-action:pan-y pinch-zoom!important}
+}
+@media(prefers-reduced-motion:reduce){.service-canvas{scroll-behavior:auto!important}}
