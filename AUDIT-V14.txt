@@ -1,0 +1,35 @@
+CONNECTED CINEMATIC V14 — VALIDATION REPORT
+
+Core corrections
+- Camera fitting now uses the actual service architecture bounds only. Oversized platforms, rings, route graphics and labels are excluded from zoom calculations.
+- Corrected local/world coordinate handling that previously doubled station positions and produced inaccurate camera targets.
+- Corrected desktop composition centering so each model uses the full available visual frame beside the copy panel.
+- Mobile portrait scenes use a dedicated centered safe frame above the information panel.
+- Transitions use a continuous route-following camera flight. Full environments are no longer shrunk to nearly zero during service changes.
+- Camera movement uses a critically damped scroll spring with no delayed capped-step behavior.
+- Station camera poses are cached, reducing connected-scene initialization cost while preserving smooth interpolation.
+- Adaptive pixel density and frame-time monitoring preserve sharp output without forcing an unstable literal 4K framebuffer on phones.
+
+Responsive validation
+- 320 x 700
+- 390 x 844
+- 768 x 1024
+- 1024 x 768
+- 1440 x 900
+
+Results
+- Stable service holds checked across all six stations: 0 containment failures.
+- Mobile hold occupancy: approximately 86% of viewport width.
+- Desktop hold occupancy: approximately 49% of viewport width with copy-safe composition.
+- 501-point camera continuity audit on phone and desktop: no NaN, infinite or invalid camera values.
+- Maximum normalized camera step: 1.882 units on 390 x 844 and 1.497 units on 1440 x 900.
+- No horizontal overflow at any tested viewport.
+- Native wheel/touch scrolling remains enabled; connected canvas uses pointer-events:none and touch-action:pan-y.
+- No JavaScript syntax errors.
+- No CSS parsing errors.
+- No duplicate HTML IDs.
+- No missing local files.
+- No Arabic diacritics.
+
+Note
+The container does not expose a functioning WebGL GPU context. Rendering behavior, scene lifecycle, responsive projections, camera containment, motion continuity and scroll behavior were validated with the real Three.js scene graph through a renderer-independent browser harness.
