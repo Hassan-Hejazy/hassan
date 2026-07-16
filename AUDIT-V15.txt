@@ -1,0 +1,44 @@
+BY MELI — CONNECTED 3D PROFESSIONAL V15 AUDIT
+
+Architecture
+- Replaced the long world-space camera flight with a controlled presentation-stage system.
+- Full detailed service models remain active during holds and hand-off transitions.
+- Incoming and outgoing models use a coordinated connected-motion hand-off.
+- Final overview uses the same real models with sub-pixel detail culling rather than generic proxy models.
+
+Camera and responsive framing
+- Camera poses are fitted against the actual service-model bounds.
+- Separate safe viewing frames are used for portrait phones, landscape phones, tablets, laptops and desktops.
+- Camera poses are precomputed on initialization and resize; expensive fitting is not performed during scrolling.
+- 101 progress samples were runtime-audited at each viewport below with zero model-containment failures:
+  320 x 700
+  390 x 844
+  768 x 1024
+  1024 x 768
+  1440 x 900
+- An independent 301-frame projection audit also passed at 1920 x 1080 and 844 x 390.
+
+Motion and scroll
+- Six service holds, five connected hand-offs and one final overview use normalized timing.
+- Scroll response uses non-oscillating exponential damping; there is no spring overshoot.
+- Canvas pointer events are disabled so native wheel and touch scrolling remain available.
+- Mobile and desktop layout tests showed a 600-pixel native wheel delta inside the section.
+
+Rendering and performance
+- Static device-specific render density prevents quality from visibly fluctuating during the scene.
+- Mobile pixel budgets are capped to avoid oversized framebuffers and thermal throttling.
+- Desktop shadows are enabled only where the device budget supports them; mobile uses contact shadows.
+- Live screen textures update only for visible stations.
+- Internal service animation stops in the fully assembled overview.
+- The overview keeps the original models but hides details that are below the useful screen-pixel threshold.
+- Camera fitting is cached, removing hundreds of projection calculations from every render frame.
+- Rendering stops while the section or browser tab is not visible.
+
+Validation
+- JavaScript syntax: passed
+- CSS parsing: passed
+- Missing local references: none
+- Duplicate HTML IDs: none
+- Horizontal overflow: none at tested viewports
+- Runtime page errors in mocked renderer audit: none
+- ZIP integrity: checked after packaging
