@@ -1,0 +1,39 @@
+BY MELI — CONNECTED 3D PROFESSIONAL V19 AUDIT
+
+Responsive viewports validated:
+- 320 x 700 portrait phone
+- 390 x 844 portrait phone
+- 768 x 1024 tablet
+- 1024 x 768 laptop / tablet landscape
+- 1440 x 900 desktop
+- 1920 x 1080 wide desktop
+- 844 x 390 landscape phone
+
+Connected scene:
+- Projection-fitted camera holds for all six services
+- Continuous world-space camera transfers between services
+- No blank transition frames
+- No behind-camera geometry
+- Detailed final six-service overview
+- Stable lighting follows the active service through the route
+- Shadow-map, edge-overlay and transmission flicker paths removed
+- Native wheel and touch scrolling preserved
+
+Individual service scenes:
+- Projection-fitted zoom and target position per model
+- Dedicated initial yaw and elevation per service
+- Horizontal drag rotation enabled for mouse, touch and pen
+- Vertical touch movement remains native page scrolling
+- Render loops stop while scenes are off-screen
+- Off-screen WebGL contexts release and restore safely
+
+Validation:
+- JavaScript syntax passed
+- CSS parsing passed
+- No duplicate HTML IDs
+- No missing local assets
+- No horizontal overflow at tested viewports
+- No Arabic diacritics
+- ZIP integrity passed
+
+The execution environment cannot provide a hardware WebGL context. Scene graphs, camera projections, responsive containment, runtime initialization, interaction logic, scroll mapping, and lifecycle behavior were validated with a renderer-independent Three.js harness.

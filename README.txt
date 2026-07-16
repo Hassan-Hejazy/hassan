@@ -1,5 +1,4 @@
-BY MELI — Connected 3D Professional V18
+BY MELI — Connected 3D Professional V19
 
 Open index.html through a local or hosted web server.
-The connected scene uses the bundled Three.js library and local assets only.
-For the best result, use a current version of Chrome, Edge, Safari or Firefox with hardware acceleration enabled.
+The existing website design is preserved. V19 updates only the connected 3D and individual service 3D behavior, camera fitting, rendering stability, interaction, and performance.
