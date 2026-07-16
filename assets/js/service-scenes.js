@@ -130,8 +130,8 @@
     const ring=shadow(new THREE.Mesh(new THREE.TorusGeometry(r,.045,18,96),m.gold));ring.rotation.x=Math.PI/2;ring.position.set(x,y,z);group.add(ring);return ring;
   }
 
-  function createMaterials(renderer){
-    const screenTexture=Q?Q.prepareTexture(Q.makeScreenTexture('IMMERSIVE EVENT SYSTEM'),renderer):null;
+  function createMaterials(renderer,options={}){
+    const screenTexture=options.skipScreenTexture?null:(Q?Q.prepareTexture(Q.makeScreenTexture('IMMERSIVE EVENT SYSTEM'),renderer):null);
     return {
       gold:new THREE.MeshPhysicalMaterial({color:0xd4ad5d,metalness:.74,roughness:.23,clearcoat:.38,clearcoatRoughness:.18,emissive:0x352006,emissiveIntensity:.13,envMapIntensity:1.35}),
       goldDark:new THREE.MeshPhysicalMaterial({color:0x765527,metalness:.54,roughness:.36,clearcoat:.2,clearcoatRoughness:.28,envMapIntensity:1.0}),

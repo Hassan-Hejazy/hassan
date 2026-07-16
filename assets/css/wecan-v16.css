@@ -1,0 +1,212 @@
+/* WE CAN V16 — isolated from the connected 3D system */
+#wecan.cinematic-wecan{background:#000!important}
+#wecan.cinematic-wecan .wecan-track{
+  position:relative!important;
+  height:310vh!important;
+  min-height:310vh!important;
+  contain:none!important;
+  overscroll-behavior:visible!important;
+}
+#wecan.cinematic-wecan .wecan-sticky{
+  position:sticky!important;
+  top:0!important;
+  width:100%!important;
+  height:100svh!important;
+  min-height:100svh!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+  contain:none!important;
+  touch-action:pan-y!important;
+  background:#000!important;
+}
+#wecan .wecan-black-field{
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  display:block!important;
+  background:#000!important;
+}
+#wecan .wecan-atmosphere,
+#wecan .wecan-mask,
+#wecan .wecan-mobile-curtain,
+#wecan .wecan-precision-frame,
+#wecan .wecan-3d-layer,
+#wecan .wecan-opening-label{display:none!important}
+#wecan .wecan-single-image{
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  display:block!important;
+  margin:0!important;
+  overflow:hidden!important;
+  opacity:var(--wecan-image-opacity-v6,0)!important;
+  clip-path:circle(var(--wecan-reveal-radius-v6,0vmax) at 50% 50%)!important;
+  transform:scale(var(--wecan-image-scale-v6,1.085))!important;
+  transform-origin:center center!important;
+  will-change:clip-path,transform,opacity!important;
+}
+#wecan .wecan-single-image img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center 47%!important;
+  transform:none!important;
+  filter:brightness(var(--wecan-image-brightness-v6,.64)) saturate(1.04) contrast(1.07)!important;
+}
+#wecan .wecan-image-depth{
+  position:absolute!important;
+  inset:0!important;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(0,0,0,.01),rgba(0,0,0,.13) 58%,rgba(0,0,0,.48) 100%),
+    linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.02) 40%,rgba(0,0,0,var(--wecan-lower-dark-v6,.38)) 100%)!important;
+  box-shadow:inset 0 0 0 100vmax rgba(0,0,0,var(--wecan-overlay-v6,.03))!important;
+}
+#wecan .wecan-film-light{opacity:var(--wecan-film-opacity-v6,0)!important;mix-blend-mode:screen!important}
+#wecan .wecan-mobile-word{
+  position:absolute!important;
+  left:50%!important;
+  right:auto!important;
+  top:50%!important;
+  bottom:auto!important;
+  z-index:4!important;
+  display:inline-block!important;
+  width:max-content!important;
+  height:auto!important;
+  min-height:0!important;
+  max-width:none!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:0!important;
+  color:#fff!important;
+  font-family:Syne,Inter,sans-serif!important;
+  font-size:var(--wecan-word-size-v6,180px)!important;
+  font-weight:800!important;
+  line-height:.84!important;
+  letter-spacing:-.062em!important;
+  white-space:nowrap!important;
+  text-align:center!important;
+  text-transform:uppercase!important;
+  text-shadow:0 18px 62px rgba(0,0,0,var(--wecan-word-shadow-v6,0))!important;
+  opacity:var(--wecan-word-opacity-v6,1)!important;
+  transform:translate(-50%,-50%) scale(var(--wecan-word-scale-v6,1))!important;
+  transform-origin:center center!important;
+  will-change:transform,opacity!important;
+  pointer-events:none!important;
+}
+html[dir="rtl"] #wecan .wecan-mobile-word{font-family:Changa,Cairo,sans-serif!important;letter-spacing:0!important;line-height:1!important}
+#wecan .wecan-enter-hint{
+  position:absolute!important;
+  left:50%!important;
+  bottom:19px!important;
+  z-index:5!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  gap:7px!important;
+  color:#e4d3b2!important;
+  font-size:.51rem!important;
+  letter-spacing:.19em!important;
+  white-space:nowrap!important;
+  opacity:var(--wecan-hint-opacity-v6,1)!important;
+  transform:translateX(-50%)!important;
+  pointer-events:none!important;
+}
+#wecan .wecan-enter-hint:after{
+  content:""!important;
+  display:block!important;
+  width:1px!important;
+  height:28px!important;
+  background:linear-gradient(180deg,#ecd8a9,rgba(236,216,169,.08))!important;
+  animation:wecan-line 1.65s cubic-bezier(.45,0,.2,1) infinite!important;
+}
+@keyframes wecan-line{0%,100%{transform:scaleY(.35);transform-origin:top;opacity:.35}50%{transform:scaleY(1);transform-origin:top;opacity:1}}
+#wecan .wecan-final{
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  z-index:6!important;
+  width:min(920px,calc(100vw - 48px))!important;
+  max-height:none!important;
+  overflow:visible!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:none!important;
+  backdrop-filter:none!important;
+  box-shadow:none!important;
+  color:#fff!important;
+  text-align:center!important;
+  opacity:var(--wecan-final-opacity-v6,0)!important;
+  transform:translate(-50%,calc(-50% + var(--wecan-final-y-v6,38px))) scale(var(--wecan-final-scale-v6,.98))!important;
+  filter:blur(var(--wecan-final-blur-v6,5px))!important;
+  pointer-events:none!important;
+  will-change:transform,opacity,filter!important;
+}
+#wecan .wecan-sticky.is-final .wecan-final{pointer-events:auto!important}
+html[dir="rtl"] #wecan .wecan-final{left:50%!important;right:auto!important;text-align:center!important}
+#wecan .wecan-final:before{
+  content:""!important;
+  display:block!important;
+  width:48px!important;
+  height:2px!important;
+  margin:0 auto 18px!important;
+  border-radius:999px!important;
+  background:linear-gradient(90deg,#ecd8a9,#b98a35)!important;
+}
+#wecan .wecan-final .eyebrow{margin-bottom:12px!important;text-align:center!important}
+#wecan .wecan-final h2{
+  max-width:14ch!important;
+  margin:0 auto 16px!important;
+  color:#fff!important;
+  font-size:clamp(3rem,5.25vw,6rem)!important;
+  line-height:.94!important;
+  letter-spacing:-.047em!important;
+  text-align:center!important;
+  text-shadow:0 18px 62px rgba(0,0,0,.78)!important;
+}
+#wecan .wecan-final>p:last-of-type{
+  max-width:740px!important;
+  margin:0 auto!important;
+  color:#eee4d5!important;
+  font-size:1rem!important;
+  line-height:1.7!important;
+  text-align:center!important;
+  text-shadow:0 8px 30px rgba(0,0,0,.82)!important;
+}
+#wecan .wecan-final-actions{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:22px!important;
+  margin-top:25px!important;
+}
+html[dir="rtl"] #wecan .wecan-final-actions{flex-direction:row!important;justify-content:center!important}
+#wecan .wecan-final a{pointer-events:auto!important}
+@media (max-width:900px){
+#wecan.cinematic-wecan .wecan-track{height:280svh!important;min-height:280svh!important}
+#wecan .wecan-single-image img{object-position:center 46%!important}
+#wecan .wecan-enter-hint{bottom:15px!important;font-size:.48rem!important}
+#wecan .wecan-final{width:calc(100vw - 30px)!important}
+#wecan .wecan-final h2{max-width:12ch!important;margin-bottom:12px!important;font-size:clamp(2.2rem,9.5vw,3.6rem)!important;line-height:.98!important}
+#wecan .wecan-final>p:last-of-type{font-size:.86rem!important;line-height:1.54!important}
+#wecan .wecan-final-actions{gap:13px!important;margin-top:18px!important;flex-wrap:wrap!important}
+#wecan .wecan-final .btn{min-height:45px!important;padding:11px 17px!important}
+#wecan .wecan-final-link{font-size:.77rem!important}
+}
+@media (max-width:420px){
+#wecan.cinematic-wecan .wecan-track{height:265svh!important;min-height:265svh!important}
+#wecan .wecan-final{width:calc(100vw - 22px)!important}
+#wecan .wecan-final h2{font-size:clamp(1.95rem,9.4vw,2.85rem)!important}
+#wecan .wecan-final>p:last-of-type{font-size:.79rem!important;line-height:1.47!important}
+#wecan .wecan-final-actions{margin-top:15px!important}
+}
+@media (max-height:560px) and (orientation:landscape){
+#wecan.cinematic-wecan .wecan-track{height:225svh!important;min-height:225svh!important}
+#wecan .wecan-final{width:min(72vw,790px)!important}
+#wecan .wecan-final h2{font-size:clamp(1.75rem,4vw,2.8rem)!important;margin-bottom:8px!important}
+#wecan .wecan-final>p:last-of-type{font-size:.72rem!important;line-height:1.4!important}
+#wecan .wecan-final-actions{margin-top:11px!important;flex-wrap:nowrap!important}
+}
+@media (prefers-reduced-motion:reduce){
+#wecan .wecan-enter-hint:after{animation:none!important}
+}

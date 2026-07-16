@@ -1,0 +1,44 @@
+BY MELI — CONNECTED 3D PROFESSIONAL V16 AUDIT
+
+Source
+- Rebuilt from the V15 package supplied in this project.
+
+Critical corrections
+- Fixed the camera-bounds defect that added each station's world position twice.
+- Isolated WE CAN CSS from Connected 3D CSS so old !important rules no longer override the connected layout.
+- Replaced moving-model handoffs with a continuous route-based camera walkthrough.
+- Added projection-fitted camera poses for phone portrait, phone landscape, tablet, laptop, desktop and wide desktop.
+- Rebuilt the final overview assembly to avoid models crossing the whole screen during the transition.
+- Removed CSS filters from the WebGL canvas to prevent blur and extra compositing.
+- Reduced GPU texture pressure by sharing one contact-shadow texture and skipping unused factory screen textures.
+- Disabled expensive glass transmission on phones while retaining a clean transparent-glass appearance.
+- Limited live screen updates and off-screen scene rendering.
+- Fixed shadow updates so they occur only when the active lighting state changes.
+- Rebuilds the route geometry correctly after responsive layout changes.
+
+Responsive camera audit
+- 320 x 700
+- 390 x 844
+- 768 x 1024
+- 1024 x 768
+- 1440 x 900
+- 1920 x 1080
+- 844 x 390 landscape
+
+847 projection frames were checked across the seven viewports.
+- 0 service-hold containment failures
+- 0 final-overview containment failures
+- 0 blank walkthrough transition frames
+
+Runtime and structure checks
+- Native scroll verified inside the connected section on 390 x 844 and 1440 x 900.
+- Connected canvas does not capture wheel or vertical touch scrolling.
+- No horizontal overflow at the audited phone and desktop sizes.
+- No JavaScript syntax errors.
+- No CSS parsing errors.
+- No duplicate HTML IDs.
+- No missing local assets.
+- No Arabic diacritics.
+
+Rendering note
+The audit environment cannot create a real WebGL GPU context. Camera projections, scene transforms, responsive framing, lifecycle behavior and scroll logic were tested against the actual Three.js scene graph with a renderer-independent harness. Final GPU appearance should still be checked in Chrome and Safari on physical target devices.

@@ -1,5 +1,5 @@
-BY MELI PRODUCTION — CONNECTED 3D PROFESSIONAL V15
+BY MELI — Connected 3D Professional V16
 
-Open index.html in a modern browser or host the folder on a static web server.
+Open index.html through a local or web server for the correct browser security and asset-loading behavior.
 
-This version rebuilds the connected 3D summary with cached responsive camera fitting, full-detail service hand-offs, stable scroll timing, adaptive rendering quality and a performance-optimized final overview.
+This version contains a rebuilt route-based connected 3D walkthrough, responsive camera fitting, isolated Connected/WE CAN styling, and mobile performance safeguards.
