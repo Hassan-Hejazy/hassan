@@ -1,0 +1,8 @@
+BY MELI CONNECTED 3D V22
+
+Targeted corrections:
+- Service 02 showroom camera direction corrected in standalone and connected scenes.
+- Connected timeline rebalanced: longer transitions and clean stage holds.
+- Scroll interpolation changed to responsive exponential damping without a hard frame-step cap.
+- Mobile and desktop track distances updated for consistent motion timing.
+- Transition FOV breathing reduced, especially on phones.

@@ -56,8 +56,8 @@
 
   // The timing intentionally totals 1.0. Each discipline receives a long,
   // readable hold and every transfer is short enough to remain responsive.
-  const HOLD=.100;
-  const TRANSITION=.052;
+  const HOLD=.088;
+  const TRANSITION=.066;
   const OVERVIEW=1-(HOLD*6+TRANSITION*5);
   const OVERVIEW_START=HOLD*6+TRANSITION*5;
 
@@ -116,11 +116,11 @@
     return Math.max(1,Math.min(dpr,cap,Math.sqrt(budget/Math.max(1,p.w*p.h))));
   }
 
-  const SERVICE_RELATIVE_YAW=[.60,-.68,.56,-.61,.50,-.59];
+  const SERVICE_RELATIVE_YAW=[.60,.68,.56,-.61,.50,-.59];
   const CAMERA_PRESETS={
     phonePortrait:[
       {yaw:.64,elev:.215,focusY:.018,compY:.016},
-      {yaw:-.66,elev:.205,focusY:.024,compY:.012},
+      {yaw:.66,elev:.205,focusY:.024,compY:.012},
       {yaw:.57,elev:.182,focusY:.042,compY:.020},
       {yaw:-.60,elev:.214,focusY:.030,compY:.012},
       {yaw:.52,elev:.178,focusY:.050,compY:.024},
@@ -128,7 +128,7 @@
     ],
     phoneLandscape:[
       {yaw:.67,elev:.228,focusY:.016,compY:.008},
-      {yaw:-.69,elev:.218,focusY:.022,compY:.006},
+      {yaw:.69,elev:.218,focusY:.022,compY:.006},
       {yaw:.59,elev:.195,focusY:.038,compY:.012},
       {yaw:-.62,elev:.228,focusY:.028,compY:.008},
       {yaw:.54,elev:.190,focusY:.046,compY:.014},
@@ -136,7 +136,7 @@
     ],
     tablet:[
       {yaw:.68,elev:.236,focusY:.014,compY:.006},
-      {yaw:-.70,elev:.225,focusY:.020,compY:.004},
+      {yaw:.70,elev:.225,focusY:.020,compY:.004},
       {yaw:.60,elev:.205,focusY:.034,compY:.010},
       {yaw:-.63,elev:.238,focusY:.026,compY:.006},
       {yaw:.56,elev:.198,focusY:.040,compY:.012},
@@ -144,7 +144,7 @@
     ],
     desktop:[
       {yaw:.70,elev:.248,focusY:.012,compY:.004},
-      {yaw:-.72,elev:.238,focusY:.018,compY:.002},
+      {yaw:.72,elev:.238,focusY:.018,compY:.002},
       {yaw:.62,elev:.214,focusY:.032,compY:.008},
       {yaw:-.65,elev:.250,focusY:.024,compY:.004},
       {yaw:.58,elev:.206,focusY:.038,compY:.010},
@@ -593,7 +593,7 @@
     const pos=cubic(start.pos,c1p,c2p,end.pos,t,new THREE.Vector3());
     pos.y+=Math.sin(Math.PI*t)*arc;
     const target=cubic(start.target,c1t,c2t,end.target,t,new THREE.Vector3());
-    return {pos,target,fov:lerp(start.fov,end.fov,t)+Math.sin(Math.PI*t)*(profile.compact?.06:.10)};
+    return {pos,target,fov:lerp(start.fov,end.fov,t)+Math.sin(Math.PI*t)*(profile.compact?.035:.075)};
   }
 
   function finalOverviewScale(){
@@ -833,12 +833,9 @@
     lastRenderedAt=now;readProgress();
     const dt=lastTime?Math.min(.04,(now-lastTime)/1000):1/60;lastTime=now;
     const gap=Math.abs(targetProgress-progress);
-    const lambda=(profile.compact?13.6:12.2)+Math.min(4.2,gap*10);
-    if(reduced)progress=targetProgress;else{
-      const damped=damp(progress,targetProgress,lambda,dt);
-      const maxStep=dt*(profile.compact?0.96:1.08);
-      progress+=clamp(damped-progress,-maxStep,maxStep);
-    }
+    const lambda=(profile.compact?14.5:13.0)+Math.min(9.0,gap*42);
+    if(reduced||gap>.22)progress=damp(progress,targetProgress,profile.compact?24:22,dt);
+    else progress=damp(progress,targetProgress,lambda,dt);
     if(Math.abs(progress-targetProgress)<.000012)progress=targetProgress;
     const state=timeline(progress);applyState(state);const pose=evaluateCamera(state);
     if(pose){camera.position.copy(desiredPos);camera.up.set(0,1,0);camera.lookAt(desiredTarget);if(Math.abs(camera.fov-pose.fov)>.001){camera.fov=pose.fov;camera.updateProjectionMatrix();}}
