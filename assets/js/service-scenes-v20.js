@@ -145,6 +145,18 @@
     };
   }
 
+  function tuneMaterialsForDevice(materials,profile){
+    if(!materials)return;
+    if(materials.gold){materials.gold.color.setHex(0xd0a553);materials.gold.clearcoat=profile.compact?.40:.52;materials.gold.clearcoatRoughness=.13;materials.gold.envMapIntensity=profile.compact?1.22:1.42;materials.gold.needsUpdate=true;}
+    if(materials.goldDark){materials.goldDark.color.setHex(0x80602e);materials.goldDark.roughness=.32;materials.goldDark.envMapIntensity=1.08;materials.goldDark.needsUpdate=true;}
+    if(materials.dark){materials.dark.color.setHex(0x17130f);materials.dark.roughness=.40;materials.dark.metalness=.32;materials.dark.envMapIntensity=.98;materials.dark.needsUpdate=true;}
+    if(materials.cream){materials.cream.color.setHex(0xeadcc2);materials.cream.roughness=.52;materials.cream.envMapIntensity=.70;materials.cream.needsUpdate=true;}
+    if(materials.white){materials.white.color.setHex(0xf5efe4);materials.white.roughness=.56;materials.white.envMapIntensity=.64;materials.white.needsUpdate=true;}
+    if(materials.teal){materials.teal.color.setHex(0x609f92);materials.teal.clearcoat=.22;materials.teal.envMapIntensity=1.02;materials.teal.needsUpdate=true;}
+    if(materials.glass){materials.glass.transmission=0;materials.glass.opacity=profile.compact?.32:.38;materials.glass.roughness=profile.compact?.12:.085;materials.glass.depthWrite=false;materials.glass.needsUpdate=true;}
+    if(materials.screen){materials.screen.emissiveIntensity=1.32;materials.screen.roughness=.18;materials.screen.needsUpdate=true;}
+  }
+
   function baseScene(scene,renderer){
     const materials=createMaterials(renderer);
     scene.background=new THREE.Color(0x12100d);
@@ -348,40 +360,28 @@
     const type=canvas.dataset.scene;
     const viewByType={
       booth:{
-        phonePortrait:{yaw:.64,elev:.215,y:.016,cy:.016},
-        phoneLandscape:{yaw:.67,elev:.228,y:.014,cy:.008},
-        tablet:{yaw:.68,elev:.236,y:.012,cy:.006},
-        desktop:{yaw:.70,elev:.248,y:.010,cy:.004}
+        phonePortrait:{yaw:.56,elev:.218,y:.018,cy:.018},phoneLandscape:{yaw:.58,elev:.230,y:.016,cy:.010},
+        tablet:{yaw:.60,elev:.240,y:.014,cy:.008},desktop:{yaw:.62,elev:.250,y:.012,cy:.006}
       },
       showroom:{
-        phonePortrait:{yaw:.66,elev:.205,y:.022,cy:.012},
-        phoneLandscape:{yaw:.69,elev:.218,y:.020,cy:.006},
-        tablet:{yaw:.70,elev:.225,y:.018,cy:.004},
-        desktop:{yaw:.72,elev:.238,y:.016,cy:.002}
+        phonePortrait:{yaw:-.34,elev:.208,y:.024,cy:.014},phoneLandscape:{yaw:-.36,elev:.220,y:.022,cy:.008},
+        tablet:{yaw:-.38,elev:.228,y:.020,cy:.006},desktop:{yaw:-.40,elev:.240,y:.018,cy:.004}
       },
       interior:{
-        phonePortrait:{yaw:.57,elev:.182,y:.040,cy:.020},
-        phoneLandscape:{yaw:.59,elev:.195,y:.038,cy:.012},
-        tablet:{yaw:.60,elev:.205,y:.036,cy:.010},
-        desktop:{yaw:.62,elev:.214,y:.032,cy:.008}
+        phonePortrait:{yaw:.50,elev:.184,y:.042,cy:.022},phoneLandscape:{yaw:.52,elev:.198,y:.038,cy:.014},
+        tablet:{yaw:.54,elev:.208,y:.034,cy:.012},desktop:{yaw:.56,elev:.216,y:.032,cy:.010}
       },
       management:{
-        phonePortrait:{yaw:-.60,elev:.214,y:.030,cy:.012},
-        phoneLandscape:{yaw:-.62,elev:.228,y:.028,cy:.008},
-        tablet:{yaw:-.63,elev:.238,y:.026,cy:.006},
-        desktop:{yaw:-.65,elev:.250,y:.024,cy:.004}
+        phonePortrait:{yaw:-.50,elev:.216,y:.030,cy:.014},phoneLandscape:{yaw:-.52,elev:.230,y:.028,cy:.010},
+        tablet:{yaw:-.54,elev:.240,y:.026,cy:.008},desktop:{yaw:-.56,elev:.252,y:.024,cy:.006}
       },
       crowd:{
-        phonePortrait:{yaw:.52,elev:.178,y:.048,cy:.024},
-        phoneLandscape:{yaw:.54,elev:.190,y:.046,cy:.014},
-        tablet:{yaw:.56,elev:.198,y:.044,cy:.012},
-        desktop:{yaw:.58,elev:.206,y:.040,cy:.010}
+        phonePortrait:{yaw:.44,elev:.180,y:.050,cy:.026},phoneLandscape:{yaw:.46,elev:.192,y:.046,cy:.016},
+        tablet:{yaw:.48,elev:.200,y:.040,cy:.014},desktop:{yaw:.50,elev:.208,y:.038,cy:.012}
       },
       av:{
-        phonePortrait:{yaw:-.57,elev:.205,y:.038,cy:.015},
-        phoneLandscape:{yaw:-.59,elev:.220,y:.036,cy:.010},
-        tablet:{yaw:-.61,elev:.228,y:.034,cy:.008},
-        desktop:{yaw:-.63,elev:.236,y:.030,cy:.006}
+        phonePortrait:{yaw:-.48,elev:.208,y:.040,cy:.017},phoneLandscape:{yaw:-.50,elev:.222,y:.036,cy:.012},
+        tablet:{yaw:-.52,elev:.230,y:.032,cy:.010},desktop:{yaw:-.54,elev:.238,y:.030,cy:.008}
       }
     };
     const viewSet=viewByType[type]||viewByType.booth;
@@ -410,16 +410,16 @@
 
     function qualityRatio(profile){
       const dpr=Math.max(1,window.devicePixelRatio||1);
-      const cap=profile.compact?(profile.high?2.28:(profile.low?1.42:1.98)):(profile.tablet?(profile.high?2.14:1.92):(profile.high?2.04:1.84));
-      const budget=profile.compact?(profile.high?2800000:(profile.low?1100000:2100000)):(profile.tablet?(profile.high?3600000:2750000):(profile.high?4700000:3600000));
+      const cap=profile.compact?(profile.high?2.35:(profile.low?1.45:2.05)):(profile.tablet?(profile.high?2.22:2.00):(profile.high?2.12:1.92));
+      const budget=profile.compact?(profile.high?3200000:(profile.low?1200000:2350000)):(profile.tablet?(profile.high?4100000:3100000):(profile.high?5300000:4000000));
       return Math.max(1,Math.min(dpr,cap,Math.sqrt(budget/Math.max(1,profile.w*profile.h))));
     }
 
     function safeFrame(profile){
-      if(profile.compact&&profile.portrait)return {left:-.94,right:.94,bottom:-.74,top:.86};
-      if(profile.compact)return {left:-.94,right:.94,bottom:-.78,top:.86};
-      if(profile.tablet)return {left:-.92,right:.92,bottom:-.82,top:.87};
-      return {left:-.90,right:.90,bottom:-.82,top:.88};
+      if(profile.compact&&profile.portrait)return {left:-.94,right:.94,bottom:-.72,top:.86};
+      if(profile.compact)return {left:-.94,right:.94,bottom:-.77,top:.86};
+      if(profile.tablet)return {left:-.92,right:.92,bottom:-.81,top:.87};
+      return {left:-.90,right:.90,bottom:-.81,top:.88};
     }
 
     function corners(box){
@@ -464,7 +464,7 @@
         const mid=(low+high)*.5;
         if(fits(mid))high=mid;else low=mid;
       }
-      return high*1.008;
+      return high*1.004;
     }
 
     function calculatePose(yawValue,elevValue,profile){
@@ -556,20 +556,20 @@
         return;
       }
       initAttempts=0;initialized=true;canvas.style.display='block';frame.classList.remove('webgl-fallback');
-      sceneShadowEnabled=!profile.compact&&!profile.low;
+      sceneShadowEnabled=!profile.low&&(!profile.compact||profile.high);
       if(Q)Q.configureRenderer(renderer,{exposure:1.11,pixelCap:qualityRatio(profile)});
       else{
         renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.11;
         renderer.shadowMap.enabled=sceneShadowEnabled;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
       }
-      renderer.shadowMap.enabled=sceneShadowEnabled;renderer.shadowMap.autoUpdate=false;
+      renderer.shadowMap.enabled=sceneShadowEnabled;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.shadowMap.autoUpdate=false;
       renderer.setPixelRatio(qualityRatio(profile));renderer.setSize(profile.w,profile.h,false);renderer.setClearColor(0x12100d,1);
-      scene=new THREE.Scene();materials=baseScene(scene,renderer);root=new THREE.Group();scene.add(root);
+      scene=new THREE.Scene();materials=baseScene(scene,renderer);tuneMaterialsForDevice(materials,profile);root=new THREE.Group();scene.add(root);
       (factories[type]||factories.booth)(root,materials);root.updateMatrixWorld(true);if(sceneShadowEnabled)renderer.shadowMap.needsUpdate=true;
       modelBox=new THREE.Box3().setFromObject(root);modelBox.expandByScalar(.10);
       modelCenter=modelBox.getCenter(new THREE.Vector3());modelSize=modelBox.getSize(new THREE.Vector3());
       const sphere=modelBox.getBoundingSphere(new THREE.Sphere());
-      if(Q)Q.addContactShadow(root,renderer,Math.max(5.2,sphere.radius*.88),profile.compact?.34:.42,.305);
+      if(Q)Q.addContactShadow(root,renderer,Math.max(5.4,sphere.radius*.92),profile.compact?.40:.46,.305);
       camera=new THREE.PerspectiveCamera(profile.fov,profile.aspect,.08,120);fitCamera=new THREE.PerspectiveCamera(profile.fov,profile.aspect,.08,120);scene.add(camera);
       yaw=targetYaw=view.yaw;elevation=targetElevation=view.elev;
       bindInteraction();resize(true);frame.classList.add('ready','model-active');startLoop();
@@ -625,9 +625,9 @@
 
     function animateDetails(t){
       if(root?.userData.people)root.userData.people.forEach((p,i)=>{const bob=Math.sin(t*1.35+i*.55)*.018;p.torso.position.y=p.baseY+bob;p.head.position.y=1.05+bob;});
-      if(root?.userData.beams)root.userData.beams.forEach((b,i)=>b.intensity=1.66+Math.sin(t*1.45+i*.8)*.18);
-      if(root?.userData.led)root.userData.led.material.emissiveIntensity=1.05+Math.sin(t*2.15)*.055;
-      if(root?.userData.screen)root.userData.screen.material.emissiveIntensity=1.02+Math.sin(t*1.95)*.045;
+      if(root?.userData.beams)root.userData.beams.forEach((b,i)=>b.intensity=1.72+Math.sin(t*.95+i*.8)*.08);
+      if(root?.userData.led)root.userData.led.material.emissiveIntensity=1.12+Math.sin(t*1.25)*.025;
+      if(root?.userData.screen)root.userData.screen.material.emissiveIntensity=1.16+Math.sin(t*1.15)*.022;
       if(root?.userData.flowMarkers)root.userData.flowMarkers.forEach((marker,i)=>{const u=(t*.082+marker.userData.offset)%1;const pos=marker.userData.curve.getPointAt(u);marker.position.copy(pos);marker.position.y=.37+Math.sin(t*3+i)*.018;});
     }
 
@@ -636,8 +636,8 @@
       if(!initialized||!visible||!pageVisible||!renderer||!scene||!camera)return;
       const dt=lastTime?Math.min(.04,(now-lastTime)/1000):1/60;lastTime=now;
       refreshFit(false,now);
-      yaw=damp(yaw,targetYaw,dragging?18:12.5,dt);elevation=damp(elevation,targetElevation,dragging?18:12.5,dt);
-      distance=damp(distance,targetDistance,14,dt);targetPoint.lerp(desiredTarget,1-Math.exp(-14*dt));
+      yaw=damp(yaw,targetYaw,dragging?18:13.5,dt);elevation=damp(elevation,targetElevation,dragging?18:13.5,dt);
+      distance=damp(distance,targetDistance,15.5,dt);targetPoint.lerp(desiredTarget,1-Math.exp(-15.5*dt));
       camera.position.copy(cameraPosition(targetPoint,yaw,elevation,distance,tmpPos));camera.up.set(0,1,0);camera.lookAt(targetPoint);
       animateDetails(now*.001);renderer.render(scene,camera);
       rafId=requestAnimationFrame(render);

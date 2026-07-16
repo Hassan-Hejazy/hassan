@@ -8,8 +8,8 @@
 #connected .dark-heading{position:relative!important;z-index:2!important;padding-bottom:clamp(22px,3vw,44px)!important}
 #connected .connected-track{
   position:relative!important;
-  height:470vh!important;
-  min-height:470vh!important;
+  height:435vh!important;
+  min-height:435vh!important;
   overflow:visible!important;
   contain:none!important;
   touch-action:pan-y!important;
@@ -35,7 +35,7 @@
   inset:0!important;
   z-index:3!important;
   pointer-events:none!important;
-  opacity:.026!important;
+  opacity:.018!important;
   background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px)!important;
   background-size:22px 22px!important;
   -webkit-mask-image:linear-gradient(to bottom,transparent,black 22%,black 76%,transparent)!important;
@@ -81,7 +81,7 @@
   inset:0!important;
   z-index:2!important;
   pointer-events:none!important;
-  background:linear-gradient(90deg,rgba(4,3,2,.72) 0%,rgba(4,3,2,.38) 25%,rgba(4,3,2,.045) 48%,rgba(4,3,2,.008) 76%,rgba(4,3,2,.08) 100%),linear-gradient(180deg,rgba(4,3,2,.035),transparent 52%,rgba(4,3,2,.28))!important;
+  background:linear-gradient(90deg,rgba(4,3,2,.60) 0%,rgba(4,3,2,.30) 25%,rgba(4,3,2,.025) 48%,rgba(4,3,2,.008) 76%,rgba(4,3,2,.08) 100%),linear-gradient(180deg,rgba(4,3,2,.035),transparent 52%,rgba(4,3,2,.28))!important;
 }
 
 #connected .connected-transition-veil{
@@ -89,7 +89,7 @@
   inset:0!important;
   z-index:5!important;
   pointer-events:none!important;
-  opacity:calc(var(--connected-transition,0) * .55)!important;
+  opacity:calc(var(--connected-transition,0) * .34)!important;
   background:
     radial-gradient(circle at 50% 46%,rgba(31,23,10,.12) 0%,rgba(5,4,3,.72) 50%,rgba(3,3,2,.94) 100%),
     linear-gradient(115deg,transparent 33%,rgba(235,198,116,.12) 48%,rgba(238,207,139,.28) 50%,rgba(235,198,116,.10) 52%,transparent 67%)!important;
@@ -263,13 +263,13 @@ html[dir="rtl"] #connected .connected-rail{right:auto!important;left:18px!import
 @keyframes connectedScrollDotV18{0%{opacity:0;transform:translate(-50%,0)}24%{opacity:1}72%{opacity:1}100%{opacity:0;transform:translate(-50%,11px)}}
 
 @media(max-width:1100px){
-  #connected .connected-track{height:485svh!important;min-height:485svh!important}
+  #connected .connected-track{height:450svh!important;min-height:450svh!important}
   #connected .connected-copy{width:min(455px,calc(100vw - 54px))!important}
   #connected .connected-copy h3{font-size:clamp(2rem,5vw,3.6rem)!important}
 }
 
 @media(max-width:760px){
-  #connected .connected-track{height:500svh!important;min-height:500svh!important}
+  #connected .connected-track{height:455svh!important;min-height:455svh!important}
   #connected .connected-sticky{height:100svh!important;min-height:100svh!important}
   #connected .connected-sticky::before{opacity:.025!important;background-size:12px 12px!important}
   #connected .connected-sticky::after{background:radial-gradient(ellipse at 50% 34%,transparent 29%,rgba(0,0,0,.04) 61%,rgba(0,0,0,.34) 112%),linear-gradient(180deg,rgba(3,3,2,.015),transparent 54%,rgba(3,3,2,.22) 70%,rgba(3,3,2,.93) 100%)!important}
@@ -302,7 +302,7 @@ html[dir="rtl"] #connected .connected-rail{right:auto!important;left:18px!import
 }
 
 @media(max-width:390px){
-  #connected .connected-track{height:490svh!important;min-height:490svh!important}
+  #connected .connected-track{height:445svh!important;min-height:445svh!important}
   #connected .connected-copy{left:7px!important;right:7px!important;max-height:21svh!important;padding:9px 10px!important;border-radius:14px!important}
   html[dir="rtl"] #connected .connected-copy{left:7px!important;right:7px!important;padding:9px 10px!important}
   #connected .connected-copy h3{font-size:clamp(1.34rem,7.05vw,1.9rem)!important}
@@ -312,7 +312,7 @@ html[dir="rtl"] #connected .connected-rail{right:auto!important;left:18px!import
 }
 
 @media(max-height:560px) and (orientation:landscape){
-  #connected .connected-track{height:455svh!important;min-height:455svh!important}
+  #connected .connected-track{height:415svh!important;min-height:415svh!important}
   #connected .connected-copy{left:10px!important;right:auto!important;bottom:7px!important;width:min(40vw,400px)!important;max-height:calc(100svh - 16px)!important;padding:8px 10px!important}
   html[dir="rtl"] #connected .connected-copy{right:10px!important;left:auto!important}
   #connected .connected-copy h3{font-size:clamp(1.08rem,3vw,1.58rem)!important}
