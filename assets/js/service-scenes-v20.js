@@ -151,10 +151,10 @@
     scene.fog=new THREE.FogExp2(0x12100d,.031);
     if(Q) Q.studioEnvironment(scene);
     scene.add(new THREE.HemisphereLight(0xf1dfbd,0x15110d,1.1));
-    const key=new THREE.DirectionalLight(0xffedc7,1.25);key.position.set(7,11,8);
+    const key=new THREE.DirectionalLight(0xffedc7,1.32);key.position.set(7,11,8);
     if(Q) Q.tuneShadow(key,Q.shadowMapSize,12); else {key.castShadow=true;key.shadow.mapSize.set(2048,2048);key.shadow.camera.left=-12;key.shadow.camera.right=12;key.shadow.camera.top=12;key.shadow.camera.bottom=-12;}
     scene.add(key);
-    const rim=new THREE.PointLight(0x67b9ac,.55,28);rim.position.set(-7,4,6);scene.add(rim);
+    const rim=new THREE.PointLight(0x67b9ac,.62,28);rim.position.set(-7,4,6);scene.add(rim);
     const floor=shadow(new THREE.Mesh(new THREE.CylinderGeometry(6.3,6.6,.28,96),new THREE.MeshStandardMaterial({color:0x17130f,roughness:.9,metalness:.05})),false);
     floor.position.y=.14;scene.add(floor);
     const ring=new THREE.Mesh(new THREE.RingGeometry(4.8,5.65,96),new THREE.MeshBasicMaterial({color:0xcda452,side:THREE.DoubleSide,transparent:true,opacity:.28}));
@@ -347,12 +347,42 @@
     const targetPoint=new THREE.Vector3(),desiredTarget=new THREE.Vector3(),tmpPos=new THREE.Vector3();
     const type=canvas.dataset.scene;
     const viewByType={
-      booth:{mobile:{yaw:.60,elev:.195,y:.012,cy:.010},desktop:{yaw:.64,elev:.225,y:.010,cy:.004}},
-      showroom:{mobile:{yaw:-.66,elev:.185,y:.020,cy:.006},desktop:{yaw:-.70,elev:.215,y:.018,cy:0}},
-      interior:{mobile:{yaw:.56,elev:.160,y:.040,cy:.018},desktop:{yaw:.60,elev:.190,y:.034,cy:.010}},
-      management:{mobile:{yaw:-.59,elev:.198,y:.030,cy:.010},desktop:{yaw:-.63,elev:.228,y:.025,cy:.004}},
-      crowd:{mobile:{yaw:.50,elev:.155,y:.048,cy:.022},desktop:{yaw:.54,elev:.182,y:.042,cy:.014}},
-      av:{mobile:{yaw:-.57,elev:.185,y:.038,cy:.014},desktop:{yaw:-.61,elev:.215,y:.032,cy:.008}}
+      booth:{
+        phonePortrait:{yaw:.64,elev:.215,y:.016,cy:.016},
+        phoneLandscape:{yaw:.67,elev:.228,y:.014,cy:.008},
+        tablet:{yaw:.68,elev:.236,y:.012,cy:.006},
+        desktop:{yaw:.70,elev:.248,y:.010,cy:.004}
+      },
+      showroom:{
+        phonePortrait:{yaw:-.66,elev:.205,y:.022,cy:.012},
+        phoneLandscape:{yaw:-.69,elev:.218,y:.020,cy:.006},
+        tablet:{yaw:-.70,elev:.225,y:.018,cy:.004},
+        desktop:{yaw:-.72,elev:.238,y:.016,cy:.002}
+      },
+      interior:{
+        phonePortrait:{yaw:.57,elev:.182,y:.040,cy:.020},
+        phoneLandscape:{yaw:.59,elev:.195,y:.038,cy:.012},
+        tablet:{yaw:.60,elev:.205,y:.036,cy:.010},
+        desktop:{yaw:.62,elev:.214,y:.032,cy:.008}
+      },
+      management:{
+        phonePortrait:{yaw:-.60,elev:.214,y:.030,cy:.012},
+        phoneLandscape:{yaw:-.62,elev:.228,y:.028,cy:.008},
+        tablet:{yaw:-.63,elev:.238,y:.026,cy:.006},
+        desktop:{yaw:-.65,elev:.250,y:.024,cy:.004}
+      },
+      crowd:{
+        phonePortrait:{yaw:.52,elev:.178,y:.048,cy:.024},
+        phoneLandscape:{yaw:.54,elev:.190,y:.046,cy:.014},
+        tablet:{yaw:.56,elev:.198,y:.044,cy:.012},
+        desktop:{yaw:.58,elev:.206,y:.040,cy:.010}
+      },
+      av:{
+        phonePortrait:{yaw:-.57,elev:.205,y:.038,cy:.015},
+        phoneLandscape:{yaw:-.59,elev:.220,y:.036,cy:.010},
+        tablet:{yaw:-.61,elev:.228,y:.034,cy:.008},
+        desktop:{yaw:-.63,elev:.236,y:.030,cy:.006}
+      }
     };
     const viewSet=viewByType[type]||viewByType.booth;
     let view=viewSet.desktop;
@@ -374,21 +404,22 @@
       if(compact)fov=landscape?38.0:(portrait?36.5:37.0);
       else if(tablet)fov=36.0;
       profileCache={w,h,aspect,compact,tablet,portrait,landscape,short,low,high,fov};
-      view=compact?viewSet.mobile:viewSet.desktop;
+      view=compact?(portrait?viewSet.phonePortrait:viewSet.phoneLandscape):(tablet?viewSet.tablet:viewSet.desktop);
       return profileCache;
     }
 
     function qualityRatio(profile){
       const dpr=Math.max(1,window.devicePixelRatio||1);
-      const cap=profile.compact?(profile.high?2.20:(profile.low?1.35:1.90)):(profile.tablet?(profile.high?2.10:1.85):(profile.high?2.00:1.78));
-      const budget=profile.compact?(profile.high?2400000:(profile.low?950000:1850000)):(profile.tablet?(profile.high?3300000:2500000):(profile.high?4300000:3400000));
+      const cap=profile.compact?(profile.high?2.28:(profile.low?1.42:1.98)):(profile.tablet?(profile.high?2.14:1.92):(profile.high?2.04:1.84));
+      const budget=profile.compact?(profile.high?2800000:(profile.low?1100000:2100000)):(profile.tablet?(profile.high?3600000:2750000):(profile.high?4700000:3600000));
       return Math.max(1,Math.min(dpr,cap,Math.sqrt(budget/Math.max(1,profile.w*profile.h))));
     }
 
     function safeFrame(profile){
-      if(profile.compact)return {left:-.94,right:.94,bottom:-.82,top:.86};
-      if(profile.tablet)return {left:-.92,right:.92,bottom:-.84,top:.87};
-      return {left:-.90,right:.90,bottom:-.84,top:.88};
+      if(profile.compact&&profile.portrait)return {left:-.94,right:.94,bottom:-.74,top:.86};
+      if(profile.compact)return {left:-.94,right:.94,bottom:-.78,top:.86};
+      if(profile.tablet)return {left:-.92,right:.92,bottom:-.82,top:.87};
+      return {left:-.90,right:.90,bottom:-.82,top:.88};
     }
 
     function corners(box){
@@ -427,13 +458,13 @@
         const b=projectedBounds(target,yawValue,elevValue,d,profile);
         return !b.behind&&b.minX>=frameBounds.left&&b.maxX<=frameBounds.right&&b.minY>=frameBounds.bottom&&b.maxY<=frameBounds.top;
       };
-      let low=.8,high=3.5;
+      let low=.8,high=3.2;
       while(!fits(high)&&high<120)high*=1.28;
       for(let i=0;i<22;i++){
         const mid=(low+high)*.5;
         if(fits(mid))high=mid;else low=mid;
       }
-      return high*1.012;
+      return high*1.008;
     }
 
     function calculatePose(yawValue,elevValue,profile){
@@ -580,8 +611,8 @@
         const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;
         const speed=e.pointerType==='mouse'?.0047:.0057;
         const base=view.yaw;
-        targetYaw=clamp(targetYaw+dx*speed,base-.82,base+.82);
-        targetElevation=clamp(targetElevation+dy*.00155,.12,.32);fitDirty=true;
+        targetYaw=clamp(targetYaw+dx*speed,base-.76,base+.76);
+        targetElevation=clamp(targetElevation+dy*.00145,.13,.34);fitDirty=true;
       },{passive:false});
       const end=e=>{
         if(activePointer!==null&&e.pointerId!==activePointer)return;
@@ -605,8 +636,8 @@
       if(!initialized||!visible||!pageVisible||!renderer||!scene||!camera)return;
       const dt=lastTime?Math.min(.04,(now-lastTime)/1000):1/60;lastTime=now;
       refreshFit(false,now);
-      yaw=damp(yaw,targetYaw,dragging?17:11,dt);elevation=damp(elevation,targetElevation,dragging?17:11,dt);
-      distance=damp(distance,targetDistance,15,dt);targetPoint.lerp(desiredTarget,1-Math.exp(-15*dt));
+      yaw=damp(yaw,targetYaw,dragging?18:12.5,dt);elevation=damp(elevation,targetElevation,dragging?18:12.5,dt);
+      distance=damp(distance,targetDistance,14,dt);targetPoint.lerp(desiredTarget,1-Math.exp(-14*dt));
       camera.position.copy(cameraPosition(targetPoint,yaw,elevation,distance,tmpPos));camera.up.set(0,1,0);camera.lookAt(targetPoint);
       animateDetails(now*.001);renderer.render(scene,camera);
       rafId=requestAnimationFrame(render);

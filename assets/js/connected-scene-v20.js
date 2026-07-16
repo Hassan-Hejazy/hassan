@@ -104,29 +104,62 @@
     const dpr=Math.max(1,window.devicePixelRatio||1);
     let cap,budget;
     if(p.compact){
-      cap=p.high?2.15:(p.low?1.35:1.90);
-      budget=p.high?2700000:(p.low?1050000:2050000);
+      cap=p.high?2.30:(p.low?1.45:2.00);
+      budget=p.high?3200000:(p.low?1180000:2280000);
     }else if(p.tablet){
-      cap=p.high?2.10:(p.low?1.40:1.85);
-      budget=p.high?3600000:(p.low?1650000:2750000);
+      cap=p.high?2.18:(p.low?1.48:1.95);
+      budget=p.high?4050000:(p.low?1850000:3050000);
     }else{
-      cap=p.high?2.00:(p.low?1.40:1.80);
-      budget=p.high?4700000:(p.low?2350000:3650000);
+      cap=p.high?2.08:(p.low?1.46:1.88);
+      budget=p.high?5200000:(p.low?2450000:3850000);
     }
     return Math.max(1,Math.min(dpr,cap,Math.sqrt(budget/Math.max(1,p.w*p.h))));
   }
 
   const SERVICE_RELATIVE_YAW=[.60,-.68,.56,-.61,.50,-.59];
-  const TARGET_Y_BIAS=[.010,.020,.035,.025,.045,.035];
+  const CAMERA_PRESETS={
+    phonePortrait:[
+      {yaw:.64,elev:.215,focusY:.018,compY:.016},
+      {yaw:-.66,elev:.205,focusY:.024,compY:.012},
+      {yaw:.57,elev:.182,focusY:.042,compY:.020},
+      {yaw:-.60,elev:.214,focusY:.030,compY:.012},
+      {yaw:.52,elev:.178,focusY:.050,compY:.024},
+      {yaw:-.57,elev:.205,focusY:.040,compY:.015}
+    ],
+    phoneLandscape:[
+      {yaw:.67,elev:.228,focusY:.016,compY:.008},
+      {yaw:-.69,elev:.218,focusY:.022,compY:.006},
+      {yaw:.59,elev:.195,focusY:.038,compY:.012},
+      {yaw:-.62,elev:.228,focusY:.028,compY:.008},
+      {yaw:.54,elev:.190,focusY:.046,compY:.014},
+      {yaw:-.59,elev:.220,focusY:.036,compY:.010}
+    ],
+    tablet:[
+      {yaw:.68,elev:.236,focusY:.014,compY:.006},
+      {yaw:-.70,elev:.225,focusY:.020,compY:.004},
+      {yaw:.60,elev:.205,focusY:.034,compY:.010},
+      {yaw:-.63,elev:.238,focusY:.026,compY:.006},
+      {yaw:.56,elev:.198,focusY:.040,compY:.012},
+      {yaw:-.61,elev:.228,focusY:.032,compY:.008}
+    ],
+    desktop:[
+      {yaw:.70,elev:.248,focusY:.012,compY:.004},
+      {yaw:-.72,elev:.238,focusY:.018,compY:.002},
+      {yaw:.62,elev:.214,focusY:.032,compY:.008},
+      {yaw:-.65,elev:.250,focusY:.024,compY:.004},
+      {yaw:.58,elev:.206,focusY:.038,compY:.010},
+      {yaw:-.63,elev:.236,focusY:.030,compY:.006}
+    ]
+  };
 
-  function worldYawFor(i){
-    const mobilePortrait=[.48,.51,.46,.50,.44,.52];
-    const mobileLandscape=[.55,.58,.52,.57,.50,.59];
-    const tablet=[.58,.62,.55,.61,.53,.63];
-    const desktop=[.62,.66,.59,.65,.57,.67];
-    const list=profile.compact?(profile.portrait?mobilePortrait:mobileLandscape):(profile.tablet?tablet:desktop);
-    return list[i];
+  function stagePreset(i){
+    if(profile.compact && profile.portrait) return CAMERA_PRESETS.phonePortrait[i];
+    if(profile.compact) return CAMERA_PRESETS.phoneLandscape[i];
+    if(profile.tablet) return CAMERA_PRESETS.tablet[i];
+    return CAMERA_PRESETS.desktop[i];
   }
+
+  function worldYawFor(i){ return stagePreset(i).yaw; }
 
   function configureRoute(){
     const gap=profile.compact?9.55:(profile.tablet?10.35:11.15);
@@ -319,7 +352,7 @@
       }
       const detail=new THREE.Group();detail.name='detail';
       if(factory&&factory.factories&&factory.factories[type])factory.factories[type](detail,materials);
-      detail.scale.setScalar(profile.compact?.90:.94);detail.position.y=.28;
+      detail.scale.setScalar(profile.compact?.94:.97);detail.position.y=.28;
       detail.updateMatrixWorld(true);
       const rawBox=new THREE.Box3().setFromObject(detail);
       rawBox.min.sub(new THREE.Vector3(.20,.05,.20));rawBox.max.add(new THREE.Vector3(.20,.18,.20));
@@ -471,11 +504,11 @@
 
   function safeFrame(){
     const rtl=document.documentElement.dir==='rtl';
-    if(profile.compact&&profile.portrait)return {left:-.955,right:.955,bottom:-.435,top:.875};
-    if(profile.compact&&profile.landscape)return rtl?{left:-.97,right:-.015,bottom:-.79,top:.84}:{left:.015,right:.97,bottom:-.79,top:.84};
-    if(profile.compact)return {left:-.955,right:.955,bottom:-.455,top:.86};
-    if(profile.tablet)return rtl?{left:-.96,right:-.015,bottom:-.83,top:.89}:{left:.015,right:.96,bottom:-.83,top:.89};
-    return rtl?{left:-.965,right:-.07,bottom:-.85,top:.90}:{left:.07,right:.965,bottom:-.85,top:.90};
+    if(profile.compact&&profile.portrait)return {left:-.95,right:.95,bottom:-.34,top:.86};
+    if(profile.compact&&profile.landscape)return rtl?{left:-.965,right:-.02,bottom:-.73,top:.84}:{left:.02,right:.965,bottom:-.73,top:.84};
+    if(profile.compact)return {left:-.95,right:.95,bottom:-.38,top:.86};
+    if(profile.tablet)return rtl?{left:-.96,right:-.02,bottom:-.78,top:.88}:{left:.02,right:.96,bottom:-.78,top:.88};
+    return rtl?{left:-.965,right:-.08,bottom:-.80,top:.895}:{left:.08,right:.965,bottom:-.80,top:.895};
   }
 
   function cameraPosition(target,yaw,elev,distance,out){
@@ -523,31 +556,23 @@
     return {pos:cameraPosition(target,yaw,elev,distance,new THREE.Vector3()),target,distance,fov};
   }
 
-  function stageYaw(i){return worldYawFor(i);}
+  function stageYaw(i){return stagePreset(i).yaw;}
 
-  function stageElevation(i){
-    const mobile=[.195,.185,.165,.198,.158,.188];
-    const tablet=[.215,.205,.185,.218,.178,.208];
-    const desktop=[.235,.225,.198,.238,.190,.220];
-    return (profile.compact?mobile:(profile.tablet?tablet:desktop))[i];
-  }
+  function stageElevation(i){ return stagePreset(i).elev; }
 
-  function stageComposition(i){
-    const yMobile=[.012,.008,.018,.010,.024,.014];
-    const yDesktop=[.006,.002,.012,.005,.016,.009];
-    return {x:0,y:(profile.compact?yMobile:yDesktop)[i]};
-  }
+  function stageComposition(i){ return {x:0,y:stagePreset(i).compY}; }
 
   function holdPose(i,u){
     const box=stageWorldBox(i);
     const size=box.getSize(new THREE.Vector3());
+    const preset=stagePreset(i);
     const focus=box.getCenter(new THREE.Vector3());
-    focus.y+=size.y*TARGET_Y_BIAS[i];
+    focus.y+=size.y*preset.focusY;
     const live=smoother(u),direction=i%2?-1:1;
-    const yaw=stageYaw(i)+lerp(-.006,.006,live)*direction;
-    const elev=stageElevation(i)+Math.sin(Math.PI*u)*.0025;
-    const pose=framedPose(box,yaw,elev,profile.fov,profile.compact?.010:.014,stageComposition(i),focus);
-    const dolly=1-Math.sin(Math.PI*u)*.006;
+    const yaw=stageYaw(i)+lerp(-.0048,.0048,live)*direction;
+    const elev=stageElevation(i)+Math.sin(Math.PI*u)*.0020;
+    const pose=framedPose(box,yaw,elev,profile.fov,profile.compact?.009:.012,stageComposition(i),focus);
+    const dolly=1-Math.sin(Math.PI*u)*.0045;
     pose.pos.sub(pose.target).multiplyScalar(dolly).add(pose.target);
     return pose;
   }
@@ -559,16 +584,16 @@
     const delta=end.target.clone().sub(start.target);
     const startForward=start.target.clone().sub(start.pos).normalize();
     const endForward=end.target.clone().sub(end.pos).normalize();
-    const pull=profile.compact?.48:(profile.tablet?.66:.82);
-    const arc=profile.compact?.10:(profile.tablet?.14:.18);
-    const c1p=start.pos.clone().addScaledVector(delta,.29).addScaledVector(startForward,-pull);
-    const c2p=end.pos.clone().addScaledVector(delta,-.29).addScaledVector(endForward,-pull);
-    const c1t=start.target.clone().addScaledVector(delta,.30);
-    const c2t=end.target.clone().addScaledVector(delta,-.30);
+    const pull=profile.compact?.42:(profile.tablet?.58:.74);
+    const arc=profile.compact?.08:(profile.tablet?.11:.14);
+    const c1p=start.pos.clone().addScaledVector(delta,.30).addScaledVector(startForward,-pull);
+    const c2p=end.pos.clone().addScaledVector(delta,-.30).addScaledVector(endForward,-pull);
+    const c1t=start.target.clone().addScaledVector(delta,.28);
+    const c2t=end.target.clone().addScaledVector(delta,-.28);
     const pos=cubic(start.pos,c1p,c2p,end.pos,t,new THREE.Vector3());
     pos.y+=Math.sin(Math.PI*t)*arc;
     const target=cubic(start.target,c1t,c2t,end.target,t,new THREE.Vector3());
-    return {pos,target,fov:lerp(start.fov,end.fov,t)+Math.sin(Math.PI*t)*(profile.compact?.10:.14)};
+    return {pos,target,fov:lerp(start.fov,end.fov,t)+Math.sin(Math.PI*t)*(profile.compact?.06:.10)};
   }
 
   function finalOverviewScale(){
@@ -600,8 +625,8 @@
 
   function buildCameraCache(){
     holdCache=[];bridgeCache=[];
-    const holdCount=profile.low?7:(profile.compact?11:13);
-    const bridgeCount=profile.low?13:(profile.compact?19:23);
+    const holdCount=profile.low?8:(profile.compact?13:15);
+    const bridgeCount=profile.low?15:(profile.compact?23:27);
     for(let i=0;i<6;i++){
       const list=[];for(let k=0;k<holdCount;k++)list.push(holdPose(i,k/(holdCount-1)));holdCache.push(list);
     }
@@ -609,7 +634,7 @@
       const list=[];for(let k=0;k<bridgeCount;k++)list.push(bridgePose(i,k/(bridgeCount-1)));bridgeCache.push(list);
     }
     overviewCache={final:finalOverviewPose(),samples:[]};
-    const overviewCount=profile.low?15:(profile.compact?21:25);
+    const overviewCount=profile.low?17:(profile.compact?25:29);
     for(let k=0;k<overviewCount;k++)overviewCache.samples.push(overviewPose(k/(overviewCount-1)));
   }
 
@@ -803,15 +828,15 @@
 
   function render(now){
     rafId=0;if(!renderer||!scene||!camera||!visible||!pageVisible)return;
-    const minFrameMs=profile.low?20:0;
+    const minFrameMs=profile.low?18:(profile.compact?8:0);
     if(lastRenderedAt&&now-lastRenderedAt<minFrameMs){rafId=requestAnimationFrame(render);return;}
     lastRenderedAt=now;readProgress();
     const dt=lastTime?Math.min(.04,(now-lastTime)/1000):1/60;lastTime=now;
     const gap=Math.abs(targetProgress-progress);
-    const lambda=(profile.compact?18.0:16.0)+Math.min(7,gap*20);
+    const lambda=(profile.compact?13.6:12.2)+Math.min(4.2,gap*10);
     if(reduced)progress=targetProgress;else{
       const damped=damp(progress,targetProgress,lambda,dt);
-      const maxStep=dt*(profile.compact?1.32:1.48);
+      const maxStep=dt*(profile.compact?0.96:1.08);
       progress+=clamp(damped-progress,-maxStep,maxStep);
     }
     if(Math.abs(progress-targetProgress)<.000012)progress=targetProgress;
@@ -867,18 +892,19 @@
     renderer.setPixelRatio(renderRatio);renderer.setSize(profile.w,profile.h,false);renderer.setClearColor(0x060504,1);renderer.sortObjects=true;
     renderer.shadowMap.enabled=false;renderer.shadowMap.autoUpdate=false;
 
-    scene=new THREE.Scene();scene.background=new THREE.Color(0x060504);scene.fog=new THREE.FogExp2(0x060504,profile.compact?.0105:.0085);if(Q)Q.studioEnvironment(scene);
+    scene=new THREE.Scene();scene.background=new THREE.Color(0x060504);scene.fog=new THREE.FogExp2(0x060504,profile.compact?.0088:.0072);if(Q)Q.studioEnvironment(scene);
     root=new THREE.Group();scene.add(root);
     surfaceTexture=makeSurfaceTexture();
     edgeMaterial=new THREE.LineBasicMaterial({color:0xf2dfb6,transparent:true,opacity:profile.compact?.105:.13,depthWrite:false,toneMapped:false});
     scene.add(new THREE.HemisphereLight(0xffefd3,0x080706,profile.compact?.78:.88));
     keyLight=new THREE.DirectionalLight(0xffe1a9,profile.compact?1.62:1.82);keyLight.position.set(7,10,7);keyLight.castShadow=renderer.shadowMap.enabled;scene.add(keyLight);scene.add(keyLight.target);
     if(keyLight.castShadow){const size=profile.high?1536:1024;keyLight.shadow.mapSize.set(size,size);keyLight.shadow.camera.left=-10;keyLight.shadow.camera.right=10;keyLight.shadow.camera.top=10;keyLight.shadow.camera.bottom=-10;keyLight.shadow.bias=-.00024;keyLight.shadow.normalBias=.024;keyLight.shadow.radius=2.2;}
-    rimLight=new THREE.PointLight(0x72d2bf,profile.compact?.64:.82,25,1.9);scene.add(rimLight);
-    fillLight=new THREE.PointLight(0xe3b35c,profile.compact?.48:.64,24,2);scene.add(fillLight);
-    topLight=new THREE.PointLight(0xffe6bb,profile.compact?.22:.32,18,2);scene.add(topLight);
+    rimLight=new THREE.PointLight(0x72d2bf,profile.compact?.70:.90,25,1.9);scene.add(rimLight);
+    fillLight=new THREE.PointLight(0xe3b35c,profile.compact?.54:.70,24,2);scene.add(fillLight);
+    topLight=new THREE.PointLight(0xffe6bb,profile.compact?.26:.36,18,2);scene.add(topLight);
 
     buildHub();buildStations();buildJourney();measureTrack();
+    if(Q&&!profile.low)Q.addContactShadow(root,renderer,profile.compact?10.2:12.8,profile.compact?.28:.34,.308);
     camera=new THREE.PerspectiveCamera(profile.fov,profile.aspect,.14,170);scene.add(camera);
     buildCameraCache();
     const state=timeline(0);applyState(state);const pose=evaluateCamera(state);
