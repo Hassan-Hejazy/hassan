@@ -1,5 +1,5 @@
-BY MELI — Connected 3D Professional V16
+BY MELI — Connected 3D Professional V18
 
-Open index.html through a local or web server for the correct browser security and asset-loading behavior.
-
-This version contains a rebuilt route-based connected 3D walkthrough, responsive camera fitting, isolated Connected/WE CAN styling, and mobile performance safeguards.
+Open index.html through a local or hosted web server.
+The connected scene uses the bundled Three.js library and local assets only.
+For the best result, use a current version of Chrome, Edge, Safari or Firefox with hardware acceleration enabled.

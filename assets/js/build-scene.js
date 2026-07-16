@@ -412,7 +412,7 @@ window.BuildScene = (function(){
     const darkMat = new THREE.MeshStandardMaterial({ color:0x1A1511, roughness:0.68, metalness:0.18, transparent:true, opacity:0 });
     const woodMat = new THREE.MeshStandardMaterial({ color:0x5E4528, roughness:0.72, metalness:0.06, transparent:true, opacity:0 });
     const goldMat = new THREE.MeshStandardMaterial({ color:GOLD, roughness:0.34, metalness:0.36, emissive:0x7b5a16, emissiveIntensity:0, transparent:true, opacity:0 });
-    const glassMat = new THREE.MeshStandardMaterial({ color:0xd9efe8, roughness:0.04, metalness:0.12, transparent:true, opacity:0, transmission:0.35 });
+    const glassMat = new THREE.MeshPhysicalMaterial({ color:0xd9efe8, roughness:0.04, metalness:0.12, transparent:true, opacity:0, transmission:0.35, depthWrite:false });
     const creamMat = new THREE.MeshStandardMaterial({ color:0xF3E6CD, roughness:0.55, metalness:0.05, transparent:true, opacity:0 });
     const tealMat = new THREE.MeshStandardMaterial({ color:TEAL, roughness:0.42, metalness:0.14, transparent:true, opacity:0 });
 

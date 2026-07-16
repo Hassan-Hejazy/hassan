@@ -1,0 +1,36 @@
+BY MELI — CONNECTED 3D PROFESSIONAL V18 AUDIT
+
+Validated responsive viewports:
+- 320 x 700 portrait phone
+- 390 x 844 portrait phone
+- 768 x 1024 tablet
+- 1024 x 768 laptop/tablet landscape
+- 1440 x 900 desktop
+- 1920 x 1080 wide desktop
+- 844 x 390 landscape phone
+
+Connected camera audit:
+- 27 timeline samples per viewport
+- All hold, transition and overview frames contained
+- No camera clipping or behind-camera geometry
+- Zero horizontal overflow at every viewport
+
+Rendering and motion:
+- Adaptive high-density rendering with mobile pixel budgets
+- Full detailed model only for the active service
+- Lightweight final overview models
+- Inactive stations do not render
+- Off-screen animation pauses
+- Live screens update at a controlled interval
+- Desktop shadows update only when required
+- Native touch and wheel scrolling preserved
+
+Visual checks completed with SwiftShader WebGL at phone and desktop sizes, including a 2x-density mobile render.
+
+Static validation:
+- JavaScript syntax passed
+- CSS parsing passed
+- No duplicate HTML IDs
+- No missing local assets
+- No Arabic diacritics
+- ZIP integrity passed
