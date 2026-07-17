@@ -1,0 +1,45 @@
+BY MELI — CONNECTED 3D ULTRA V28
+
+Scope
+- Upgraded only the connected 3D walkthrough and its shared connected-scene materials.
+- Existing page design and booth-manufacturing section remain unchanged.
+
+Ultra rendering profile
+- Native-retina rendering up to 3.25 DPR on capable phones.
+- 4K-class supersampled drawing buffer up to 8,294,400 pixels on capable desktop screens.
+- Verified 3840 x 2160 output at 1920 x 1080 / DPR 2.
+- Verified 3643 x 2277 supersampled output at 1440 x 900 / DPR 2.
+- Verified 1170 x 2532 native-retina output at 390 x 844 / DPR 3.
+- Lower-tier devices remain bounded by a strict pixel budget to avoid scroll stalls and WebGL context loss.
+
+Visual-quality upgrades
+- 1536–2048 px live display textures with mipmaps and 16x anisotropic filtering.
+- High-resolution brushed micro-surface texture used as subtle roughness and bump detail.
+- Rebalanced gold, dark metal, cream, white, teal, glass, red and screen materials.
+- Increased environment response, clearcoat definition, glass clarity and lighting separation.
+- Major architectural edges receive restrained high-resolution line definition.
+- High-tier mobile and desktop devices use stable soft shadows; every station retains contact grounding.
+- Removed CSS GPU-layer resampling that could soften the WebGL canvas.
+- Reduced fog and overlay density so fine geometry stays visible.
+
+Responsive and motion audit
+Viewports:
+- 320 x 700
+- 390 x 844
+- 768 x 1024
+- 1024 x 768
+- 1440 x 900
+- 844 x 390 landscape
+
+Results
+- Six standalone service cameras initialized and remained inside their safe frames.
+- 51 connected walkthrough samples per viewport.
+- Zero camera-containment failures.
+- Zero blank connected frames.
+- Zero horizontal overflow.
+- Mobile and desktop connected progress remained monotonic while scrolling.
+- Maximum measured scroll-to-camera lag: 0.076 normalized progress.
+- No JavaScript syntax errors, CSS parse errors, duplicate IDs or missing local assets.
+
+Runtime note
+- The container has no physical WebGL GPU. Renderer lifecycle, real Three.js scene graphs, camera projection, responsive framing, output-buffer sizing and scroll state were validated with a renderer-compatible browser harness.
