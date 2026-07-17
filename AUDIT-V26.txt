@@ -1,0 +1,54 @@
+BY MELI — CONNECTED AND SERVICE 3D V26
+
+Scope
+- Existing visual design retained.
+- Booth-manufacturing section not modified.
+- Connected 3D camera, transitions, scroll response, rendering lifecycle and service-model quality corrected.
+
+Critical runtime correction
+- The connected scene now keeps all standalone service WebGL renderers blocked for the entire time the connected renderer owns the GPU context.
+- Service renderers restart only after the connected scene is disposed.
+- This prevents context competition, failed connected initialization, intermittent fallback display, flicker and mobile renderer loss.
+
+Motion and camera correction
+- Removed per-frame transition camera refitting, which caused zoom pumping and unstable motion.
+- Connected transfers now interpolate between pre-fitted camera poses using a fixed cubic path.
+- Service-model rotations remain unchanged when a transition begins; the previous code reset both models to zero rotation and caused a visible direction snap.
+- The final overview interpolates model direction rather than snapping to the overview angle.
+- Transition overlap is limited to a short center handoff to keep every detailed model inside the responsive camera frame.
+- Scroll response uses stable exponential damping with no overshoot.
+
+Quality and performance
+- High-density adaptive rendering remains enabled across phone, tablet and desktop profiles.
+- High-resolution live-screen textures are used on capable devices.
+- Physically-correct lighting is enabled.
+- Fog and CSS grid interference were reduced for sharper geometry.
+- Unstable moving shadow maps were removed from the connected walkthrough; stable platform/contact grounding remains.
+- Service-scene lighting and texture budgets were increased while keeping one service WebGL context active at a time.
+- Emissive and lighting animation amplitudes were reduced to prevent shimmer and flicker.
+
+Responsive validation
+Viewports checked:
+- 320 x 700
+- 390 x 844
+- 768 x 1024
+- 1024 x 768
+- 1440 x 900
+- 844 x 390 landscape
+
+Results
+- All six standalone service cameras initialized and remained inside their safe frame at every tested viewport.
+- Connected walkthrough had zero camera-containment failures across the responsive sample audit.
+- Dense 101-frame audits at 390 x 844 and 1440 x 900 had zero blank frames and zero containment failures.
+- Maximum model-rotation change between adjacent audited frames: 0.0122 radians.
+- Scroll progression was monotonic on mobile and desktop.
+- Maximum measured scroll-to-camera progress lag: 0.041.
+- Standalone service initialization was blocked while connected 3D owned the context and restored after connected disposal.
+- No horizontal overflow.
+- No JavaScript syntax errors.
+- No CSS parse errors.
+- No duplicate HTML IDs.
+- No missing local assets.
+
+Environment note
+- The container does not expose a usable physical WebGL GPU, so rendering logic, real Three.js geometry, camera projection, responsive framing, lifecycle and scroll behavior were audited with a renderer-compatible browser harness. Final visual GPU output should still be checked on the client’s target iPhone/Android devices and desktop browsers.

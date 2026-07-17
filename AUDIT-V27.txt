@@ -1,0 +1,49 @@
+BY MELI — CONNECTED 3D PROFESSIONAL V27
+
+Scope
+- Rebuilt only the connected 3D walkthrough.
+- Existing page design and booth-manufacturing sequence remain unchanged.
+
+Motion system
+- Replaced the long world-space camera travel with a central cinematic presentation stage.
+- Added fixed responsive camera holds for all six services.
+- Added spherical camera interpolation between services to eliminate abrupt angle changes and camera pumping.
+- Added critically damped scroll interpolation for fast response without overshoot or a delayed catch-up tail.
+- Increased the pinned scroll distance so holds, transfers and the final overview have consistent timing.
+- Removed per-frame camera fitting and reduced per-frame DOM/style updates.
+
+Rendering and quality
+- Removed procedural bump noise from the connected materials to prevent mobile shimmer and moire.
+- Rebalanced material roughness, metalness, glass, gold, environment response and screen emissive intensity.
+- Raised adaptive render-density budgets while preserving device-specific limits.
+- Disabled outdated physically-correct-light scaling and recalibrated stable cinematic lighting.
+- Added desktop high-tier static shadow support and stable contact/platform grounding.
+- Reduced animated-screen refresh frequency and paused heavy internal model animation during transitions.
+- Retained complete service geometry in the final overview except on genuinely low-tier devices.
+
+Responsive camera audit
+Viewports tested:
+- 320 x 700
+- 390 x 844
+- 768 x 1024
+- 1024 x 768
+- 1440 x 900
+- 1920 x 1080
+- 844 x 390 landscape
+
+Camera audit results
+- 101 walkthrough samples per viewport.
+- Zero camera-containment failures.
+- Zero blank connected frames.
+- Zero horizontal overflow.
+- Native canvas behavior remains pointer-transparent with vertical touch scrolling enabled.
+
+Technical validation
+- All JavaScript files passed syntax validation.
+- All local HTML asset references exist.
+- No duplicate HTML IDs.
+- CSS parsed without errors.
+- No Arabic diacritics were introduced.
+
+Environment limitation
+- The container does not expose a physical WebGL GPU. Real Three.js geometry, camera projection, scene state, responsive framing and lifecycle were validated with a renderer-compatible browser harness. Final color and GPU performance should be reviewed on the target production devices.

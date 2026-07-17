@@ -1,0 +1,25 @@
+/* Service 3D V26 — high-quality responsive interaction; existing design is unchanged. */
+.service-canvas{
+  pointer-events:auto!important;
+  touch-action:pan-y pinch-zoom!important;
+  cursor:grab!important;
+  image-rendering:auto!important;
+  transform:none!important;
+  backface-visibility:visible!important;
+}
+.service-canvas.is-dragging{cursor:grabbing!important}
+.canvas-frame.ready .service-canvas{opacity:1!important}
+.canvas-frame.webgl-fallback .service-canvas{pointer-events:none!important}
+@media(hover:none) and (pointer:coarse){
+  .service-canvas{pointer-events:auto!important;touch-action:pan-y pinch-zoom!important}
+}
+@media(prefers-reduced-motion:reduce){.service-canvas{scroll-behavior:auto!important}}
+
+/* V23 rendering clarity: prevent CSS post-processing from softening WebGL. */
+.canvas-frame.ready .service-canvas{filter:none!important;transform:none!important;will-change:auto!important}
+.canvas-frame.ready::before{opacity:.18!important}
+.canvas-frame.ready::after{box-shadow:inset 0 0 0 1px rgba(255,255,255,.045),inset 0 -70px 100px rgba(0,0,0,.09)!important}
+
+/* Stable GPU compositing without CSS blur or transitional flashing. */
+.canvas-frame .service-canvas{opacity:1!important;transition:none!important;will-change:auto!important}
+.canvas-frame.ready{transform:translateZ(0);backface-visibility:hidden}
