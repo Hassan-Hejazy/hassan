@@ -1,0 +1,34 @@
+BY MELI CONNECTED 3D V43 — TESTED SUMMARY
+
+Mobile portrait 390x844
+- 201 positions tested
+- Clipping failures: 0
+- Empty frames: 0
+- Behind-camera frames: 0
+- Average model width: 98.85% of the viewport
+- Software WebGL initialization: 974.3 ms
+
+Desktop 1440x900
+- 201 positions tested
+- Clipping failures: 0
+- Empty frames: 0
+- Behind-camera frames: 0
+- Average model width: 61.25% of the viewport
+- Software WebGL initialization: 1321.1 ms
+
+Mobile DPR 3 quality
+- Motion ratio: 2.2
+- Settled ratio: 3
+- Settled canvas: 1125 x 2532
+
+Walkthrough
+- Exact scroll-to-frame mapping; no secondary progress easing.
+- More frontal service-facing cameras.
+- Larger mobile and desktop model presentation.
+- Technical rings, scanners and decorative orbit effects removed.
+- Matte luxury studio floor and quiet architectural bases.
+
+Static validation
+- JavaScript syntax: passed
+- CSS braces: passed
+- Missing local assets: 0

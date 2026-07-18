@@ -1,0 +1,57 @@
+{
+  "version": "V43 Luxury Fast Sharp",
+  "reference": "Rebuilt from the user-supplied older walkthrough reference while retaining the current service-scene continuity behavior.",
+  "browser_runtime_audit": {
+    "mobile_portrait": {
+      "viewport": "390x844",
+      "positions_tested": 201,
+      "clipping_failures": 0,
+      "empty_frames": 0,
+      "behind_camera": 0,
+      "software_webgl_startup_ms": 974.3,
+      "average_model_screen_width_percent": 98.85,
+      "average_model_screen_height_percent": 30.72
+    },
+    "desktop": {
+      "viewport": "1440x900",
+      "positions_tested": 201,
+      "clipping_failures": 0,
+      "empty_frames": 0,
+      "behind_camera": 0,
+      "software_webgl_startup_ms": 1321.1,
+      "average_model_screen_width_percent": 61.25,
+      "average_model_screen_height_percent": 73.48
+    }
+  },
+  "mobile_render_quality": {
+    "tested_device_pixel_ratio": 3,
+    "motion_pixel_ratio": 2.2,
+    "motion_buffer_target": "825x1857 at a 375x844 CSS viewport",
+    "settled_pixel_ratio": 3,
+    "settled_canvas": "1125x2532",
+    "antialiasing": "enabled except on detected low-end devices"
+  },
+  "scroll_system": {
+    "mapping": "exact targetProgress to rendered progress on every render frame",
+    "secondary_easing_layer": "removed",
+    "mobile_recovery": "scroll events can reactivate rendering from track geometry if observer delivery is delayed"
+  },
+  "startup_optimizations": [
+    "Procedural material textures reduced to 384px on capable mobile and 768px on capable desktop.",
+    "Live display textures reduced to 768px on capable mobile and 1152px on capable desktop.",
+    "Unused preview models, scanner geometry and decorative orbit arches removed.",
+    "Compact-device contact-shadow render pass removed.",
+    "Connected scene begins preloading 1400px before the section."
+  ],
+  "visual_direction": {
+    "mobile_service_captures_reviewed": 6,
+    "desktop_service_captures_reviewed": 6,
+    "presentation": "more frontal open-side views, full-width mobile framing, larger desktop framing, matte studio floor, architectural rectangular bases"
+  },
+  "static_validation": {
+    "css_braces_balanced": true,
+    "local_references_checked": 50,
+    "missing_local_references": [],
+    "javascript_syntax": "passed with node --check"
+  }
+}
