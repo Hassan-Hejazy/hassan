@@ -1,0 +1,6 @@
+CONNECTED 3D V40 AUDIT
+- Rebased the connected scene on the earlier V30 walkthrough logic the user preferred.
+- Removed the final overview connection lines between services.
+- Reduced decorative route, hub, dust and glow effects for a more professional presentation.
+- Preserved V39 service-scene continuity so service scenes do not reload after the connected section.
+- Kept the connected scroll indicator under the heading and preserved sharper mobile rendering.
