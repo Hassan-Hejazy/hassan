@@ -1,0 +1,7 @@
+CONNECTED 3D V48 LUXURY FLOOR REDESIGN
+- Restored a richer luxury floor with inset panel, metallic guide lines, and stronger contact shadow.
+- Kept exact scroll mapping while reducing motion render load for smoother real-time response.
+- Reduced hold and transition model drift so the scroll feels tied to the walkthrough rather than model motion.
+- Tuned mobile FOV, framing, and composition for clearer/larger 3D models.
+- Corrected the showroom camera preset direction to a more frontal luxury presentation.
+- Redesigned the final six-service overview into a more curated gallery composition.

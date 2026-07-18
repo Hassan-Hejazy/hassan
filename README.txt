@@ -1,5 +1,5 @@
-BY MELI WEBSITE — CONNECTED 3D V47 LUXURY SYNC
+BY MELI WEBSITE — CONNECTED 3D V48 LUXURY FLOOR REDESIGN
 
 Open index.html in a modern browser or upload the full folder structure unchanged.
 
-This release focuses only on the connected 3D scene. V47 fixes the remaining showroom direction problem, removes perceived scroll delay by keeping exact mapping with lighter motion rendering, increases mobile model presence, improves luxury shadows, and further separates the final overview on all devices.
+This release focuses only on the connected 3D scene. V48 restores the luxury floor with inset detailing, keeps scroll synced to the walkthrough while minimizing model motion, sharpens the mobile zoom/clarity balance, corrects the showroom presentation angle, and redesigns the final six-service summary into a cleaner gallery-style composition.
