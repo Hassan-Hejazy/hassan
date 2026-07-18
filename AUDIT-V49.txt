@@ -1,0 +1,6 @@
+CONNECTED 3D V49 EVENT FINALE REBUILD
+- Increased the connected track length and adjusted timeline pacing for smoother scroll progression.
+- Lowered motion rendering cost while keeping very high settled quality.
+- Rebuilt the floor with a cleaner premium stage-floor language.
+- Reduced hold/transition drift so the walkthrough feels driven by the camera rather than by model motion.
+- Replaced the old end-state gallery with a new event-stage finale and spotlights.
