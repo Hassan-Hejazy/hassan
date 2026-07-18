@@ -1,0 +1,6 @@
+CONNECTED 3D V45 DEVICE AUDITED
+- Increased mobile model presence by lowering compact FOV and tightening hold-state framing padding.
+- Added a contact shadow to the connected scene and enabled real shadows on capable non-portrait devices.
+- Used service-facing rotations more consistently for clearer presentation direction.
+- Reworked the final overview layout and scale to remove desktop overlap.
+- Added light progress damping for smoother cinematic scroll response.
