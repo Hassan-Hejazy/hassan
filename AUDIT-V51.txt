@@ -1,0 +1,6 @@
+CONNECTED 3D V51 SCROLL FAST
+- Reduced live pixel load for smoother scrolling.
+- Disabled compact-device shadow maps to reduce frame cost.
+- Shortened the connected scroll track for faster progression.
+- Disabled smooth-scroll behavior globally to remove any perceived delay.
+- Added idle-aware render loop so the scene does not keep rendering endlessly when the page is not actively scrolling.

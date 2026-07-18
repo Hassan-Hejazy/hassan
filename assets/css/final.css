@@ -18,7 +18,7 @@
   --wecan-p:0;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + 26px)}
+html{scroll-behavior:auto;scroll-padding-top:calc(var(--header-h) + 26px)}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
 body.lock{overflow:hidden}
 a{color:inherit;text-decoration:none}
@@ -1207,7 +1207,7 @@ html{
   overflow-x:clip;
   overflow-y:auto;
   overscroll-behavior-y:auto;
-  scroll-behavior:smooth;
+  scroll-behavior:auto;
 }
 body{
   min-width:320px;
