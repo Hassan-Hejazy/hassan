@@ -1,0 +1,7 @@
+CONNECTED 3D V46 FINAL MOBILE DESKTOP
+- Removed progress damping so scroll and camera respond with no delay.
+- Increased mobile model presence through lower compact FOV, tighter framing, lower camera elevation, and more centered composition.
+- Corrected service presentation direction by reducing service rotation and using a more frontal camera lead.
+- Improved connected-scene shadow grounding with stronger contact shadow and enabled real shadows on capable devices.
+- Reduced transition drift for a calmer walkthrough.
+- Widened and downscaled the final overview again to prevent overlap on mobile, tablet and desktop.
