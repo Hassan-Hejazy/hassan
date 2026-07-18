@@ -1,0 +1,24 @@
+BY MELI CONNECTED 3D V35 — FINAL AUDIT
+
+Scope: connected 3D walkthrough only
+
+RESULTS
+- 603 deterministic scroll positions checked across desktop, portrait mobile and landscape mobile.
+- Framing/clipping failures: 0
+- Application runtime errors: 0
+- Missing HTML/CSS local assets: 0
+- JavaScript syntax failures: 0
+- V35 CSS/JS references active; no legacy connected renderer referenced by index.html.
+
+PRODUCTION RESOLUTION CHECKS
+- Mobile 390x844 at DPR 3 selected a 1289x2791 motion buffer (pixel ratio 3.307), with configured ultra ratio 3.6.
+- Desktop 1185x750 canvas at DPR 2 selected a 3258x2062 motion buffer (pixel ratio 2.75), with configured ultra ratio 2.88.
+
+VISUAL REVIEW CORRECTIONS
+- Full-size service models and corrected outward-facing directions.
+- Close cinematic service camera angles instead of miniature platform views.
+- Intentional portal/light transition cut; no exposed empty technical wall at midpoint.
+- Cleaner final six-service hero composition with portal/truss clutter removed.
+
+NOTE
+The audit harness produced one SwiftShader ReadPixels performance warning during landscape sampling. It is a browser audit-readback warning, not an application error. See AUDIT-V35.json for full details and limitations.

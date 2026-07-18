@@ -1,0 +1,157 @@
+{
+  "release": "BY MELI Connected 3D V35 Cinematic Extreme Audited",
+  "generated_at_utc": "2026-07-18T08:30:31.442154+00:00",
+  "scope": "Final connected 3D walkthrough only",
+  "architecture": {
+    "presentation": "Continuous architectural production gallery",
+    "camera_system": "Deterministic scroll-to-camera-frame mapping; full-size stationary service environments",
+    "transitions": "Cinematic portal/light cuts with no model overlap at the cut midpoint",
+    "finale": "Clean six-service 3x2 hero composition with heavy portal architecture removed"
+  },
+  "quality_system": {
+    "desktop_target": "Up to native 3840x2160 or device/WebGL capability limit",
+    "mobile_portrait_target": "Up to 2160x3840 or device/WebGL capability limit",
+    "mobile_landscape_target": "Up to 3840x2160 or device/WebGL capability limit",
+    "high_tier_caps": {
+      "mobile": 3.6,
+      "tablet": 3.35,
+      "desktop": 3.25
+    },
+    "adaptive_policy": "High-resolution motion buffer; maximum settled buffer after scroll idle; gradual reduction only after sustained slow frames",
+    "runtime_resolution_checks": [
+      {
+        "name": "mobile_390x844_dpr3",
+        "css_canvas": [
+          390,
+          844
+        ],
+        "motion_render_buffer": [
+          1289,
+          2791
+        ],
+        "device_pixel_ratio": 3,
+        "selected_motion_pixel_ratio": 3.307103017477682,
+        "configured_ultra_pixel_ratio": 3.6,
+        "errors": []
+      },
+      {
+        "name": "desktop_1200x750_dpr2",
+        "css_canvas": [
+          1185,
+          750
+        ],
+        "motion_render_buffer": [
+          3258,
+          2062
+        ],
+        "device_pixel_ratio": 2,
+        "selected_motion_pixel_ratio": 2.75,
+        "configured_ultra_pixel_ratio": 2.88,
+        "errors": []
+      }
+    ]
+  },
+  "structural_scroll_audit": {
+    "total_positions": 603,
+    "viewports": [
+      {
+        "name": "desktop_1440x900",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "sampled_scroll_positions": 201,
+        "initialized": true,
+        "framing_failures": 0,
+        "maximum_simultaneously_visible_models": 6,
+        "application_runtime_errors": 0
+      },
+      {
+        "name": "mobile_390x844",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "sampled_scroll_positions": 201,
+        "initialized": true,
+        "framing_failures": 0,
+        "maximum_simultaneously_visible_models": 6,
+        "application_runtime_errors": 0
+      },
+      {
+        "name": "landscape_844x390",
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "sampled_scroll_positions": 201,
+        "initialized": true,
+        "framing_failures": 0,
+        "maximum_simultaneously_visible_models": 6,
+        "application_runtime_errors": 0
+      }
+    ],
+    "total_framing_failures": 0,
+    "application_runtime_errors": 0,
+    "audit_harness_warnings": [
+      {
+        "viewport": "landscape_844x390",
+        "type": "warning",
+        "text": "[.WebGL-0x2f2c0015bc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+      }
+    ],
+    "warning_note": "The single ReadPixels GPU-stall warning is emitted by Chromium SwiftShader during audit pixel readback; it is not an application JavaScript/WebGL error."
+  },
+  "static_package_audit": {
+    "index_references": {
+      "css_v35": true,
+      "js_v35": true,
+      "legacy_connected_reference": false
+    },
+    "html_local_reference_count": 16,
+    "missing_html_assets": [],
+    "missing_css_assets": [],
+    "javascript_syntax": [
+      {
+        "file": "assets/js/build-scene.js",
+        "passed": true,
+        "stderr": ""
+      },
+      {
+        "file": "assets/js/connected-scene-v35.js",
+        "passed": true,
+        "stderr": ""
+      },
+      {
+        "file": "assets/js/service-scenes-v26.js",
+        "passed": true,
+        "stderr": ""
+      },
+      {
+        "file": "assets/js/site.js",
+        "passed": true,
+        "stderr": ""
+      },
+      {
+        "file": "assets/js/ultra-quality.js",
+        "passed": true,
+        "stderr": ""
+      },
+      {
+        "file": "assets/js/wecan-v5.js",
+        "passed": true,
+        "stderr": ""
+      }
+    ],
+    "javascript_syntax_failures": 0
+  },
+  "visual_evidence_files": [
+    "audit/mobile-stage-01.png",
+    "audit/mobile-transition-01-to-02.png",
+    "audit/mobile-final-overview.png",
+    "audit/desktop-stage-01.png",
+    "audit/desktop-transition-01-to-02.png",
+    "audit/desktop-final-overview.png"
+  ],
+  "audit_limitations": "Automated visual captures used Chromium SwiftShader and a reduced 1x audit buffer to make repeated deterministic screenshot/framing checks practical. Separate production-runtime checks verified the unreduced high-DPI buffer selection. Real device frame rate depends on GPU, thermal state, browser and background workload."
+}

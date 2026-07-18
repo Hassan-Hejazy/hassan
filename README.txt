@@ -1,7 +1,11 @@
-BY MELI WEBSITE — CONNECTED 3D V34 EXTREME AUDITED
+BY MELI — CONNECTED 3D V35 CINEMATIC EXTREME
 
-Open index.html in a modern browser, or upload the complete folder structure unchanged.
+Open index.html in a modern WebGL-capable browser, or upload the complete folder structure unchanged.
 
-This release rebuilds only the final connected 3D scene. It presents all six services as one continuous production environment and includes deterministic scroll synchronization, responsive camera framing, high-resolution adaptive rendering, stable mobile viewport handling and retained WebGL state during section re-entry.
+V35 rebuilds only the final connected 3D experience as a continuous cinematic production gallery. Service models remain full-size while a scroll-locked camera moves through six professionally directed environments. The build includes adaptive high-DPI rendering, a high-resolution settled target, stable mobile viewport handling, controlled transition cuts, corrected model directions, and a clean six-service hero finale.
 
-See AUDIT-V34.txt and AUDIT-V34.json for the completed desktop and mobile validation results.
+Primary connected-scene files:
+- assets/js/connected-scene-v35.js
+- assets/css/connected-motion-v35.css
+
+See AUDIT-V35.txt and AUDIT-V35.json for the completed verification results.
