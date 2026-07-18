@@ -1,0 +1,25 @@
+CONNECTED 3D V50 — REBUILT FROM SCRATCH
+
+Architecture
+- New connected renderer written independently from the V43–V49 implementation.
+- One service model is visible at a time; service models never overlap during the walkthrough.
+- Models remain stationary. Scroll controls camera movement and chapter progression.
+- Transitions use a short editorial camera retreat and dark cut, not moving or intersecting models.
+- Stable render resolution; no motion/idle canvas reallocations during scroll.
+
+Presentation
+- New dark-stone architectural stage with clearcoat materials and brass inlays.
+- Service camera directions are based on the standalone service-scene presentation angles.
+- Mobile safe framing gives the 3D model almost the full available scene width above the copy panel.
+- New event-production finale: stage, runway, LED wall, truss, spotlights and audience silhouettes.
+
+Structural browser audit
+- Desktop 1440×900: 201 timeline positions, 0 framing failures.
+- Mobile portrait 390×844: 201 timeline positions, 0 framing failures.
+- Mobile landscape 844×390: 201 timeline positions, 0 framing failures.
+- Tablet 834×1112: 201 timeline positions, 0 framing failures.
+- JavaScript runtime errors in the structural browser harness: 0.
+- JavaScript syntax: passed.
+
+Audit limitation
+- The execution environment blocks GPU/WebGL context creation. Camera, geometry, timeline and viewport calculations were executed in Chromium using the real Three.js scene graph with a renderer stub. Final GPU material appearance should still be reviewed on the target browser/device after deployment.

@@ -1,5 +1,5 @@
-BY MELI WEBSITE — CONNECTED 3D V49 EVENT FINALE REBUILD
+BY MELI WEBSITE — CONNECTED 3D V50 REBUILT FROM SCRATCH
 
-Open index.html in a modern browser or upload the full folder structure unchanged.
+Open index.html in a modern browser or upload the complete folder structure unchanged.
 
-This release focuses only on the connected 3D scene. V49 rebuilds the connected scroll pacing, restores a more premium floor treatment, minimizes model drift so the walkthrough feels camera-led, and replaces the old six-service end layout with a professional event-stage finale with spotlights.
+V50 replaces the previous connected-scene implementation rather than modifying it. The six service environments remain static while the camera performs the walkthrough. The renderer uses one stable device-aware resolution during scrolling, avoiding pixel-ratio reallocations that caused lag. The final miniature overview has been replaced by a dedicated event-production finale with a stage, LED screen, truss, moving spotlight beams, runway and audience silhouettes.

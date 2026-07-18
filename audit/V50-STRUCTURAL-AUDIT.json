@@ -1,0 +1,72 @@
+{
+  "devices": [
+    {
+      "name": "desktop",
+      "state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "profile": {
+          "w": 1440,
+          "h": 900,
+          "pixelRatio": 1.4,
+          "tier": "high"
+        }
+      },
+      "failureCount": 0,
+      "failures": [],
+      "errors": []
+    },
+    {
+      "name": "mobile_portrait",
+      "state": {
+        "initialized": true,
+        "progress": 0,
+        "target": 0,
+        "profile": {
+          "w": 390,
+          "h": 844,
+          "pixelRatio": 2.55,
+          "tier": "high"
+        }
+      },
+      "failureCount": 0,
+      "failures": [],
+      "errors": []
+    },
+    {
+      "name": "mobile_landscape",
+      "state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "profile": {
+          "w": 844,
+          "h": 390,
+          "pixelRatio": 2,
+          "tier": "high"
+        }
+      },
+      "failureCount": 0,
+      "failures": [],
+      "errors": []
+    },
+    {
+      "name": "tablet",
+      "state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "profile": {
+          "w": 834,
+          "h": 1112,
+          "pixelRatio": 1.9702250269970003,
+          "tier": "high"
+        }
+      },
+      "failureCount": 0,
+      "failures": [],
+      "errors": []
+    }
+  ]
+}
