@@ -1,0 +1,6 @@
+CONNECTED 3D V44 CINEMATIC AUDITED
+- Widened all overview layouts to remove overlap on mobile, tablet and desktop.
+- Reduced final overview scale just enough to preserve six visible services without crowding.
+- Restored service-facing yaw so models present their open side more professionally.
+- Reduced startup cost by lowering live-screen and microtexture sizes and camera-cache sample counts.
+- Slightly raised mobile render quality while preserving fast loading and direct scroll sync.
