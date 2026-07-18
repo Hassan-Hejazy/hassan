@@ -1,0 +1,6 @@
+CONNECTED 3D V36 OVERLAP FIXED
+- Increased horizontal and vertical spacing between all six connected service environments.
+- Reduced portal/plinth footprint so adjacent models do not intersect in overview compositions.
+- Expanded floor, aisles, route glow and ceiling structure to match the new scene footprint.
+- Increased motion and settled render budgets to reduce blur and improve clarity.
+- Extended connected scroll distance to preserve smooth pacing.
