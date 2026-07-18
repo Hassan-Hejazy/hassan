@@ -1,0 +1,7 @@
+CONNECTED 3D V38 MOBILE PERF SYNC
+- Reduced motion render budget on mobile to improve scroll sync and loading speed.
+- Preserved higher settled render quality when interaction stops.
+- Disabled connected-scene shadows on compact devices.
+- Reduced live screen texture sizes and procedural texture sizes.
+- Removed unused connected hub/journey construction from the connected section to reduce load.
+- Increased track length for smoother scroll pacing.
