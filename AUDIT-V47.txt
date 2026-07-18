@@ -1,0 +1,7 @@
+CONNECTED 3D V47 LUXURY SYNC
+- Fixed showroom direction with a custom negative model yaw and camera yaw based on the designed camera presets instead of the model rotation.
+- Kept exact scroll-to-camera mapping and reduced motion render load for better real-time smoothness.
+- Increased mobile model presence with lower FOV, lower camera elevation, tighter framing, and calmer orbit.
+- Strengthened contact shadow and enabled real shadows on all non-low-end profiles.
+- Reduced transition drift for a more luxury feel.
+- Widened and downscaled the final overview again to avoid overlap.
