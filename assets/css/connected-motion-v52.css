@@ -1,4 +1,4 @@
-/* BY MELI Connected 3D V51 — rebuilt from scratch */
+/* BY MELI Connected 3D V52 — rebuilt from scratch */
 #connected{
   position:relative!important;
   isolation:isolate!important;
@@ -233,4 +233,11 @@ html[dir="rtl"] #connected .connected-rail span.active{transform:translateX(6px)
   #connected .connected-copy h3{font-size:30px!important}
   #connected .connected-copy p{display:none!important}
   #connected .scene-scroll-indicator{top:14px!important}
+}
+
+/* V52 premium finale: give the stage more visual room without affecting mobile */
+@media(min-width:1101px){
+  #connected .connected-sticky.finale-active .connected-copy{width:min(33vw,540px)!important;}
+  #connected .connected-sticky.finale-active .connected-copy h3{font-size:clamp(40px,4.7vw,78px)!important;max-width:12ch!important;}
+  #connected .connected-sticky.finale-active .connected-copy p{max-width:44ch!important;}
 }

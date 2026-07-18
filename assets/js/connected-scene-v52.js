@@ -33,7 +33,7 @@
       ['Project Management & Site Delivery','Approvals, planning, logistics and site control move the concept toward opening day.'],
       ['Crowd & Guest Operations','Registration, movement, staffing and wayfinding keep every guest journey clear and composed.'],
       ['Audio Visual & Live Production','Stage, LED, sound, lighting and show control complete the live environment.'],
-      ['One Partner. Every Environment.','From concept and fabrication to guest operations and live production, every discipline arrives as one controlled delivery system.']
+      ['One Partner. Total Event Power.','Strategy, fabrication, interiors, operations and live production come together as one controlled delivery system.']
     ],
     ar:[
       ['أجنحة المعارض والأجنحة الوطنية','تبدأ العمارة والتصنيع والوسائط والضيافة ضمن بيئة تنفيذ واحدة ومنضبطة.'],
@@ -42,7 +42,7 @@
       ['إدارة المشاريع والتنفيذ في الموقع','تنقل الاعتمادات والجداول واللوجستيات وإدارة الموقع الفكرة إلى يوم الافتتاح.'],
       ['إدارة الحشود وتجربة الضيوف','تنظم التسجيل والحركة والفرق والإرشاد رحلة الضيف بهدوء ووضوح.'],
       ['الأنظمة السمعية والبصرية والإنتاج الحي','تكتمل البيئة من خلال المسرح والشاشات والصوت والإضاءة والتحكم.'],
-      ['شريك واحد لكل بيئة','من الفكرة والتصنيع إلى تشغيل الضيوف والإنتاج الحي، تصل جميع التخصصات ضمن منظومة تنفيذ واحدة.']
+      ['شريك واحد. قوة تنفيذ متكاملة.','تجتمع الاستراتيجية والتصنيع والديكور والتشغيل والإنتاج الحي ضمن منظومة تنفيذ واحدة.']
     ]
   };
 
@@ -100,7 +100,7 @@
   let activeStage=-1,initialized=false,initQueued=false,visible=false,pageVisible=!document.hidden;
   let raf=0,resizeQueued=false,progress=0,targetProgress=0,trackStart=0,trackSpan=1;
   let lastFrame=0,lastScrollAt=0,lastY=window.scrollY||0,copyStage=-1,lastMode='',renderDirty=true;
-  let finaleBeams=[],finaleHeads=[],finaleScreen=null,finaleGlow=null;
+  let finaleBeams=[],finaleHeads=[],finaleScreen=null,finaleGlow=null,finaleLights=[],finaleAccents=[];
   let observer=null,resizeObserver=null;
 
   const fitCamera=new THREE.PerspectiveCamera(34,1,.08,180);
@@ -250,49 +250,70 @@
   }
 
   function buildFinale(){
-    const g=new THREE.Group();g.name='event-finale';
-    const dark=new THREE.MeshPhysicalMaterial({color:0x15120e,roughness:.34,metalness:.26,clearcoat:.26,clearcoatRoughness:.20});
-    const gold=new THREE.MeshPhysicalMaterial({color:0xc49b4e,roughness:.22,metalness:.92,clearcoat:.30,clearcoatRoughness:.14});
-    const cream=new THREE.MeshStandardMaterial({color:0xf1eadc,roughness:.50,metalness:.04});
-    const stage=roundedPlatform(14.8,8.6,.44,.42,dark);stage.position.y=-.10;stage.castShadow=true;stage.receiveShadow=true;g.add(stage);
-    const runway=roundedPlatform(3.6,8.6,.16,.18,cream);runway.position.set(0,.17,2.9);runway.castShadow=true;runway.receiveShadow=true;g.add(runway);
-    const apron=new THREE.Mesh(new THREE.RingGeometry(2.8,3.9,72,1,Math.PI*.07,Math.PI*.86),new THREE.MeshStandardMaterial({color:0xe8dfcf,roughness:.46,metalness:.02}));
-    apron.rotation.x=-Math.PI/2;apron.position.set(0,.255,6.55);g.add(apron);
+    const g=new THREE.Group();g.name='premium-event-finale';
+    finaleBeams=[];finaleHeads=[];finaleLights=[];finaleAccents=[];
+
+    const charcoal=new THREE.MeshPhysicalMaterial({color:0x14110d,roughness:.34,metalness:.24,clearcoat:.24,clearcoatRoughness:.20});
+    const stone=new THREE.MeshPhysicalMaterial({color:0x262019,roughness:.48,metalness:.14,clearcoat:.18,clearcoatRoughness:.30});
+    const brass=new THREE.MeshPhysicalMaterial({color:0xb8944f,roughness:.24,metalness:.92,clearcoat:.24,clearcoatRoughness:.14});
+    const ivory=new THREE.MeshStandardMaterial({color:0xf0eadf,roughness:.50,metalness:.03});
+    const smokedGlass=new THREE.MeshPhysicalMaterial({color:0x15231e,roughness:.18,metalness:.06,transparent:true,opacity:.86,transmission:.08,clearcoat:.28,clearcoatRoughness:.12});
+
+    // Main stage and runway
+    const stage=roundedPlatform(15.2,8.8,.46,.42,charcoal);stage.position.y=-.10;stage.castShadow=true;stage.receiveShadow=true;g.add(stage);
+    const upper=roundedPlatform(13.8,7.4,.16,.30,stone);upper.position.set(0,.18,-.40);upper.castShadow=true;upper.receiveShadow=true;g.add(upper);
+    const runway=roundedPlatform(3.25,8.2,.14,.16,ivory);runway.position.set(0,.27,3.10);runway.castShadow=true;runway.receiveShadow=true;g.add(runway);
+    const runwayTrim=new THREE.Mesh(new THREE.BoxGeometry(3.55,.035,8.35),brass);runwayTrim.position.set(0,.34,3.10);g.add(runwayTrim);
+
+    // Premium architectural portal
+    const leftTower=new THREE.Mesh(new THREE.BoxGeometry(.18,5.0,.24),brass);leftTower.position.set(-5.35,2.56,-.20);g.add(leftTower);
+    const rightTower=leftTower.clone();rightTower.position.x=5.35;g.add(rightTower);
+    const topBeam=new THREE.Mesh(new THREE.BoxGeometry(10.9,.18,.24),brass);topBeam.position.set(0,5.02,-.20);g.add(topBeam);
+    const arch=new THREE.Mesh(new THREE.TorusGeometry(4.9,.055,10,96,Math.PI),brass);arch.rotation.y=Math.PI;arch.position.set(0,4.98,-.20);g.add(arch);
+
+    // Central LED wall with restrained frame
     const screenTex=makeCanvasTexture();
-    const screenMat=new THREE.MeshStandardMaterial({color:0x091511,map:screenTex,emissive:0x23483d,emissiveMap:screenTex,emissiveIntensity:1.05,roughness:.18,metalness:.06});
-    const screen=new THREE.Mesh(new THREE.BoxGeometry(9.4,4.1,.16),screenMat);screen.position.set(0,2.48,-2.88);screen.castShadow=true;g.add(screen);finaleScreen=screen;
-    const screenFrame=new THREE.Mesh(new THREE.BoxGeometry(9.9,4.5,.22),gold);screenFrame.position.set(0,2.48,-3.02);g.add(screenFrame);screenFrame.renderOrder=-1;
-    screen.renderOrder=1;
+    const screenMat=new THREE.MeshStandardMaterial({color:0x07100e,map:screenTex,emissive:0x1b4a38,emissiveMap:screenTex,emissiveIntensity:1.02,roughness:.18,metalness:.04});
+    const screenFrame=new THREE.Mesh(new THREE.BoxGeometry(9.75,4.20,.24),brass);screenFrame.position.set(0,2.56,-2.94);g.add(screenFrame);screenFrame.renderOrder=-1;
+    const screen=new THREE.Mesh(new THREE.BoxGeometry(9.30,3.78,.12),screenMat);screen.position.set(0,2.56,-2.80);screen.castShadow=true;screen.renderOrder=1;g.add(screen);finaleScreen=screen;
 
-    const topTruss=new THREE.Mesh(new THREE.TorusGeometry(5.8,.07,10,84,Math.PI),gold);topTruss.rotation.y=Math.PI;topTruss.position.set(0,5.25,-.15);g.add(topTruss);
-    [-5.4,5.4].forEach(x=>{const tower=new THREE.Mesh(new THREE.BoxGeometry(.16,5.1,.16),gold);tower.position.set(x,2.56,.20);g.add(tower);});
-    const header=new THREE.Mesh(new THREE.BoxGeometry(11.2,.14,.14),gold);header.position.set(0,5.15,.22);g.add(header);
-
-    finaleBeams=[];finaleHeads=[];
-    const beamMat=()=>new THREE.MeshBasicMaterial({color:0xf0d6a0,transparent:true,opacity:.10,depthWrite:false,toneMapped:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide});
-    [-4.2,-1.7,1.7,4.2].forEach((x,i)=>{
-      const head=new THREE.Group();head.position.set(x,5.0,.32);
-      const fixture=new THREE.Mesh(new THREE.CylinderGeometry(.17,.20,.40,20),dark);fixture.rotation.z=Math.PI/2;head.add(fixture);
-      const beam=new THREE.Mesh(new THREE.ConeGeometry(i%2?1.05:1.25,6.4,24,1,true),beamMat());beam.position.set(0,-3.18,0);beam.rotation.x=Math.PI;beam.userData.base=.09+(i%2)*.02;head.add(beam);
-      head.rotation.x=-1.20;head.rotation.z=(i<2?-1:1)*(.10+i*.018);g.add(head);finaleHeads.push(head);finaleBeams.push(beam);
-    });
-    [-3.0,3.0].forEach((x,i)=>{
-      const side=new THREE.Group();side.position.set(x,1.2,4.7);
-      const fixture=new THREE.Mesh(new THREE.CylinderGeometry(.15,.18,.34,18),dark);fixture.rotation.z=Math.PI/2;side.add(fixture);
-      const beam=new THREE.Mesh(new THREE.ConeGeometry(1.0,4.4,22,1,true),beamMat());beam.position.set(0,-2.2,0);beam.rotation.x=Math.PI;beam.userData.base=.06;side.add(beam);
-      side.rotation.x=-1.04;side.rotation.z=(i===0?.52:-.52);g.add(side);finaleHeads.push(side);finaleBeams.push(beam);
+    // Six architectural service monoliths — no crowd, no cone beams
+    const serviceColors=[0xc39a4d,0x69b8a8,0xc39a4d,0x69b8a8,0xc39a4d,0x69b8a8];
+    const servicePositions=[[-4.55,1.02,-.18],[-4.55,1.02,1.34],[-4.55,1.02,2.86],[4.55,1.02,-.18],[4.55,1.02,1.34],[4.55,1.02,2.86]];
+    servicePositions.forEach((p,i)=>{
+      const monolith=new THREE.Group();
+      const body=new THREE.Mesh(new THREE.BoxGeometry(.64,1.72,.72),smokedGlass);body.castShadow=true;body.receiveShadow=true;monolith.add(body);
+      const capMat=new THREE.MeshStandardMaterial({color:serviceColors[i],emissive:serviceColors[i],emissiveIntensity:.42,roughness:.26,metalness:.76});
+      const cap=new THREE.Mesh(new THREE.BoxGeometry(.66,.08,.74),capMat);cap.position.y=.90;monolith.add(cap);finaleAccents.push(cap);
+      const slit=new THREE.Mesh(new THREE.BoxGeometry(.05,1.18,.05),capMat);slit.position.set(i<3?.22:-.22,0,.38);monolith.add(slit);finaleAccents.push(slit);
+      monolith.position.set(p[0],p[1],p[2]);g.add(monolith);
     });
 
-    const audienceMat=new THREE.MeshStandardMaterial({color:0x221e18,roughness:.84,metalness:.04});
-    for(let row=0;row<3;row++)for(let col=0;col<7;col++){
-      const p=new THREE.Group();
-      const torso=new THREE.Mesh(new THREE.CylinderGeometry(.10,.13,.46,12),audienceMat);torso.position.y=.32;p.add(torso);
-      const head=new THREE.Mesh(new THREE.SphereGeometry(.09,14,10),audienceMat);head.position.y=.64;p.add(head);
-      p.position.set((col-3)*.82,.18,5.05+row*.72);p.rotation.y=(col-3)*-.03;g.add(p);
-    }
-    finaleGlow=new THREE.Mesh(new THREE.CircleGeometry(6.4,96),new THREE.MeshBasicMaterial({color:0xd8b66a,transparent:true,opacity:.06,depthWrite:false,toneMapped:false,blending:THREE.AdditiveBlending}));
-    finaleGlow.rotation.x=-Math.PI/2;finaleGlow.position.y=.13;g.add(finaleGlow);
-    if(Q)Q.addContactShadow(g,renderer,8.8,.34,.11);
+    // Ceiling light bars; visual light is produced by real spotlights only
+    const barMat=new THREE.MeshStandardMaterial({color:0xc6aa6b,emissive:0x6d5832,emissiveIntensity:.30,roughness:.28,metalness:.82});
+    [-2.9,0,2.9].forEach((x,i)=>{
+      const bar=new THREE.Mesh(new THREE.BoxGeometry(2.15,.08,.12),barMat);bar.position.set(x,4.66,1.25);g.add(bar);finaleAccents.push(bar);
+    });
+
+    // Real spotlights with no visible cones
+    const spotData=[
+      [-3.2,4.75,1.0,-1.7,.35],
+      [0,4.95,1.45,0,.10],
+      [3.2,4.75,1.0,1.7,.35]
+    ];
+    spotData.forEach((d,i)=>{
+      const light=new THREE.SpotLight(i===1?0xffe4a8:0xf3d08a,i===1?4.0:3.2,18,.42,.74,1.45);
+      light.position.set(d[0],d[1],d[2]);
+      light.target.position.set(d[3],.40,d[4]);
+      light.castShadow=renderer.shadowMap.enabled&&!profile.compact;
+      if(light.castShadow){light.shadow.mapSize.set(768,768);light.shadow.bias=-.00018;light.shadow.normalBias=.025;}
+      g.add(light,light.target);finaleLights.push(light);
+    });
+
+    // Subtle floor glow only
+    finaleGlow=new THREE.Mesh(new THREE.CircleGeometry(5.5,96),new THREE.MeshBasicMaterial({color:0xd8b66a,transparent:true,opacity:.035,depthWrite:false,toneMapped:false,blending:THREE.AdditiveBlending}));
+    finaleGlow.rotation.x=-Math.PI/2;finaleGlow.position.y=.14;g.add(finaleGlow);
+    if(Q)Q.addContactShadow(g,renderer,8.9,.42,.11);
     return g;
   }
 
@@ -379,10 +400,10 @@
     finale.updateMatrixWorld(true);
     const finalBox=new THREE.Box3().setFromObject(finale).expandByScalar(.16);
     const portrait=profile.compact&&profile.portrait;
-    const yaw=portrait?.02:(profile.compact?.04:.06);
-    const elev=portrait?.36:(profile.compact?.31:.27);
-    const focus=new THREE.Vector3(0,1.70,.30);
-    finalPose=framedPose(finalBox,yaw,elev,profile.fov+(portrait?.2:-.2),profile.compact?.008:.012,{x:0,y:portrait?.020:.012},focus);
+    const yaw=portrait?.01:(profile.compact?.025:.035);
+    const elev=portrait?.33:(profile.compact?.285:.24);
+    const focus=new THREE.Vector3(0,1.82,.20);
+    finalPose=framedPose(finalBox,yaw,elev,profile.fov+(portrait?-.5:-.8),profile.compact?.005:.009,{x:0,y:portrait?.018:.010},focus);
   }
 
   function timeline(p){
@@ -470,25 +491,30 @@
     sticky.style.setProperty('--connected-transition',veil.toFixed(4));
     if(copyBox)copyBox.classList.toggle('in-transit',state.type==='transition'||state.type==='finalTransition');
     if(indicator)indicator.style.opacity=progress>.94?'0':'1';
+    sticky.classList.toggle('finale-active',finaleMode);
     return pose;
   }
 
   function updateLights(state){
     const finaleMode=state.type==='finale'||(state.type==='finalTransition'&&state.q>.55);
     const dim=(state.type==='transition'||state.type==='finalTransition')?1-Math.pow(Math.sin(Math.PI*state.q),6)*.46:1;
-    keyLight.intensity=(finaleMode?1.42:1.92)*dim;
-    fillLight.intensity=(finaleMode?.34:.56)*dim;
-    rimLight.intensity=(finaleMode?.82:.66)*dim;
-    topLight.intensity=(finaleMode?.50:.30)*dim;
-    keyLight.target.position.set(0,finaleMode?1.9:1.5,finaleMode?.2:0);keyLight.target.updateMatrixWorld();
+    keyLight.intensity=(finaleMode?1.68:1.92)*dim;
+    fillLight.intensity=(finaleMode?.48:.56)*dim;
+    rimLight.intensity=(finaleMode?.72:.66)*dim;
+    topLight.intensity=(finaleMode?.42:.30)*dim;
+    keyLight.target.position.set(0,finaleMode?1.8:1.5,finaleMode?.25:0);keyLight.target.updateMatrixWorld();
   }
 
   function animateFinale(now){
     const t=now*.001;
-    finaleHeads.forEach((head,i)=>{head.rotation.z=(i<4?(i<2?-1:1):0)*(0.12+Math.sin(t*.34+i*.7)*.022)+(i>=4?(i===4?.46:-.46):0);head.rotation.x=(i<4?-1.20:-1.04)+Math.sin(t*.42+i*.55)*.022;});
-    finaleBeams.forEach((beam,i)=>{beam.material.opacity=(beam.userData.base||.10)*(.84+.16*Math.sin(t*.78+i*.8));});
-    if(finaleScreen)finaleScreen.material.emissiveIntensity=1.06+Math.sin(t*.54)*.025;
-    if(finaleGlow)finaleGlow.material.opacity=.05+.018*Math.sin(t*.9);
+    if(finaleScreen)finaleScreen.material.emissiveIntensity=1.00+Math.sin(t*.46)*.018;
+    if(finaleGlow)finaleGlow.material.opacity=.030+.010*Math.sin(t*.62);
+    finaleAccents.forEach((obj,i)=>{
+      if(obj.material&&'emissiveIntensity' in obj.material)obj.material.emissiveIntensity=.30+.08*(.5+.5*Math.sin(t*.48+i*.70));
+    });
+    finaleLights.forEach((light,i)=>{
+      light.intensity=(i===1?3.9:3.0)+.18*Math.sin(t*.40+i*.85);
+    });
   }
 
   function measureTrack(){
@@ -585,8 +611,8 @@
     const r=auditAt(value);if(initialized)renderer.render(scene,camera);return r;
   }
 
-  window.ByMeliConnectedV51={forceInit,renderAt,auditAt,getState:()=>({initialized,progress,target:targetProgress,profile:profile?{w:profile.w,h:profile.h,pixelRatio:stablePixelRatio(profile),tier:profile.tier}:null})};
-  for(const v of [50,49,48,47,46,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,20])window['ByMeliConnectedV'+v]=window.ByMeliConnectedV51;
+  window.ByMeliConnectedV52={forceInit,renderAt,auditAt,getState:()=>({initialized,progress,target:targetProgress,profile:profile?{w:profile.w,h:profile.h,pixelRatio:stablePixelRatio(profile),tier:profile.tier}:null})};
+  for(const v of [51,50,49,48,47,46,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,20])window['ByMeliConnectedV'+v]=window.ByMeliConnectedV52;
 
   const io=new IntersectionObserver(entries=>{
     if(entries.some(e=>e.isIntersecting)){io.disconnect();forceInit();}

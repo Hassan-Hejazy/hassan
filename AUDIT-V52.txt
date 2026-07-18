@@ -1,0 +1,7 @@
+CONNECTED 3D V52 PREMIUM FINALE
+- Removed all crowd geometry.
+- Removed visible cone spotlight meshes.
+- Rebuilt the final scene with a premium architectural stage and runway.
+- Added six illuminated service monoliths to represent the company disciplines.
+- Added restrained real spotlights without visible beam geometry.
+- Refined final camera framing, stage lighting, and copy width on desktop.
