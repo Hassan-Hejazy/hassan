@@ -1,0 +1,7 @@
+CONNECTED 3D V32 SOLID
+- Increased connected-track scroll distance for smoother frame progression.
+- Replaced risky overflow/contain/canvas settings with safer sticky and canvas behavior for mobile + desktop.
+- Raised motion and settled quality budgets while keeping deterministic scroll-sync.
+- Reduced aggressive renderer disposal so the connected scene stays stable after scroll-away / scroll-back.
+- Added extra resize recovery and render-budget recovery.
+- Updated asset references to connected-motion-v32.css and connected-scene-v32.js.
