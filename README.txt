@@ -1,5 +1,5 @@
-BY MELI WEBSITE — CONNECTED 3D V30
+BY MELI WEBSITE — CONNECTED 3D V31 ULTRA
 
 Open index.html in a modern browser. For production hosting, upload the full folder structure unchanged.
 
-This build fixes the connected scene asset loading path, uses direct scroll-to-frame synchronization, and applies stable high-density rendering without changing the existing visual design.
+This build focuses only on the final connected 3D scene. It adds deterministic 1:1 scroll-frame mapping, stable mobile viewport handling, early WebGL context preparation, motion-quality rendering for smooth interaction, and an automatic ultra-resolution settled frame for maximum detail.

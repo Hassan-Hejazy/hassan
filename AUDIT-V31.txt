@@ -1,0 +1,47 @@
+BY MELI CONNECTED 3D V31 ULTRA — FINAL AUDIT
+
+SCOPE
+- Connected 3D scene only. The standalone service scenes and the rest of the website remain unchanged.
+
+MOTION AND SCROLL
+- Normalized page scroll maps directly to the rendered 3D frame with no delayed camera interpolation.
+- Mobile and desktop use the same deterministic timeline and camera route.
+- Connected scroll distance was increased to provide more physical scroll frames for each hold and transition.
+- Runtime mobile mapping test passed at 390 x 844: maximum normalized progress error 0.000085, caused only by whole-pixel browser scroll rounding.
+
+MOBILE STABILITY
+- The sticky scene uses a stable captured viewport height.
+- Height-only mobile browser-toolbar changes no longer resize or reallocate the WebGL canvas during a swipe.
+- Simulated viewport change from 844 px to 760 px passed: camera profile and canvas buffer remained locked to the original 844 px scene height.
+- Orientation or width changes still trigger a proper responsive rebuild.
+
+QUALITY
+- High-resolution motion render profile is used during interaction.
+- An automatic ultra-resolution settled frame is restored after scrolling stops.
+- High-tier 390 x 844 mobile profile: approximately 2.34x while moving and 2.56x after settling.
+- High-tier desktop profile: approximately 2.23x while moving and 2.40x after settling.
+- Render ratios are clamped to the actual GPU renderbuffer limit to prevent invalid oversized buffers.
+- Premium soft shadows are enabled on capable devices and refreshed during moving transitions.
+- Connected-scene edge-detail coverage was increased while preserving anisotropic texture filtering where supported.
+- Procedural surface textures were optimized to reduce initialization cost without removing visible micro-detail.
+
+CONTEXT AND PERFORMANCE
+- Low-latency WebGL context configuration added.
+- Service-scene contexts are fully released before the connected renderer initializes.
+- Connected context preparation starts earlier before the section enters view.
+- The connected context stays alive farther outside the viewport to avoid repeated rebuilds when scrolling back.
+- Performance fallback only reduces the moving render ratio when sustained active-scroll frame time exceeds the budget; the ultra settled frame remains available.
+
+VISUAL AND FRAMING VALIDATION
+- Desktop WebGL runtime passed across all six service stages, every transition, and the final overview.
+- Mobile WebGL runtime passed at 390 x 844.
+- Safe-frame containment passed at 41 timeline samples on mobile and all inspected desktop samples; no visible model left the intended camera frame.
+- Beginning, midpoint, and final mobile captures were visually inspected and passed.
+
+PACKAGE VALIDATION
+- All JavaScript files passed syntax validation.
+- All CSS files passed structural brace validation.
+- All 24 image assets passed integrity checks.
+- No duplicate HTML IDs were found.
+- All 38 detected local asset references resolve correctly; zero missing files.
+- index.html correctly loads connected-motion-v31.css and connected-scene-v31.js.
