@@ -1,0 +1,6 @@
+CONNECTED + SERVICE 3D V39 AUDIT
+- Service 3D scenes no longer dispose immediately when the connected scene starts or when another service scene claims focus.
+- Connected scene no longer broadcasts forced release of all service scenes during startup.
+- Mobile render clarity increased for both connected and service scenes.
+- Scroll indicator moved under the connected section heading.
+- Aggressive offscreen disposal relaxed to prevent LOADING 3D flashes after the connected section.
