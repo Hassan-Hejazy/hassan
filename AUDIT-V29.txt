@@ -1,0 +1,27 @@
+BY MELI — CONNECTED 3D EXTREME QUALITY V29 AUDIT
+
+Runtime validation
+- Actual Three.js/WebGL rendering validated in Chromium with SwiftShader.
+- Mobile test viewport: 390 x 844 at DPR 2.
+- Connected renderer initialized successfully.
+- All six service models and the final connected overview rendered.
+- No browser console or page runtime errors were recorded.
+- Seven connected-scene camera samples remained inside the mobile safe frame.
+- The final overview kept all six detailed service environments visible and contained.
+
+Quality system
+- Extreme initial supersampling target with device pixel-budget limits.
+- Adaptive render-density controller adjusts only after sustained frame-time measurements.
+- High-tier desktop pixel budget up to 12,000,000 drawing-buffer pixels.
+- High-tier mobile pixel budget up to 5,200,000 drawing-buffer pixels.
+- 768–1024 px procedural material detail maps depending on device capability.
+- 1536–2048 px live screen canvases inherited from the connected renderer profile.
+- Mipmaps and up to 16x anisotropic texture filtering.
+- 3072 px desktop shadow map on capable desktop hardware.
+
+Package validation
+- JavaScript syntax checks passed for all local scripts.
+- CSS parse checks passed for all local stylesheets.
+- No duplicate HTML IDs.
+- No missing local script, stylesheet or image references.
+- Old connected V27/V28 runtime assets removed from the final package.
