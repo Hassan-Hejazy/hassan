@@ -1,0 +1,6 @@
+CONNECTED 3D V53 MOBILE SAFE FINALE
+- Removed crowd, spotlights, spotlight animation and transmission-heavy finale materials.
+- Rebuilt finale as a central LED pavilion with six service columns and architectural wings.
+- Disabled mobile shadow maps, environment generation and contact-shadow rendering.
+- Added mobile-safe IntersectionObserver fallbacks, pageshow/orientation recovery and earlier initialization.
+- Replaced continuous animation loop with an event-driven scroll renderer.
