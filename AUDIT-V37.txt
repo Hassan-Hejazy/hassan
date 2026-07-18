@@ -1,0 +1,6 @@
+CONNECTED 3D V37 CLEAN TRANSITIONS
+- Removed the transition veil / flash effect between models.
+- Kept portal transitions visible without the mid-transition cutout.
+- Reduced route glow and halo intensity for a cleaner connected presentation.
+- Scaled the final six-model overview down for both mobile and desktop to avoid crowding and overlap in the hero composition.
+- Preserved the sharpened render-quality settings from V36.
