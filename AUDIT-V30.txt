@@ -1,0 +1,18 @@
+BY MELI CONNECTED 3D V30 AUDIT
+
+- Corrected index.html to load the existing V30 connected CSS and JavaScript assets.
+- Removed delayed scroll damping: normalized page scroll and rendered 3D progress now match 1:1.
+- Rebuilt transition camera fitting from the actual transformed bounds of both service environments.
+- Increased transition overlap and separation for continuous cinematic handoffs without clipping.
+- Added stable 4K-class backing-buffer targets up to 3840 x 2160 on suitable desktop viewports.
+- Added native-retina mobile backing buffers with stable pixel density and no runtime resolution oscillation.
+- Increased procedural surface textures to as high as 2048 x 2048 and retained 16x anisotropic filtering where supported.
+- Increased camera cache density for smoother hold, transition, and overview interpolation.
+- Increased connected scroll length to provide more physical scroll distance per rendered frame.
+- Upgraded desktop shadow maps to power-of-two 4096 resolution when hardware limits permit.
+- JavaScript syntax: passed.
+- CSS parsing: passed.
+- Local asset references: passed, zero missing.
+- Duplicate HTML IDs: zero.
+- Stubbed runtime camera audit: 41 timeline samples across six viewport profiles, zero containment failures.
+- Scroll/frame mapping audit: target progress equals rendered progress across tested mobile, tablet, laptop, and desktop profiles.
