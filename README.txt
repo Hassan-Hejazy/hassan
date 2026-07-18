@@ -1,5 +1,7 @@
-BY MELI WEBSITE — CONNECTED 3D V32 SOLID
+BY MELI WEBSITE — CONNECTED 3D V34 EXTREME AUDITED
 
-Open index.html in a modern browser or upload the full folder structure unchanged.
+Open index.html in a modern browser, or upload the complete folder structure unchanged.
 
-This build focuses only on the final connected 3D scene. V32 hardens the scene for real use on desktop and mobile: stronger scroll-to-frame locking, safer sticky/canvas behavior, improved viewport handling, higher sustained detail, less aggressive disposal, and more stable re-entry when the section leaves and re-enters the viewport.
+This release rebuilds only the final connected 3D scene. It presents all six services as one continuous production environment and includes deterministic scroll synchronization, responsive camera framing, high-resolution adaptive rendering, stable mobile viewport handling and retained WebGL state during section re-entry.
+
+See AUDIT-V34.txt and AUDIT-V34.json for the completed desktop and mobile validation results.

@@ -1,0 +1,543 @@
+{
+  "release": "V34 Extreme Audited",
+  "scope": "Final connected 3D scene only",
+  "design": "Single continuous production environment with six connected service stations, central hub, deterministic transitions, and responsive final overview.",
+  "browser_validation": "Chromium with active WebGL context",
+  "structural_audit": [
+    {
+      "name": "desktop",
+      "viewport": [
+        1440,
+        900
+      ],
+      "invalid_count": 0,
+      "invalid": [],
+      "nonfinite_count": 0,
+      "scroll_mapping_max_error": 0.0,
+      "scroll_mapping": [
+        {
+          "expected": 0.0,
+          "actual_y": 0,
+          "target": 0,
+          "error": 0.0
+        },
+        {
+          "expected": 0.05,
+          "actual_y": 342,
+          "target": 0.05,
+          "error": 0.0
+        },
+        {
+          "expected": 0.1,
+          "actual_y": 684,
+          "target": 0.1,
+          "error": 0.0
+        },
+        {
+          "expected": 0.15,
+          "actual_y": 1026,
+          "target": 0.15,
+          "error": 0.0
+        },
+        {
+          "expected": 0.2,
+          "actual_y": 1368,
+          "target": 0.2,
+          "error": 0.0
+        },
+        {
+          "expected": 0.25,
+          "actual_y": 1710,
+          "target": 0.25,
+          "error": 0.0
+        },
+        {
+          "expected": 0.3,
+          "actual_y": 2052,
+          "target": 0.3,
+          "error": 0.0
+        },
+        {
+          "expected": 0.35,
+          "actual_y": 2394,
+          "target": 0.35,
+          "error": 0.0
+        },
+        {
+          "expected": 0.4,
+          "actual_y": 2736,
+          "target": 0.4,
+          "error": 0.0
+        },
+        {
+          "expected": 0.45,
+          "actual_y": 3078,
+          "target": 0.45,
+          "error": 0.0
+        },
+        {
+          "expected": 0.5,
+          "actual_y": 3420,
+          "target": 0.5,
+          "error": 0.0
+        },
+        {
+          "expected": 0.55,
+          "actual_y": 3762,
+          "target": 0.55,
+          "error": 0.0
+        },
+        {
+          "expected": 0.6,
+          "actual_y": 4104,
+          "target": 0.6,
+          "error": 0.0
+        },
+        {
+          "expected": 0.65,
+          "actual_y": 4446,
+          "target": 0.65,
+          "error": 0.0
+        },
+        {
+          "expected": 0.7,
+          "actual_y": 4788,
+          "target": 0.7,
+          "error": 0.0
+        },
+        {
+          "expected": 0.75,
+          "actual_y": 5130,
+          "target": 0.75,
+          "error": 0.0
+        },
+        {
+          "expected": 0.8,
+          "actual_y": 5472,
+          "target": 0.8,
+          "error": 0.0
+        },
+        {
+          "expected": 0.85,
+          "actual_y": 5814,
+          "target": 0.85,
+          "error": 0.0
+        },
+        {
+          "expected": 0.9,
+          "actual_y": 6156,
+          "target": 0.9,
+          "error": 0.0
+        },
+        {
+          "expected": 0.95,
+          "actual_y": 6498,
+          "target": 0.95,
+          "error": 0.0
+        },
+        {
+          "expected": 1.0,
+          "actual_y": 6840,
+          "target": 1,
+          "error": 0.0
+        }
+      ],
+      "resize_state": null,
+      "away_initialized": true,
+      "back_initialized": true,
+      "final_state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "state": {
+          "mode": "overview",
+          "stage": 5,
+          "next": 5,
+          "local": 1,
+          "q": 1
+        },
+        "profile": {
+          "w": 1425,
+          "h": 900,
+          "tier": "low",
+          "pixelRatio": 1,
+          "ultraRatio": 1,
+          "motionRatio": 1,
+          "qualityState": "motion"
+        }
+      },
+      "errors": [],
+      "all_logs": []
+    },
+    {
+      "name": "mobile",
+      "viewport": [
+        390,
+        844
+      ],
+      "invalid_count": 0,
+      "invalid": [],
+      "nonfinite_count": 0,
+      "scroll_mapping_max_error": 8.712319219372766e-05,
+      "scroll_mapping": [
+        {
+          "expected": 0.0,
+          "actual_y": 0,
+          "target": 0,
+          "error": 0.0
+        },
+        {
+          "expected": 0.05,
+          "actual_y": 287,
+          "target": 0.05000871231921938,
+          "error": 8.712319219374154e-06
+        },
+        {
+          "expected": 0.1,
+          "actual_y": 574,
+          "target": 0.10001742463843875,
+          "error": 1.7424638438748308e-05
+        },
+        {
+          "expected": 0.15,
+          "actual_y": 861,
+          "target": 0.15002613695765812,
+          "error": 2.61369576581294e-05
+        },
+        {
+          "expected": 0.2,
+          "actual_y": 1148,
+          "target": 0.2000348492768775,
+          "error": 3.4849276877496616e-05
+        },
+        {
+          "expected": 0.25,
+          "actual_y": 1435,
+          "target": 0.25004356159609686,
+          "error": 4.356159609686383e-05
+        },
+        {
+          "expected": 0.3,
+          "actual_y": 1722,
+          "target": 0.30005227391531625,
+          "error": 5.22739153162588e-05
+        },
+        {
+          "expected": 0.35,
+          "actual_y": 2009,
+          "target": 0.35006098623453563,
+          "error": 6.098623453565377e-05
+        },
+        {
+          "expected": 0.4,
+          "actual_y": 2296,
+          "target": 0.400069698553755,
+          "error": 6.969855375499323e-05
+        },
+        {
+          "expected": 0.45,
+          "actual_y": 2583,
+          "target": 0.4500784108729744,
+          "error": 7.84108729743882e-05
+        },
+        {
+          "expected": 0.5,
+          "actual_y": 2870,
+          "target": 0.5000871231921937,
+          "error": 8.712319219372766e-05
+        },
+        {
+          "expected": 0.55,
+          "actual_y": 3156,
+          "target": 0.5499215891270256,
+          "error": 7.841087297444371e-05
+        },
+        {
+          "expected": 0.6,
+          "actual_y": 3443,
+          "target": 0.599930301446245,
+          "error": 6.969855375493772e-05
+        },
+        {
+          "expected": 0.65,
+          "actual_y": 3730,
+          "target": 0.6499390137654644,
+          "error": 6.098623453565377e-05
+        },
+        {
+          "expected": 0.7,
+          "actual_y": 4017,
+          "target": 0.6999477260846837,
+          "error": 5.22739153162588e-05
+        },
+        {
+          "expected": 0.75,
+          "actual_y": 4304,
+          "target": 0.7499564384039031,
+          "error": 4.356159609686383e-05
+        },
+        {
+          "expected": 0.8,
+          "actual_y": 4591,
+          "target": 0.7999651507231225,
+          "error": 3.484927687757988e-05
+        },
+        {
+          "expected": 0.85,
+          "actual_y": 4878,
+          "target": 0.8499738630423419,
+          "error": 2.613695765807389e-05
+        },
+        {
+          "expected": 0.9,
+          "actual_y": 5165,
+          "target": 0.8999825753615612,
+          "error": 1.742463843878994e-05
+        },
+        {
+          "expected": 0.95,
+          "actual_y": 5452,
+          "target": 0.9499912876807807,
+          "error": 8.712319219283948e-06
+        },
+        {
+          "expected": 1.0,
+          "actual_y": 5739,
+          "target": 1,
+          "error": 0.0
+        }
+      ],
+      "resize_state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "state": {
+          "mode": "overview",
+          "stage": 5,
+          "next": 5,
+          "local": 1,
+          "q": 1
+        },
+        "profile": {
+          "w": 390,
+          "h": 724,
+          "tier": "low",
+          "pixelRatio": 1,
+          "ultraRatio": 1,
+          "motionRatio": 1,
+          "qualityState": "motion"
+        }
+      },
+      "away_initialized": true,
+      "back_initialized": true,
+      "final_state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 0,
+        "state": {
+          "mode": "overview",
+          "stage": 5,
+          "next": 5,
+          "local": 1,
+          "q": 1
+        },
+        "profile": {
+          "w": 390,
+          "h": 724,
+          "tier": "low",
+          "pixelRatio": 1,
+          "ultraRatio": 1,
+          "motionRatio": 1,
+          "qualityState": "motion"
+        }
+      },
+      "errors": [],
+      "all_logs": []
+    },
+    {
+      "name": "landscape",
+      "viewport": [
+        844,
+        390
+      ],
+      "invalid_count": 0,
+      "invalid": [],
+      "nonfinite_count": 0,
+      "scroll_mapping_max_error": 0.0001831501831501825,
+      "scroll_mapping": [
+        {
+          "expected": 0.0,
+          "actual_y": 0,
+          "target": 0,
+          "error": 0.0
+        },
+        {
+          "expected": 0.05,
+          "actual_y": 109,
+          "target": 0.04990842490842491,
+          "error": 9.157509157509125e-05
+        },
+        {
+          "expected": 0.1,
+          "actual_y": 218,
+          "target": 0.09981684981684982,
+          "error": 0.0001831501831501825
+        },
+        {
+          "expected": 0.15,
+          "actual_y": 328,
+          "target": 0.15018315018315018,
+          "error": 0.0001831501831501825
+        },
+        {
+          "expected": 0.2,
+          "actual_y": 437,
+          "target": 0.2000915750915751,
+          "error": 9.157509157509125e-05
+        },
+        {
+          "expected": 0.25,
+          "actual_y": 546,
+          "target": 0.25,
+          "error": 0.0
+        },
+        {
+          "expected": 0.3,
+          "actual_y": 655,
+          "target": 0.2999084249084249,
+          "error": 9.157509157509125e-05
+        },
+        {
+          "expected": 0.35,
+          "actual_y": 764,
+          "target": 0.3498168498168498,
+          "error": 0.0001831501831501825
+        },
+        {
+          "expected": 0.4,
+          "actual_y": 874,
+          "target": 0.4001831501831502,
+          "error": 0.0001831501831501825
+        },
+        {
+          "expected": 0.45,
+          "actual_y": 983,
+          "target": 0.4500915750915751,
+          "error": 9.157509157509125e-05
+        },
+        {
+          "expected": 0.5,
+          "actual_y": 1092,
+          "target": 0.5,
+          "error": 0.0
+        },
+        {
+          "expected": 0.55,
+          "actual_y": 1201,
+          "target": 0.549908424908425,
+          "error": 9.157509157509125e-05
+        },
+        {
+          "expected": 0.6,
+          "actual_y": 1310,
+          "target": 0.5998168498168498,
+          "error": 0.0001831501831501825
+        },
+        {
+          "expected": 0.65,
+          "actual_y": 1420,
+          "target": 0.6501831501831502,
+          "error": 0.0001831501831501825
+        },
+        {
+          "expected": 0.7,
+          "actual_y": 1529,
+          "target": 0.700091575091575,
+          "error": 9.157509157509125e-05
+        },
+        {
+          "expected": 0.75,
+          "actual_y": 1638,
+          "target": 0.75,
+          "error": 0.0
+        },
+        {
+          "expected": 0.8,
+          "actual_y": 1747,
+          "target": 0.799908424908425,
+          "error": 9.157509157509125e-05
+        },
+        {
+          "expected": 0.85,
+          "actual_y": 1856,
+          "target": 0.8498168498168498,
+          "error": 0.0001831501831501825
+        },
+        {
+          "expected": 0.9,
+          "actual_y": 1966,
+          "target": 0.9001831501831502,
+          "error": 0.0001831501831501825
+        },
+        {
+          "expected": 0.95,
+          "actual_y": 2075,
+          "target": 0.950091575091575,
+          "error": 9.157509157509125e-05
+        },
+        {
+          "expected": 1.0,
+          "actual_y": 2184,
+          "target": 1,
+          "error": 0.0
+        }
+      ],
+      "resize_state": null,
+      "away_initialized": true,
+      "back_initialized": true,
+      "final_state": {
+        "initialized": true,
+        "progress": 0.5998168498168498,
+        "target": 1,
+        "state": {
+          "mode": "hold",
+          "stage": 4,
+          "next": 4,
+          "local": 0.23591487877202053,
+          "q": 0
+        },
+        "profile": {
+          "w": 844,
+          "h": 390,
+          "tier": "low",
+          "pixelRatio": 1,
+          "ultraRatio": 1,
+          "motionRatio": 1,
+          "qualityState": "motion"
+        }
+      },
+      "errors": [],
+      "all_logs": []
+    }
+  ],
+  "visual_review": {
+    "desktop_hold": "passed",
+    "desktop_transition": "passed",
+    "desktop_overview": "passed",
+    "mobile_portrait_hold_and_overview": "passed",
+    "mobile_landscape_layout": "passed"
+  },
+  "runtime_checks": {
+    "javascript_syntax": "passed",
+    "local_asset_integrity": "passed",
+    "index_asset_references": "passed",
+    "brace_balance": "passed"
+  },
+  "quality_strategy": {
+    "scroll_mapping": "direct deterministic mapping from page progress to scene frame",
+    "motion_rendering": "adaptive high-resolution render budget during active scroll",
+    "settled_rendering": "automatic maximum-resolution pass after scrolling settles",
+    "shadows": "high-resolution soft shadows with throttled updates during movement",
+    "mobile_stability": "visualViewport-aware sizing, delayed settle resize, retained renderer on section re-entry"
+  }
+}

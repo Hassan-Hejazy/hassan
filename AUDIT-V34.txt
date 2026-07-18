@@ -1,0 +1,25 @@
+BY MELI CONNECTED 3D — V34 EXTREME AUDITED
+
+Scope: the final connected 3D scene only.
+
+REBUILD
+- Replaced the disconnected presentation with one continuous production environment.
+- Six service stations share one floor system, route network and central hub.
+- Rebuilt service handoffs, camera framing and final overview for desktop, portrait mobile and landscape mobile.
+
+QUALITY + PERFORMANCE
+- Deterministic scroll-to-frame mapping with no camera easing drift.
+- Adaptive high-resolution rendering while scrolling.
+- Automatic maximum-resolution settled frame after scroll stops.
+- High-resolution shadows, richer materials and controlled lighting without overexposure.
+- Retained WebGL renderer when leaving and re-entering the section to avoid fragile rebuilds.
+
+AUDIT
+- 201 sampled scroll positions per audited viewport.
+- Desktop 1440×900: 0 clipped models, 0 non-finite frames, 0 runtime errors, 0.0 maximum scroll mapping error.
+- Mobile portrait 390×844 and 390×724 resize: 0 clipped models, 0 runtime errors, maximum mapping error 0.000087.
+- Mobile landscape 844×390: 0 clipped models, 0 runtime errors, maximum mapping error 0.000184.
+- Renderer remained initialized after scrolling away and returning in all audited viewports.
+- Hold, transition and final overview frames were visually reviewed using active WebGL rendering.
+
+Open index.html in a modern browser or upload the complete folder structure unchanged.

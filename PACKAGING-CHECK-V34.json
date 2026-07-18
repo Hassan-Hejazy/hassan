@@ -1,0 +1,8 @@
+{
+  "javascript_syntax": "passed",
+  "index_references": "passed",
+  "local_asset_integrity": "passed",
+  "javascript_brace_balance": "passed",
+  "css_brace_balance": "passed",
+  "files_checked": 62
+}

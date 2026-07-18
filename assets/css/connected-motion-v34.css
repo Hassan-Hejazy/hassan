@@ -1,0 +1,334 @@
+/* Connected 3D V34 — integrated master production environment */
+#connected{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+  overflow:clip!important;
+  background:radial-gradient(circle at 62% 38%,#17120b 0%,#0b0907 42%,#050403 100%)!important;
+}
+#connected .dark-heading{position:relative!important;z-index:2!important;padding-bottom:clamp(22px,3vw,44px)!important}
+#connected .connected-track{
+  position:relative!important;
+  height:860vh!important;
+  min-height:860vh!important;
+  overflow:visible!important;
+  contain:none!important;
+  touch-action:pan-y!important;
+  overscroll-behavior:auto!important;
+}
+#connected .connected-sticky{
+  position:sticky!important;
+  inset:auto!important;
+  top:0!important;
+  width:100%!important;
+  height:var(--connected-vh,var(--viewport-h,100dvh))!important;
+  min-height:var(--connected-vh,var(--viewport-h,100dvh))!important;
+  overflow:hidden!important;
+  contain:layout paint!important;
+  isolation:isolate!important;
+  touch-action:pan-y!important;
+  overscroll-behavior:auto!important;
+  background:radial-gradient(circle at 62% 38%,#17120b 0%,#0b0907 42%,#050403 100%)!important;
+}
+#connected .connected-sticky::before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:3!important;
+  pointer-events:none!important;
+  opacity:.012!important;
+  background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px)!important;
+  background-size:44px 44px!important;
+  -webkit-mask-image:linear-gradient(to bottom,transparent,black 22%,black 76%,transparent)!important;
+  mask-image:linear-gradient(to bottom,transparent,black 22%,black 76%,transparent)!important;
+}
+#connected .connected-sticky::after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:4!important;
+  pointer-events:none!important;
+  background:radial-gradient(ellipse at 64% 42%,transparent 15%,rgba(0,0,0,.035) 62%,rgba(0,0,0,.43) 116%),linear-gradient(180deg,rgba(4,3,2,.02),transparent 48%,rgba(4,3,2,.30))!important;
+}
+#connectedCanvas{
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  pointer-events:none!important;
+  touch-action:pan-y!important;
+  user-select:none!important;
+  -webkit-user-select:none!important;
+  transform:translate3d(0,0,0)!important;
+  filter:none!important;
+  image-rendering:auto!important;
+  backface-visibility:visible!important;
+  -webkit-backface-visibility:visible!important;
+  will-change:transform,opacity!important;
+}
+#connected .connected-fallback{
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  opacity:.16!important;
+  background-position:center 46%!important;
+  background-size:cover!important;
+  filter:saturate(.8) contrast(1.08) brightness(.36)!important;
+  transition:opacity .38s ease!important;
+}
+#connected .connected-sticky.model-active>.connected-fallback{opacity:0!important}
+#connected .connected-scrim{
+  position:absolute!important;
+  inset:0!important;
+  z-index:2!important;
+  pointer-events:none!important;
+  background:linear-gradient(90deg,rgba(4,3,2,.44) 0%,rgba(4,3,2,.18) 25%,rgba(4,3,2,.008) 48%,rgba(4,3,2,.002) 76%,rgba(4,3,2,.045) 100%),linear-gradient(180deg,rgba(4,3,2,.012),transparent 56%,rgba(4,3,2,.18))!important;
+}
+
+#connected .connected-transition-veil{
+  position:absolute!important;
+  inset:0!important;
+  z-index:5!important;
+  pointer-events:none!important;
+  opacity:calc(var(--connected-transition,0) * .28)!important;
+  background:
+    radial-gradient(circle at 50% 46%,rgba(31,23,10,.12) 0%,rgba(5,4,3,.72) 50%,rgba(3,3,2,.94) 100%),
+    linear-gradient(115deg,transparent 33%,rgba(235,198,116,.12) 48%,rgba(238,207,139,.28) 50%,rgba(235,198,116,.10) 52%,transparent 67%)!important;
+  transform:scale(calc(1 + var(--connected-transition,0) * .025))!important;
+  transition:none!important;
+  will-change:opacity,transform!important;
+}
+#connected .connected-transition-veil::before{
+  content:""!important;
+  position:absolute!important;
+  left:50%!important;
+  top:18%!important;
+  bottom:18%!important;
+  width:1px!important;
+  opacity:var(--connected-transition,0)!important;
+  background:linear-gradient(180deg,transparent,rgba(239,205,133,.72),transparent)!important;
+  box-shadow:0 0 32px rgba(236,194,103,.28)!important;
+  transform:translateX(-50%) scaleY(calc(.25 + var(--connected-transition,0) * .75))!important;
+}
+
+#connected .connected-copy{
+  position:absolute!important;
+  z-index:7!important;
+  left:max(28px,calc((100vw - min(1320px,100vw - 48px))/2))!important;
+  right:auto!important;
+  bottom:clamp(42px,6.5vh,76px)!important;
+  width:min(470px,calc(100vw - 64px))!important;
+  max-height:none!important;
+  overflow:visible!important;
+  padding:0 0 0 18px!important;
+  border:0!important;
+  border-left:1px solid rgba(232,193,107,.58)!important;
+  border-radius:0!important;
+  background:none!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  color:#fff!important;
+  transition:opacity .2s ease,transform .3s cubic-bezier(.2,.8,.2,1)!important;
+  will-change:transform,opacity!important;
+}
+html[dir="rtl"] #connected .connected-copy{
+  left:auto!important;
+  right:max(28px,calc((100vw - min(1320px,100vw - 48px))/2))!important;
+  padding:0 18px 0 0!important;
+  border-left:0!important;
+  border-right:1px solid rgba(232,193,107,.58)!important;
+  text-align:right!important;
+}
+#connected .connected-copy.switching{opacity:.86!important;transform:translate3d(0,3px,0)!important}
+#connected .connected-copy.in-transit{opacity:.82!important;transform:translate3d(0,3px,0)!important}
+#connected .connected-copy>span{
+  display:block!important;
+  margin:0 0 9px!important;
+  color:#eac46f!important;
+  font-size:.63rem!important;
+  letter-spacing:.18em!important;
+  text-shadow:0 5px 20px rgba(0,0,0,.9)!important;
+}
+#connected .connected-copy h3{
+  max-width:14ch!important;
+  margin:0 0 11px!important;
+  color:#fffaf0!important;
+  font-size:clamp(2.12rem,3.45vw,4.05rem)!important;
+  line-height:.96!important;
+  letter-spacing:-.045em!important;
+  text-wrap:balance!important;
+  text-shadow:0 20px 64px rgba(0,0,0,.9)!important;
+}
+#connected .connected-copy p{
+  display:block!important;
+  max-width:52ch!important;
+  margin:0!important;
+  overflow:visible!important;
+  color:rgba(249,240,221,.77)!important;
+  font-size:.91rem!important;
+  line-height:1.6!important;
+  text-shadow:0 8px 28px rgba(0,0,0,.92)!important;
+}
+#connected .connected-rail{
+  position:absolute!important;
+  z-index:8!important;
+  top:50%!important;
+  right:18px!important;
+  left:auto!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  gap:8px!important;
+  transform:translateY(-50%)!important;
+}
+html[dir="rtl"] #connected .connected-rail{right:auto!important;left:18px!important}
+#connected .connected-rail::before{
+  content:""!important;
+  position:absolute!important;
+  top:-16px!important;
+  bottom:-16px!important;
+  left:50%!important;
+  width:1px!important;
+  transform:translateX(-50%)!important;
+  background:linear-gradient(180deg,rgba(232,196,116,.08),rgba(232,196,116,.78) var(--connected-progress-pct,0%),rgba(255,255,255,.12) var(--connected-progress-pct,0%))!important;
+}
+#connected .connected-rail span{
+  position:relative!important;
+  z-index:1!important;
+  display:block!important;
+  width:3px!important;
+  height:18px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:999px!important;
+  background:rgba(255,255,255,.18)!important;
+  color:transparent!important;
+  font-size:0!important;
+  line-height:0!important;
+  transition:height .24s ease,background .24s ease,box-shadow .24s ease!important;
+}
+#connected .connected-rail span.active{
+  width:3px!important;
+  height:34px!important;
+  background:#efd08b!important;
+  color:transparent!important;
+  transform:none!important;
+  box-shadow:0 0 16px rgba(236,197,112,.30)!important;
+}
+#connected .interaction-hint{display:none!important}
+#connected .scene-scroll-indicator{
+  position:absolute!important;
+  z-index:8!important;
+  left:50%!important;
+  right:auto!important;
+  top:auto!important;
+  bottom:16px!important;
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  gap:8px!important;
+  padding:0!important;
+  border:0!important;
+  background:none!important;
+  color:#ead8b1!important;
+  transform:translateX(-50%)!important;
+  pointer-events:none!important;
+  transition:opacity .24s ease!important;
+}
+#connected .scene-scroll-indicator span{display:block!important;font-size:.52rem!important;letter-spacing:.16em!important;white-space:nowrap!important}
+#connected .scene-scroll-indicator i{
+  position:relative!important;
+  display:block!important;
+  width:17px!important;
+  height:29px!important;
+  border:1px solid rgba(237,211,157,.46)!important;
+  border-radius:999px!important;
+  background:none!important;
+  overflow:hidden!important;
+}
+#connected .scene-scroll-indicator i::before{display:none!important}
+#connected .scene-scroll-indicator i::after{display:none!important}
+#connected .scene-scroll-indicator b{
+  position:absolute!important;
+  display:block!important;
+  top:5px!important;
+  left:50%!important;
+  width:3px!important;
+  height:6px!important;
+  border-radius:999px!important;
+  background:#ebc977!important;
+  transform:translateX(-50%)!important;
+  animation:connectedScrollDotV18 1.55s cubic-bezier(.3,.7,.3,1) infinite!important;
+}
+@keyframes connectedScrollDotV18{0%{opacity:0;transform:translate(-50%,0)}24%{opacity:1}72%{opacity:1}100%{opacity:0;transform:translate(-50%,11px)}}
+
+@media(max-width:1100px){
+  #connected .connected-track{height:820svh!important;min-height:820svh!important}
+  #connected .connected-copy{width:min(455px,calc(100vw - 54px))!important}
+  #connected .connected-copy h3{font-size:clamp(2rem,5vw,3.6rem)!important}
+}
+
+@media(max-width:760px){
+  #connected .connected-track{height:800svh!important;min-height:800svh!important}
+  #connected .connected-sticky{height:var(--connected-vh,var(--viewport-h,100dvh))!important;min-height:var(--connected-vh,var(--viewport-h,100dvh))!important}
+  #connected .connected-sticky::before{opacity:.006!important;background-size:28px 28px!important}
+  #connected .connected-sticky::after{background:radial-gradient(ellipse at 50% 34%,transparent 29%,rgba(0,0,0,.04) 61%,rgba(0,0,0,.34) 112%),linear-gradient(180deg,rgba(3,3,2,.015),transparent 54%,rgba(3,3,2,.22) 70%,rgba(3,3,2,.93) 100%)!important}
+  #connected .connected-scrim{background:linear-gradient(180deg,rgba(3,3,2,.008) 0%,rgba(3,3,2,.012) 55%,rgba(3,3,2,.22) 70%,rgba(3,3,2,.94) 100%)!important}
+  #connected .connected-copy{
+    left:9px!important;
+    right:9px!important;
+    bottom:calc(8px + env(safe-area-inset-bottom))!important;
+    width:auto!important;
+    max-height:19.5dvh!important;
+    overflow:hidden!important;
+    padding:11px 12px!important;
+    border:1px solid rgba(236,210,155,.14)!important;
+    border-radius:16px!important;
+    background:linear-gradient(145deg,rgba(7,6,4,.88),rgba(6,5,3,.73))!important;
+    box-shadow:0 18px 48px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.035)!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+  }
+  html[dir="rtl"] #connected .connected-copy{left:9px!important;right:9px!important;padding:11px 12px!important;border:1px solid rgba(236,210,155,.14)!important}
+  #connected .connected-copy>span{margin-bottom:4px!important;font-size:.5rem!important}
+  #connected .connected-copy h3{max-width:18ch!important;margin-bottom:4px!important;font-size:clamp(1.48rem,6.55vw,2.14rem)!important;line-height:.99!important}
+  #connected .connected-copy p{display:-webkit-box!important;overflow:hidden!important;font-size:.69rem!important;line-height:1.33!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important}
+  #connected .connected-rail{top:calc(var(--header-h) + 12px)!important;right:9px!important;left:auto!important;gap:5px!important;transform:none!important}
+  html[dir="rtl"] #connected .connected-rail{right:auto!important;left:9px!important}
+  #connected .connected-rail::before{display:none!important}
+  #connected .connected-rail span{width:3px!important;height:14px!important;padding:0!important;border-radius:999px!important;background:rgba(255,255,255,.16)!important;color:transparent!important;font-size:0!important;transform:none!important;transition:height .24s ease,background .24s ease,box-shadow .24s ease!important}
+  #connected .connected-rail span.active{width:3px!important;height:27px!important;background:#efd08b!important;color:transparent!important;box-shadow:0 0 14px rgba(236,197,112,.26)!important;transform:none!important}
+  #connected .scene-scroll-indicator{top:auto!important;bottom:calc(19.5dvh + 10px)!important;flex-direction:row!important}
+}
+
+@media(max-width:390px){
+  #connected .connected-track{height:780svh!important;min-height:780svh!important}
+  #connected .connected-copy{left:7px!important;right:7px!important;max-height:19dvh!important;padding:9px 10px!important;border-radius:14px!important}
+  html[dir="rtl"] #connected .connected-copy{left:7px!important;right:7px!important;padding:9px 10px!important}
+  #connected .connected-copy h3{font-size:clamp(1.34rem,7.05vw,1.9rem)!important}
+  #connected .connected-copy p{font-size:.65rem!important}
+  #connected .scene-scroll-indicator{bottom:calc(21svh + 8px)!important}
+  #connected .scene-scroll-indicator span{display:none!important}
+}
+
+@media(max-height:560px) and (orientation:landscape){
+  #connected .connected-track{height:660svh!important;min-height:660svh!important}
+  #connected .connected-copy{left:10px!important;right:auto!important;bottom:7px!important;width:min(40vw,400px)!important;max-height:calc(100svh - 16px)!important;padding:8px 10px!important}
+  html[dir="rtl"] #connected .connected-copy{right:10px!important;left:auto!important}
+  #connected .connected-copy h3{font-size:clamp(1.08rem,3vw,1.58rem)!important}
+  #connected .connected-copy p{font-size:.6rem!important}
+  #connected .scene-scroll-indicator{display:none!important}
+}
+
+
+@media(max-width:760px){
+  body.connected-scene-active .whatsapp{bottom:calc(20dvh + 18px + var(--safe-bottom))!important;transition:bottom .28s cubic-bezier(.2,.8,.2,1),opacity .25s ease,transform .25s ease!important}
+}
+@media(prefers-reduced-motion:reduce){
+  #connected .connected-copy,#connected .connected-rail span,#connected .scene-scroll-indicator{transition:none!important;animation:none!important}
+  #connected .scene-scroll-indicator b{animation:none!important}
+}

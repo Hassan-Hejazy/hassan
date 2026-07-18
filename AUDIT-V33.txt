@@ -1,0 +1,25 @@
+CONNECTED 3D V33 — AUDIT TARGETS
+
+Visual
+- One continuous master production environment
+- Six service stations arranged around a shared hub
+- Continuous illuminated delivery route and architectural canopy
+- Larger, cleaner stage framing with richer floor and lighting
+- Cohesive final overview instead of detached miniatures
+
+Motion
+- Deterministic scroll-to-frame mapping
+- Cubic camera travel between service stations
+- No asynchronous camera easing or frame lag
+
+Stability
+- Connected renderer retained when leaving the section
+- Service WebGL contexts released only when the connected scene becomes active
+- Mobile visual viewport settles after browser chrome movement
+- Context-loss recovery and resize recovery retained
+
+Performance
+- One connected WebGL renderer
+- Only one or two full-detail stations visible during travel
+- Overview LOD disables local lights and cast shadows
+- Dynamic motion/settled pixel ratio with hardware limits
