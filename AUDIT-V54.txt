@@ -1,0 +1,7 @@
+CONNECTED 3D V54
+- Removed the entire final scene and its geometry, screen texture, lights, effects and animation.
+- Timeline now contains only six service chapters and five transitions.
+- Replaced eased service/transition camera movement with direct linear scroll mapping.
+- Shortened the connected track to match the six-service sequence.
+- Reduced the render tail after scroll from 110ms to 34ms.
+- Increased preload root margin and reduced fallback init delay.
