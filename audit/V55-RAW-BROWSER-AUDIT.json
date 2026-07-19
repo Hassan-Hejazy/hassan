@@ -1,0 +1,5532 @@
+[
+  {
+    "device": "desktop",
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1,
+    "lang": "en",
+    "dom": {
+      "lang": "en",
+      "dir": "ltr",
+      "docOverflow": 0,
+      "bodyFont": "Inter, system-ui, sans-serif",
+      "type": {
+        ".hero-copy h1": {
+          "text": "We design the space, build it properly and deliver it ready to perform.",
+          "font": "102.24px",
+          "line": "90.9936px",
+          "w": 758.3125,
+          "h": 454.921875,
+          "sw": 758,
+          "sh": 471,
+          "cw": 758,
+          "ch": 455,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".proof-intro h2": {
+          "text": "No repeated sections. No disconnected services. One clear journey.",
+          "font": "61.92px",
+          "line": "60.0624px",
+          "w": 558.890625,
+          "h": 300.3125,
+          "sw": 559,
+          "sh": 307,
+          "cw": 559,
+          "ch": 300,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".section-heading h2": {
+          "text": "From an empty footprint to a finished booth ready for display and operation.",
+          "font": "64.8px",
+          "line": "62.856px",
+          "w": 655.1875,
+          "h": 251.375,
+          "sw": 655,
+          "sh": 259,
+          "cw": 655,
+          "ch": 251,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".service-copy h3": {
+          "text": "Exhibition Stands & Pavilions",
+          "font": "57.6px",
+          "line": "55.296px",
+          "w": 562.3125,
+          "h": 110.5625,
+          "sw": 562,
+          "sh": 117,
+          "cw": 562,
+          "ch": 111,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".connected-copy h3": {
+          "text": "Exhibition Stands & Pavilions",
+          "font": "76.32px",
+          "line": "70.9776px",
+          "w": 519.59375,
+          "h": 212.90625,
+          "sw": 520,
+          "sh": 223,
+          "cw": 520,
+          "ch": 213,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".standards-copy h2": {
+          "text": "High design only matters when the delivery is equally controlled.",
+          "font": "64.8px",
+          "line": "62.856px",
+          "w": 558,
+          "h": 251.375,
+          "sw": 558,
+          "sh": 259,
+          "cw": 558,
+          "ch": 251,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".wecan-final h2": {
+          "text": "We can design it, build it and deliver it.",
+          "font": "75.6px",
+          "line": "71.064px",
+          "w": 695.784423828125,
+          "h": 138.541015625,
+          "sw": 714,
+          "sh": 152,
+          "cw": 714,
+          "ch": 142,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".contact-copy h2": {
+          "text": "Tell us the city, venue, footprint and the experience you want to build.",
+          "font": "64.8px",
+          "line": "62.856px",
+          "w": 559.796875,
+          "h": 314.21875,
+          "sw": 560,
+          "sh": 321,
+          "cw": 560,
+          "ch": 314,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".mega-intro h2": {
+          "text": "Explore the disciplines behind complete exhibition and event delivery.",
+          "font": "25.2px",
+          "line": "27.216px",
+          "w": 305.703125,
+          "h": 108.875,
+          "sw": 306,
+          "sh": 110,
+          "cw": 306,
+          "ch": 109,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".mobile-menu-intro h2": {
+          "text": "Go straight to the information your project needs.",
+          "font": "44px",
+          "line": "44.88px",
+          "w": 415.375,
+          "h": 134.625,
+          "sw": 415,
+          "sh": 139,
+          "cw": 415,
+          "ch": 135,
+          "fontFamily": "Syne, Inter, sans-serif"
+        }
+      },
+      "overs": [],
+      "connectedTitle": {
+        "text": "Exhibition Stands & Pavilions",
+        "font": "76.32px"
+      },
+      "frames": [
+        {
+          "w": 660.09375,
+          "h": 576
+        },
+        {
+          "w": 562.3125,
+          "h": 576
+        },
+        {
+          "w": 660.09375,
+          "h": 576
+        },
+        {
+          "w": 562.3125,
+          "h": 576
+        },
+        {
+          "w": 660.09375,
+          "h": 576
+        },
+        {
+          "w": 562.3125,
+          "h": 576
+        }
+      ]
+    },
+    "services": {
+      "booth": {
+        "initialized": true,
+        "type": "booth",
+        "profile": {
+          "w": 658,
+          "h": 574,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 7.884478561994028,
+          "y": 4.8988464062340356,
+          "z": 12.037851791223337
+        },
+        "target": {
+          "x": 0.0610952563670133,
+          "y": 1.3904683190120546,
+          "z": 0.6024441209498465
+        },
+        "bounds": {
+          "minX": -0.8861037847612965,
+          "maxX": 0.8861037848827307,
+          "minY": -0.705631691928265,
+          "maxY": 0.7876316995792602
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "showroom": {
+        "initialized": true,
+        "type": "showroom",
+        "profile": {
+          "w": 560,
+          "h": 574,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 6.302874398095051,
+          "y": 5.517873182464834,
+          "z": 13.407673156359817
+        },
+        "target": {
+          "x": -0.16061710080739489,
+          "y": 1.9858615451339303,
+          "z": 0.36194188854666826
+        },
+        "bounds": {
+          "minX": -0.8859687141706961,
+          "maxX": 0.8859687158188787,
+          "minY": -0.7611580933613469,
+          "maxY": 0.8411881027399861
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "interior": {
+        "initialized": true,
+        "type": "interior",
+        "profile": {
+          "w": 658,
+          "h": 574,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 6.437945616177937,
+          "y": 3.7622746961699676,
+          "z": 10.774098620491992
+        },
+        "target": {
+          "x": -0.02311043130868463,
+          "y": 1.0933327189810382,
+          "z": 0.4685545754780037
+        },
+        "bounds": {
+          "minX": -0.8861021869280725,
+          "maxX": 0.8861021869093678,
+          "minY": -0.6457663011983024,
+          "maxY": 0.7356152307737903
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "management": {
+        "initialized": true,
+        "type": "management",
+        "profile": {
+          "w": 560,
+          "h": 574,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 7.43464367574757,
+          "y": 4.951543184756432,
+          "z": 12.665699598327436
+        },
+        "target": {
+          "x": 0.03184196271434846,
+          "y": 1.2749952625879581,
+          "z": 0.3159567311376487
+        },
+        "bounds": {
+          "minX": -0.8861201437794537,
+          "maxX": 0.8861201437844918,
+          "minY": -0.5759263820693117,
+          "maxY": 0.6579263808626594
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "crowd": {
+        "initialized": true,
+        "type": "crowd",
+        "profile": {
+          "w": 658,
+          "h": 574,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 5.5095677585621265,
+          "y": 3.870191130337875,
+          "z": 11.917303667025115
+        },
+        "target": {
+          "x": -0.3205929122831756,
+          "y": 1.2055628980174549,
+          "z": 0.71861133109778
+        },
+        "bounds": {
+          "minX": -0.8859244765929433,
+          "maxX": 0.8859244188308051,
+          "minY": -0.7260064971788036,
+          "maxY": 0.8190760032575298
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "av": {
+        "initialized": true,
+        "type": "av",
+        "profile": {
+          "w": 560,
+          "h": 574,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 9.217105491318131,
+          "y": 5.392388904442797,
+          "z": 15.522409993097234
+        },
+        "target": {
+          "x": -0.048763220639674,
+          "y": 1.3263840684185073,
+          "z": 1.3796826846112156
+        },
+        "bounds": {
+          "minX": -0.8860763060206129,
+          "maxX": 0.886076306013072,
+          "minY": -0.558099004442598,
+          "maxY": 0.644098999488383
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      }
+    },
+    "connected": {
+      "failures": [],
+      "failureCount": 0,
+      "minW": 0.9697629996387862,
+      "maxW": 1.2427028874349537,
+      "minH": 1.2631298381753404,
+      "maxH": 1.618920692014092,
+      "state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "profile": {
+          "w": 1440,
+          "h": 900,
+          "pixelRatio": 1.24,
+          "tier": "high"
+        }
+      }
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "device": "desktop",
+    "viewport": [
+      1440,
+      900
+    ],
+    "dpr": 1,
+    "lang": "ar",
+    "dom": {
+      "lang": "ar",
+      "dir": "rtl",
+      "docOverflow": 0,
+      "bodyFont": "Cairo, \"Noto Sans Arabic\", Inter, sans-serif",
+      "type": {
+        ".hero-copy h1": {
+          "text": "نصمم المساحة، ننفذها، ونسلمها جاهزة للتشغيل.",
+          "font": "74.88px",
+          "line": "86.8608px",
+          "w": 535.234375,
+          "h": 521.0625,
+          "sw": 535,
+          "sh": 548,
+          "cw": 535,
+          "ch": 521,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".proof-intro h2": {
+          "text": "لا تكرار ولا خدمات منفصلة؛ رحلة تنفيذ واضحة من البداية للنهاية.",
+          "font": "59.76px",
+          "line": "66.9312px",
+          "w": 558.890625,
+          "h": 267.75,
+          "sw": 559,
+          "sh": 291,
+          "cw": 559,
+          "ch": 268,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".section-heading h2": {
+          "text": "من أرضية فارغة إلى جناح جاهز للعرض والتشغيل.",
+          "font": "59.76px",
+          "line": "66.9312px",
+          "w": 655.1875,
+          "h": 200.8125,
+          "sw": 655,
+          "sh": 224,
+          "cw": 655,
+          "ch": 201,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".service-copy h3": {
+          "text": "أجنحة المعارض والأجنحة الوطنية",
+          "font": "51.12px",
+          "line": "57.7656px",
+          "w": 562.3125,
+          "h": 115.53125,
+          "sw": 562,
+          "sh": 135,
+          "cw": 562,
+          "ch": 116,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".connected-copy h3": {
+          "text": "أجنحة المعارض والأجنحة الوطنية",
+          "font": "44.64px",
+          "line": "51.7824px",
+          "w": 280.765625,
+          "h": 207.125,
+          "sw": 281,
+          "sh": 222,
+          "cw": 281,
+          "ch": 207,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".standards-copy h2": {
+          "text": "قيمة التصميم تظهر عندما يكون التنفيذ منضبطا بالمستوى نفسه.",
+          "font": "59.76px",
+          "line": "66.9312px",
+          "w": 558,
+          "h": 267.75,
+          "sw": 558,
+          "sh": 291,
+          "cw": 558,
+          "ch": 268,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".wecan-final h2": {
+          "text": "نستطيع أن نصممها، نبنيها، ونسلمها.",
+          "font": "75.6px",
+          "line": "71.064px",
+          "w": 590.210205078125,
+          "h": 207.8125,
+          "sw": 605,
+          "sh": 249,
+          "cw": 605,
+          "ch": 213,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".contact-copy h2": {
+          "text": "شاركنا المدينة وموقع الفعالية والمساحة والتجربة التي ترغب في تنفيذها.",
+          "font": "59.76px",
+          "line": "66.9312px",
+          "w": 559.796875,
+          "h": 334.6875,
+          "sw": 560,
+          "sh": 358,
+          "cw": 560,
+          "ch": 335,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".mega-intro h2": {
+          "text": "استكشف الخدمات التي تصنع تجربة معرض أو فعالية متكاملة.",
+          "font": "25.2px",
+          "line": "34.02px",
+          "w": 259.328125,
+          "h": 136.0625,
+          "sw": 259,
+          "sh": 142,
+          "cw": 259,
+          "ch": 136,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".mobile-menu-intro h2": {
+          "text": "انتقل مباشرة إلى القسم الذي تحتاجه لمشروعك.",
+          "font": "44px",
+          "line": "59.4px",
+          "w": 352.34375,
+          "h": 237.5625,
+          "sw": 352,
+          "sh": 249,
+          "cw": 352,
+          "ch": 238,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        }
+      },
+      "overs": [],
+      "connectedTitle": {
+        "text": "أجنحة المعارض والأجنحة الوطنية",
+        "font": "44.64px"
+      },
+      "frames": [
+        {
+          "w": 660.09375,
+          "h": 576
+        },
+        {
+          "w": 562.3125,
+          "h": 576
+        },
+        {
+          "w": 660.09375,
+          "h": 576
+        },
+        {
+          "w": 562.3125,
+          "h": 576
+        },
+        {
+          "w": 660.09375,
+          "h": 576
+        },
+        {
+          "w": 562.3125,
+          "h": 576
+        }
+      ]
+    },
+    "services": {
+      "booth": {
+        "initialized": true,
+        "type": "booth",
+        "profile": {
+          "w": 658,
+          "h": 574,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 7.884478561994028,
+          "y": 4.8988464062340356,
+          "z": 12.037851791223337
+        },
+        "target": {
+          "x": 0.0610952563670133,
+          "y": 1.3904683190120546,
+          "z": 0.6024441209498465
+        },
+        "bounds": {
+          "minX": -0.8861037847612965,
+          "maxX": 0.8861037848827307,
+          "minY": -0.705631691928265,
+          "maxY": 0.7876316995792602
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "showroom": {
+        "initialized": true,
+        "type": "showroom",
+        "profile": {
+          "w": 560,
+          "h": 574,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 6.302874398095051,
+          "y": 5.517873182464834,
+          "z": 13.407673156359817
+        },
+        "target": {
+          "x": -0.16061710080739489,
+          "y": 1.9858615451339303,
+          "z": 0.36194188854666826
+        },
+        "bounds": {
+          "minX": -0.8859687141706961,
+          "maxX": 0.8859687158188787,
+          "minY": -0.7611580933613469,
+          "maxY": 0.8411881027399861
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "interior": {
+        "initialized": true,
+        "type": "interior",
+        "profile": {
+          "w": 658,
+          "h": 574,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 6.437945616177937,
+          "y": 3.7622746961699676,
+          "z": 10.774098620491992
+        },
+        "target": {
+          "x": -0.02311043130868463,
+          "y": 1.0933327189810382,
+          "z": 0.4685545754780037
+        },
+        "bounds": {
+          "minX": -0.8861021869280725,
+          "maxX": 0.8861021869093678,
+          "minY": -0.6457663011983024,
+          "maxY": 0.7356152307737903
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "management": {
+        "initialized": true,
+        "type": "management",
+        "profile": {
+          "w": 560,
+          "h": 574,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 7.43464367574757,
+          "y": 4.951543184756432,
+          "z": 12.665699598327436
+        },
+        "target": {
+          "x": 0.03184196271434846,
+          "y": 1.2749952625879581,
+          "z": 0.3159567311376487
+        },
+        "bounds": {
+          "minX": -0.8861201437794537,
+          "maxX": 0.8861201437844918,
+          "minY": -0.5759263820693117,
+          "maxY": 0.6579263808626594
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "crowd": {
+        "initialized": true,
+        "type": "crowd",
+        "profile": {
+          "w": 658,
+          "h": 574,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 5.5095677585621265,
+          "y": 3.870191130337875,
+          "z": 11.917303667025115
+        },
+        "target": {
+          "x": -0.3205929122831756,
+          "y": 1.2055628980174549,
+          "z": 0.71861133109778
+        },
+        "bounds": {
+          "minX": -0.8859244765929433,
+          "maxX": 0.8859244188308051,
+          "minY": -0.7260064971788036,
+          "maxY": 0.8190760032575298
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "av": {
+        "initialized": true,
+        "type": "av",
+        "profile": {
+          "w": 560,
+          "h": 574,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 9.217105491318131,
+          "y": 5.392388904442797,
+          "z": 15.522409993097234
+        },
+        "target": {
+          "x": -0.048763220639674,
+          "y": 1.3263840684185073,
+          "z": 1.3796826846112156
+        },
+        "bounds": {
+          "minX": -0.8860763060206129,
+          "maxX": 0.886076306013072,
+          "minY": -0.558099004442598,
+          "maxY": 0.644098999488383
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      }
+    },
+    "connected": {
+      "failures": [],
+      "failureCount": 0,
+      "minW": 1.060255751087226,
+      "maxW": 1.2421695124409544,
+      "minH": 1.2245835809270949,
+      "maxH": 1.618921550817132,
+      "state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "profile": {
+          "w": 1440,
+          "h": 900,
+          "pixelRatio": 1.24,
+          "tier": "high"
+        }
+      }
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "device": "laptop",
+    "viewport": [
+      1366,
+      768
+    ],
+    "dpr": 1,
+    "lang": "en",
+    "dom": {
+      "lang": "en",
+      "dir": "ltr",
+      "docOverflow": 0,
+      "bodyFont": "Inter, system-ui, sans-serif",
+      "type": {
+        ".hero-copy h1": {
+          "text": "We design the space, build it properly and deliver it ready to perform.",
+          "font": "96.986px",
+          "line": "86.3175px",
+          "w": 719.25,
+          "h": 431.5625,
+          "sw": 719,
+          "sh": 446,
+          "cw": 719,
+          "ch": 432,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".proof-intro h2": {
+          "text": "No repeated sections. No disconnected services. One clear journey.",
+          "font": "58.738px",
+          "line": "56.9759px",
+          "w": 558.890625,
+          "h": 284.84375,
+          "sw": 559,
+          "sh": 291,
+          "cw": 559,
+          "ch": 285,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".section-heading h2": {
+          "text": "From an empty footprint to a finished booth ready for display and operation.",
+          "font": "61.47px",
+          "line": "59.6259px",
+          "w": 655.1875,
+          "h": 238.4375,
+          "sw": 655,
+          "sh": 246,
+          "cw": 655,
+          "ch": 238,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".service-copy h3": {
+          "text": "Exhibition Stands & Pavilions",
+          "font": "54.64px",
+          "line": "52.4544px",
+          "w": 563.6875,
+          "h": 104.90625,
+          "sw": 564,
+          "sh": 111,
+          "cw": 564,
+          "ch": 105,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".connected-copy h3": {
+          "text": "Exhibition Stands & Pavilions",
+          "font": "72.398px",
+          "line": "67.3301px",
+          "w": 490.734375,
+          "h": 201.9375,
+          "sw": 491,
+          "sh": 212,
+          "cw": 491,
+          "ch": 202,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".standards-copy h2": {
+          "text": "High design only matters when the delivery is equally controlled.",
+          "font": "61.47px",
+          "line": "59.6259px",
+          "w": 558,
+          "h": 238.4375,
+          "sw": 558,
+          "sh": 246,
+          "cw": 558,
+          "ch": 238,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".wecan-final h2": {
+          "text": "We can design it, build it and deliver it.",
+          "font": "71.715px",
+          "line": "67.4121px",
+          "w": 659.983642578125,
+          "h": 131.44140625,
+          "sw": 677,
+          "sh": 143,
+          "cw": 677,
+          "ch": 135,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".contact-copy h2": {
+          "text": "Tell us the city, venue, footprint and the experience you want to build.",
+          "font": "61.47px",
+          "line": "59.6259px",
+          "w": 559.796875,
+          "h": 238.4375,
+          "sw": 560,
+          "sh": 246,
+          "cw": 560,
+          "ch": 238,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".mega-intro h2": {
+          "text": "Explore the disciplines behind complete exhibition and event delivery.",
+          "font": "23.905px",
+          "line": "25.8174px",
+          "w": 289.96875,
+          "h": 103.25,
+          "sw": 290,
+          "sh": 104,
+          "cw": 290,
+          "ch": 103,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".mobile-menu-intro h2": {
+          "text": "Go straight to the information your project needs.",
+          "font": "44px",
+          "line": "44.88px",
+          "w": 415.375,
+          "h": 134.625,
+          "sw": 415,
+          "sh": 139,
+          "cw": 415,
+          "ch": 135,
+          "fontFamily": "Syne, Inter, sans-serif"
+        }
+      },
+      "overs": [],
+      "connectedTitle": {
+        "text": "Exhibition Stands & Pavilions",
+        "font": "72.398px"
+      },
+      "frames": [
+        {
+          "w": 661.6875,
+          "h": 500
+        },
+        {
+          "w": 563.6875,
+          "h": 500
+        },
+        {
+          "w": 661.6875,
+          "h": 500
+        },
+        {
+          "w": 563.6875,
+          "h": 500
+        },
+        {
+          "w": 661.6875,
+          "h": 500
+        },
+        {
+          "w": 563.6875,
+          "h": 500
+        }
+      ]
+    },
+    "services": {
+      "booth": {
+        "initialized": true,
+        "type": "booth",
+        "profile": {
+          "w": 660,
+          "h": 498,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 7.3410854709278155,
+          "y": 4.682335190685843,
+          "z": 11.258414501786717
+        },
+        "target": {
+          "x": 0.050946167613971034,
+          "y": 1.413089138770438,
+          "z": 0.6024474284980914
+        },
+        "bounds": {
+          "minX": -0.8251394806501616,
+          "maxX": 0.8251494352167142,
+          "minY": -0.7832157711165154,
+          "maxY": 0.8653093431640733
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "showroom": {
+        "initialized": true,
+        "type": "showroom",
+        "profile": {
+          "w": 562,
+          "h": 498,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 6.152253900385287,
+          "y": 5.4494976159203485,
+          "z": 13.121870592435336
+        },
+        "target": {
+          "x": -0.16887385764061455,
+          "y": 1.9952814533100809,
+          "z": 0.36348233514078543
+        },
+        "bounds": {
+          "minX": -0.7840042776654397,
+          "maxX": 0.7840022648890744,
+          "minY": -0.7855074624042421,
+          "maxY": 0.8655037954763318
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "interior": {
+        "initialized": true,
+        "type": "interior",
+        "profile": {
+          "w": 660,
+          "h": 498,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 5.692530564498882,
+          "y": 3.4994570692950075,
+          "z": 9.618948049235732
+        },
+        "target": {
+          "x": -0.042640552694715804,
+          "y": 1.1303646440723616,
+          "z": 0.47120840427127797
+        },
+        "bounds": {
+          "minX": -0.8671173450115824,
+          "maxX": 0.8670927036292968,
+          "minY": -0.7754471903949373,
+          "maxY": 0.8652733399434204
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "management": {
+        "initialized": true,
+        "type": "management",
+        "profile": {
+          "w": 562,
+          "h": 498,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 6.461105888007647,
+          "y": 4.407972336698663,
+          "z": 11.070635705495954
+        },
+        "target": {
+          "x": 0.02722189824655137,
+          "y": 1.2126303930689193,
+          "z": 0.33729230511976666
+        },
+        "bounds": {
+          "minX": -0.8861028859069661,
+          "maxX": 0.8861028859261542,
+          "minY": -0.6686508408572002,
+          "maxY": 0.750650839531582
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "crowd": {
+        "initialized": true,
+        "type": "crowd",
+        "profile": {
+          "w": 660,
+          "h": 498,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 5.267124499171325,
+          "y": 3.7807604915260375,
+          "z": 11.493502324783528
+        },
+        "target": {
+          "x": -0.3390131393818277,
+          "y": 1.2185201915864141,
+          "z": 0.725118029481351
+        },
+        "bounds": {
+          "minX": -0.7980640554701837,
+          "maxX": 0.7979569405466449,
+          "minY": -0.7715316122689148,
+          "maxY": 0.8652767320313363
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "av": {
+        "initialized": true,
+        "type": "av",
+        "profile": {
+          "w": 562,
+          "h": 498,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 7.97998261812077,
+          "y": 4.777688656542075,
+          "z": 13.700614116995698
+        },
+        "target": {
+          "x": -0.06861206593526789,
+          "y": 1.2458422721509281,
+          "z": 1.4158426215571924
+        },
+        "bounds": {
+          "minX": -0.8860511872092921,
+          "maxX": 0.8860511870299387,
+          "minY": -0.6488080520947822,
+          "maxY": 0.7348080388098391
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      }
+    },
+    "connected": {
+      "failures": [],
+      "failureCount": 0,
+      "minW": 0.8759112894748733,
+      "maxW": 1.2427289202372838,
+      "minH": 1.402719813870704,
+      "maxH": 1.6257933456475073,
+      "state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "profile": {
+          "w": 1366,
+          "h": 768,
+          "pixelRatio": 1.24,
+          "tier": "high"
+        }
+      }
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "device": "laptop",
+    "viewport": [
+      1366,
+      768
+    ],
+    "dpr": 1,
+    "lang": "ar",
+    "dom": {
+      "lang": "ar",
+      "dir": "rtl",
+      "docOverflow": 0,
+      "bodyFont": "Cairo, \"Noto Sans Arabic\", Inter, sans-serif",
+      "type": {
+        ".hero-copy h1": {
+          "text": "نصمم المساحة، ننفذها، ونسلمها جاهزة للتشغيل.",
+          "font": "71.032px",
+          "line": "82.3971px",
+          "w": 507.75,
+          "h": 494.34375,
+          "sw": 508,
+          "sh": 520,
+          "cw": 508,
+          "ch": 494,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".proof-intro h2": {
+          "text": "لا تكرار ولا خدمات منفصلة؛ رحلة تنفيذ واضحة من البداية للنهاية.",
+          "font": "56.689px",
+          "line": "63.4917px",
+          "w": 558.890625,
+          "h": 253.9375,
+          "sw": 559,
+          "sh": 275,
+          "cw": 559,
+          "ch": 254,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".section-heading h2": {
+          "text": "من أرضية فارغة إلى جناح جاهز للعرض والتشغيل.",
+          "font": "56.689px",
+          "line": "63.4917px",
+          "w": 655.1875,
+          "h": 190.453125,
+          "sw": 655,
+          "sh": 212,
+          "cw": 655,
+          "ch": 190,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".service-copy h3": {
+          "text": "أجنحة المعارض والأجنحة الوطنية",
+          "font": "48.493px",
+          "line": "54.7971px",
+          "w": 563.6875,
+          "h": 109.59375,
+          "sw": 564,
+          "sh": 128,
+          "cw": 564,
+          "ch": 110,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".connected-copy h3": {
+          "text": "أجنحة المعارض والأجنحة الوطنية",
+          "font": "42.346px",
+          "line": "49.1214px",
+          "w": 266.328125,
+          "h": 196.4375,
+          "sw": 266,
+          "sh": 211,
+          "cw": 266,
+          "ch": 196,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".standards-copy h2": {
+          "text": "قيمة التصميم تظهر عندما يكون التنفيذ منضبطا بالمستوى نفسه.",
+          "font": "56.689px",
+          "line": "63.4917px",
+          "w": 558,
+          "h": 253.9375,
+          "sw": 558,
+          "sh": 275,
+          "cw": 558,
+          "ch": 254,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".wecan-final h2": {
+          "text": "نستطيع أن نصممها، نبنيها، ونسلمها.",
+          "font": "71.715px",
+          "line": "67.4121px",
+          "w": 559.8328247070312,
+          "h": 197.1640625,
+          "sw": 574,
+          "sh": 236,
+          "cw": 574,
+          "ch": 202,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".contact-copy h2": {
+          "text": "شاركنا المدينة وموقع الفعالية والمساحة والتجربة التي ترغب في تنفيذها.",
+          "font": "56.689px",
+          "line": "63.4917px",
+          "w": 559.796875,
+          "h": 317.421875,
+          "sw": 560,
+          "sh": 339,
+          "cw": 560,
+          "ch": 317,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".mega-intro h2": {
+          "text": "استكشف الخدمات التي تصنع تجربة معرض أو فعالية متكاملة.",
+          "font": "23.905px",
+          "line": "32.2718px",
+          "w": 245.96875,
+          "h": 129.0625,
+          "sw": 246,
+          "sh": 136,
+          "cw": 246,
+          "ch": 129,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".mobile-menu-intro h2": {
+          "text": "انتقل مباشرة إلى القسم الذي تحتاجه لمشروعك.",
+          "font": "44px",
+          "line": "59.4px",
+          "w": 352.34375,
+          "h": 237.5625,
+          "sw": 352,
+          "sh": 249,
+          "cw": 352,
+          "ch": 238,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        }
+      },
+      "overs": [],
+      "connectedTitle": {
+        "text": "أجنحة المعارض والأجنحة الوطنية",
+        "font": "42.346px"
+      },
+      "frames": [
+        {
+          "w": 661.6875,
+          "h": 500
+        },
+        {
+          "w": 563.6875,
+          "h": 500
+        },
+        {
+          "w": 661.6875,
+          "h": 500
+        },
+        {
+          "w": 563.6875,
+          "h": 500
+        },
+        {
+          "w": 661.6875,
+          "h": 500
+        },
+        {
+          "w": 563.6875,
+          "h": 500
+        }
+      ]
+    },
+    "services": {
+      "booth": {
+        "initialized": true,
+        "type": "booth",
+        "profile": {
+          "w": 660,
+          "h": 498,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 7.3410854709278155,
+          "y": 4.682335190685843,
+          "z": 11.258414501786717
+        },
+        "target": {
+          "x": 0.050946167613971034,
+          "y": 1.413089138770438,
+          "z": 0.6024474284980914
+        },
+        "bounds": {
+          "minX": -0.8251394806501616,
+          "maxX": 0.8251494352167142,
+          "minY": -0.7832157711165154,
+          "maxY": 0.8653093431640733
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "showroom": {
+        "initialized": true,
+        "type": "showroom",
+        "profile": {
+          "w": 562,
+          "h": 498,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 6.152253900385287,
+          "y": 5.4494976159203485,
+          "z": 13.121870592435336
+        },
+        "target": {
+          "x": -0.16887385764061455,
+          "y": 1.9952814533100809,
+          "z": 0.36348233514078543
+        },
+        "bounds": {
+          "minX": -0.7840042776654397,
+          "maxX": 0.7840022648890744,
+          "minY": -0.7855074624042421,
+          "maxY": 0.8655037954763318
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "interior": {
+        "initialized": true,
+        "type": "interior",
+        "profile": {
+          "w": 660,
+          "h": 498,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 5.692530564498882,
+          "y": 3.4994570692950075,
+          "z": 9.618948049235732
+        },
+        "target": {
+          "x": -0.042640552694715804,
+          "y": 1.1303646440723616,
+          "z": 0.47120840427127797
+        },
+        "bounds": {
+          "minX": -0.8671173450115824,
+          "maxX": 0.8670927036292968,
+          "minY": -0.7754471903949373,
+          "maxY": 0.8652733399434204
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "management": {
+        "initialized": true,
+        "type": "management",
+        "profile": {
+          "w": 562,
+          "h": 498,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 6.461105888007647,
+          "y": 4.407972336698663,
+          "z": 11.070635705495954
+        },
+        "target": {
+          "x": 0.02722189824655137,
+          "y": 1.2126303930689193,
+          "z": 0.33729230511976666
+        },
+        "bounds": {
+          "minX": -0.8861028859069661,
+          "maxX": 0.8861028859261542,
+          "minY": -0.6686508408572002,
+          "maxY": 0.750650839531582
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "crowd": {
+        "initialized": true,
+        "type": "crowd",
+        "profile": {
+          "w": 660,
+          "h": 498,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 5.267124499171325,
+          "y": 3.7807604915260375,
+          "z": 11.493502324783528
+        },
+        "target": {
+          "x": -0.3390131393818277,
+          "y": 1.2185201915864141,
+          "z": 0.725118029481351
+        },
+        "bounds": {
+          "minX": -0.7980640554701837,
+          "maxX": 0.7979569405466449,
+          "minY": -0.7715316122689148,
+          "maxY": 0.8652767320313363
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      },
+      "av": {
+        "initialized": true,
+        "type": "av",
+        "profile": {
+          "w": 562,
+          "h": 498,
+          "fov": 35.5,
+          "pixelRatio": 1
+        },
+        "camera": {
+          "x": 7.97998261812077,
+          "y": 4.777688656542075,
+          "z": 13.700614116995698
+        },
+        "target": {
+          "x": -0.06861206593526789,
+          "y": 1.2458422721509281,
+          "z": 1.4158426215571924
+        },
+        "bounds": {
+          "minX": -0.8860511872092921,
+          "maxX": 0.8860511870299387,
+          "minY": -0.6488080520947822,
+          "maxY": 0.7348080388098391
+        },
+        "safe": {
+          "left": -0.9,
+          "right": 0.9,
+          "bottom": -0.81,
+          "top": 0.88
+        },
+        "behind": false,
+        "inside": true
+      }
+    },
+    "connected": {
+      "failures": [],
+      "failureCount": 0,
+      "minW": 0.9610617355385868,
+      "maxW": 1.242181810840095,
+      "minH": 1.3519845825770216,
+      "maxH": 1.6189220514502336,
+      "state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "profile": {
+          "w": 1366,
+          "h": 768,
+          "pixelRatio": 1.24,
+          "tier": "high"
+        }
+      }
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "device": "tablet_portrait",
+    "viewport": [
+      834,
+      1112
+    ],
+    "dpr": 2,
+    "lang": "en",
+    "dom": {
+      "lang": "en",
+      "dir": "ltr",
+      "docOverflow": 0,
+      "bodyFont": "Inter, system-ui, sans-serif",
+      "type": {
+        ".hero-copy h1": {
+          "text": "We design the space, build it properly and deliver it ready to perform.",
+          "font": "59.214px",
+          "line": "52.7005px",
+          "w": 479.046875,
+          "h": 263.5156555175781,
+          "sw": 479,
+          "sh": 272,
+          "cw": 479,
+          "ch": 264,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".proof-intro h2": {
+          "text": "No repeated sections. No disconnected services. One clear journey.",
+          "font": "38.4px",
+          "line": "37.248px",
+          "w": 802,
+          "h": 74.5,
+          "sw": 802,
+          "sh": 78,
+          "cw": 802,
+          "ch": 75,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".section-heading h2": {
+          "text": "From an empty footprint to a finished booth ready for display and operation.",
+          "font": "60.048px",
+          "line": "58.2466px",
+          "w": 802,
+          "h": 174.703125,
+          "sw": 802,
+          "sh": 181,
+          "cw": 802,
+          "ch": 175,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".service-copy h3": {
+          "text": "Exhibition Stands & Pavilions",
+          "font": "60.048px",
+          "line": "57.6461px",
+          "w": 802,
+          "h": 57.640625,
+          "sw": 802,
+          "sh": 64,
+          "cw": 802,
+          "ch": 58,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".connected-copy h3": {
+          "text": "Exhibition Stands & Pavilions",
+          "font": "44.202px",
+          "line": "41.1079px",
+          "w": 327.75,
+          "h": 123.28125,
+          "sw": 328,
+          "sh": 129,
+          "cw": 328,
+          "ch": 123,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".standards-copy h2": {
+          "text": "High design only matters when the delivery is equally controlled.",
+          "font": "60.048px",
+          "line": "58.2466px",
+          "w": 802,
+          "h": 174.703125,
+          "sw": 802,
+          "sh": 181,
+          "cw": 802,
+          "ch": 175,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".wecan-final h2": {
+          "text": "We can design it, build it and deliver it.",
+          "font": "57.6px",
+          "line": "56.448px",
+          "w": 454.3804931640625,
+          "h": 165.080078125,
+          "sw": 466,
+          "sh": 176,
+          "cw": 466,
+          "ch": 169,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".contact-copy h2": {
+          "text": "Tell us the city, venue, footprint and the experience you want to build.",
+          "font": "60.048px",
+          "line": "58.2466px",
+          "w": 802,
+          "h": 174.703125,
+          "sw": 802,
+          "sh": 181,
+          "cw": 802,
+          "ch": 175,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".mega-intro h2": {
+          "text": "Explore the disciplines behind complete exhibition and event delivery.",
+          "font": "22.4px",
+          "line": "24.192px",
+          "w": 0,
+          "h": 0,
+          "sw": 0,
+          "sh": 0,
+          "cw": 0,
+          "ch": 0,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".mobile-menu-intro h2": {
+          "text": "Go straight to the information your project needs.",
+          "font": "44px",
+          "line": "44.88px",
+          "w": 415.375,
+          "h": 134.625,
+          "sw": 415,
+          "sh": 139,
+          "cw": 415,
+          "ch": 135,
+          "fontFamily": "Syne, Inter, sans-serif"
+        }
+      },
+      "overs": [],
+      "connectedTitle": {
+        "text": "Exhibition Stands & Pavilions",
+        "font": "44.202px"
+      },
+      "frames": [
+        {
+          "w": 802,
+          "h": 550.4375
+        },
+        {
+          "w": 802,
+          "h": 550.4375
+        },
+        {
+          "w": 802,
+          "h": 550.4375
+        },
+        {
+          "w": 802,
+          "h": 550.4375
+        },
+        {
+          "w": 802,
+          "h": 550.4375
+        },
+        {
+          "w": 802,
+          "h": 550.4375
+        }
+      ]
+    },
+    "services": {
+      "booth": {
+        "initialized": true,
+        "type": "booth",
+        "profile": {
+          "w": 800,
+          "h": 548,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 7.071342948038925,
+          "y": 4.586155247195244,
+          "z": 11.38337259515075
+        },
+        "target": {
+          "x": 0.008765438717403175,
+          "y": 1.4597098280471374,
+          "z": 0.603583790191962
+        },
+        "bounds": {
+          "minX": -0.7385158427274922,
+          "maxX": 0.738516281835718,
+          "minY": -0.779343121066832,
+          "maxY": 0.8553469493206284
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "showroom": {
+        "initialized": true,
+        "type": "showroom",
+        "profile": {
+          "w": 800,
+          "h": 548,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 5.852480000199634,
+          "y": 5.314124269902493,
+          "z": 13.213921326553479
+        },
+        "target": {
+          "x": -0.20392822497218488,
+          "y": 2.044791613899239,
+          "z": 0.34931059128336034
+        },
+        "bounds": {
+          "minX": -0.594207152476673,
+          "maxX": 0.5942008566117026,
+          "minY": -0.7815556215864461,
+          "maxY": 0.85554089307451
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "interior": {
+        "initialized": true,
+        "type": "interior",
+        "profile": {
+          "w": 800,
+          "h": 548,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 5.452265791144253,
+          "y": 3.436276162849501,
+          "z": 9.701583030411674
+        },
+        "target": {
+          "x": -0.07902576923949281,
+          "y": 1.1656847584410084,
+          "z": 0.4739917558904344
+        },
+        "bounds": {
+          "minX": -0.7767397469660912,
+          "maxX": 0.7766989672586002,
+          "minY": -0.7715843683951855,
+          "maxY": 0.8553105882222181
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "management": {
+        "initialized": true,
+        "type": "management",
+        "profile": {
+          "w": 800,
+          "h": 548,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 5.4587462938965725,
+          "y": 3.922998025930782,
+          "z": 9.921351446977974
+        },
+        "target": {
+          "x": -0.024808212183238556,
+          "y": 1.2456940662587943,
+          "z": 0.34412464569168333
+        },
+        "bounds": {
+          "minX": -0.7684396999370947,
+          "maxX": 0.7684415096180334,
+          "minY": -0.7793380312425466,
+          "maxY": 0.8553505621576443
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "crowd": {
+        "initialized": true,
+        "type": "crowd",
+        "profile": {
+          "w": 800,
+          "h": 548,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 4.996771868028169,
+          "y": 3.7100028679217685,
+          "z": 11.561607885510664
+        },
+        "target": {
+          "x": -0.3763505522036591,
+          "y": 1.2565948693102722,
+          "z": 0.716647205155605
+        },
+        "bounds": {
+          "minX": -0.7108172815201783,
+          "maxX": 0.7106737998153246,
+          "minY": -0.7676777474185938,
+          "maxY": 0.8553125677860666
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "av": {
+        "initialized": true,
+        "type": "av",
+        "profile": {
+          "w": 800,
+          "h": 548,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 6.717961806990849,
+          "y": 4.310070840734679,
+          "z": 12.384405066168945
+        },
+        "target": {
+          "x": -0.14829704708820385,
+          "y": 1.310726496226627,
+          "z": 1.4325525322932953
+        },
+        "bounds": {
+          "minX": -0.7677957294964736,
+          "maxX": 0.7677813608867197,
+          "minY": -0.7753200306081479,
+          "maxY": 0.8552557501261531
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      }
+    },
+    "connected": {
+      "failures": [],
+      "failureCount": 0,
+      "minW": 1.0688994250636905,
+      "maxW": 1.1114923258708616,
+      "minH": 0.5393583184189299,
+      "maxH": 0.8359202060980163,
+      "state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "profile": {
+          "w": 834,
+          "h": 1112,
+          "pixelRatio": 1.7985611510791366,
+          "tier": "high"
+        }
+      }
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "device": "tablet_portrait",
+    "viewport": [
+      834,
+      1112
+    ],
+    "dpr": 2,
+    "lang": "ar",
+    "dom": {
+      "lang": "ar",
+      "dir": "rtl",
+      "docOverflow": 0,
+      "bodyFont": "Cairo, \"Noto Sans Arabic\", Inter, sans-serif",
+      "type": {
+        ".hero-copy h1": {
+          "text": "نصمم المساحة، ننفذها، ونسلمها جاهزة للتشغيل.",
+          "font": "44.8px",
+          "line": "51.968px",
+          "w": 320.296875,
+          "h": 311.71875,
+          "sw": 320,
+          "sh": 328,
+          "cw": 320,
+          "ch": 312,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".proof-intro h2": {
+          "text": "لا تكرار ولا خدمات منفصلة؛ رحلة تنفيذ واضحة من البداية للنهاية.",
+          "font": "37.6px",
+          "line": "42.112px",
+          "w": 802,
+          "h": 84.1875,
+          "sw": 802,
+          "sh": 98,
+          "cw": 802,
+          "ch": 84,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".section-heading h2": {
+          "text": "من أرضية فارغة إلى جناح جاهز للعرض والتشغيل.",
+          "font": "37.6px",
+          "line": "42.112px",
+          "w": 802,
+          "h": 84.1875,
+          "sw": 802,
+          "sh": 98,
+          "cw": 802,
+          "ch": 84,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".service-copy h3": {
+          "text": "أجنحة المعارض والأجنحة الوطنية",
+          "font": "32.8px",
+          "line": "37.064px",
+          "w": 802,
+          "h": 37.046875,
+          "sw": 802,
+          "sh": 49,
+          "cw": 802,
+          "ch": 37,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".connected-copy h3": {
+          "text": "أجنحة المعارض والأجنحة الوطنية",
+          "font": "29.6px",
+          "line": "34.336px",
+          "w": 186.203125,
+          "h": 137.3125,
+          "sw": 186,
+          "sh": 148,
+          "cw": 186,
+          "ch": 137,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".standards-copy h2": {
+          "text": "قيمة التصميم تظهر عندما يكون التنفيذ منضبطا بالمستوى نفسه.",
+          "font": "37.6px",
+          "line": "42.112px",
+          "w": 802,
+          "h": 84.1875,
+          "sw": 802,
+          "sh": 98,
+          "cw": 802,
+          "ch": 84,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".wecan-final h2": {
+          "text": "نستطيع أن نصممها، نبنيها، ونسلمها.",
+          "font": "57.6px",
+          "line": "56.448px",
+          "w": 385.4296875,
+          "h": 220.107421875,
+          "sw": 395,
+          "sh": 251,
+          "cw": 395,
+          "ch": 226,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".contact-copy h2": {
+          "text": "شاركنا المدينة وموقع الفعالية والمساحة والتجربة التي ترغب في تنفيذها.",
+          "font": "37.6px",
+          "line": "42.112px",
+          "w": 802,
+          "h": 84.1875,
+          "sw": 802,
+          "sh": 98,
+          "cw": 802,
+          "ch": 84,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".mega-intro h2": {
+          "text": "استكشف الخدمات التي تصنع تجربة معرض أو فعالية متكاملة.",
+          "font": "22.4px",
+          "line": "30.24px",
+          "w": 0,
+          "h": 0,
+          "sw": 0,
+          "sh": 0,
+          "cw": 0,
+          "ch": 0,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".mobile-menu-intro h2": {
+          "text": "انتقل مباشرة إلى القسم الذي تحتاجه لمشروعك.",
+          "font": "44px",
+          "line": "59.4px",
+          "w": 352.34375,
+          "h": 237.5625,
+          "sw": 352,
+          "sh": 249,
+          "cw": 352,
+          "ch": 238,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        }
+      },
+      "overs": [],
+      "connectedTitle": {
+        "text": "أجنحة المعارض والأجنحة الوطنية",
+        "font": "29.6px"
+      },
+      "frames": [
+        {
+          "w": 802,
+          "h": 550.4375
+        },
+        {
+          "w": 802,
+          "h": 550.4375
+        },
+        {
+          "w": 802,
+          "h": 550.4375
+        },
+        {
+          "w": 802,
+          "h": 550.4375
+        },
+        {
+          "w": 802,
+          "h": 550.4375
+        },
+        {
+          "w": 802,
+          "h": 550.4375
+        }
+      ]
+    },
+    "services": {
+      "booth": {
+        "initialized": true,
+        "type": "booth",
+        "profile": {
+          "w": 800,
+          "h": 548,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 7.071342948038925,
+          "y": 4.586155247195244,
+          "z": 11.38337259515075
+        },
+        "target": {
+          "x": 0.008765438717403175,
+          "y": 1.4597098280471374,
+          "z": 0.603583790191962
+        },
+        "bounds": {
+          "minX": -0.7385158427274922,
+          "maxX": 0.738516281835718,
+          "minY": -0.779343121066832,
+          "maxY": 0.8553469493206284
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "showroom": {
+        "initialized": true,
+        "type": "showroom",
+        "profile": {
+          "w": 800,
+          "h": 548,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 5.852480000199634,
+          "y": 5.314124269902493,
+          "z": 13.213921326553479
+        },
+        "target": {
+          "x": -0.20392822497218488,
+          "y": 2.044791613899239,
+          "z": 0.34931059128336034
+        },
+        "bounds": {
+          "minX": -0.594207152476673,
+          "maxX": 0.5942008566117026,
+          "minY": -0.7815556215864461,
+          "maxY": 0.85554089307451
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "interior": {
+        "initialized": true,
+        "type": "interior",
+        "profile": {
+          "w": 800,
+          "h": 548,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 5.452265791144253,
+          "y": 3.436276162849501,
+          "z": 9.701583030411674
+        },
+        "target": {
+          "x": -0.07902576923949281,
+          "y": 1.1656847584410084,
+          "z": 0.4739917558904344
+        },
+        "bounds": {
+          "minX": -0.7767397469660912,
+          "maxX": 0.7766989672586002,
+          "minY": -0.7715843683951855,
+          "maxY": 0.8553105882222181
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "management": {
+        "initialized": true,
+        "type": "management",
+        "profile": {
+          "w": 800,
+          "h": 548,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 5.4587462938965725,
+          "y": 3.922998025930782,
+          "z": 9.921351446977974
+        },
+        "target": {
+          "x": -0.024808212183238556,
+          "y": 1.2456940662587943,
+          "z": 0.34412464569168333
+        },
+        "bounds": {
+          "minX": -0.7684396999370947,
+          "maxX": 0.7684415096180334,
+          "minY": -0.7793380312425466,
+          "maxY": 0.8553505621576443
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "crowd": {
+        "initialized": true,
+        "type": "crowd",
+        "profile": {
+          "w": 800,
+          "h": 548,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 4.996771868028169,
+          "y": 3.7100028679217685,
+          "z": 11.561607885510664
+        },
+        "target": {
+          "x": -0.3763505522036591,
+          "y": 1.2565948693102722,
+          "z": 0.716647205155605
+        },
+        "bounds": {
+          "minX": -0.7108172815201783,
+          "maxX": 0.7106737998153246,
+          "minY": -0.7676777474185938,
+          "maxY": 0.8553125677860666
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "av": {
+        "initialized": true,
+        "type": "av",
+        "profile": {
+          "w": 800,
+          "h": 548,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 6.717961806990849,
+          "y": 4.310070840734679,
+          "z": 12.384405066168945
+        },
+        "target": {
+          "x": -0.14829704708820385,
+          "y": 1.310726496226627,
+          "z": 1.4325525322932953
+        },
+        "bounds": {
+          "minX": -0.7677957294964736,
+          "maxX": 0.7677813608867197,
+          "minY": -0.7753200306081479,
+          "maxY": 0.8552557501261531
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      }
+    },
+    "connected": {
+      "failures": [],
+      "failureCount": 0,
+      "minW": 1.0646821032357543,
+      "maxW": 1.1085599995748066,
+      "minH": 0.5260472741901602,
+      "maxH": 0.7608445659847068,
+      "state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "profile": {
+          "w": 834,
+          "h": 1112,
+          "pixelRatio": 1.7985611510791366,
+          "tier": "high"
+        }
+      }
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "device": "tablet_landscape",
+    "viewport": [
+      1112,
+      834
+    ],
+    "dpr": 2,
+    "lang": "en",
+    "dom": {
+      "lang": "en",
+      "dir": "ltr",
+      "docOverflow": 0,
+      "bodyFont": "Inter, system-ui, sans-serif",
+      "type": {
+        ".hero-copy h1": {
+          "text": "We design the space, build it properly and deliver it ready to perform.",
+          "font": "78.952px",
+          "line": "70.2673px",
+          "w": 585.515625,
+          "h": 351.3281555175781,
+          "sw": 586,
+          "sh": 363,
+          "cw": 586,
+          "ch": 351,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".proof-intro h2": {
+          "text": "No repeated sections. No disconnected services. One clear journey.",
+          "font": "47.816px",
+          "line": "46.3815px",
+          "w": 1076,
+          "h": 92.75,
+          "sw": 1076,
+          "sh": 98,
+          "cw": 1076,
+          "ch": 93,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".section-heading h2": {
+          "text": "From an empty footprint to a finished booth ready for display and operation.",
+          "font": "50.04px",
+          "line": "48.5388px",
+          "w": 1076,
+          "h": 97.0625,
+          "sw": 1076,
+          "sh": 103,
+          "cw": 1076,
+          "ch": 97,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".service-copy h3": {
+          "text": "Exhibition Stands & Pavilions",
+          "font": "44.48px",
+          "line": "42.7008px",
+          "w": 474.515625,
+          "h": 85.40625,
+          "sw": 475,
+          "sh": 91,
+          "cw": 475,
+          "ch": 85,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".connected-copy h3": {
+          "text": "Exhibition Stands & Pavilions",
+          "font": "58.936px",
+          "line": "54.8105px",
+          "w": 391.671875,
+          "h": 164.390625,
+          "sw": 392,
+          "sh": 172,
+          "cw": 392,
+          "ch": 164,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".standards-copy h2": {
+          "text": "High design only matters when the delivery is equally controlled.",
+          "font": "50.04px",
+          "line": "48.5388px",
+          "w": 1076,
+          "h": 97.0625,
+          "sw": 1076,
+          "sh": 103,
+          "cw": 1076,
+          "ch": 97,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".wecan-final h2": {
+          "text": "We can design it, build it and deliver it.",
+          "font": "58.38px",
+          "line": "54.8772px",
+          "w": 537.3012084960938,
+          "h": 106.974609375,
+          "sw": 551,
+          "sh": 117,
+          "cw": 551,
+          "ch": 110,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".contact-copy h2": {
+          "text": "Tell us the city, venue, footprint and the experience you want to build.",
+          "font": "50.04px",
+          "line": "48.5388px",
+          "w": 1076,
+          "h": 97.0625,
+          "sw": 1076,
+          "sh": 103,
+          "cw": 1076,
+          "ch": 97,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".mega-intro h2": {
+          "text": "Explore the disciplines behind complete exhibition and event delivery.",
+          "font": "22.4px",
+          "line": "24.192px",
+          "w": 0,
+          "h": 0,
+          "sw": 0,
+          "sh": 0,
+          "cw": 0,
+          "ch": 0,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".mobile-menu-intro h2": {
+          "text": "Go straight to the information your project needs.",
+          "font": "44px",
+          "line": "44.88px",
+          "w": 415.375,
+          "h": 134.625,
+          "sw": 415,
+          "sh": 139,
+          "cw": 415,
+          "ch": 135,
+          "fontFamily": "Syne, Inter, sans-serif"
+        }
+      },
+      "overs": [],
+      "connectedTitle": {
+        "text": "Exhibition Stands & Pavilions",
+        "font": "58.936px"
+      },
+      "frames": [
+        {
+          "w": 557.015625,
+          "h": 533.75
+        },
+        {
+          "w": 557.015625,
+          "h": 533.75
+        },
+        {
+          "w": 557.015625,
+          "h": 533.75
+        },
+        {
+          "w": 557.015625,
+          "h": 533.75
+        },
+        {
+          "w": 557.015625,
+          "h": 533.75
+        },
+        {
+          "w": 557.015625,
+          "h": 533.75
+        }
+      ]
+    },
+    "services": {
+      "booth": {
+        "initialized": true,
+        "type": "booth",
+        "profile": {
+          "w": 555,
+          "h": 532,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 8.039667475644718,
+          "y": 4.985249507245337,
+          "z": 12.82804180802198
+        },
+        "target": {
+          "x": 0.02689726623970082,
+          "y": 1.4381749890801772,
+          "z": 0.5979501048090353
+        },
+        "bounds": {
+          "minX": -0.9060594228584926,
+          "maxX": 0.9060594228640294,
+          "minY": -0.6527227478956606,
+          "maxY": 0.7287227454023324
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "showroom": {
+        "initialized": true,
+        "type": "showroom",
+        "profile": {
+          "w": 555,
+          "h": 532,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 5.852480000199633,
+          "y": 5.314124269902493,
+          "z": 13.213921326553479
+        },
+        "target": {
+          "x": -0.20392822497218613,
+          "y": 2.0447916138992395,
+          "z": 0.3493105912833607
+        },
+        "bounds": {
+          "minX": -0.8315070825740511,
+          "maxX": 0.831498272420401,
+          "minY": -0.7815556215864461,
+          "maxY": 0.85554089307451
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "interior": {
+        "initialized": true,
+        "type": "interior",
+        "profile": {
+          "w": 555,
+          "h": 532,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 6.549519393446114,
+          "y": 3.8215966022453927,
+          "z": 11.472764202578146
+        },
+        "target": {
+          "x": -0.047221648902375055,
+          "y": 1.1136389138197205,
+          "z": 0.4677341082274642
+        },
+        "bounds": {
+          "minX": -0.9060565460435883,
+          "maxX": 0.9060565460523244,
+          "minY": -0.5908004994973699,
+          "maxY": 0.6746332773981117
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "management": {
+        "initialized": true,
+        "type": "management",
+        "profile": {
+          "w": 555,
+          "h": 532,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 6.461069126719113,
+          "y": 4.402381904258956,
+          "z": 11.6231474772883
+        },
+        "target": {
+          "x": -0.003798731457736453,
+          "y": 1.2459591320839754,
+          "z": 0.33202132007445073
+        },
+        "bounds": {
+          "minX": -0.9060569427392635,
+          "maxX": 0.9060569427212705,
+          "minY": -0.62685787815752,
+          "maxY": 0.7028578752619266
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "crowd": {
+        "initialized": true,
+        "type": "crowd",
+        "profile": {
+          "w": 555,
+          "h": 532,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 5.549259122316096,
+          "y": 3.9124842040671015,
+          "z": 12.57338000418845
+        },
+        "target": {
+          "x": -0.3325557226998125,
+          "y": 1.2268034288110545,
+          "z": 0.7016886980048813
+        },
+        "bounds": {
+          "minX": -0.9058824802675476,
+          "maxX": 0.9058824131927719,
+          "minY": -0.667821272821025,
+          "maxY": 0.7550323701499089
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "av": {
+        "initialized": true,
+        "type": "av",
+        "profile": {
+          "w": 555,
+          "h": 532,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 7.9938339796336795,
+          "y": 4.820201177461357,
+          "z": 14.319349387056894
+        },
+        "target": {
+          "x": -0.10002673187936938,
+          "y": 1.2846112927469582,
+          "z": 1.4094415571823242
+        },
+        "bounds": {
+          "minX": -0.9060039094500151,
+          "maxX": 0.9060039092067222,
+          "minY": -0.6115501930561195,
+          "maxY": 0.6915501782687934
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      }
+    },
+    "connected": {
+      "failures": [],
+      "failureCount": 0,
+      "minW": 1.0474733524179989,
+      "maxW": 1.1115373361571637,
+      "minH": 0.9478243048068952,
+      "maxH": 1.4504170133358767,
+      "state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "profile": {
+          "w": 1112,
+          "h": 834,
+          "pixelRatio": 1.7985611510791366,
+          "tier": "high"
+        }
+      }
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "device": "tablet_landscape",
+    "viewport": [
+      1112,
+      834
+    ],
+    "dpr": 2,
+    "lang": "ar",
+    "dom": {
+      "lang": "ar",
+      "dir": "rtl",
+      "docOverflow": 0,
+      "bodyFont": "Cairo, \"Noto Sans Arabic\", Inter, sans-serif",
+      "type": {
+        ".hero-copy h1": {
+          "text": "نصمم المساحة، ننفذها، ونسلمها جاهزة للتشغيل.",
+          "font": "57.824px",
+          "line": "67.0758px",
+          "w": 413.34375,
+          "h": 402.46875,
+          "sw": 413,
+          "sh": 423,
+          "cw": 413,
+          "ch": 402,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".proof-intro h2": {
+          "text": "لا تكرار ولا خدمات منفصلة؛ رحلة تنفيذ واضحة من البداية للنهاية.",
+          "font": "46.148px",
+          "line": "51.6858px",
+          "w": 1076,
+          "h": 103.34375,
+          "sw": 1076,
+          "sh": 121,
+          "cw": 1076,
+          "ch": 103,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".section-heading h2": {
+          "text": "من أرضية فارغة إلى جناح جاهز للعرض والتشغيل.",
+          "font": "46.148px",
+          "line": "51.6858px",
+          "w": 1076,
+          "h": 103.34375,
+          "sw": 1076,
+          "sh": 121,
+          "cw": 1076,
+          "ch": 103,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".service-copy h3": {
+          "text": "أجنحة المعارض والأجنحة الوطنية",
+          "font": "39.476px",
+          "line": "44.6079px",
+          "w": 474.515625,
+          "h": 89.1875,
+          "sw": 475,
+          "sh": 104,
+          "cw": 475,
+          "ch": 89,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".connected-copy h3": {
+          "text": "أجنحة المعارض والأجنحة الوطنية",
+          "font": "34.472px",
+          "line": "39.9875px",
+          "w": 216.875,
+          "h": 159.875,
+          "sw": 217,
+          "sh": 172,
+          "cw": 217,
+          "ch": 160,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".standards-copy h2": {
+          "text": "قيمة التصميم تظهر عندما يكون التنفيذ منضبطا بالمستوى نفسه.",
+          "font": "46.148px",
+          "line": "51.6858px",
+          "w": 1076,
+          "h": 103.34375,
+          "sw": 1076,
+          "sh": 121,
+          "cw": 1076,
+          "ch": 103,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".wecan-final h2": {
+          "text": "نستطيع أن نصممها، نبنيها، ونسلمها.",
+          "font": "58.38px",
+          "line": "54.8772px",
+          "w": 455.766845703125,
+          "h": 160.462890625,
+          "sw": 467,
+          "sh": 192,
+          "cw": 467,
+          "ch": 165,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".contact-copy h2": {
+          "text": "شاركنا المدينة وموقع الفعالية والمساحة والتجربة التي ترغب في تنفيذها.",
+          "font": "46.148px",
+          "line": "51.6858px",
+          "w": 1076,
+          "h": 103.34375,
+          "sw": 1076,
+          "sh": 121,
+          "cw": 1076,
+          "ch": 103,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".mega-intro h2": {
+          "text": "استكشف الخدمات التي تصنع تجربة معرض أو فعالية متكاملة.",
+          "font": "22.4px",
+          "line": "30.24px",
+          "w": 0,
+          "h": 0,
+          "sw": 0,
+          "sh": 0,
+          "cw": 0,
+          "ch": 0,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".mobile-menu-intro h2": {
+          "text": "انتقل مباشرة إلى القسم الذي تحتاجه لمشروعك.",
+          "font": "44px",
+          "line": "59.4px",
+          "w": 352.34375,
+          "h": 237.5625,
+          "sw": 352,
+          "sh": 249,
+          "cw": 352,
+          "ch": 238,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        }
+      },
+      "overs": [],
+      "connectedTitle": {
+        "text": "أجنحة المعارض والأجنحة الوطنية",
+        "font": "34.472px"
+      },
+      "frames": [
+        {
+          "w": 557.015625,
+          "h": 533.75
+        },
+        {
+          "w": 474.515625,
+          "h": 533.75
+        },
+        {
+          "w": 557.015625,
+          "h": 533.75
+        },
+        {
+          "w": 474.515625,
+          "h": 533.75
+        },
+        {
+          "w": 557.015625,
+          "h": 533.75
+        },
+        {
+          "w": 474.515625,
+          "h": 533.75
+        }
+      ]
+    },
+    "services": {
+      "booth": {
+        "initialized": true,
+        "type": "booth",
+        "profile": {
+          "w": 555,
+          "h": 532,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 8.039667475644718,
+          "y": 4.985249507245337,
+          "z": 12.82804180802198
+        },
+        "target": {
+          "x": 0.02689726623970082,
+          "y": 1.4381749890801772,
+          "z": 0.5979501048090353
+        },
+        "bounds": {
+          "minX": -0.9060594228584926,
+          "maxX": 0.9060594228640294,
+          "minY": -0.6527227478956606,
+          "maxY": 0.7287227454023324
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "showroom": {
+        "initialized": true,
+        "type": "showroom",
+        "profile": {
+          "w": 473,
+          "h": 532,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 6.325119959503464,
+          "y": 5.5268315501716385,
+          "z": 14.155546057260498
+        },
+        "target": {
+          "x": -0.17716932675439548,
+          "y": 2.0168061503002783,
+          "z": 0.3438250758116945
+        },
+        "bounds": {
+          "minX": -0.9059294795503252,
+          "maxX": 0.9059294834834756,
+          "minY": -0.7076527154311554,
+          "maxY": 0.7816153621270213
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "interior": {
+        "initialized": true,
+        "type": "interior",
+        "profile": {
+          "w": 555,
+          "h": 532,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 6.549519393446114,
+          "y": 3.8215966022453927,
+          "z": 11.472764202578146
+        },
+        "target": {
+          "x": -0.047221648902375055,
+          "y": 1.1136389138197205,
+          "z": 0.4677341082274642
+        },
+        "bounds": {
+          "minX": -0.9060565460435883,
+          "maxX": 0.9060565460523244,
+          "minY": -0.5908004994973699,
+          "maxY": 0.6746332773981117
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "management": {
+        "initialized": true,
+        "type": "management",
+        "profile": {
+          "w": 473,
+          "h": 532,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 7.5505750205054225,
+          "y": 4.994167547887484,
+          "z": 13.487428709039612
+        },
+        "target": {
+          "x": 0.005099907990471757,
+          "y": 1.3101464674104752,
+          "z": 0.3089827948256805
+        },
+        "bounds": {
+          "minX": -0.9060768070258353,
+          "maxX": 0.9060768070257023,
+          "minY": -0.5318012460790095,
+          "maxY": 0.6078012455033224
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "crowd": {
+        "initialized": true,
+        "type": "crowd",
+        "profile": {
+          "w": 555,
+          "h": 532,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 5.549259122316096,
+          "y": 3.9124842040671015,
+          "z": 12.57338000418845
+        },
+        "target": {
+          "x": -0.3325557226998125,
+          "y": 1.2268034288110545,
+          "z": 0.7016886980048813
+        },
+        "bounds": {
+          "minX": -0.9058824802675476,
+          "maxX": 0.9058824131927719,
+          "minY": -0.667821272821025,
+          "maxY": 0.7550323701499089
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "av": {
+        "initialized": true,
+        "type": "av",
+        "profile": {
+          "w": 473,
+          "h": 532,
+          "fov": 36,
+          "pixelRatio": 2
+        },
+        "camera": {
+          "x": 9.376878051998332,
+          "y": 5.496482249729575,
+          "z": 16.44571931352607
+        },
+        "target": {
+          "x": -0.07446124996564349,
+          "y": 1.3679135945394665,
+          "z": 1.3705995893052927
+        },
+        "bounds": {
+          "minX": -0.9060325442422965,
+          "maxX": 0.9060325442178537,
+          "minY": -0.5181461654115295,
+          "maxY": 0.5981461629501589
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      }
+    },
+    "connected": {
+      "failures": [],
+      "failureCount": 0,
+      "minW": 1.051050936469298,
+      "maxW": 1.1078178088684631,
+      "minH": 0.9094828217545514,
+      "maxH": 1.2896949226439571,
+      "state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "profile": {
+          "w": 1112,
+          "h": 834,
+          "pixelRatio": 1.7985611510791366,
+          "tier": "high"
+        }
+      }
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "device": "mobile",
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 3,
+    "lang": "en",
+    "dom": {
+      "lang": "en",
+      "dir": "ltr",
+      "docOverflow": 0,
+      "bodyFont": "Inter, system-ui, sans-serif",
+      "type": {
+        ".hero-copy h1": {
+          "text": "We design the space, build it properly and deliver it ready to perform.",
+          "font": "42.12px",
+          "line": "38.7504px",
+          "w": 340.734375,
+          "h": 193.75,
+          "sw": 341,
+          "sh": 199,
+          "cw": 341,
+          "ch": 194,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".proof-intro h2": {
+          "text": "No repeated sections. No disconnected services. One clear journey.",
+          "font": "40.56px",
+          "line": "40.56px",
+          "w": 366,
+          "h": 202.8125,
+          "sw": 366,
+          "sh": 206,
+          "cw": 366,
+          "ch": 203,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".section-heading h2": {
+          "text": "From an empty footprint to a finished booth ready for display and operation.",
+          "font": "40.56px",
+          "line": "40.56px",
+          "w": 366,
+          "h": 202.8125,
+          "sw": 366,
+          "sh": 206,
+          "cw": 366,
+          "ch": 203,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".service-copy h3": {
+          "text": "Exhibition Stands & Pavilions",
+          "font": "38.22px",
+          "line": "38.22px",
+          "w": 366,
+          "h": 76.4375,
+          "sw": 366,
+          "sh": 80,
+          "cw": 366,
+          "ch": 76,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".connected-copy h3": {
+          "text": "Exhibition Stands & Pavilions",
+          "font": "34px",
+          "line": "31.96px",
+          "w": 320.96875,
+          "h": 63.90625,
+          "sw": 321,
+          "sh": 68,
+          "cw": 321,
+          "ch": 64,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".standards-copy h2": {
+          "text": "High design only matters when the delivery is equally controlled.",
+          "font": "40.56px",
+          "line": "40.56px",
+          "w": 366,
+          "h": 162.25,
+          "sw": 366,
+          "sh": 166,
+          "cw": 366,
+          "ch": 162,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".wecan-final h2": {
+          "text": "We can design it, build it and deliver it.",
+          "font": "36.66px",
+          "line": "35.9268px",
+          "w": 289.19415283203125,
+          "h": 105.0703125,
+          "sw": 297,
+          "sh": 112,
+          "cw": 297,
+          "ch": 108,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".contact-copy h2": {
+          "text": "Tell us the city, venue, footprint and the experience you want to build.",
+          "font": "40.56px",
+          "line": "40.56px",
+          "w": 366,
+          "h": 162.25,
+          "sw": 366,
+          "sh": 166,
+          "cw": 366,
+          "ch": 162,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".mega-intro h2": {
+          "text": "Explore the disciplines behind complete exhibition and event delivery.",
+          "font": "22.4px",
+          "line": "24.192px",
+          "w": 0,
+          "h": 0,
+          "sw": 0,
+          "sh": 0,
+          "cw": 0,
+          "ch": 0,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".mobile-menu-intro h2": {
+          "text": "Go straight to the information your project needs.",
+          "font": "33.15px",
+          "line": "33.813px",
+          "w": 312.859375,
+          "h": 101.4375,
+          "sw": 313,
+          "sh": 104,
+          "cw": 313,
+          "ch": 101,
+          "fontFamily": "Syne, Inter, sans-serif"
+        }
+      },
+      "overs": [],
+      "connectedTitle": {
+        "text": "Exhibition Stands & Pavilions",
+        "font": "34px"
+      },
+      "frames": [
+        {
+          "w": 366,
+          "h": 429
+        },
+        {
+          "w": 366,
+          "h": 429
+        },
+        {
+          "w": 366,
+          "h": 429
+        },
+        {
+          "w": 366,
+          "h": 429
+        },
+        {
+          "w": 366,
+          "h": 429
+        },
+        {
+          "w": 366,
+          "h": 429
+        }
+      ]
+    },
+    "services": {
+      "booth": {
+        "initialized": true,
+        "type": "booth",
+        "profile": {
+          "w": 364,
+          "h": 427,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 8.329754836276354,
+          "y": 4.833993725818184,
+          "z": 15.232665532410342
+        },
+        "target": {
+          "x": -0.014934561314145757,
+          "y": 1.1665633198663454,
+          "z": 0.6583628864889285
+        },
+        "bounds": {
+          "minX": -0.9409766862702812,
+          "maxX": 0.9409766862621378,
+          "minY": -0.4586379496911329,
+          "maxY": 0.6735648932442981
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "showroom": {
+        "initialized": true,
+        "type": "showroom",
+        "profile": {
+          "w": 364,
+          "h": 427,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 5.318238638664221,
+          "y": 4.970609386638634,
+          "z": 14.300603887787451
+        },
+        "target": {
+          "x": -0.2460822811216639,
+          "y": 1.8515090734314799,
+          "z": 0.3693477687018677
+        },
+        "bounds": {
+          "minX": -0.927360418498418,
+          "maxX": 0.9273580965131307,
+          "minY": -0.6536083340783475,
+          "maxY": 0.8606072906351202
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "interior": {
+        "initialized": true,
+        "type": "interior",
+        "profile": {
+          "w": 364,
+          "h": 427,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 6.70969581998653,
+          "y": 3.646454676377341,
+          "z": 13.55914595555826
+        },
+        "target": {
+          "x": -0.08751164158888501,
+          "y": 0.9070622371645485,
+          "z": 0.502930286185247
+        },
+        "bounds": {
+          "minX": -0.9409732875063912,
+          "maxX": 0.9409732874787559,
+          "minY": -0.41242322259843484,
+          "maxY": 0.6332603555610751
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "management": {
+        "initialized": true,
+        "type": "management",
+        "profile": {
+          "w": 364,
+          "h": 427,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 6.590016720071023,
+          "y": 4.256020698317882,
+          "z": 13.769709333757644
+        },
+        "target": {
+          "x": -0.04392508697557903,
+          "y": 1.0084797154748586,
+          "z": 0.37994591011320955
+        },
+        "bounds": {
+          "minX": -0.940974093840149,
+          "maxX": 0.940974093829733,
+          "minY": -0.43834214942802824,
+          "maxY": 0.6453421480691136
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "crowd": {
+        "initialized": true,
+        "type": "crowd",
+        "profile": {
+          "w": 364,
+          "h": 427,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 5.479546270582314,
+          "y": 3.731491079717681,
+          "z": 14.47736803243306
+        },
+        "target": {
+          "x": -0.34344978669545345,
+          "y": 1.010489691175152,
+          "z": 0.7046872059603394
+        },
+        "bounds": {
+          "minX": -0.9408091140067996,
+          "maxX": 0.9408090293148603,
+          "minY": -0.4824004456862953,
+          "maxY": 0.7108106450720798
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "av": {
+        "initialized": true,
+        "type": "av",
+        "profile": {
+          "w": 364,
+          "h": 427,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 8.207656051105493,
+          "y": 4.641111666562626,
+          "z": 16.720562433689775
+        },
+        "target": {
+          "x": -0.13525330609055947,
+          "y": 1.022896967991506,
+          "z": 1.448969291982474
+        },
+        "bounds": {
+          "minX": -0.9409242685952018,
+          "maxX": 0.9409242691917692,
+          "minY": -0.42899016349006047,
+          "maxY": 0.639878823860044
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      }
+    },
+    "connected": {
+      "failures": [],
+      "failureCount": 0,
+      "minW": 1.349739780580046,
+      "maxW": 1.8794067965678922,
+      "minH": 0.5120054323852362,
+      "maxH": 0.6047826504209068,
+      "state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "profile": {
+          "w": 390,
+          "h": 844,
+          "pixelRatio": 2.15,
+          "tier": "high"
+        }
+      }
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "device": "mobile",
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 3,
+    "lang": "ar",
+    "dom": {
+      "lang": "ar",
+      "dir": "rtl",
+      "docOverflow": 0,
+      "bodyFont": "Cairo, \"Noto Sans Arabic\", Inter, sans-serif",
+      "type": {
+        ".hero-copy h1": {
+          "text": "نصمم المساحة، ننفذها، ونسلمها جاهزة للتشغيل.",
+          "font": "36.075px",
+          "line": "43.29px",
+          "w": 247.53125,
+          "h": 259.6875,
+          "sw": 248,
+          "sh": 271,
+          "cw": 248,
+          "ch": 260,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".proof-intro h2": {
+          "text": "لا تكرار ولا خدمات منفصلة؛ رحلة تنفيذ واضحة من البداية للنهاية.",
+          "font": "33.93px",
+          "line": "39.3588px",
+          "w": 366,
+          "h": 157.4375,
+          "sw": 366,
+          "sh": 169,
+          "cw": 366,
+          "ch": 157,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".section-heading h2": {
+          "text": "من أرضية فارغة إلى جناح جاهز للعرض والتشغيل.",
+          "font": "33.93px",
+          "line": "39.3588px",
+          "w": 366,
+          "h": 118.078125,
+          "sw": 366,
+          "sh": 130,
+          "cw": 366,
+          "ch": 118,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".service-copy h3": {
+          "text": "أجنحة المعارض والأجنحة الوطنية",
+          "font": "31.59px",
+          "line": "37.2762px",
+          "w": 366,
+          "h": 74.53125,
+          "sw": 366,
+          "sh": 85,
+          "cw": 366,
+          "ch": 75,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".connected-copy h3": {
+          "text": "أجنحة المعارض والأجنحة الوطنية",
+          "font": "21.84px",
+          "line": "26.208px",
+          "w": 174.796875,
+          "h": 78.609375,
+          "sw": 175,
+          "sh": 85,
+          "cw": 175,
+          "ch": 79,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".standards-copy h2": {
+          "text": "قيمة التصميم تظهر عندما يكون التنفيذ منضبطا بالمستوى نفسه.",
+          "font": "33.93px",
+          "line": "39.3588px",
+          "w": 366,
+          "h": 157.4375,
+          "sw": 366,
+          "sh": 169,
+          "cw": 366,
+          "ch": 157,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".wecan-final h2": {
+          "text": "نستطيع أن نصممها، نبنيها، ونسلمها.",
+          "font": "36.66px",
+          "line": "35.9268px",
+          "w": 245.30392456054688,
+          "h": 140.095703125,
+          "sw": 252,
+          "sh": 160,
+          "cw": 252,
+          "ch": 144,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".contact-copy h2": {
+          "text": "شاركنا المدينة وموقع الفعالية والمساحة والتجربة التي ترغب في تنفيذها.",
+          "font": "33.93px",
+          "line": "39.3588px",
+          "w": 366,
+          "h": 157.4375,
+          "sw": 366,
+          "sh": 169,
+          "cw": 366,
+          "ch": 157,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".mega-intro h2": {
+          "text": "استكشف الخدمات التي تصنع تجربة معرض أو فعالية متكاملة.",
+          "font": "22.4px",
+          "line": "30.24px",
+          "w": 0,
+          "h": 0,
+          "sw": 0,
+          "sh": 0,
+          "cw": 0,
+          "ch": 0,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".mobile-menu-intro h2": {
+          "text": "انتقل مباشرة إلى القسم الذي تحتاجه لمشروعك.",
+          "font": "31.98px",
+          "line": "41.574px",
+          "w": 256,
+          "h": 166.3125,
+          "sw": 256,
+          "sh": 176,
+          "cw": 256,
+          "ch": 166,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        }
+      },
+      "overs": [],
+      "connectedTitle": {
+        "text": "أجنحة المعارض والأجنحة الوطنية",
+        "font": "21.84px"
+      },
+      "frames": [
+        {
+          "w": 366,
+          "h": 429
+        },
+        {
+          "w": 366,
+          "h": 429
+        },
+        {
+          "w": 366,
+          "h": 429
+        },
+        {
+          "w": 366,
+          "h": 429
+        },
+        {
+          "w": 366,
+          "h": 429
+        },
+        {
+          "w": 366,
+          "h": 429
+        }
+      ]
+    },
+    "services": {
+      "booth": {
+        "initialized": true,
+        "type": "booth",
+        "profile": {
+          "w": 364,
+          "h": 427,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 8.329754836276354,
+          "y": 4.833993725818184,
+          "z": 15.232665532410342
+        },
+        "target": {
+          "x": -0.014934561314145757,
+          "y": 1.1665633198663454,
+          "z": 0.6583628864889285
+        },
+        "bounds": {
+          "minX": -0.9409766862702812,
+          "maxX": 0.9409766862621378,
+          "minY": -0.4586379496911329,
+          "maxY": 0.6735648932442981
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "showroom": {
+        "initialized": true,
+        "type": "showroom",
+        "profile": {
+          "w": 364,
+          "h": 427,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 5.318238638664221,
+          "y": 4.970609386638634,
+          "z": 14.300603887787451
+        },
+        "target": {
+          "x": -0.2460822811216639,
+          "y": 1.8515090734314799,
+          "z": 0.3693477687018677
+        },
+        "bounds": {
+          "minX": -0.927360418498418,
+          "maxX": 0.9273580965131307,
+          "minY": -0.6536083340783475,
+          "maxY": 0.8606072906351202
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "interior": {
+        "initialized": true,
+        "type": "interior",
+        "profile": {
+          "w": 364,
+          "h": 427,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 6.70969581998653,
+          "y": 3.646454676377341,
+          "z": 13.55914595555826
+        },
+        "target": {
+          "x": -0.08751164158888501,
+          "y": 0.9070622371645485,
+          "z": 0.502930286185247
+        },
+        "bounds": {
+          "minX": -0.9409732875063912,
+          "maxX": 0.9409732874787559,
+          "minY": -0.41242322259843484,
+          "maxY": 0.6332603555610751
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "management": {
+        "initialized": true,
+        "type": "management",
+        "profile": {
+          "w": 364,
+          "h": 427,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 6.590016720071023,
+          "y": 4.256020698317882,
+          "z": 13.769709333757644
+        },
+        "target": {
+          "x": -0.04392508697557903,
+          "y": 1.0084797154748586,
+          "z": 0.37994591011320955
+        },
+        "bounds": {
+          "minX": -0.940974093840149,
+          "maxX": 0.940974093829733,
+          "minY": -0.43834214942802824,
+          "maxY": 0.6453421480691136
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "crowd": {
+        "initialized": true,
+        "type": "crowd",
+        "profile": {
+          "w": 364,
+          "h": 427,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 5.479546270582314,
+          "y": 3.731491079717681,
+          "z": 14.47736803243306
+        },
+        "target": {
+          "x": -0.34344978669545345,
+          "y": 1.010489691175152,
+          "z": 0.7046872059603394
+        },
+        "bounds": {
+          "minX": -0.9408091140067996,
+          "maxX": 0.9408090293148603,
+          "minY": -0.4824004456862953,
+          "maxY": 0.7108106450720798
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "av": {
+        "initialized": true,
+        "type": "av",
+        "profile": {
+          "w": 364,
+          "h": 427,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 8.207656051105493,
+          "y": 4.641111666562626,
+          "z": 16.720562433689775
+        },
+        "target": {
+          "x": -0.13525330609055947,
+          "y": 1.022896967991506,
+          "z": 1.448969291982474
+        },
+        "bounds": {
+          "minX": -0.9409242685952018,
+          "maxX": 0.9409242691917692,
+          "minY": -0.42899016349006047,
+          "maxY": 0.639878823860044
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      }
+    },
+    "connected": {
+      "failures": [],
+      "failureCount": 0,
+      "minW": 1.349739780580046,
+      "maxW": 1.8794067965678922,
+      "minH": 0.5120054323852362,
+      "maxH": 0.6047826504209068,
+      "state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "profile": {
+          "w": 390,
+          "h": 844,
+          "pixelRatio": 2.15,
+          "tier": "high"
+        }
+      }
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "device": "small_mobile",
+    "viewport": [
+      360,
+      800
+    ],
+    "dpr": 3,
+    "lang": "en",
+    "dom": {
+      "lang": "en",
+      "dir": "ltr",
+      "docOverflow": 0,
+      "bodyFont": "Inter, system-ui, sans-serif",
+      "type": {
+        ".hero-copy h1": {
+          "text": "We design the space, build it properly and deliver it ready to perform.",
+          "font": "38.88px",
+          "line": "35.7696px",
+          "w": 314.5625,
+          "h": 178.75,
+          "sw": 315,
+          "sh": 184,
+          "cw": 315,
+          "ch": 179,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".proof-intro h2": {
+          "text": "No repeated sections. No disconnected services. One clear journey.",
+          "font": "37.44px",
+          "line": "37.44px",
+          "w": 336,
+          "h": 187.1875,
+          "sw": 336,
+          "sh": 191,
+          "cw": 336,
+          "ch": 187,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".section-heading h2": {
+          "text": "From an empty footprint to a finished booth ready for display and operation.",
+          "font": "37.44px",
+          "line": "37.44px",
+          "w": 336,
+          "h": 187.1875,
+          "sw": 336,
+          "sh": 191,
+          "cw": 336,
+          "ch": 187,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".service-copy h3": {
+          "text": "Exhibition Stands & Pavilions",
+          "font": "35.28px",
+          "line": "35.28px",
+          "w": 336,
+          "h": 70.5625,
+          "sw": 336,
+          "sh": 74,
+          "cw": 336,
+          "ch": 71,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".connected-copy h3": {
+          "text": "Exhibition Stands & Pavilions",
+          "font": "34px",
+          "line": "31.96px",
+          "w": 306,
+          "h": 63.90625,
+          "sw": 306,
+          "sh": 68,
+          "cw": 306,
+          "ch": 64,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".standards-copy h2": {
+          "text": "High design only matters when the delivery is equally controlled.",
+          "font": "37.44px",
+          "line": "37.44px",
+          "w": 336,
+          "h": 149.75,
+          "sw": 336,
+          "sh": 153,
+          "cw": 336,
+          "ch": 150,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".wecan-final h2": {
+          "text": "We can design it, build it and deliver it.",
+          "font": "33.84px",
+          "line": "33.1632px",
+          "w": 266.87579345703125,
+          "h": 96.982421875,
+          "sw": 274,
+          "sh": 103,
+          "cw": 274,
+          "ch": 99,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".contact-copy h2": {
+          "text": "Tell us the city, venue, footprint and the experience you want to build.",
+          "font": "37.44px",
+          "line": "37.44px",
+          "w": 336,
+          "h": 149.75,
+          "sw": 336,
+          "sh": 153,
+          "cw": 336,
+          "ch": 150,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".mega-intro h2": {
+          "text": "Explore the disciplines behind complete exhibition and event delivery.",
+          "font": "22.4px",
+          "line": "24.192px",
+          "w": 0,
+          "h": 0,
+          "sw": 0,
+          "sh": 0,
+          "cw": 0,
+          "ch": 0,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".mobile-menu-intro h2": {
+          "text": "Go straight to the information your project needs.",
+          "font": "30.6px",
+          "line": "31.212px",
+          "w": 288.8125,
+          "h": 93.609375,
+          "sw": 289,
+          "sh": 96,
+          "cw": 289,
+          "ch": 94,
+          "fontFamily": "Syne, Inter, sans-serif"
+        }
+      },
+      "overs": [],
+      "connectedTitle": {
+        "text": "Exhibition Stands & Pavilions",
+        "font": "34px"
+      },
+      "frames": [
+        {
+          "w": 336,
+          "h": 396
+        },
+        {
+          "w": 336,
+          "h": 396
+        },
+        {
+          "w": 336,
+          "h": 396
+        },
+        {
+          "w": 336,
+          "h": 396
+        },
+        {
+          "w": 336,
+          "h": 396
+        },
+        {
+          "w": 336,
+          "h": 396
+        }
+      ]
+    },
+    "services": {
+      "booth": {
+        "initialized": true,
+        "type": "booth",
+        "profile": {
+          "w": 334,
+          "h": 394,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 8.376346479419379,
+          "y": 4.849969797886624,
+          "z": 15.312012023269759
+        },
+        "target": {
+          "x": -0.013633974263582848,
+          "y": 1.1626343016052252,
+          "z": 0.6586069054414163
+        },
+        "bounds": {
+          "minX": -0.9409776272412793,
+          "maxX": 0.9409776272319104,
+          "minY": -0.45464500405974256,
+          "maxY": 0.6695792450473798
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "showroom": {
+        "initialized": true,
+        "type": "showroom",
+        "profile": {
+          "w": 334,
+          "h": 394,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 5.318239137179282,
+          "y": 4.970609910844157,
+          "z": 14.300594525216365
+        },
+        "target": {
+          "x": -0.24607879570985322,
+          "y": 1.8515112719528313,
+          "z": 0.3693458843521535
+        },
+        "bounds": {
+          "minX": -0.9325509880204008,
+          "maxX": 0.9325466119780812,
+          "minY": -0.6536093304006279,
+          "maxY": 0.8606073149811497
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "interior": {
+        "initialized": true,
+        "type": "interior",
+        "profile": {
+          "w": 334,
+          "h": 394,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 6.748116962325572,
+          "y": 3.658044476598026,
+          "z": 13.630616408643393
+        },
+        "target": {
+          "x": -0.08626586913250127,
+          "y": 0.9036697188732297,
+          "z": 0.5029935254225636
+        },
+        "bounds": {
+          "minX": -0.9409743094829472,
+          "maxX": 0.9409743094560664,
+          "minY": -0.4087098569281387,
+          "maxY": 0.6295588047771304
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "management": {
+        "initialized": true,
+        "type": "management",
+        "profile": {
+          "w": 334,
+          "h": 394,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 6.626954287708448,
+          "y": 4.273737005763949,
+          "z": 13.842087275308034
+        },
+        "target": {
+          "x": -0.04306487236028189,
+          "y": 1.0085349270145059,
+          "z": 0.3795063268845179
+        },
+        "bounds": {
+          "minX": -0.9409749940900358,
+          "maxX": 0.9409749940769996,
+          "minY": -0.4354165711968518,
+          "maxY": 0.642416569923498
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "crowd": {
+        "initialized": true,
+        "type": "crowd",
+        "profile": {
+          "w": 334,
+          "h": 394,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 5.514018832874724,
+          "y": 3.7426487145318816,
+          "z": 14.552179184846734
+        },
+        "target": {
+          "x": -0.3407757058739018,
+          "y": 1.0067883579624712,
+          "z": 0.7042878770759436
+        },
+        "bounds": {
+          "minX": -0.9408112611438935,
+          "maxX": 0.9408111758894875,
+          "minY": -0.4780073283298833,
+          "maxY": 0.7064498525946353
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "av": {
+        "initialized": true,
+        "type": "av",
+        "profile": {
+          "w": 334,
+          "h": 394,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 8.255103269129432,
+          "y": 4.6569176720680865,
+          "z": 16.8037059006954
+        },
+        "target": {
+          "x": -0.13330193300278978,
+          "y": 1.0189719986266748,
+          "z": 1.4488331734435125
+        },
+        "bounds": {
+          "minX": -0.9409253322135908,
+          "maxX": 0.9409253328549418,
+          "minY": -0.4251431426069163,
+          "maxY": 0.6360416358441866
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      }
+    },
+    "connected": {
+      "failures": [],
+      "failureCount": 0,
+      "minW": 1.3920719137385726,
+      "maxW": 1.8794097036074373,
+      "minH": 0.4988431292864057,
+      "maxH": 0.6079885546046713,
+      "state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "profile": {
+          "w": 360,
+          "h": 800,
+          "pixelRatio": 2.15,
+          "tier": "high"
+        }
+      }
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "device": "small_mobile",
+    "viewport": [
+      360,
+      800
+    ],
+    "dpr": 3,
+    "lang": "ar",
+    "dom": {
+      "lang": "ar",
+      "dir": "rtl",
+      "docOverflow": 0,
+      "bodyFont": "Cairo, \"Noto Sans Arabic\", Inter, sans-serif",
+      "type": {
+        ".hero-copy h1": {
+          "text": "نصمم المساحة، ننفذها، ونسلمها جاهزة للتشغيل.",
+          "font": "34.4px",
+          "line": "41.28px",
+          "w": 236.046875,
+          "h": 247.6875,
+          "sw": 236,
+          "sh": 259,
+          "cw": 236,
+          "ch": 248,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".proof-intro h2": {
+          "text": "لا تكرار ولا خدمات منفصلة؛ رحلة تنفيذ واضحة من البداية للنهاية.",
+          "font": "32.8px",
+          "line": "38.048px",
+          "w": 336,
+          "h": 152.125,
+          "sw": 336,
+          "sh": 164,
+          "cw": 336,
+          "ch": 152,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".section-heading h2": {
+          "text": "من أرضية فارغة إلى جناح جاهز للعرض والتشغيل.",
+          "font": "32.8px",
+          "line": "38.048px",
+          "w": 336,
+          "h": 114.09375,
+          "sw": 336,
+          "sh": 126,
+          "cw": 336,
+          "ch": 114,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".service-copy h3": {
+          "text": "أجنحة المعارض والأجنحة الوطنية",
+          "font": "29.6px",
+          "line": "34.928px",
+          "w": 336,
+          "h": 69.8125,
+          "sw": 336,
+          "sh": 80,
+          "cw": 336,
+          "ch": 70,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".connected-copy h3": {
+          "text": "أجنحة المعارض والأجنحة الوطنية",
+          "font": "20.8px",
+          "line": "24.96px",
+          "w": 166.53125,
+          "h": 74.859375,
+          "sw": 167,
+          "sh": 82,
+          "cw": 167,
+          "ch": 75,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".standards-copy h2": {
+          "text": "قيمة التصميم تظهر عندما يكون التنفيذ منضبطا بالمستوى نفسه.",
+          "font": "32.8px",
+          "line": "38.048px",
+          "w": 336,
+          "h": 152.125,
+          "sw": 336,
+          "sh": 164,
+          "cw": 336,
+          "ch": 152,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".wecan-final h2": {
+          "text": "نستطيع أن نصممها، نبنيها، ونسلمها.",
+          "font": "33.84px",
+          "line": "33.1632px",
+          "w": 226.3828125,
+          "h": 129.30859375,
+          "sw": 232,
+          "sh": 147,
+          "cw": 232,
+          "ch": 133,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".contact-copy h2": {
+          "text": "شاركنا المدينة وموقع الفعالية والمساحة والتجربة التي ترغب في تنفيذها.",
+          "font": "32.8px",
+          "line": "38.048px",
+          "w": 336,
+          "h": 190.15625,
+          "sw": 336,
+          "sh": 202,
+          "cw": 336,
+          "ch": 190,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".mega-intro h2": {
+          "text": "استكشف الخدمات التي تصنع تجربة معرض أو فعالية متكاملة.",
+          "font": "22.4px",
+          "line": "30.24px",
+          "w": 0,
+          "h": 0,
+          "sw": 0,
+          "sh": 0,
+          "cw": 0,
+          "ch": 0,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".mobile-menu-intro h2": {
+          "text": "انتقل مباشرة إلى القسم الذي تحتاجه لمشروعك.",
+          "font": "29.6px",
+          "line": "38.48px",
+          "w": 236.984375,
+          "h": 153.875,
+          "sw": 237,
+          "sh": 162,
+          "cw": 237,
+          "ch": 154,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        }
+      },
+      "overs": [],
+      "connectedTitle": {
+        "text": "أجنحة المعارض والأجنحة الوطنية",
+        "font": "20.8px"
+      },
+      "frames": [
+        {
+          "w": 336,
+          "h": 396
+        },
+        {
+          "w": 336,
+          "h": 396
+        },
+        {
+          "w": 336,
+          "h": 396
+        },
+        {
+          "w": 336,
+          "h": 396
+        },
+        {
+          "w": 336,
+          "h": 396
+        },
+        {
+          "w": 336,
+          "h": 396
+        }
+      ]
+    },
+    "services": {
+      "booth": {
+        "initialized": true,
+        "type": "booth",
+        "profile": {
+          "w": 334,
+          "h": 394,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 8.376346479419379,
+          "y": 4.849969797886624,
+          "z": 15.312012023269759
+        },
+        "target": {
+          "x": -0.013633974263582848,
+          "y": 1.1626343016052252,
+          "z": 0.6586069054414163
+        },
+        "bounds": {
+          "minX": -0.9409776272412793,
+          "maxX": 0.9409776272319104,
+          "minY": -0.45464500405974256,
+          "maxY": 0.6695792450473798
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "showroom": {
+        "initialized": true,
+        "type": "showroom",
+        "profile": {
+          "w": 334,
+          "h": 394,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 5.318239137179282,
+          "y": 4.970609910844157,
+          "z": 14.300594525216365
+        },
+        "target": {
+          "x": -0.24607879570985322,
+          "y": 1.8515112719528313,
+          "z": 0.3693458843521535
+        },
+        "bounds": {
+          "minX": -0.9325509880204008,
+          "maxX": 0.9325466119780812,
+          "minY": -0.6536093304006279,
+          "maxY": 0.8606073149811497
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "interior": {
+        "initialized": true,
+        "type": "interior",
+        "profile": {
+          "w": 334,
+          "h": 394,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 6.748116962325572,
+          "y": 3.658044476598026,
+          "z": 13.630616408643393
+        },
+        "target": {
+          "x": -0.08626586913250127,
+          "y": 0.9036697188732297,
+          "z": 0.5029935254225636
+        },
+        "bounds": {
+          "minX": -0.9409743094829472,
+          "maxX": 0.9409743094560664,
+          "minY": -0.4087098569281387,
+          "maxY": 0.6295588047771304
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "management": {
+        "initialized": true,
+        "type": "management",
+        "profile": {
+          "w": 334,
+          "h": 394,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 6.626954287708448,
+          "y": 4.273737005763949,
+          "z": 13.842087275308034
+        },
+        "target": {
+          "x": -0.04306487236028189,
+          "y": 1.0085349270145059,
+          "z": 0.3795063268845179
+        },
+        "bounds": {
+          "minX": -0.9409749940900358,
+          "maxX": 0.9409749940769996,
+          "minY": -0.4354165711968518,
+          "maxY": 0.642416569923498
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "crowd": {
+        "initialized": true,
+        "type": "crowd",
+        "profile": {
+          "w": 334,
+          "h": 394,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 5.514018832874724,
+          "y": 3.7426487145318816,
+          "z": 14.552179184846734
+        },
+        "target": {
+          "x": -0.3407757058739018,
+          "y": 1.0067883579624712,
+          "z": 0.7042878770759436
+        },
+        "bounds": {
+          "minX": -0.9408112611438935,
+          "maxX": 0.9408111758894875,
+          "minY": -0.4780073283298833,
+          "maxY": 0.7064498525946353
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      },
+      "av": {
+        "initialized": true,
+        "type": "av",
+        "profile": {
+          "w": 334,
+          "h": 394,
+          "fov": 36.5,
+          "pixelRatio": 2.65
+        },
+        "camera": {
+          "x": 8.255103269129432,
+          "y": 4.6569176720680865,
+          "z": 16.8037059006954
+        },
+        "target": {
+          "x": -0.13330193300278978,
+          "y": 1.0189719986266748,
+          "z": 1.4488331734435125
+        },
+        "bounds": {
+          "minX": -0.9409253322135908,
+          "maxX": 0.9409253328549418,
+          "minY": -0.4251431426069163,
+          "maxY": 0.6360416358441866
+        },
+        "safe": {
+          "left": -0.955,
+          "right": 0.955,
+          "bottom": -0.7,
+          "top": 0.875
+        },
+        "behind": false,
+        "inside": true
+      }
+    },
+    "connected": {
+      "failures": [],
+      "failureCount": 0,
+      "minW": 1.3920719137385726,
+      "maxW": 1.8794097036074373,
+      "minH": 0.4988431292864057,
+      "maxH": 0.6079885546046713,
+      "state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "profile": {
+          "w": 360,
+          "h": 800,
+          "pixelRatio": 2.15,
+          "tier": "high"
+        }
+      }
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "device": "mobile_landscape",
+    "viewport": [
+      844,
+      390
+    ],
+    "dpr": 3,
+    "lang": "en",
+    "dom": {
+      "lang": "en",
+      "dir": "ltr",
+      "docOverflow": 0,
+      "bodyFont": "Inter, system-ui, sans-serif",
+      "type": {
+        ".hero-copy h1": {
+          "text": "We design the space, build it properly and deliver it ready to perform.",
+          "font": "64px",
+          "line": "56.96px",
+          "w": 517.875,
+          "h": 284.765625,
+          "sw": 518,
+          "sh": 294,
+          "cw": 518,
+          "ch": 285,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".proof-intro h2": {
+          "text": "No repeated sections. No disconnected services. One clear journey.",
+          "font": "38.4px",
+          "line": "37.248px",
+          "w": 812,
+          "h": 74.5,
+          "sw": 812,
+          "sh": 78,
+          "cw": 812,
+          "ch": 75,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".section-heading h2": {
+          "text": "From an empty footprint to a finished booth ready for display and operation.",
+          "font": "60.768px",
+          "line": "58.945px",
+          "w": 812,
+          "h": 176.8125,
+          "sw": 812,
+          "sh": 184,
+          "cw": 812,
+          "ch": 177,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".service-copy h3": {
+          "text": "Exhibition Stands & Pavilions",
+          "font": "60.768px",
+          "line": "58.3373px",
+          "w": 812,
+          "h": 58.328125,
+          "sw": 812,
+          "sh": 66,
+          "cw": 812,
+          "ch": 58,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".connected-copy h3": {
+          "text": "Exhibition Stands & Pavilions",
+          "font": "30px",
+          "line": "27.9px",
+          "w": 222.515625,
+          "h": 83.671875,
+          "sw": 223,
+          "sh": 87,
+          "cw": 223,
+          "ch": 84,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".standards-copy h2": {
+          "text": "High design only matters when the delivery is equally controlled.",
+          "font": "60.768px",
+          "line": "58.945px",
+          "w": 812,
+          "h": 176.8125,
+          "sw": 812,
+          "sh": 184,
+          "cw": 812,
+          "ch": 177,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".wecan-final h2": {
+          "text": "We can design it, build it and deliver it.",
+          "font": "33.76px",
+          "line": "33.0848px",
+          "w": 266.266357421875,
+          "h": 96.75390625,
+          "sw": 273,
+          "sh": 103,
+          "cw": 273,
+          "ch": 99,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".contact-copy h2": {
+          "text": "Tell us the city, venue, footprint and the experience you want to build.",
+          "font": "60.768px",
+          "line": "58.945px",
+          "w": 812,
+          "h": 176.8125,
+          "sw": 812,
+          "sh": 184,
+          "cw": 812,
+          "ch": 177,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".mega-intro h2": {
+          "text": "Explore the disciplines behind complete exhibition and event delivery.",
+          "font": "22.4px",
+          "line": "24.192px",
+          "w": 0,
+          "h": 0,
+          "sw": 0,
+          "sh": 0,
+          "cw": 0,
+          "ch": 0,
+          "fontFamily": "Syne, Inter, sans-serif"
+        },
+        ".mobile-menu-intro h2": {
+          "text": "Go straight to the information your project needs.",
+          "font": "27.2px",
+          "line": "27.744px",
+          "w": 256.65625,
+          "h": 83.203125,
+          "sw": 257,
+          "sh": 85,
+          "cw": 257,
+          "ch": 83,
+          "fontFamily": "Syne, Inter, sans-serif"
+        }
+      },
+      "overs": [],
+      "connectedTitle": {
+        "text": "Exhibition Stands & Pavilions",
+        "font": "30px"
+      },
+      "frames": [
+        {
+          "w": 812,
+          "h": 557.03125
+        },
+        {
+          "w": 812,
+          "h": 557.03125
+        },
+        {
+          "w": 812,
+          "h": 557.03125
+        },
+        {
+          "w": 812,
+          "h": 557.03125
+        },
+        {
+          "w": 812,
+          "h": 557.03125
+        },
+        {
+          "w": 812,
+          "h": 557.03125
+        }
+      ]
+    },
+    "services": {
+      "booth": {
+        "initialized": true,
+        "type": "booth",
+        "profile": {
+          "w": 810,
+          "h": 555,
+          "fov": 36,
+          "pixelRatio": 2.42
+        },
+        "camera": {
+          "x": 7.071342948038925,
+          "y": 4.586155247195244,
+          "z": 11.38337259515075
+        },
+        "target": {
+          "x": 0.00876543871740359,
+          "y": 1.4597098280471374,
+          "z": 0.6035837901919617
+        },
+        "bounds": {
+          "minX": -0.7387154955641311,
+          "maxX": 0.738715934791067,
+          "minY": -0.779343121066832,
+          "maxY": 0.8553469493206284
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "showroom": {
+        "initialized": true,
+        "type": "showroom",
+        "profile": {
+          "w": 810,
+          "h": 555,
+          "fov": 36,
+          "pixelRatio": 2.42
+        },
+        "camera": {
+          "x": 5.852480000199636,
+          "y": 5.314124269902494,
+          "z": 13.213921326553477
+        },
+        "target": {
+          "x": -0.20392822497218302,
+          "y": 2.0447916138992404,
+          "z": 0.34931059128335895
+        },
+        "bounds": {
+          "minX": -0.5943677924205705,
+          "maxX": 0.5943614948535548,
+          "minY": -0.781555621586446,
+          "maxY": 0.8555408930745093
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "interior": {
+        "initialized": true,
+        "type": "interior",
+        "profile": {
+          "w": 810,
+          "h": 555,
+          "fov": 36,
+          "pixelRatio": 2.42
+        },
+        "camera": {
+          "x": 5.452265791144253,
+          "y": 3.4362761628495013,
+          "z": 9.701583030411674
+        },
+        "target": {
+          "x": -0.07902576923949282,
+          "y": 1.165684758441009,
+          "z": 0.47399175589043413
+        },
+        "bounds": {
+          "minX": -0.7769497333805185,
+          "maxX": 0.7769089426485051,
+          "minY": -0.771584368395186,
+          "maxY": 0.8553105882222178
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "management": {
+        "initialized": true,
+        "type": "management",
+        "profile": {
+          "w": 810,
+          "h": 555,
+          "fov": 36,
+          "pixelRatio": 2.42
+        },
+        "camera": {
+          "x": 5.4587462938965725,
+          "y": 3.922998025930782,
+          "z": 9.921351446977974
+        },
+        "target": {
+          "x": -0.02480821218323859,
+          "y": 1.2456940662587943,
+          "z": 0.3441246456916834
+        },
+        "bounds": {
+          "minX": -0.7686474424891189,
+          "maxX": 0.7686492526592927,
+          "minY": -0.7793380312425466,
+          "maxY": 0.8553505621576443
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "crowd": {
+        "initialized": true,
+        "type": "crowd",
+        "profile": {
+          "w": 810,
+          "h": 555,
+          "fov": 36,
+          "pixelRatio": 2.42
+        },
+        "camera": {
+          "x": 4.99677186802817,
+          "y": 3.7100028679217685,
+          "z": 11.561607885510664
+        },
+        "target": {
+          "x": -0.37635055220365865,
+          "y": 1.2565948693102724,
+          "z": 0.7166472051556048
+        },
+        "bounds": {
+          "minX": -0.7110094462353775,
+          "maxX": 0.7108659257412006,
+          "minY": -0.7676777474185938,
+          "maxY": 0.8553125677860666
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "av": {
+        "initialized": true,
+        "type": "av",
+        "profile": {
+          "w": 810,
+          "h": 555,
+          "fov": 36,
+          "pixelRatio": 2.42
+        },
+        "camera": {
+          "x": 6.717961806990849,
+          "y": 4.31007084073468,
+          "z": 12.384405066168945
+        },
+        "target": {
+          "x": -0.14829704708820385,
+          "y": 1.3107264962266272,
+          "z": 1.432552532293295
+        },
+        "bounds": {
+          "minX": -0.7680032979553804,
+          "maxX": 0.7679889254611687,
+          "minY": -0.7753200306081484,
+          "maxY": 0.8552557501261525
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      }
+    },
+    "connected": {
+      "failures": [],
+      "failureCount": 0,
+      "minW": 0.7109117351202539,
+      "maxW": 1.0189673970980495,
+      "minH": 1.4261445088824658,
+      "maxH": 1.5676584380603322,
+      "state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "profile": {
+          "w": 844,
+          "h": 390,
+          "pixelRatio": 2,
+          "tier": "high"
+        }
+      }
+    },
+    "errors": [],
+    "failed": []
+  },
+  {
+    "device": "mobile_landscape",
+    "viewport": [
+      844,
+      390
+    ],
+    "dpr": 3,
+    "lang": "ar",
+    "dom": {
+      "lang": "ar",
+      "dir": "rtl",
+      "docOverflow": 0,
+      "bodyFont": "Cairo, \"Noto Sans Arabic\", Inter, sans-serif",
+      "type": {
+        ".hero-copy h1": {
+          "text": "نصمم المساحة، ننفذها، ونسلمها جاهزة للتشغيل.",
+          "font": "44.8px",
+          "line": "51.968px",
+          "w": 320.296875,
+          "h": 311.71875,
+          "sw": 320,
+          "sh": 328,
+          "cw": 320,
+          "ch": 312,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".proof-intro h2": {
+          "text": "لا تكرار ولا خدمات منفصلة؛ رحلة تنفيذ واضحة من البداية للنهاية.",
+          "font": "37.6px",
+          "line": "42.112px",
+          "w": 812,
+          "h": 84.1875,
+          "sw": 812,
+          "sh": 98,
+          "cw": 812,
+          "ch": 84,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".section-heading h2": {
+          "text": "من أرضية فارغة إلى جناح جاهز للعرض والتشغيل.",
+          "font": "37.6px",
+          "line": "42.112px",
+          "w": 812,
+          "h": 84.1875,
+          "sw": 812,
+          "sh": 98,
+          "cw": 812,
+          "ch": 84,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".service-copy h3": {
+          "text": "أجنحة المعارض والأجنحة الوطنية",
+          "font": "37.6px",
+          "line": "42.488px",
+          "w": 812,
+          "h": 42.46875,
+          "sw": 812,
+          "sh": 56,
+          "cw": 812,
+          "ch": 42,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".connected-copy h3": {
+          "text": "أجنحة المعارض والأجنحة الوطنية",
+          "font": "29.6px",
+          "line": "34.336px",
+          "w": 186.203125,
+          "h": 137.3125,
+          "sw": 186,
+          "sh": 148,
+          "cw": 186,
+          "ch": 137,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".standards-copy h2": {
+          "text": "قيمة التصميم تظهر عندما يكون التنفيذ منضبطا بالمستوى نفسه.",
+          "font": "37.6px",
+          "line": "42.112px",
+          "w": 812,
+          "h": 84.1875,
+          "sw": 812,
+          "sh": 98,
+          "cw": 812,
+          "ch": 84,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".wecan-final h2": {
+          "text": "نستطيع أن نصممها، نبنيها، ونسلمها.",
+          "font": "33.76px",
+          "line": "33.0848px",
+          "w": 225.86480712890625,
+          "h": 129.00390625,
+          "sw": 232,
+          "sh": 147,
+          "cw": 232,
+          "ch": 132,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".contact-copy h2": {
+          "text": "شاركنا المدينة وموقع الفعالية والمساحة والتجربة التي ترغب في تنفيذها.",
+          "font": "37.6px",
+          "line": "42.112px",
+          "w": 812,
+          "h": 84.1875,
+          "sw": 812,
+          "sh": 98,
+          "cw": 812,
+          "ch": 84,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".mega-intro h2": {
+          "text": "استكشف الخدمات التي تصنع تجربة معرض أو فعالية متكاملة.",
+          "font": "22.4px",
+          "line": "30.24px",
+          "w": 0,
+          "h": 0,
+          "sw": 0,
+          "sh": 0,
+          "cw": 0,
+          "ch": 0,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        },
+        ".mobile-menu-intro h2": {
+          "text": "انتقل مباشرة إلى القسم الذي تحتاجه لمشروعك.",
+          "font": "27.2px",
+          "line": "36.72px",
+          "w": 217.703125,
+          "h": 146.875,
+          "sw": 218,
+          "sh": 154,
+          "cw": 218,
+          "ch": 147,
+          "fontFamily": "Changa, \"Noto Kufi Arabic\", Cairo, \"Noto Sans Arabic\", sans-serif"
+        }
+      },
+      "overs": [],
+      "connectedTitle": {
+        "text": "أجنحة المعارض والأجنحة الوطنية",
+        "font": "29.6px"
+      },
+      "frames": [
+        {
+          "w": 812,
+          "h": 557.03125
+        },
+        {
+          "w": 812,
+          "h": 557.03125
+        },
+        {
+          "w": 812,
+          "h": 557.03125
+        },
+        {
+          "w": 812,
+          "h": 557.03125
+        },
+        {
+          "w": 812,
+          "h": 557.03125
+        },
+        {
+          "w": 812,
+          "h": 557.03125
+        }
+      ]
+    },
+    "services": {
+      "booth": {
+        "initialized": true,
+        "type": "booth",
+        "profile": {
+          "w": 810,
+          "h": 555,
+          "fov": 36,
+          "pixelRatio": 2.42
+        },
+        "camera": {
+          "x": 7.071342948038925,
+          "y": 4.586155247195244,
+          "z": 11.38337259515075
+        },
+        "target": {
+          "x": 0.00876543871740359,
+          "y": 1.4597098280471374,
+          "z": 0.6035837901919617
+        },
+        "bounds": {
+          "minX": -0.7387154955641311,
+          "maxX": 0.738715934791067,
+          "minY": -0.779343121066832,
+          "maxY": 0.8553469493206284
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "showroom": {
+        "initialized": true,
+        "type": "showroom",
+        "profile": {
+          "w": 810,
+          "h": 555,
+          "fov": 36,
+          "pixelRatio": 2.42
+        },
+        "camera": {
+          "x": 5.852480000199636,
+          "y": 5.314124269902494,
+          "z": 13.213921326553477
+        },
+        "target": {
+          "x": -0.20392822497218302,
+          "y": 2.0447916138992404,
+          "z": 0.34931059128335895
+        },
+        "bounds": {
+          "minX": -0.5943677924205705,
+          "maxX": 0.5943614948535548,
+          "minY": -0.781555621586446,
+          "maxY": 0.8555408930745093
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "interior": {
+        "initialized": true,
+        "type": "interior",
+        "profile": {
+          "w": 810,
+          "h": 555,
+          "fov": 36,
+          "pixelRatio": 2.42
+        },
+        "camera": {
+          "x": 5.452265791144253,
+          "y": 3.4362761628495013,
+          "z": 9.701583030411674
+        },
+        "target": {
+          "x": -0.07902576923949282,
+          "y": 1.165684758441009,
+          "z": 0.47399175589043413
+        },
+        "bounds": {
+          "minX": -0.7769497333805185,
+          "maxX": 0.7769089426485051,
+          "minY": -0.771584368395186,
+          "maxY": 0.8553105882222178
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "management": {
+        "initialized": true,
+        "type": "management",
+        "profile": {
+          "w": 810,
+          "h": 555,
+          "fov": 36,
+          "pixelRatio": 2.42
+        },
+        "camera": {
+          "x": 5.4587462938965725,
+          "y": 3.922998025930782,
+          "z": 9.921351446977974
+        },
+        "target": {
+          "x": -0.02480821218323859,
+          "y": 1.2456940662587943,
+          "z": 0.3441246456916834
+        },
+        "bounds": {
+          "minX": -0.7686474424891189,
+          "maxX": 0.7686492526592927,
+          "minY": -0.7793380312425466,
+          "maxY": 0.8553505621576443
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "crowd": {
+        "initialized": true,
+        "type": "crowd",
+        "profile": {
+          "w": 810,
+          "h": 555,
+          "fov": 36,
+          "pixelRatio": 2.42
+        },
+        "camera": {
+          "x": 4.99677186802817,
+          "y": 3.7100028679217685,
+          "z": 11.561607885510664
+        },
+        "target": {
+          "x": -0.37635055220365865,
+          "y": 1.2565948693102724,
+          "z": 0.7166472051556048
+        },
+        "bounds": {
+          "minX": -0.7110094462353775,
+          "maxX": 0.7108659257412006,
+          "minY": -0.7676777474185938,
+          "maxY": 0.8553125677860666
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      },
+      "av": {
+        "initialized": true,
+        "type": "av",
+        "profile": {
+          "w": 810,
+          "h": 555,
+          "fov": 36,
+          "pixelRatio": 2.42
+        },
+        "camera": {
+          "x": 6.717961806990849,
+          "y": 4.31007084073468,
+          "z": 12.384405066168945
+        },
+        "target": {
+          "x": -0.14829704708820385,
+          "y": 1.3107264962266272,
+          "z": 1.432552532293295
+        },
+        "bounds": {
+          "minX": -0.7680032979553804,
+          "maxX": 0.7679889254611687,
+          "minY": -0.7753200306081484,
+          "maxY": 0.8552557501261525
+        },
+        "safe": {
+          "left": -0.92,
+          "right": 0.92,
+          "bottom": -0.81,
+          "top": 0.87
+        },
+        "behind": false,
+        "inside": true
+      }
+    },
+    "connected": {
+      "failures": [],
+      "failureCount": 0,
+      "minW": 0.7883496175243478,
+      "maxW": 1.0872595198727364,
+      "minH": 1.426205327736667,
+      "maxH": 1.5677920292009118,
+      "state": {
+        "initialized": true,
+        "progress": 1,
+        "target": 1,
+        "profile": {
+          "w": 844,
+          "h": 390,
+          "pixelRatio": 2,
+          "tier": "high"
+        }
+      }
+    },
+    "errors": [],
+    "failed": []
+  }
+]

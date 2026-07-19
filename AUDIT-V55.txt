@@ -1,0 +1,8 @@
+V55 FULL WEBSITE AUDIT
+- Fixed 9,999px Arabic RTL page overflow caused by the hidden skip link.
+- Corrected closed RTL mobile-menu positioning and containment.
+- Rebalanced Arabic headline sizes, line heights, font stacks and mono labels.
+- Increased compact build/connected description allowance from one line to two.
+- Replaced connected camera interpolation with a frame-safe camera retreat/cut.
+- Deferred connected initialization to observer/idle time to reduce page-start contention.
+- Standalone booth, showroom, interior, management, crowd and AV scenes retained their device-specific safe framing.

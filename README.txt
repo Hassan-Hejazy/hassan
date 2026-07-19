@@ -1,5 +1,3 @@
-BY MELI WEBSITE — CONNECTED 3D V54 NO FINALE / FAST SCROLL
+BY MELI WEBSITE — V55 FULL DEVICE AUDITED
 
-Open index.html in a modern browser or upload the full folder structure unchanged.
-
-V54 removes the final connected-scene finale completely. The section now ends on Audio Visual & Live Production. Scroll progress maps directly to a linear camera walkthrough, the heavy finale geometry/textures are no longer built, and initialization starts earlier so the connected scene is ready before the user reaches it.
+This version audits and corrects the entire website in English and Arabic across desktop, laptop, tablet portrait, tablet landscape, mobile portrait, small mobile, and mobile landscape. It fixes RTL page overflow, Arabic typography hierarchy, compact copy truncation, connected-scene transition clipping, and connected-scene preload contention while preserving the six standalone 3D service scenes.

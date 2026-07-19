@@ -1,0 +1,70 @@
+{
+  "version": "V55 Full Device Audited",
+  "audit_scope": {
+    "languages": [
+      "English",
+      "Arabic / RTL"
+    ],
+    "viewports": [
+      {
+        "name": "desktop",
+        "size": "1440×900"
+      },
+      {
+        "name": "laptop",
+        "size": "1366×768"
+      },
+      {
+        "name": "tablet portrait",
+        "size": "834×1112"
+      },
+      {
+        "name": "tablet landscape",
+        "size": "1112×834"
+      },
+      {
+        "name": "mobile portrait",
+        "size": "390×844"
+      },
+      {
+        "name": "small mobile",
+        "size": "360×800"
+      },
+      {
+        "name": "mobile landscape",
+        "size": "844×390"
+      }
+    ],
+    "language_device_combinations": 14,
+    "connected_timeline_positions_tested": 2814,
+    "standalone_3d_scene_device_language_checks": 84
+  },
+  "results": {
+    "horizontal_document_overflow_failures": 0,
+    "clipped_text_or_container_failures": 0,
+    "connected_3d_framing_failures": 0,
+    "standalone_3d_framing_failures": 0,
+    "runtime_errors": 0,
+    "failed_local_asset_requests": 0
+  },
+  "issues_found_and_fixed": [
+    "Arabic RTL mode created a 9,999px horizontal document overflow because the skip link was hidden with left:-9999px.",
+    "The closed RTL mobile menu was positioned off the wrong edge and was not contained by its overlay.",
+    "Arabic headings inherited Latin proportions, letter spacing and line-height, producing oversized and cramped typography.",
+    "Arabic WE CAN SVG text used forced Latin textLength values.",
+    "Compact build and connected descriptions were truncated too aggressively.",
+    "Connected-scene camera interpolation clipped models during service transitions on every tested device class.",
+    "Connected initialization competed with the page startup instead of using near-viewport/idle preloading."
+  ],
+  "corrections": [
+    "Replaced offscreen skip-link positioning with an accessible transform-based focus reveal.",
+    "Corrected RTL mobile-menu anchoring, transform direction and overflow containment.",
+    "Added Arabic-specific responsive typography, Noto Arabic fallbacks, balanced line-height, and zero Arabic tracking.",
+    "Removed forced textLength/lengthAdjust attributes from Arabic WE CAN SVG text.",
+    "Allowed complete compact build/connected descriptions without line-clamp clipping.",
+    "Replaced connected transition interpolation with a frame-safe camera retreat/cut while keeping exact scroll mapping.",
+    "Moved connected preload to intersection/idle scheduling to reduce initial loading contention.",
+    "Removed legacy connected versions and obsolete audit files from the deliverable."
+  ],
+  "validation_note": "Three.js geometry, responsive camera calculations and DOM layouts were executed in Chromium with a structural renderer because this environment does not expose a real WebGL/GPU context. JavaScript runtime, scene construction, camera projection, RTL layout and asset loading were exercised."
+}
