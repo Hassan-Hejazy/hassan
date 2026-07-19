@@ -1,0 +1,7 @@
+V57 mobile scroll fixes
+- Fixed a continuous render-loop bug by resetting renderDirty after each frame.
+- Kept a short active RAF tail after scroll input for smoother momentum on mobile.
+- Marked scroll/pageshow/visibility/intersection changes as dirty so frames update only when needed.
+- Reduced mobile connected-track scroll length.
+- Removed expensive mobile backdrop blur on the connected copy card.
+- Disabled the animated mobile scroll-indicator bar.

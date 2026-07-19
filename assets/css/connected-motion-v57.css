@@ -1,0 +1,271 @@
+/* BY MELI Connected 3D V57 — mobile scroll fixed */
+#connected{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:clip!important;
+  background:#070605!important;
+}
+#connected .dark-heading{
+  position:relative!important;
+  z-index:5!important;
+  padding-bottom:clamp(22px,3vw,42px)!important;
+}
+#connected .connected-track{
+  position:relative!important;
+  height:660vh!important;
+  min-height:660vh!important;
+  overflow:visible!important;
+  touch-action:pan-y!important;
+  overscroll-behavior:contain!important;
+}
+#connected .connected-sticky{
+  position:sticky!important;
+  top:0!important;
+  width:100%!important;
+  height:var(--viewport-h,100svh)!important;
+  min-height:var(--viewport-h,100svh)!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+  background:#070605!important;
+  touch-action:pan-y!important;
+}
+#connectedCanvas{
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  pointer-events:none!important;
+  transform:translate3d(0,0,0)!important;
+}
+#connected .connected-fallback{
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  background-position:center!important;
+  background-size:cover!important;
+  filter:saturate(.55) brightness(.35)!important;
+  transition:opacity .45s ease!important;
+}
+#connected .connected-sticky.model-active .connected-fallback{opacity:0!important}
+#connected .connected-scrim{
+  position:absolute!important;
+  inset:0!important;
+  z-index:2!important;
+  pointer-events:none!important;
+  background:
+    radial-gradient(ellipse at 68% 42%,transparent 20%,rgba(4,3,2,.05) 58%,rgba(4,3,2,.36) 108%),
+    linear-gradient(180deg,rgba(4,3,2,.03),transparent 52%,rgba(4,3,2,.28))!important;
+}
+#connected .connected-transition-veil{
+  position:absolute!important;
+  inset:0!important;
+  z-index:7!important;
+  pointer-events:none!important;
+  opacity:var(--connected-transition,0)!important;
+  background:#070605!important;
+  will-change:opacity!important;
+}
+#connected .connected-copy{
+  position:absolute!important;
+  z-index:9!important;
+  left:clamp(26px,5vw,84px)!important;
+  bottom:clamp(30px,6.5vh,72px)!important;
+  width:min(39vw,650px)!important;
+  padding-left:20px!important;
+  border-left:1px solid rgba(211,174,91,.78)!important;
+  text-align:left!important;
+  transform:translate3d(0,0,0)!important;
+}
+html[dir="rtl"] #connected .connected-copy{
+  left:auto!important;
+  right:clamp(26px,5vw,84px)!important;
+  padding-left:0!important;
+  padding-right:20px!important;
+  border-left:0!important;
+  border-right:1px solid rgba(211,174,91,.78)!important;
+  text-align:right!important;
+}
+#connected .connected-copy .mono{
+  display:block!important;
+  margin-bottom:12px!important;
+  color:#d8b66a!important;
+  font-size:11px!important;
+  letter-spacing:.22em!important;
+}
+#connected .connected-copy h3{
+  margin:0!important;
+  color:#f6f0e5!important;
+  font-size:clamp(42px,5.3vw,92px)!important;
+  line-height:.93!important;
+  letter-spacing:-.055em!important;
+  max-width:11ch!important;
+  text-wrap:balance!important;
+}
+#connected .connected-copy p{
+  margin:18px 0 0!important;
+  color:rgba(246,240,229,.72)!important;
+  font-size:clamp(15px,1.15vw,20px)!important;
+  line-height:1.55!important;
+  max-width:52ch!important;
+}
+#connected .connected-copy.in-transit{opacity:.46!important}
+#connected .connected-rail{
+  position:absolute!important;
+  z-index:9!important;
+  right:clamp(18px,2.4vw,42px)!important;
+  top:50%!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-end!important;
+  gap:12px!important;
+  transform:translateY(-50%)!important;
+}
+html[dir="rtl"] #connected .connected-rail{right:auto!important;left:clamp(18px,2.4vw,42px)!important;align-items:flex-start!important}
+#connected .connected-rail span{
+  color:rgba(246,240,229,.34)!important;
+  font-size:10px!important;
+  letter-spacing:.16em!important;
+  transition:color .2s ease,transform .2s ease!important;
+}
+#connected .connected-rail span.active{
+  color:#d8b66a!important;
+  transform:translateX(-6px)!important;
+}
+html[dir="rtl"] #connected .connected-rail span.active{transform:translateX(6px)!important}
+#connected .interaction-hint{display:none!important}
+#connected .scene-scroll-indicator{
+  position:absolute!important;
+  z-index:9!important;
+  left:50%!important;
+  top:18px!important;
+  bottom:auto!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  transform:translateX(-50%)!important;
+  color:rgba(246,240,229,.48)!important;
+  pointer-events:none!important;
+  transition:opacity .25s ease!important;
+}
+#connected .scene-scroll-indicator>span{font-size:9px!important;letter-spacing:.18em!important}
+#connected .scene-scroll-indicator i{
+  position:relative!important;
+  display:block!important;
+  width:44px!important;
+  height:1px!important;
+  overflow:hidden!important;
+  background:rgba(246,240,229,.18)!important;
+}
+#connected .scene-scroll-indicator i b{
+  position:absolute!important;
+  inset:0 auto 0 0!important;
+  width:42%!important;
+  background:#d8b66a!important;
+  animation:connected-v50-indicator 1.4s ease-in-out infinite!important;
+}
+@keyframes connected-v50-indicator{0%{transform:translateX(-110%)}100%{transform:translateX(260%)}}
+
+@media(max-width:1100px){
+  #connected .connected-track{height:640svh!important;min-height:640svh!important}
+  #connected .connected-copy{width:min(46vw,560px)!important}
+}
+@media(max-width:760px){
+  #connected .connected-track{height:620svh!important;min-height:620svh!important}
+  #connected .connected-sticky{height:var(--viewport-h,100svh)!important;min-height:var(--viewport-h,100svh)!important}
+  #connected .connected-copy,
+  html[dir="rtl"] #connected .connected-copy{
+    left:10px!important;
+    right:10px!important;
+    bottom:10px!important;
+    width:auto!important;
+    min-height:156px!important;
+    padding:16px 16px 15px!important;
+    border:1px solid rgba(211,174,91,.20)!important;
+    border-radius:20px!important;
+    background:rgba(8,7,6,.76)!important;
+    -webkit-backdrop-filter:blur(18px) saturate(1.05)!important;
+    backdrop-filter:blur(18px) saturate(1.05)!important;
+    text-align:left!important;
+  }
+  html[dir="rtl"] #connected .connected-copy{text-align:right!important}
+  #connected .connected-copy .mono{margin-bottom:8px!important;font-size:9px!important}
+  #connected .connected-copy h3{
+    font-size:clamp(34px,10vw,48px)!important;
+    line-height:.94!important;
+    max-width:14ch!important;
+  }
+  #connected .connected-copy p{
+    margin-top:10px!important;
+    font-size:14px!important;
+    line-height:1.42!important;
+    max-width:none!important;
+  }
+  #connected .connected-rail{
+    top:110px!important;
+    right:10px!important;
+    gap:8px!important;
+  }
+  html[dir="rtl"] #connected .connected-rail{left:10px!important;right:auto!important}
+  #connected .connected-rail span{font-size:0!important;width:4px!important;height:20px!important;border-radius:999px!important;background:rgba(246,240,229,.16)!important}
+  #connected .connected-rail span.active{background:#d8b66a!important;transform:none!important}
+  #connected .scene-scroll-indicator{top:102px!important}
+}
+@media(max-width:390px){
+  #connected .connected-track{height:600svh!important;min-height:600svh!important}
+  #connected .connected-copy h3{font-size:34px!important}
+  #connected .connected-copy p{font-size:13px!important}
+}
+@media(max-height:560px) and (orientation:landscape){
+  #connected .connected-track{height:650svh!important;min-height:650svh!important}
+  #connected .connected-copy,
+  html[dir="rtl"] #connected .connected-copy{
+    left:18px!important;
+    right:auto!important;
+    bottom:14px!important;
+    width:min(43vw,460px)!important;
+    min-height:0!important;
+    padding:12px 14px!important;
+  }
+  html[dir="rtl"] #connected .connected-copy{right:18px!important;left:auto!important}
+  #connected .connected-copy h3{font-size:30px!important}
+  #connected .connected-copy p{display:none!important}
+  #connected .scene-scroll-indicator{top:14px!important}
+}
+
+/* V54 premium finale: give the stage more visual room without affecting mobile */
+@media(min-width:1101px){
+  #connected .connected-sticky.finale-active .connected-copy{width:min(33vw,540px)!important;}
+  #connected .connected-sticky.finale-active .connected-copy h3{font-size:clamp(40px,4.7vw,78px)!important;max-width:12ch!important;}
+  #connected .connected-sticky.finale-active .connected-copy p{max-width:44ch!important;}
+}
+
+/* V54 mobile-safe finale */
+@media(max-width:760px){
+  #connected .connected-sticky.finale-active .connected-copy,
+  html[dir="rtl"] #connected .connected-sticky.finale-active .connected-copy{
+    min-height:132px!important;
+    padding:14px 15px!important;
+    background:rgba(7,6,5,.72)!important;
+  }
+  #connected .connected-sticky.finale-active .connected-copy h3{font-size:30px!important;max-width:12ch!important}
+  #connected .connected-sticky.finale-active .connected-copy p{font-size:12px!important;line-height:1.38!important}
+}
+
+
+/* V57 mobile scroll optimization */
+@media(max-width:760px){
+  #connected .connected-track{height:520svh!important;min-height:520svh!important;overscroll-behavior:contain!important}
+  #connected .connected-sticky{overscroll-behavior:contain!important}
+  #connected .connected-copy,
+  html[dir="rtl"] #connected .connected-copy{background:rgba(8,7,6,.88)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;}
+  #connected .scene-scroll-indicator i b{animation:none!important;transform:translateX(0)!important;width:56%!important;}
+}
+@media(max-width:390px){
+  #connected .connected-track{height:500svh!important;min-height:500svh!important}
+}
+@media(max-height:560px) and (orientation:landscape){
+  #connected .connected-track{height:540svh!important;min-height:540svh!important}
+}

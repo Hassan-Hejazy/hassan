@@ -1,3 +1,3 @@
-BY MELI WEBSITE — V56 MOBILE SHARP + SPEED
+BY MELI WEBSITE — V57 MOBILE SCROLL FIXED
 
-This release focuses on the connected 3D scene mobile quality and site speed. Mobile rendering is sharper, mobile framing is tighter, initialization happens earlier, and the connected scene motion is more stable and direct. Non-critical images are also lazy-loaded to improve page speed.
+This release focuses specifically on the mobile scroll behavior of the connected 3D scene. The connected renderer now stops its continuous loop correctly, rerenders only when needed, keeps a short active frame tail during finger/momentum scroll, and uses lighter mobile UI styling to reduce paint cost.
