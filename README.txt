@@ -1,3 +1,3 @@
-BY MELI WEBSITE — V55 FULL DEVICE AUDITED
+BY MELI WEBSITE — V56 MOBILE SHARP + SPEED
 
-This version audits and corrects the entire website in English and Arabic across desktop, laptop, tablet portrait, tablet landscape, mobile portrait, small mobile, and mobile landscape. It fixes RTL page overflow, Arabic typography hierarchy, compact copy truncation, connected-scene transition clipping, and connected-scene preload contention while preserving the six standalone 3D service scenes.
+This release focuses on the connected 3D scene mobile quality and site speed. Mobile rendering is sharper, mobile framing is tighter, initialization happens earlier, and the connected scene motion is more stable and direct. Non-critical images are also lazy-loaded to improve page speed.

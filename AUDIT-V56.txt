@@ -1,0 +1,6 @@
+V56 audit focus
+- Improved connected-scene mobile pixel ratio and compact FOV for sharper perceived detail.
+- Enabled high-precision renderer settings on stronger mobile devices.
+- Reduced transition retreat/orbit drift for more stable motion.
+- Started connected-scene loading earlier and kept frames alive slightly longer during active scroll.
+- Added lazy-loading to non-critical images for better overall page speed.
