@@ -1,0 +1,6 @@
+V58 mobile quality fixes
+- Raised compact-device pixel-ratio budgets and minimum ratios.
+- Relaxed low-end classification so more phones use higher-quality rendering.
+- Enabled antialiasing and highp precision on all non-low devices.
+- Tightened mobile field of view for a sharper perceived model presentation.
+- Added explicit canvas crispness hints and sRGB output where supported.
