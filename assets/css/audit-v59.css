@@ -1,0 +1,271 @@
+/* BY MELI V59 — comprehensive Arabic / RTL audit fixes */
+html[dir="rtl"]{
+  font-synthesis:none;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+}
+html[dir="rtl"] body{
+  font-family:"Cairo","Noto Sans Arabic",Tahoma,Arial,sans-serif!important;
+  text-align:right;
+  line-height:1.75;
+}
+html[dir="rtl"] .skip-link{
+  left:auto!important;
+  right:-9999px!important;
+}
+html[dir="rtl"] .skip-link:focus{
+  right:16px!important;
+  left:auto!important;
+}
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] .brand strong,
+html[dir="rtl"] .mega-intro h2,
+html[dir="rtl"] .mobile-menu-intro h2,
+html[dir="rtl"] .process-card h3,
+html[dir="rtl"] .connected-copy h3,
+html[dir="rtl"] .wecan-final h2{
+  font-family:"Changa","Cairo","Noto Sans Arabic",Tahoma,Arial,sans-serif!important;
+  letter-spacing:0!important;
+  word-spacing:0!important;
+  text-transform:none!important;
+  text-wrap:balance;
+  overflow-wrap:normal;
+  word-break:normal;
+  hyphens:none;
+}
+html[dir="rtl"] p,
+html[dir="rtl"] li,
+html[dir="rtl"] label,
+html[dir="rtl"] input,
+html[dir="rtl"] textarea,
+html[dir="rtl"] button,
+html[dir="rtl"] a,
+html[dir="rtl"] small,
+html[dir="rtl"] span{
+  letter-spacing:0;
+  word-break:normal;
+  hyphens:none;
+}
+html[dir="rtl"] .mono,
+html[dir="rtl"] .eyebrow,
+html[dir="rtl"] .mega-kicker,
+html[dir="rtl"] .scene-loading,
+html[dir="rtl"] .scene-tag,
+html[dir="rtl"] .service-index,
+html[dir="rtl"] .touch-label,
+html[dir="rtl"] .process-status,
+html[dir="rtl"] .process-output>span{
+  font-family:"Cairo","Noto Sans Arabic",Tahoma,Arial,sans-serif!important;
+  letter-spacing:0!important;
+  font-weight:700!important;
+}
+html[dir="rtl"] .eyebrow,
+html[dir="rtl"] .mono{font-size:13px!important;line-height:1.6!important}
+html[dir="rtl"] .hero-inner,
+html[dir="rtl"] .proof-grid,
+html[dir="rtl"] .section-heading,
+html[dir="rtl"] .process-overview,
+html[dir="rtl"] .service-row,
+html[dir="rtl"] .standards-grid,
+html[dir="rtl"] .contact-grid,
+html[dir="rtl"] .site-footer .container{direction:rtl}
+html[dir="rtl"] .hero-copy h1{
+  font-size:clamp(48px,5.35vw,86px)!important;
+  line-height:1.12!important;
+  max-width:13ch!important;
+  margin-inline:0!important;
+}
+html[dir="rtl"] .hero-copy>p:last-of-type{
+  font-size:18px!important;
+  line-height:1.9!important;
+  max-width:66ch!important;
+}
+html[dir="rtl"] .hero-panel h2{font-size:clamp(27px,2.2vw,38px)!important;line-height:1.28!important}
+html[dir="rtl"] .hero-panel small{font-size:14px!important;line-height:1.65!important}
+html[dir="rtl"] .proof-intro h2,
+html[dir="rtl"] .section-heading h2,
+html[dir="rtl"] .standards-copy h2,
+html[dir="rtl"] .contact-copy h2{
+  font-size:clamp(38px,4vw,64px)!important;
+  line-height:1.18!important;
+  max-width:16ch;
+}
+html[dir="rtl"] .section-heading>p,
+html[dir="rtl"] .section-heading>div+div>p,
+html[dir="rtl"] .proof-card p,
+html[dir="rtl"] .standards-copy>p,
+html[dir="rtl"] .standards-cards p,
+html[dir="rtl"] .contact-copy>p{
+  font-size:17px!important;
+  line-height:1.9!important;
+}
+html[dir="rtl"] .process-head h2{font-size:clamp(40px,4.6vw,70px)!important;line-height:1.18!important;max-width:15ch}
+html[dir="rtl"] .process-head>p{font-size:17px!important;line-height:1.9!important;max-width:72ch}
+html[dir="rtl"] .process-card h3{font-size:27px!important;line-height:1.3!important}
+html[dir="rtl"] .process-card p{font-size:16px!important;line-height:1.85!important}
+html[dir="rtl"] .process-output strong{font-size:15px!important;line-height:1.65!important}
+html[dir="rtl"] .service-copy h3{font-size:clamp(36px,3.8vw,58px)!important;line-height:1.18!important;max-width:16ch!important}
+html[dir="rtl"] .service-copy>p{font-size:17px!important;line-height:1.9!important;max-width:62ch!important}
+html[dir="rtl"] .service-details strong{font-size:14px!important;line-height:1.6!important}
+html[dir="rtl"] .service-details span{font-size:15px!important;line-height:1.85!important}
+html[dir="rtl"] .scene-loading{font-size:12px!important;white-space:nowrap}
+html[dir="rtl"] .scene-tag,
+html[dir="rtl"] .touch-label,
+html[dir="rtl"] .service-index{font-size:12px!important;line-height:1.55!important}
+html[dir="rtl"] #connected .connected-copy h3{
+  font-size:clamp(40px,4.3vw,68px)!important;
+  line-height:1.16!important;
+  max-width:15ch!important;
+}
+html[dir="rtl"] #connected .connected-copy p{font-size:17px!important;line-height:1.85!important;max-width:48ch!important}
+html[dir="rtl"] #connected .connected-copy .mono{font-size:13px!important}
+html[dir="rtl"] #connected .connected-rail span{font-family:"Cairo",Tahoma,Arial,sans-serif!important;font-size:12px!important;letter-spacing:0!important}
+html[dir="rtl"] .portfolio-filters{direction:rtl;flex-direction:row!important;justify-content:flex-start}
+html[dir="rtl"] .portfolio-filters button{font-family:"Cairo",Tahoma,Arial,sans-serif!important;font-size:15px!important;line-height:1.4!important}
+html[dir="rtl"] .portfolio-card h3,
+html[dir="rtl"] .lightbox-copy h3{font-family:"Changa","Cairo",sans-serif!important;letter-spacing:0!important;line-height:1.25!important}
+html[dir="rtl"] .portfolio-card p,
+html[dir="rtl"] .lightbox-copy p{line-height:1.8!important}
+html[dir="rtl"] .wecan-final h2{font-size:clamp(42px,4.8vw,74px)!important;line-height:1.16!important;max-width:14ch!important}
+html[dir="rtl"] .wecan-final p{font-size:17px!important;line-height:1.85!important}
+html[dir="rtl"] .wecan-cutout-text,
+html[dir="rtl"] .wecan-edge,
+html[dir="rtl"] .wecan-solid-text{font-size:280px!important;letter-spacing:0!important}
+html[dir="rtl"] .contact-form label{font-size:14px!important;line-height:1.55!important;text-align:right}
+html[dir="rtl"] .contact-form input,
+html[dir="rtl"] .contact-form textarea{
+  font-family:"Cairo",Tahoma,Arial,sans-serif!important;
+  font-size:16px!important;
+  line-height:1.7!important;
+  text-align:right;
+  direction:rtl;
+}
+html[dir="rtl"] .contact-form input[type="email"],
+html[dir="rtl"] .contact-form input[type="tel"],
+html[dir="rtl"] a[href^="tel:"],
+html[dir="rtl"] a[href^="mailto:"],
+html[dir="rtl"] .phone-link{
+  direction:ltr!important;
+  unicode-bidi:isolate!important;
+  text-align:left!important;
+}
+html[dir="rtl"] .hero-actions,
+html[dir="rtl"] .wecan-final-actions,
+html[dir="rtl"] .header-actions,
+html[dir="rtl"] .site-footer nav{direction:rtl;flex-direction:row!important}
+html[dir="rtl"] .btn,
+html[dir="rtl"] .header-cta,
+html[dir="rtl"] .mobile-contact-cta,
+html[dir="rtl"] .contact-form button{font-family:"Cairo",Tahoma,Arial,sans-serif!important;font-size:15px!important;font-weight:700!important;letter-spacing:0!important}
+html[dir="rtl"] .premium-nav a,
+html[dir="rtl"] .mega-trigger{font-size:15px!important;line-height:1.5!important}
+html[dir="rtl"] .mega-menu-inner,
+html[dir="rtl"] .mobile-menu-panel,
+html[dir="rtl"] .mobile-menu-scroll{direction:rtl;text-align:right}
+html[dir="rtl"] .mega-intro h2,
+html[dir="rtl"] .mobile-menu-intro h2{font-size:clamp(30px,3.2vw,48px)!important;line-height:1.25!important}
+html[dir="rtl"] .mega-intro p{font-size:16px!important;line-height:1.85!important}
+html[dir="rtl"] .mega-service,
+html[dir="rtl"] .mobile-main-links a,
+html[dir="rtl"] .mobile-cap-grid a{direction:rtl;text-align:right}
+html[dir="rtl"] .mega-service i,
+html[dir="rtl"] .mobile-main-links i,
+html[dir="rtl"] .header-cta i{transform:scaleX(-1)}
+html[dir="rtl"] .preloader-status strong,
+html[dir="rtl"] .process-index,
+html[dir="rtl"] #connectedIndex,
+html[dir="rtl"] .lightbox-count{direction:ltr;unicode-bidi:isolate}
+html[dir="rtl"] .brand small{font-size:12px!important;line-height:1.35!important;letter-spacing:0!important}
+html[dir="rtl"] .site-footer{direction:rtl;text-align:right}
+html[dir="rtl"] .site-footer small{direction:ltr;unicode-bidi:isolate}
+html[dir="rtl"] .proof-grid,
+html[dir="rtl"] .section-heading,
+html[dir="rtl"] .service-row,
+html[dir="rtl"] .standards-grid,
+html[dir="rtl"] .contact-grid,
+html[dir="rtl"] .process-grid,
+html[dir="rtl"] .hero-inner,
+html[dir="rtl"] .mega-menu-inner{min-width:0}
+html[dir="rtl"] .hero-copy,
+html[dir="rtl"] .hero-panel,
+html[dir="rtl"] .section-heading>*,
+html[dir="rtl"] .service-copy,
+html[dir="rtl"] .service-scene,
+html[dir="rtl"] .standards-grid>*,
+html[dir="rtl"] .contact-grid>*{min-width:0}
+
+@media(max-width:1100px){
+  html[dir="rtl"] .hero-copy h1{font-size:clamp(44px,7vw,72px)!important}
+  html[dir="rtl"] .section-heading h2,
+  html[dir="rtl"] .proof-intro h2,
+  html[dir="rtl"] .standards-copy h2,
+  html[dir="rtl"] .contact-copy h2{font-size:clamp(36px,6.2vw,56px)!important}
+  html[dir="rtl"] .service-copy h3{font-size:clamp(34px,5.2vw,48px)!important}
+}
+@media(max-width:760px){
+  html[dir="rtl"] body{font-size:15.5px;line-height:1.78}
+  html[dir="rtl"] .eyebrow,
+  html[dir="rtl"] .mono{font-size:11.5px!important;line-height:1.55!important}
+  html[dir="rtl"] .hero-copy h1{font-size:clamp(38px,11vw,52px)!important;line-height:1.18!important;max-width:13ch!important}
+  html[dir="rtl"] .hero-copy>p:last-of-type{font-size:15.5px!important;line-height:1.82!important}
+  html[dir="rtl"] .hero-actions{display:grid!important;grid-template-columns:1fr!important;gap:10px!important}
+  html[dir="rtl"] .hero-actions .btn{width:100%;justify-content:center}
+  html[dir="rtl"] .hero-panel h2{font-size:25px!important;line-height:1.3!important}
+  html[dir="rtl"] .proof-intro h2,
+  html[dir="rtl"] .section-heading h2,
+  html[dir="rtl"] .standards-copy h2,
+  html[dir="rtl"] .contact-copy h2{font-size:clamp(31px,8.8vw,42px)!important;line-height:1.22!important;max-width:16ch!important}
+  html[dir="rtl"] .section-heading>p,
+  html[dir="rtl"] .section-heading>div+div>p,
+  html[dir="rtl"] .proof-card p,
+  html[dir="rtl"] .standards-copy>p,
+  html[dir="rtl"] .contact-copy>p{font-size:15.5px!important;line-height:1.82!important}
+  html[dir="rtl"] .process-head h2{font-size:clamp(33px,9.2vw,45px)!important;line-height:1.22!important}
+  html[dir="rtl"] .process-head>p{font-size:15.5px!important;line-height:1.82!important}
+  html[dir="rtl"] .process-card h3{font-size:25px!important;line-height:1.3!important}
+  html[dir="rtl"] .process-card p{font-size:15px!important;line-height:1.82!important}
+  html[dir="rtl"] .service-copy h3{font-size:clamp(30px,8.4vw,40px)!important;line-height:1.2!important;max-width:16ch!important}
+  html[dir="rtl"] .service-copy>p{font-size:15.5px!important;line-height:1.84!important}
+  html[dir="rtl"] .service-details span{font-size:14.5px!important;line-height:1.8!important}
+  html[dir="rtl"] .scene-loading{font-size:11px!important}
+  html[dir="rtl"] .scene-tag,
+  html[dir="rtl"] .touch-label,
+  html[dir="rtl"] .service-index{font-size:10.5px!important}
+  html[dir="rtl"] #connected .connected-copy h3{font-size:clamp(30px,8.5vw,38px)!important;line-height:1.2!important;max-width:15ch!important}
+  html[dir="rtl"] #connected .connected-copy p{font-size:14.5px!important;line-height:1.75!important}
+  html[dir="rtl"] #connected .connected-copy .mono{font-size:11px!important}
+  html[dir="rtl"] .portfolio-filters{margin-right:0!important;margin-left:-12px!important;padding-left:12px!important;width:calc(100vw - 12px)!important}
+  html[dir="rtl"] .portfolio-filters button{font-size:14px!important;padding:10px 14px!important}
+  html[dir="rtl"] .wecan-cutout-text,
+  html[dir="rtl"] .wecan-edge,
+  html[dir="rtl"] .wecan-solid-text{font-size:205px!important}
+  html[dir="rtl"] .wecan-final h2{font-size:clamp(34px,9vw,46px)!important;line-height:1.2!important}
+  html[dir="rtl"] .wecan-final p{font-size:15px!important;line-height:1.8!important}
+  html[dir="rtl"] .mega-intro h2,
+  html[dir="rtl"] .mobile-menu-intro h2{font-size:32px!important;line-height:1.25!important}
+  html[dir="rtl"] .mobile-main-links strong{font-size:18px!important;line-height:1.45!important}
+  html[dir="rtl"] .mobile-cap-grid strong{font-size:15px!important;line-height:1.5!important}
+  html[dir="rtl"] .mobile-menu-panel{left:0!important;right:auto!important;transform:translateX(-102%)!important}
+  html[dir="rtl"] .mobile-menu-overlay.open .mobile-menu-panel{transform:translateX(0)!important}
+  html[dir="rtl"] .contact-form input,
+  html[dir="rtl"] .contact-form textarea{font-size:16px!important}
+}
+@media(max-width:390px){
+  html[dir="rtl"] .hero-copy h1{font-size:37px!important}
+  html[dir="rtl"] .section-heading h2,
+  html[dir="rtl"] .proof-intro h2,
+  html[dir="rtl"] .standards-copy h2,
+  html[dir="rtl"] .contact-copy h2{font-size:31px!important}
+  html[dir="rtl"] .service-copy h3{font-size:30px!important}
+  html[dir="rtl"] #connected .connected-copy h3{font-size:29px!important}
+  html[dir="rtl"] #connected .connected-copy p{font-size:14px!important}
+  html[dir="rtl"] .mobile-menu-intro h2{font-size:29px!important}
+}
+@media(max-height:560px) and (orientation:landscape){
+  html[dir="rtl"] .hero-copy h1{font-size:clamp(34px,7vw,52px)!important;line-height:1.12!important}
+  html[dir="rtl"] .section-heading h2{font-size:34px!important}
+  html[dir="rtl"] #connected .connected-copy h3{font-size:28px!important}
+  html[dir="rtl"] #connected .connected-copy p{display:none!important}
+}

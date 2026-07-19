@@ -1,3 +1,3 @@
-BY MELI WEBSITE — V58 MOBILE QUALITY FIXED
+BY MELI WEBSITE — V59 ARABIC AUDITED
 
-This release focuses specifically on the mobile visual quality of the connected 3D scene. Mobile pixel-ratio budgets were raised, compact framing was tightened, and stronger renderer settings are used on most phones so the scene looks less blurry and less pixelated while keeping the V57 mobile scroll fixes.
+This release comprehensively fixes the Arabic version across desktop, tablet, mobile and short landscape. It includes responsive Arabic typography, RTL layout corrections, translated 3D interface labels, localized accessibility attributes, metadata updates, and immediate connected-scene copy refresh when switching languages.
